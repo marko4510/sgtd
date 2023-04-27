@@ -68,10 +68,11 @@ public class TipoDocumentoController {
 
     
     //Boton para Guardar Modificacion de TipoDocumento
+    
     @RequestMapping(value = "/TipoDocumentoModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
 	public String TipoDocumentoModF(@Validated TipoDocumento tipoDocumento) { //validar los datos capturados (1)
 		
-        
+        tipoDocumento.setEstado("A");
         tipoDocumentoService.save(tipoDocumento);
 		
 		return "redirect:/TipoDocumentoR"; 

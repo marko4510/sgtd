@@ -77,65 +77,47 @@
         <div class="conatiner-fluid content-inner mt-n5 py-0">
             <div class="row">
                 <div class="col-sm-12">
+
+                    <!--FORM DE CARRERA-->
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
-                                <h3 class="card-title">Administrar Tipo de Documento</h3>
-
+                                <h3 class="card-title">Administrar Departamento</h3>
                             </div>
-                            <!--
-                            <div class="d-flex align-items-center">
-                                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#exampleModal" data-bs-whatever="@mdo">
-                                    <svg class="icon-32" width="15" viewBox="0 0 24 24" fill="none"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M12.5495 13.73H14.2624C14.6683 13.73 15.005 13.4 15.005 12.99C15.005 12.57 14.6683 12.24 14.2624 12.24H12.5495V10.51C12.5495 10.1 12.2228 9.77 11.8168 9.77C11.4109 9.77 11.0743 10.1 11.0743 10.51V12.24H9.37129C8.96535 12.24 8.62871 12.57 8.62871 12.99C8.62871 13.4 8.96535 13.73 9.37129 13.73H11.0743V15.46C11.0743 15.87 11.4109 16.2 11.8168 16.2C12.2228 16.2 12.5495 15.87 12.5495 15.46V13.73ZM19.3381 9.02561C19.5708 9.02292 19.8242 9.02 20.0545 9.02C20.302 9.02 20.5 9.22 20.5 9.47V17.51C20.5 19.99 18.5099 22 16.0446 22H8.17327C5.59901 22 3.5 19.89 3.5 17.29V6.51C3.5 4.03 5.5 2 7.96535 2H13.2525C13.5099 2 13.7079 2.21 13.7079 2.46V5.68C13.7079 7.51 15.203 9.01 17.0149 9.02C17.4381 9.02 17.8112 9.02316 18.1377 9.02593C18.3917 9.02809 18.6175 9.03 18.8168 9.03C18.9578 9.03 19.1405 9.02789 19.3381 9.02561ZM19.61 7.5662C18.7961 7.5692 17.8367 7.5662 17.1466 7.5592C16.0516 7.5592 15.1496 6.6482 15.1496 5.5422V2.9062C15.1496 2.4752 15.6674 2.2612 15.9635 2.5722C16.4995 3.1351 17.2361 3.90891 17.9693 4.67913C18.7002 5.44689 19.4277 6.21108 19.9496 6.7592C20.2387 7.0622 20.0268 7.5652 19.61 7.5662Z"
-                                            fill="currentColor"></path>
-                                    </svg>
-                                    Nuevo</button>
-                            </div>
-                        -->
                         </div>
 
-                        <br>
-
                         <div class="card-body">
-
-                            <form th:action="${edit} ?@{/TipoDocumentoModF} :@{/TipoDocumentoF}" method="post">
-                                <input type="hidden" th:field="${tipoDocumento.id_tipo_documento}">
+                            <form th:action="${edit} ?@{/DepartamentoModF} :@{/DepartamentoF}" method="post">
+                                <input type="hidden" th:field="${departamento.id_departamento}">
                                 <div class="row">
                                     <div class="col-md-3">
-
                                         <label for="nombre_tipo_documento" class="col-form-label">Nombre</label>
                                         <input class="form-control" id="nombre_tipo_documento" type="text"
-                                            th:field="${tipoDocumento.nombre_tipo_documento}"
+                                            th:field="${departamento.nombre}"
                                             onkeyup="javascript:this.value=this.value.toUpperCase();"
                                             style="text-transform:uppercase;" required>
-
                                     </div>
-
-
                                 </div>
                                 <br>
                                 <div class="text-center">
                                     <button class="btn btn-primary" type="submit"
                                         th:text="${edit} ?'Actualizar' :'Registrar'"></button>
                                 </div>
-
                             </form>
                         </div>
                     </div>
+                    <!--FIN FORM DE CARRERA-->
 
+                    <!--LISTA DE CARRERA-->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h3 class="card-title">Listar Departamento</h3>
 
+                            </div>
+                        </div>
 
-
-                    </form>
-                    <div class="card-body">
-
-
-
-                        <div class="table-responsive">
+                        <div class="card-body">
                             <table id="datatable" class="table table-striped" data-toggle="data-table">
                                 <thead>
                                     <tr>
@@ -145,17 +127,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    <tr th:each="td : ${tipoDocumentos}" th:if="${td.estado != 'X'}">
-                                        <td th:text="${td.nombre_tipo_documento}"></td>
-
-
+                                    <tr th:each="c : ${carreras}" th:if="${c.estado != 'X'}">
+                                        <td th:text="${c.nombre_carrera}"></td>
                                         <td>
                                             <div class="flex align-items-center list-user-action">
-
                                                 <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Editar"
-                                                    th:href="${'../../../../editar-tdocumento/' + td.id_tipo_documento}">
+                                                    th:href="${'../../../../editar-carrera/' + c.id_carrera}">
                                                     <span class="btn-inner">
                                                         <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
@@ -178,7 +156,7 @@
                                                 </a>
                                                 <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Eliminar"
-                                                    th:attr="onclick=${'MandarURL('+td.id_tipo_documento+')'}">
+                                                    th:attr="onclick=${'MandarURL('+c.id_carrera+')'}">
                                                     <span class="btn-inner">
                                                         <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
@@ -199,14 +177,8 @@
                                                     </span>
                                                 </a>
                                             </div>
-
-
-
-
                                         </td>
                                     </tr>
-
-
                                 </tbody>
                                 <tfoot>
                                     <tr>
@@ -216,12 +188,8 @@
                                 </tfoot>
                             </table>
                         </div>
-
-
-
-
-
                     </div>
+                    <!--FIN LISTA DE CARRERA-->
                 </div>
             </div>
         </div>
@@ -267,7 +235,7 @@
                 showConfirmButton: false,
                 cancelButtonText: "Cancelar",
                 html:
-                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-tdocumento/" + a + "'  >" +
+                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-carrera/" + a + "'  >" +
                     "Eliminar" +
                     "</a>",
             }).then().done();

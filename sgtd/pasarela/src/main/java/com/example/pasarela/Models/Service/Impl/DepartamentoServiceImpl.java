@@ -9,6 +9,7 @@ import com.example.pasarela.Models.Dao.IUsuarioDao;
 import com.example.pasarela.Models.Entity.Departamento;
 import com.example.pasarela.Models.Service.IDepartamentoService;
 
+@Service
 public class DepartamentoServiceImpl implements IDepartamentoService{
     @Autowired
     private IDepartamentoDao departamentoDao;
