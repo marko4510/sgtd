@@ -34,7 +34,7 @@ public class Tramite {
     private Date fecha_emision;
     private String estado;
 
-    /* 
+     
     @Transient
     private MultipartFile file; 
     
@@ -55,5 +55,5 @@ public class Tramite {
        //Tabla Persona
        @ManyToOne(fetch = FetchType.EAGER)
        @JoinColumn(name = "id_persona")
-       private Persona persona;*/
+       private Persona persona;
 }
