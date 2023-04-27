@@ -35,13 +35,13 @@ public class DepartamentoController {
             model.addAttribute("departamentos", departamentoService.findAll());
 			model.addAttribute("nacionalidades", nacionalidadService.findAll());
 			
-			return "Persona/gestionarDepartamento";
+			return "persona/gestionarDepartamento";
 		}else{
 			return "redirect:LoginR";
 		}
 	}
 	//FUNCION PARA GUARDAR EL departamento
-	@RequestMapping(value = "/departamentoF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
+	@RequestMapping(value = "/DepartamentoF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
 	public String PersonaF(@Validated Departamento departamento) { //validar los datos capturados (1)
 		
         departamento.setEstado("A");
@@ -67,12 +67,12 @@ public class DepartamentoController {
 		model.addAttribute("nacionalidades", nacionalidadService.findAll());
 		model.addAttribute("edit", "true");
           
-        return "Persona/RegistrarDepartamento";
+        return "persona/gestionarDepartamento";
           
     }
 
 		//FUNCION PARA GUARDAR EL departamento
-		@RequestMapping(value = "/departamentoModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
+		@RequestMapping(value = "/DepartamentoModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
 		public String departamentoModF(@Validated Departamento departamento) { //validar los datos capturados (1)
 			
 		

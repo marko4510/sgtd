@@ -97,6 +97,21 @@
                                             onkeyup="javascript:this.value=this.value.toUpperCase();"
                                             style="text-transform:uppercase;" required>
                                     </div>
+                                    <div class="col-md-3">
+                                        <label for="nombre_tipo_documento" class="col-form-label">Sigla</label>
+                                        <input class="form-control" id="nombre_tipo_documento" type="text"
+                                            th:field="${departamento.sigla}"
+                                            onkeyup="javascript:this.value=this.value.toUpperCase();"
+                                            style="text-transform:uppercase;" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="col-form-label">Default</label>
+                                        <select class="form-select mb-3 shadow-none"  th:field="${departamento.nacionalidad}" id="id_nacionalidad" name="id_nacionalidad">
+                                            <option value="-1">Seleccione Pais</option>
+                                            <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
+                                            th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}"></option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <br>
                                 <div class="text-center">
@@ -121,19 +136,23 @@
                             <table id="datatable" class="table table-striped" data-toggle="data-table">
                                 <thead>
                                     <tr>
-                                        <th>Nombre</th>
+                                        <th>Departamento</th>
+                                        <th>Sigla</th>
+                                        <th>País</th>
                                         <th>Acción</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="c : ${carreras}" th:if="${c.estado != 'X'}">
-                                        <td th:text="${c.nombre_carrera}"></td>
+                                    <tr th:each="d : ${departamentos}" th:if="${d.estado != 'X'}">
+                                        <td th:text="${d.nombre}"></td>
+                                        <td th:text="${d.sigla}"></td>
+                                        <td th:text="${d.nacionalidad.nombre_nacionalidad}"></td>
                                         <td>
                                             <div class="flex align-items-center list-user-action">
                                                 <a class="btn btn-sm btn-icon btn-warning" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Editar"
-                                                    th:href="${'../../../../editar-carrera/' + c.id_carrera}">
+                                                    th:href="${'../../../../editar-departamento/' + d.id_departamento}">
                                                     <span class="btn-inner">
                                                         <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg">
@@ -156,7 +175,7 @@
                                                 </a>
                                                 <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip"
                                                     data-bs-placement="top" title="Eliminar"
-                                                    th:attr="onclick=${'MandarURL('+c.id_carrera+')'}">
+                                                    th:attr="onclick=${'MandarURL('+d.id_departamento+')'}">
                                                     <span class="btn-inner">
                                                         <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none"
                                                             xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
@@ -182,8 +201,9 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Nombre</th>
-                                        <th>Acción</th>
+                                        <th>Departamento</th>
+                                        <th>Sigla</th>
+                                        <th>País</th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -235,7 +255,7 @@
                 showConfirmButton: false,
                 cancelButtonText: "Cancelar",
                 html:
-                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-carrera/" + a + "'  >" +
+                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-departamento/" + a + "'  >" +
                     "Eliminar" +
                     "</a>",
             }).then().done();
