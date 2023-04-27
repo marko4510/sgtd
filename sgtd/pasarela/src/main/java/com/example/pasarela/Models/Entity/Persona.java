@@ -28,7 +28,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class Persona {
+public class Persona implements Serializable {
 
     private static final long serialVersionUID = 2629195288020321924L;
     @Id
@@ -40,27 +40,26 @@ public class Persona {
     private String ci;
     private String correo;
     private String estado;
-    private String numero_contacto; 
+    private String numero_contacto;
 
-    @DateTimeFormat( pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_nacimiento;
-    
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
-	private List<Usuario> usuarios;
+    private List<Usuario> usuarios;
 
-   // @JsonIgnore
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
-	//private List<Tramite> tramite;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
+    private List<Tramite> tramite;
 
-    //Tabla Expedido
-//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "id_provincia")
-    //private Provincia provincia;
+    // Tabla Expedido
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_provincia")
+    private Provincia provincia;
 
-
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "id_grado_academico")
-    //private GradoAcademico gradoAcademico;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_grado_academico")
+    private GradoAcademico gradoAcademico;
 }

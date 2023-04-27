@@ -24,7 +24,7 @@ import lombok.Setter;
 @Table(name = "pasarela_grado_academico")
 @Getter
 @Setter
-public class GradoAcademico {
+public class GradoAcademico implements Serializable{
     private static final long serialVersionUID = 2629195288020321924L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class GradoAcademico {
     private String nombre;
     private String estado;
 
-    /* 
+    
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "gradoAcademico", fetch = FetchType.LAZY)
     private List<Persona> persona;
@@ -40,5 +40,5 @@ public class GradoAcademico {
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_carrera")
-    private Carrera carrera;*/
+    private Carrera carrera;
 }

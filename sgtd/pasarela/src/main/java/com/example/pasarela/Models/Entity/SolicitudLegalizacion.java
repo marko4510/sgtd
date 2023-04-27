@@ -1,4 +1,5 @@
 package com.example.pasarela.Models.Entity;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +31,7 @@ import lombok.Setter;
 @Table(name = "pasarela_solicitud_legalizacion")
 @Getter
 @Setter
-public class SolicitudLegalizacion implements Serializable{
+public class SolicitudLegalizacion implements Serializable {
     private static final long serialVersionUID = 2629195288020321924L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,24 +44,24 @@ public class SolicitudLegalizacion implements Serializable{
     private Date fecha_solicitud;
 
     @Transient
-    private MultipartFile file; 
-    
+    private MultipartFile file;
+
     @Transient
-    private String nombreArchivo; 
+    private String nombreArchivo;
 
-        //Tabla Archivo Adjunto
-       // @ManyToOne(fetch = FetchType.EAGER)
-        //@JoinColumn(name = "id_archivo_adjunto")
-        //private ArchivoAdjunto archivoAdjunto;
+    // Tabla Archivo Adjunto
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_archivo_adjunto")
+    private ArchivoAdjunto archivoAdjunto;
 
-        //Tabla Costo Documento
-        //@ManyToOne(fetch = FetchType.EAGER)
-        //@JoinColumn(name = "id_costo_documento")
-       // private CostoDocumento costoDocumento;
+    // Tabla Costo Documento
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_costo_documento")
+    private CostoDocumento costoDocumento;
 
-        //Tabla Usuario
-       // @ManyToOne(fetch = FetchType.EAGER)
-       // @JoinColumn(name = "id_usuario")
-        //private Usuario usuario;
+    // Tabla Usuario
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 
 }

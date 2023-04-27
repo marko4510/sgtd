@@ -32,18 +32,18 @@ public class Documento implements Serializable{
     private String nombre_documento;
     private String estado;
     private String descripcion;
-/*
+
    @ManyToMany(fetch = FetchType.LAZY)
    @JoinTable(name = "pasarela_tipo_doc_documento",
    joinColumns = @JoinColumn(name = "id_documento"),
    inverseJoinColumns = @JoinColumn(name = "id_tipo_documento"))
    private Set<TipoDocumento> tipoDocumento;
- */
+ 
 
-   //@OneToMany(cascade = CascadeType.ALL, mappedBy = "documento", fetch = FetchType.LAZY)
-	//private List<Tramite> tramite;
+   @OneToMany(cascade = CascadeType.ALL, mappedBy = "documento", fetch = FetchType.LAZY)
+	private List<Tramite> tramite;
 
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "documento", fetch = FetchType.LAZY)
-	//private List<CostoDocumento> costoDocumento;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "documento", fetch = FetchType.LAZY)
+	private List<CostoDocumento> costoDocumento;
 }

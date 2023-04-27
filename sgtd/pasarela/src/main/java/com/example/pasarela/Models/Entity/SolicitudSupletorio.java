@@ -31,7 +31,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class SolicitudSupletorio {
+public class SolicitudSupletorio implements Serializable{
     private static final long serialVersionUID = 2629195288020321924L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class SolicitudSupletorio {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha_solicitud;
 
-    /* 
+    
      //Tabla Costo Documento
      @ManyToOne(fetch = FetchType.EAGER)
      @JoinColumn(name = "id_costo_documento")
@@ -51,5 +51,5 @@ public class SolicitudSupletorio {
      //Tabla Usuario
      @ManyToOne(fetch = FetchType.EAGER)
      @JoinColumn(name = "id_usuario")
-     private Usuario usuario;*/
+     private Usuario usuario;
 }

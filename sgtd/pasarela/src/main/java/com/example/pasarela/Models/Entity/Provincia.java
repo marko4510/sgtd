@@ -24,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class Provincia {
+public class Provincia implements Serializable{
     private static final long serialVersionUID = 2629195288020321924L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Provincia {
     private String nombre_provincia;
     private String estado;
 
-    /* 
+    
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_departamento")
@@ -40,5 +40,5 @@ public class Provincia {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "provincia", fetch = FetchType.LAZY)
-    private List<Persona> persona;*/
+    private List<Persona> persona;
 }

@@ -30,9 +30,9 @@ public class ArchivoAdjunto implements Serializable{
     private String tipo_archivo;
     private String estado;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "archivoAdjunto", fetch = FetchType.LAZY)
-	//private List<Tramite> tramite;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "archivoAdjunto", fetch = FetchType.LAZY)
+	private List<Tramite> tramite;
 
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "archivoAdjunto", fetch = FetchType.LAZY)
-	//private List<SolicitudLegalizacion> solicitudLegalizacion;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "archivoAdjunto", fetch = FetchType.LAZY)
+	private List<SolicitudLegalizacion> solicitudLegalizacion;
 }

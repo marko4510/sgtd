@@ -23,7 +23,7 @@ import lombok.Setter;
 @Table(name = "pasarela_departamento")
 @Getter
 @Setter
-public class Departamento {
+public class Departamento implements Serializable{
     private static final long serialVersionUID = 2629195288020321924L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class Departamento {
     private String estado;
 
     
-    /* 
+    
     // Tabla Nacionalidad
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
@@ -42,5 +42,5 @@ public class Departamento {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "departamento", fetch = FetchType.LAZY)
-	private List<Provincia> provincias;*/
+	private List<Provincia> provincias;
 }

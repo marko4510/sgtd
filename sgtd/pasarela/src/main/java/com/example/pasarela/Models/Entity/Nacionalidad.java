@@ -31,11 +31,11 @@ public class Nacionalidad implements Serializable{
     private String nombre_nacionalidad;
     private String estado;
 
-    //@JsonIgnore
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "nacionalidad", fetch = FetchType.LAZY)
-	//private List<Departamento> departamento;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nacionalidad", fetch = FetchType.LAZY)
+	private List<Departamento> departamento;
 
-    //@JsonIgnore
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "nacionalidad", fetch = FetchType.LAZY)
-	//private List<CostoDocumento> costoDocumento;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "nacionalidad", fetch = FetchType.LAZY)
+	private List<CostoDocumento> costoDocumento;
 }

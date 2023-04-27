@@ -32,36 +32,36 @@ public class CostoDocumento implements Serializable{
     private String estado;
 
     //Tabla Documento
-    /*
+    
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_documento")
     private Documento documento;
- */
+ 
     //Tabla Tipo Documento
-    /* 
+    
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_tipo_documento")
     private TipoDocumento tipoDocumento;
-*/
+
     //Tabla Expedido
-    /* 
+    
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_nacionalidad")
     private Nacionalidad nacionalidad;
-    */
+    
 
-    //@JsonIgnore
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "costoDocumento", fetch = FetchType.LAZY)
-	//private List<SolicitudLegalizacion> solicitudLegalizacion;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "costoDocumento", fetch = FetchType.LAZY)
+	private List<SolicitudLegalizacion> solicitudLegalizacion;
 
-    //@JsonIgnore
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "costoDocumento", fetch = FetchType.LAZY)
-	//private List<SolicitudSupletorio> solicitudSupletorio;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "costoDocumento", fetch = FetchType.LAZY)
+	private List<SolicitudSupletorio> solicitudSupletorio;
 
-    //@JsonIgnore
-    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "costoDocumento", fetch = FetchType.LAZY)
-	//private List<SolicitudTitulo> solicitudTitulo;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "costoDocumento", fetch = FetchType.LAZY)
+	private List<SolicitudTitulo> solicitudTitulo;
 }

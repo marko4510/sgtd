@@ -44,12 +44,12 @@ public class SolicitudTitulo implements Serializable{
 
 
      //Tabla Costo Documento
-     //@ManyToOne(fetch = FetchType.EAGER)
-     //@JoinColumn(name = "id_costo_documento")
-     //private CostoDocumento costoDocumento;
+     @ManyToOne(fetch = FetchType.EAGER)
+     @JoinColumn(name = "id_costo_documento")
+     private CostoDocumento costoDocumento;
 
      //Tabla Usuario
-    // @ManyToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = "id_usuario")
-    // private Usuario usuario;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
 }
