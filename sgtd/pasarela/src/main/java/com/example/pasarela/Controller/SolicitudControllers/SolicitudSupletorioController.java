@@ -1,6 +1,5 @@
 package com.example.pasarela.Controller.SolicitudControllers;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -8,8 +7,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -33,11 +30,9 @@ import com.example.pasarela.Models.Service.IGradoAcademicoService;
 import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.ISolicitudSupletorioService;
 
-
-
 @Controller
 public class SolicitudSupletorioController {
-    
+
     @Autowired
     private IPersonaService personaService;
 
@@ -57,20 +52,19 @@ public class SolicitudSupletorioController {
 
     }
 
+    // VISTA ADMIN, LISTAR SOLICITUDES DE SUPLETORIOS
+    @RequestMapping(value = "/SolicitudesSupletorios", method = RequestMethod.GET) // Pagina principal
+    public String facultadL(Model model, HttpServletRequest request) {
+        if (request.getSession().getAttribute("usuario") != null) {
+            // model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
 
-     // VISTA ADMIN, LISTAR SOLICITUDES DE SUPLETORIOS
-     @RequestMapping(value = "/SolicitudesSupletorios", method = RequestMethod.GET) // Pagina principal
-     public String facultadL(Model model, HttpServletRequest request) {
-         if (request.getSession().getAttribute("usuario") != null) {
-             // model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
- 
-             model.addAttribute("solicitudes", solicitudSupletorioService.findAll());
- 
-             return "solicitud/gestionarSolicitudSupletorio";
-         } else {
-             return "redirect:LoginR";
-         }
-     }
+            model.addAttribute("solicitudes", solicitudSupletorioService.findAll());
+
+            return "solicitud/gestionarSolicitudSupletorio";
+        } else {
+            return "redirect:LoginR";
+        }
+    }
 
     @GetMapping(value = "/rec-formSupletorio/{id_persona}")
     public String rec_formLegalizacion(@PathVariable("id_persona") Long id_persona, Model model,
@@ -79,7 +73,7 @@ public class SolicitudSupletorioController {
 
             Persona persona = personaService.findOne(id_persona);
             Long nacionalidad = persona.getProvincia().getDepartamento().getNacionalidad().getId_nacionalidad();
-            
+
             model.addAttribute("costodocumentos", costoDocService.lista_costo_documento_supletorio(nacionalidad));
             model.addAttribute("persona", persona);
             model.addAttribute("personas", personaService.findAll());
@@ -98,15 +92,12 @@ public class SolicitudSupletorioController {
             Model model, HttpServletRequest request, RedirectAttributes attr)
             throws FileNotFoundException, IOException, ParseException { // validar los datos capturados (1)
 
-   
-
         // Capturar Usuario de la Sesión
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
         // Capturar Fecha de Registro de SolicitudLegalizacion
         String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
         Date date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(timeStamp);
 
-       
         solicitudSupletorio.setFecha_solicitud(date1);
         solicitudSupletorio.setEstado("Aprobado");
         solicitudSupletorio.setTipo_solicitud("Supletorio");

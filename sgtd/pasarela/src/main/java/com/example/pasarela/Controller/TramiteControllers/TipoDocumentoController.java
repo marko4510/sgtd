@@ -15,82 +15,77 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.example.pasarela.Models.Entity.TipoDocumento;
 import com.example.pasarela.Models.Service.ITipoDocumentoService;
 
-
 @Controller
 public class TipoDocumentoController {
     @Autowired
     private ITipoDocumentoService tipoDocumentoService;
 
-    //Formulario para Registrar TipoDocumento
+    // Formulario para Registrar TipoDocumento
     @RequestMapping(value = "/TipoDocumentoR", method = RequestMethod.GET) // Pagina principal
-	public String Persona(HttpServletRequest request, Model model) {
+    public String Persona(HttpServletRequest request, Model model) {
         if (request.getSession().getAttribute("usuario") != null) {
-			
+
             model.addAttribute("tipoDocumento", new TipoDocumento());
             model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
 
-			return "tramite/gestionarTipoDocumento";
-		}else{
-			return "redirect:LoginR";
-		}
-	}
+            return "tramite/gestionarTipoDocumento";
+        } else {
+            return "redirect:LoginR";
+        }
+    }
 
-    //Boton para Guardar TipoDocumento
+    // Boton para Guardar TipoDocumento
     @RequestMapping(value = "/TipoDocumentoF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String PersonaF(@Validated TipoDocumento tipoDocumento) { //validar los datos capturados (1)
-		
+    public String PersonaF(@Validated TipoDocumento tipoDocumento) { // validar los datos capturados (1)
+
         tipoDocumento.setEstado("A");
         tipoDocumentoService.save(tipoDocumento);
-		
-		return "redirect:/TipoDocumentoR"; //cambiar a TipoDocumentoL 
-	}
 
-    //Listar los tipos de documentos
+        return "redirect:/TipoDocumentoR"; // cambiar a TipoDocumentoL
+    }
+
+    // Listar los tipos de documentos
     @RequestMapping(value = "/TipoDocumentoL", method = RequestMethod.GET) // Pagina principal
     public String facultadL(Model model) {
-        model.addAttribute("tipoDocumentos",  tipoDocumentoService.findAll());
+        model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
         return "Tramite/ListarTipoDocumento";
     }
 
-    //Boton para editar tipo de documento
+    // Boton para editar tipo de documento
     @RequestMapping(value = "/editar-tdocumento/{id_tipo_documento}")
-    public String editar_p(@PathVariable("id_tipo_documento")Long id_tipo_documento, Model model){
-          
-        TipoDocumento tipoDocumento  = tipoDocumentoService.findOne(id_tipo_documento);
-          
+    public String editar_p(@PathVariable("id_tipo_documento") Long id_tipo_documento, Model model) {
+
+        TipoDocumento tipoDocumento = tipoDocumentoService.findOne(id_tipo_documento);
+
         model.addAttribute("tipoDocumento", tipoDocumento);
-        model.addAttribute("tipoDocumentos",  tipoDocumentoService.findAll());
+        model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
         model.addAttribute("edit", "true");
-          
+
         return "tramite/gestionarTipoDocumento";
-          
+
     }
 
-    
-    //Boton para Guardar Modificacion de TipoDocumento
-    
+    // Boton para Guardar Modificacion de TipoDocumento
+
     @RequestMapping(value = "/TipoDocumentoModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String TipoDocumentoModF(@Validated TipoDocumento tipoDocumento) { //validar los datos capturados (1)
-		
+    public String TipoDocumentoModF(@Validated TipoDocumento tipoDocumento) { // validar los datos capturados (1)
+
         tipoDocumento.setEstado("A");
         tipoDocumentoService.save(tipoDocumento);
-		
-		return "redirect:/TipoDocumentoR"; 
-	}
 
+        return "redirect:/TipoDocumentoR";
+    }
 
+    // boton para eliminar tipo de documento
+    @RequestMapping(value = "/eliminar-tdocumento/{id_tipo_documento}")
+    public String eliminar_p(@PathVariable("id_tipo_documento") Long id_tipo_documento) {
 
-    //boton para eliminar tipo de documento
-	@RequestMapping(value = "/eliminar-tdocumento/{id_tipo_documento}")
-	public String eliminar_p(@PathVariable("id_tipo_documento")Long id_tipo_documento) {
-						
-		
-		TipoDocumento tipoDocumento  = tipoDocumentoService.findOne(id_tipo_documento);
-		
-		tipoDocumento.setEstado("X");
-		
-		tipoDocumentoService.save(tipoDocumento);
-		return "redirect:/TipoDocumentoR";
-		
-	}
+        TipoDocumento tipoDocumento = tipoDocumentoService.findOne(id_tipo_documento);
+
+        tipoDocumento.setEstado("X");
+
+        tipoDocumentoService.save(tipoDocumento);
+        return "redirect:/TipoDocumentoR";
+
+    }
 }

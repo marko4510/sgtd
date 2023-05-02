@@ -1,4 +1,5 @@
 package com.example.pasarela.Controller.TramiteControllers;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,8 @@ import org.springframework.validation.annotation.Validated;
 
 @Controller
 public class CostoDocumentoController {
-    
-    @Autowired
+
+	@Autowired
 	private ICostoDocumentoService costoDocumentoService;
 
 	@Autowired
@@ -75,22 +76,20 @@ public class CostoDocumentoController {
 	@RequestMapping(value = "/CostoModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
 	public String CostoModF(@Validated CostoDocumento costoDocumento) { // validar los datos capturados (1)
 
-		
 		costoDocumentoService.save(costoDocumento);
 
 		return "redirect:/CostoR";
 	}
 
 	@RequestMapping(value = "/eliminar-costo/{id_costo_documento}")
-	public String eliminar_p(@PathVariable("id_costo_documento")Long id_costo_documento) {
-						
-		
-		CostoDocumento costoDocumento  = costoDocumentoService.findOne(id_costo_documento);
-		
+	public String eliminar_p(@PathVariable("id_costo_documento") Long id_costo_documento) {
+
+		CostoDocumento costoDocumento = costoDocumentoService.findOne(id_costo_documento);
+
 		costoDocumento.setEstado("X");
-		
+
 		costoDocumentoService.save(costoDocumento);
 		return "redirect:/CostoR";
-		
+
 	}
 }

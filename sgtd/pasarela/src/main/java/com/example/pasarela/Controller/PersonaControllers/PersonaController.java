@@ -124,16 +124,12 @@ public class PersonaController {
             @RequestParam(value = "id_provincia") Long id_pro,
             @RequestParam(value = "id_grado_academico") Long id_gra) { // validar los datos capturados (1)
 
-       
-
         Provincia provincia = provinciaService.findOne(id_pro);
         GradoAcademico gradoAcademico = gradoAcademicoService.findOne(id_gra);
         persona.setEstado("A");
         persona.setProvincia(provincia);
         persona.setGradoAcademico(gradoAcademico);
         personaService.save(persona);
-
-     
 
         return "redirect:/PersonasL";
     }

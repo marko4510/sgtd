@@ -123,14 +123,15 @@ public class TramiteController {
         AdjuntarArchivo adjuntarArchivo = new AdjuntarArchivo();
         String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGD/tramite");
         List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
-       
+
         tramite.setNombreArchivo((listArchivos.size() + 1) + "-" + multipartFile.getOriginalFilename());
         Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
-        if(ad == 1){
-        ArchivoAdjunto barchivoAdjunto = archivoAdjuntoService.buscarArchivoAdjuntoPorTramite(tramite.getArchivoAdjunto().getId_archivo_adjunto());
-        barchivoAdjunto.setNombre_archivo(tramite.getNombreArchivo());
-        barchivoAdjunto.setRuta_archivo("SGD/tramite/");
-        archivoAdjuntoService.modificarArchivoAdjunto(barchivoAdjunto);
+        if (ad == 1) {
+            ArchivoAdjunto barchivoAdjunto = archivoAdjuntoService
+                    .buscarArchivoAdjuntoPorTramite(tramite.getArchivoAdjunto().getId_archivo_adjunto());
+            barchivoAdjunto.setNombre_archivo(tramite.getNombreArchivo());
+            barchivoAdjunto.setRuta_archivo("SGD/tramite/");
+            archivoAdjuntoService.modificarArchivoAdjunto(barchivoAdjunto);
         }
         tramite.setNro_tramite(tramite.getNro_tramite());
         tramite.setEstado("A");

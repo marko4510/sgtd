@@ -55,7 +55,6 @@ public class SolicitudLegalizacionController {
     @Autowired
     private IPersonaService personaService;
 
-    
     @Autowired
     private IArchivoAdjuntoService archivoAdjuntoService;
 
@@ -105,8 +104,6 @@ public class SolicitudLegalizacionController {
 
     }
 
-
-    
     // Vista Publica de Menu Legalizacion
     @RequestMapping(value = "TLegalizacion", method = RequestMethod.GET) // Pagina principal
     public String Tlegalizacion(Model model) {

@@ -1,4 +1,5 @@
 package com.example.pasarela.Controller.SolicitudControllers;
+
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,7 @@ public class SolicitudController {
     private ISolicitudSupletorioService solicitudSupletorioService;
 
     @Autowired
-    private ISolicitudTituloService solicitudTituloService; 
+    private ISolicitudTituloService solicitudTituloService;
 
     @GetMapping(value = "/Historial/{id_usuario}")
     public String rec_formLegalizacion(@PathVariable("id_usuario") Long id_usuario, Model model,
@@ -54,8 +55,10 @@ public class SolicitudController {
             Usuario usuario = usuarioService.findOne(id_usuario);
 
             model.addAttribute("solicitudesLegalizacion", solicitudService.lista_solicitudes_usuario(id_usuario));
-            model.addAttribute("solicitudesSupletorio", solicitudSupletorioService.lista_solicitudes_supletorio_usuario(id_usuario));
-            model.addAttribute("solicitudesTitulo", solicitudTituloService.lista_solicitudes_titulo_usuario(id_usuario));
+            model.addAttribute("solicitudesSupletorio",
+                    solicitudSupletorioService.lista_solicitudes_supletorio_usuario(id_usuario));
+            model.addAttribute("solicitudesTitulo",
+                    solicitudTituloService.lista_solicitudes_titulo_usuario(id_usuario));
             model.addAttribute("usuario", usuario);
 
             return "publico/historial";
