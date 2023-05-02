@@ -26,7 +26,7 @@
             <!--Inicio Topbar-->
             <nav th:replace="layout/topbar :: topbar"></nav>
             <!-- FINAL TOPBAR -->
-            
+
             <!-- INICIO PRESENTACION -->
             <div th:replace="layout/fragmento :: banner"></div>
             <!-- FIN INICIO PRESENTACION -->
@@ -172,7 +172,13 @@
         </footer>
         <!-- Footer Section End -->
     </main>
+    <!-- INICIO TEMA -->
+    <a th:replace="layout/fragmento :: tuerca"></a>
+    <!-- FIN INICIO TEMA -->
 
+    <!-- INICIO CONTENIDO TEMA -->
+    <div th:replace="layout/fragmento :: tema"></div>
+    <!-- FIN INICIO CONTENIDO -->
 
 
     <script type="text/javascript">
