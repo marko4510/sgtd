@@ -56,6 +56,22 @@ public class SolicitudSupletorioController {
         return "publico/supletorio/supletorio";
 
     }
+
+
+     // VISTA ADMIN, LISTAR SOLICITUDES DE SUPLETORIOS
+     @RequestMapping(value = "/SolicitudesSupletorios", method = RequestMethod.GET) // Pagina principal
+     public String facultadL(Model model, HttpServletRequest request) {
+         if (request.getSession().getAttribute("usuario") != null) {
+             // model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
+ 
+             model.addAttribute("solicitudes", solicitudSupletorioService.findAll());
+ 
+             return "solicitud/gestionarSolicitudSupletorio";
+         } else {
+             return "redirect:LoginR";
+         }
+     }
+
     @GetMapping(value = "/rec-formSupletorio/{id_persona}")
     public String rec_formLegalizacion(@PathVariable("id_persona") Long id_persona, Model model,
             HttpServletRequest request) {

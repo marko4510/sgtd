@@ -2,6 +2,7 @@ package com.example.pasarela.Controller.SolicitudControllers;
 
 import org.springframework.stereotype.Controller;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -11,9 +12,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -177,5 +180,17 @@ public class SolicitudLegalizacionController {
         Long id_usuario = usuario.getId_usuario();
 
         return "redirect:/Historial/" + id_usuario;
+    }
+
+    @RequestMapping(value = "/openFile/{id}", method = RequestMethod.GET, produces = "application/pdf")
+    public @ResponseBody FileSystemResource abrirArchivoMedianteResourse(HttpServletResponse response,
+            @PathVariable("id") long id_solicitud_legalizacion) throws FileNotFoundException {
+        ArchivoAdjunto ArchivoAdjuntos = archivoAdjuntoService
+                .buscarArchivoAdjuntoPorSolicitud(id_solicitud_legalizacion);
+        File file = new File("C:/" + ArchivoAdjuntos.getRuta_archivo() + ArchivoAdjuntos.getNombre_archivo());
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "inline; filename=" + file.getName());
+        response.setHeader("Content-Length", String.valueOf(file.length()));
+        return new FileSystemResource(file);
     }
 }
