@@ -83,9 +83,8 @@ public class LoginController {
 		Usuario usuario = usuarioService.getUsuarioContraseña(user, contrasena);
 
 		if (usuario != null) {
-			if (usuario.getEstado().equals("E")) {
-				flash.addAttribute("success", usuario.getPersona().getNombre());
-				return "redirect:/cerrar_sesion";
+			if (usuario.getEstado().equals("C")) {
+				return "redirect:/cerrar_sesionAdm";
 			}
 			HttpSession sessionAdministrador = request.getSession(true);
 

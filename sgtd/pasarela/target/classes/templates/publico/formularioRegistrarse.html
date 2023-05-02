@@ -89,22 +89,23 @@
                             required />
                         </div>
                         <div class="col-md-3 mb-3">
-                          <label class="form-label">Correo</label>
-                          <input class="form-control" th:field="${persona.correo}" type="text" required />
-                        </div>
-                        <div class="col-md-3 mb-3">
-                          <label class="form-label">Celular</label>
-                          <input class="form-control" th:field="${persona.numero_contacto}" type="text"
-                            onkeyup="javascript:this.value=this.value.toUpperCase();" style="text-transform:uppercase;"
-                            required />
-                        </div>
-
-                        <div class="col-md-3 mb-3">
                           <label class="form-label"> Cédula de Identidad </label>
                           <input class="form-control" th:field="${persona.ci}" type="text"
                             onkeyup="javascript:this.value=this.value.toUpperCase();" style="text-transform:uppercase;"
                             required />
                         </div>
+                        <div class="col-md-3 mb-3">
+                          <label class="form-label">Correo</label>
+                          <input class="form-control" th:field="${persona.correo}" type="text" required />
+                        </div>
+                        <div class="col-md-3 mb-3">
+                          <label class="form-label">Numero de Contacto</label>
+                          <input class="form-control" th:field="${persona.numero_contacto}" type="text"
+                            onkeyup="javascript:this.value=this.value.toUpperCase();" style="text-transform:uppercase;"
+                            required />
+                        </div>
+
+                        
 
                         <div class="col-md-3 mb-3">
                           <label class="form-label">Fecha de Nacimiento </label>
@@ -112,7 +113,6 @@
                             onkeyup="javascript:this.value=this.value.toUpperCase();"
                             style="text-transform:uppercase;" />
                         </div>
-                        <hr>
                         <!--
                         <div class="col-md-3 mb-3">
                           <label class="form-label">Usuario</label>
@@ -123,15 +123,15 @@
                           <input class="form-control" name="pas" id="pas" type="text" required />
                         </div>
                         -->
-                        <div class="col-md-4">
-                          <label class="form-label" for="inputState">Nacionalidad</label>
+                        <div class="col-md-3">
+                          <label class="form-label" for="inputState">País</label>
                           <select class="form-select js-choice" id="id_nacionalidad" name="id_nacionalidad" onchange="myy()" required>
                             <option value="-1">Seleccione Pais</option>
                             <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
                               th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}"></option>
                           </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <label class="form-label" for="inputState">Departamentos</label>
                           <select class="form-select js-choice" id="id_departament" name="id_departamento" onchange="provin()" required>
                             <option value="-1">Seleccione Departamento</option>
@@ -139,7 +139,7 @@
                           </select>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                           <label class="form-label" for="inputState">Provincia</label>
                           <select class="form-select js-choice" id="id_provinci" name="id_provincia" required>
                             <option value="-1">Seleccione Provincia</option>
@@ -147,8 +147,7 @@
 
                           </select>
                         </div>
-                        <hr>
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                           <label class="form-label" for="inputState">Carrera</label>
                           <select class="form-select js-choice" id="id_carrer" name="id_carrera" onchange="gradoAcad()"
                             required>
@@ -159,7 +158,7 @@
                           </select>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                           <label class="form-label" for="inputState">Grado Academico</label>
                           <select class="form-select js-choice" id="id_grado_academic" name="id_grado_academico"
                             required>
@@ -169,7 +168,6 @@
                             </option>-->
                           </select>
                         </div>
-                       <hr>
                         <div class="col-12">
                           <button class="btn btn-primary" type="submit">Registrarse</button>
                         </div>
