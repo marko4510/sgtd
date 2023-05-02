@@ -53,6 +53,21 @@ public class SolicitudTituloDiplomaController {
           return "publico/titulod/tituloDiploma";
   
       }
+
+           // VISTA ADMIN, LISTAR SOLICITUDES DE LEGALIZACIONES
+     @RequestMapping(value = "/SolicitudesTitulosDiplomas", method = RequestMethod.GET) // Pagina principal
+     public String facultadL(Model model, HttpServletRequest request) {
+         if (request.getSession().getAttribute("usuario") != null) {
+             // model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
+ 
+             model.addAttribute("solicitudes", solicitudTituloService.findAll());
+ 
+             return "solicitud/gestionarSolicitudTituloDiploma";
+         } else {
+             return "redirect:LoginR";
+         }
+     }
+
       @GetMapping(value = "/form-TituloDiploma/{id_persona}")
       public String rec_formLegalizacion(@PathVariable("id_persona") Long id_persona, Model model,
               HttpServletRequest request) {

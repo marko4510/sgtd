@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/head :: head">
+
+
+
+</head>
+
+<body>
+    <!-- loader Start -->
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body"></div>
+        </div>
+    </div>
+    <!-- loader END -->
+
+    <!--INICIO SIDEBAR-->
+    <aside th:replace="layout/sidebar :: sidebar"></aside>
+    <!--FINAL SIDEBAR-->
+
+
+    <main class="main-content">
+        <div class="position-relative iq-banner">
+            <!--Inicio Topbar-->
+            <nav th:replace="layout/topbar :: topbar"></nav>
+            <!-- FINAL TOPBAR -->
+
+            <!-- INICIO PRESENTACION -->
+            <div th:replace="layout/fragmento :: banner"></div>
+            <!-- FIN INICIO PRESENTACION -->
+        </div>
+        <div class="conatiner-fluid content-inner mt-n5 py-0">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h3 class="card-title">Administrar Solicitudes de Certificado Supletorio</h3>
+
+                            </div>
+
+
+
+                        </div>
+
+                        <br>
+
+                        <div class="card-body">
+                            <table id="datatable" class="table table-striped" data-toggle="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="border-bottom-0">Trámite Solicitado</th>
+                                        <th class="border-bottom-0">CI</th>
+                                        <th class="border-bottom-0">Costo</th>
+                                        <th class="border-bottom-0">Fecha de Solicitud</th>
+
+                                        <th class="border-bottom-0">Estado</th>
+                                        <th class="border-bottom-0">Accion</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr th:each="sol : ${solicitudes}" th:if="${sol.estado != 'X'}">
+                                        <td
+                                            th:text="${sol.tipo_solicitud}+' de  '+${sol.costoDocumento.documento.nombre_documento}">
+                                        </td>
+                                        <td th:text="${sol.usuario.persona.ci}"></td>
+                                        <td th:text="${sol.costoDocumento.costo}+' BS'"></td>
+                                        <td th:text="${sol.fecha_solicitud}"></td>
+
+                                        <th:block th:if="${ sol.estado == 'Pendiente' }">
+                                            <td class="text-center">
+                                                <h5><span class="badge bg-warning" th:text="${sol.estado}"></span></h5>
+
+                                            </td>
+                                        </th:block>
+                                        <th:block th:if="${ sol.estado == 'Aprobado' }">
+                                            <td class="text-center">
+                                                <h5><span class="badge bg-success"
+                                                        th:text="${sol.estado}">Success</span></h5>
+
+                                            </td>
+                                        </th:block>
+                                 <td>Sin acciones</td>
+                                    </tr>
+
+
+
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th class="border-bottom-0">Trámite Solicitado</th>
+                                        <th class="border-bottom-0">CI</th>
+                                        <th class="border-bottom-0">Costo</th>
+                                        <th class="border-bottom-0">Fecha de Solicitud</th>
+
+                                        <th class="border-bottom-0">Estado</th>
+                                        <th class="border-bottom-0">Accion</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Footer Section Start -->
+        <footer th:replace="layout/footer :: footer">
+        </footer>
+        <!-- Footer Section End -->
+    </main>
+    <!-- INICIO TEMA -->
+    <a th:replace="layout/fragmento :: tuerca"></a>
+    <!-- FIN INICIO TEMA -->
+
+    <!-- INICIO CONTENIDO TEMA -->
+    <div th:replace="layout/fragmento :: tema"></div>
+    <!-- FIN INICIO CONTENIDO -->
+
+
+   
+
+    </script>
+    <script type="text/javascript">
+        function renombrar2(id_solicitud_legalizacion) {
+            var id_e = id_solicitud_legalizacion;
+
+            alert(id_solicitud_legalizacion);
+
+            $("#ModalEvaluacion2").modal("show");
+
+            $("#id_e").val(id_e);
+
+            $("#aprobar").attr("th:href", `/aprobar-solicitud-legalizacion/${id_a}`)
+
+
+        }
+
+    </script>
+
+   
+
+    <!--INICIO SCRIPTS-->
+    <div th:replace="layout/script :: script"></div>
+    <!--FINAL SCRIPTS-->
+</body>
+
+</html>
