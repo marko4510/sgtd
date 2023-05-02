@@ -106,12 +106,12 @@
                                 <input type="hidden" th:field="${tramite.id_tramite}">
                                 <input type="hidden" th:field="${tramite.nro_tramite}">
                              
-                                <input type="hidden" name="id_archivo_adjunto" th:value="${tramite.archivoAdjunto.id_archivo_adjunto}" th:field="*{archivoAdjunto.id_archivo_adjunto}">
+                                <input type="hidden" name="id_archivo_adjunto"  th:field="*{archivoAdjunto.id_archivo_adjunto}">
                                 
                             
                             <div class="col-md-5">
                                 <label class="form-label text-dark" for="inputState">Documento</label>
-                                <select class="form-select js-choice" id="documento" size="1" name="documento" data-options='{"removeItemButton":true,"placeholder":true}'>
+                                <select class="form-select js-choice" id="documento" size="1" name="documento" data-options='{"removeItemButton":true,"placeholder":true}' required>
                                     
                                     <th:block th:each="doc : ${documentos}" th:if="${tramite.id_tramite == null}">
                                         <option  th:value="${doc.id_documento}" th:if="${doc.estado != 'X'}" selected th:text="${doc.nombre_documento}"></option>
@@ -128,7 +128,7 @@
     
                             <div class="col-md-7">
                                 <label class="form-label text-dark" for="inputState">Persona</label>
-                                <select class="form-select js-choice" id="persona" size="1" name="persona" data-options='{"removeItemButton":true,"placeholder":true}'>
+                                <select class="form-select js-choice" id="persona" size="1" name="persona" data-options='{"removeItemButton":true,"placeholder":true}' required>
                                     
                                     <th:block th:each="per : ${personas}" th:if="${tramite.id_tramite == null}">
                                         <option  th:value="${per.id_persona}" th:if="${per.estado != 'X'}" selected th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}"></option>
@@ -152,7 +152,7 @@
               
                             <div class="col-md-5">
                                 <label class="form-label text-dark">Fecha de Recepción</label>
-                                <input class="form-control" id="inputEmail5"  type="date" th:field="${tramite.fecha_recepcion}">
+                                <input class="form-control" id="inputEmail5"  type="date" th:field="${tramite.fecha_recepcion}" required>
                             </div>
                        
                         
@@ -202,22 +202,7 @@
 
 
   
-    <script>
-        function MandarURL (a) {			          
-            swal({
-                title: 'Eliminar Registro?',              
-                type: 'error',     
-                showCancelButton: true,
-                showConfirmButton: false,
-                cancelButtonText: "Cancelar",         
-                html:
-                "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-documento/"+a+"'  >"+
-                    "Eliminar"+
-                "</a>",                            
-                }).then().done();
-                }
-      </script>
-      
+
     <!--INICIO SCRIPTS-->
     <div th:replace="layout/script :: script"></div>
     <!--FINAL SCRIPTS-->
