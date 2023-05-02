@@ -12,7 +12,7 @@ public class InicioController {
     
 
     //Funcion de visualizaciòn de la pagina principal
-    @RequestMapping(value = "/Inicio", method = RequestMethod.GET) // Pagina principal
+    @RequestMapping(value = "/Adm", method = RequestMethod.GET) // Pagina principal
 	public String Inicio2(Model model,HttpServletRequest request) {  
 		if (request.getSession().getAttribute("usuario") != null) {
 			return "adm";
@@ -20,6 +20,13 @@ public class InicioController {
 				return "redirect:LoginR";
 			}
 		
+		
+	}
+
+	//Funcion de visualizaciòn de la pagina principal
+    @RequestMapping(value = "/Inicio", method = RequestMethod.GET) // Pagina principal
+	public String Inicio2(Model model) {  
+		return "index";
 		
 	}
 
