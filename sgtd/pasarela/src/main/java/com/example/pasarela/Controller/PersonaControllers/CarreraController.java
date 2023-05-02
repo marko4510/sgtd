@@ -19,7 +19,7 @@ public class CarreraController {
     @Autowired
     private ICarreraService carreraService;
 
-    @RequestMapping(value = "/Carrera", method = RequestMethod.GET) // Pagina principal
+    @RequestMapping(value = "/CarreraR", method = RequestMethod.GET) // Pagina principal
 	public String Carrera(HttpServletRequest request, Model model) {
         if (request.getSession().getAttribute("usuario") != null) {
 			
@@ -37,7 +37,7 @@ public class CarreraController {
         carrera.setEstado("A");
         carreraService.save(carrera);
 		
-		return "redirect:/Carrera";
+		return "redirect:/CarreraR";
 	}
 
     @RequestMapping(value = "/editar-carrera/{id_carrera}")
@@ -58,7 +58,7 @@ public class CarreraController {
         carrera.setEstado("A");
         carreraService.save(carrera);
 		
-		return "redirect:/Carrera";
+		return "redirect:/CarreraR";
 	}
 
     @RequestMapping(value = "/eliminar-carrera/{id_carrera}")
@@ -70,7 +70,7 @@ public class CarreraController {
 		carrera.setEstado("X");
 		
 		carreraService.save(carrera);
-		return "redirect:/Carrera";
+		return "redirect:/CarreraR";
 		
 	}
 }
