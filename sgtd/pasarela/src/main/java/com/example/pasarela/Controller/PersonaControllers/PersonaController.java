@@ -116,7 +116,7 @@ public class PersonaController {
         usuario.setPersona(persona);
         usuarioService.save(usuario);
 
-        return "redirect:/PersonaL";
+        return "redirect:/PersonasL";
     }
 
     @RequestMapping(value = "/PersonaModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
@@ -124,10 +124,7 @@ public class PersonaController {
             @RequestParam(value = "id_provincia") Long id_pro,
             @RequestParam(value = "id_grado_academico") Long id_gra) { // validar los datos capturados (1)
 
-        RandomAlfanumeric randomAlfanumeric = new RandomAlfanumeric();
-
-        int i = 5;
-        String passw = randomAlfanumeric.getRandomString(i);
+       
 
         Provincia provincia = provinciaService.findOne(id_pro);
         GradoAcademico gradoAcademico = gradoAcademicoService.findOne(id_gra);
@@ -136,14 +133,9 @@ public class PersonaController {
         persona.setGradoAcademico(gradoAcademico);
         personaService.save(persona);
 
-        Usuario usuario = new Usuario();
-        usuario.setContrasena(passw + "*");
-        usuario.setUsuario(persona.getCi());
-        usuario.setEstado("C");
-        usuario.setPersona(persona);
-        usuarioService.save(usuario);
+     
 
-        return "redirect:/PersonaL";
+        return "redirect:/PersonasL";
     }
 
     // FUNCION PARA LISTAR LOS REGISTRO DE PERSONA
@@ -155,7 +147,7 @@ public class PersonaController {
         model.addAttribute("gradoAcademicos", gradoAcademicoService.findAll());
         model.addAttribute("carreras", carreraService.findAll());
         model.addAttribute("provincias", provinciaService.findAll());
-        return "Persona/ListarPersonas";
+        return "persona/listarPersona";
     }
 
     // FUNCION PARA EDITAR EL REGISTRO DE PERSONA
@@ -168,6 +160,7 @@ public class PersonaController {
         model.addAttribute("personas", personaService.findAll());
         model.addAttribute("nacionalidades", nacionalidadService.findAll());
         model.addAttribute("departamentos", departamentoService.findAll());
+        model.addAttribute("carreras", carreraService.findAll());
         model.addAttribute("edit", "true");
 
         return "persona/gestionarPersona";
@@ -183,7 +176,7 @@ public class PersonaController {
         persona.setEstado("X");
 
         personaService.save(persona);
-        return "redirect:/PersonaR";
+        return "redirect:/PersonasL";
 
     }
 }

@@ -90,7 +90,7 @@
                                     <div class="col-md-3">
                                         <label class="col-form-label">País</label>
                                         <select class="form-select mb-3 shadow-none" id="id_nacionalidad"
-                                            name="id_nacionalidad" onchange="myy()">
+                                            name="id_nacionalidad" onchange="myy()" >
                                             <option value="-1">Seleccione Pais</option>
                                             <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
                                                 th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}">
@@ -100,7 +100,7 @@
                                     <div class="col-md-3">
                                         <label class="col-form-label">Departamento</label>
                                         <select class="form-select mb-3 shadow-none" id="id_departamento"
-                                            name="id_departamento" onchange="provi()" required>
+                                            name="id_departamento" onchange="provi()" required th:field="${persona.provincia.departamento}">
                                             <option value="-1">Seleccione Departamento</option>
 
                                         </select>
@@ -108,7 +108,7 @@
                                     <div class="col-md-3">
                                         <label class="col-form-label">Provincia</label>
                                         <select class="form-select mb-3 shadow-none" id="id_provinci"
-                                            name="id_provincia" required>
+                                            name="id_provincia" required >
                                             <option value="-1">Seleccione Provincia</option>
                                         </select>
                                     </div>
@@ -116,7 +116,7 @@
                                     <div class="col-md-3">
                                         <label class="col-form-label">Carrera</label>
                                         <select class="form-select mb-3 shadow-none" id="id_carrer" name="id_carrera"
-                                            onchange="gradoAcad()">
+                                            onchange="gradoAcad()" required >
                                             <option value="-1">Seleccione Carrera</option>
                                             <option th:each="carr : ${carreras}" th:if="${carr.estado != 'X'}"
                                                 th:value="${carr.id_carrera}" th:text="${carr.nombre_carrera}">
@@ -126,8 +126,8 @@
 
                                     <div class="col-md-3">
                                         <label class="col-form-label">Grado Academico</label>
-                                        <select class="form-select mb-3 shadow-none" id="id_grado_academic"
-                                            name="id_grado_academico" required>
+                                        <select class="form-select mb-3 shadow-none" id="id_grado_academic" 
+                                            name="id_grado_academico" required >
                                             <option value="-1">Seleccione Grado Academico</option>
                                         </select>
                                     </div>
