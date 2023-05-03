@@ -58,7 +58,7 @@
                                     <div class="col-md-5">
                                         <div>
                                             <label class="col-form-label">Carrera</label>
-                                            <select class="form-select js-choice" th:field="${gradoAcademico.carrera}">
+                                            <select class="form-select js-choice" size="1" th:field="${gradoAcademico.carrera}">
                                                 <option th:each="carr : ${carreras}" th:value="${carr.id_carrera}"
                                                     th:if="${carr.estado != 'X'}" th:text="${carr.nombre_carrera}">
                                                 </option>
