@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head th:replace="layout/head :: head">
-
-
+    
+    
 
 </head>
 
@@ -75,7 +75,7 @@
                                     <div class="col-md-5">
                                         <div>
                                             <label class="col-form-label">Tipo de Documento</label>
-                                            <select class="form-select js-choice" multiple="multiple" size="1"
+                                            <select class="form-select js-choice" multiple="multiple" size="3"
                                                 data-options='{"removeItemButton":true,"placeholder":true}'
                                                 th:field="${documento.tipoDocumento}">
                                                 <option th:each="tdoc : ${tiposdoc}"
@@ -86,7 +86,9 @@
                                         </div>
                                     </div>
 
-
+                                  
+                                       
+                                    
 
                                 </div>
                                 <br>
@@ -237,10 +239,13 @@
             }).then().done();
         }
     </script>
+ 
 
-    <!--INICIO SCRIPTS-->
-    <div th:replace="layout/script :: script"></div>
-    <!--FINAL SCRIPTS-->
+<!--INICIO SCRIPTS-->
+<div th:replace="layout/script :: script"></div>
+<!--FINAL SCRIPTS-->
+
+
 </body>
 
 </html>
