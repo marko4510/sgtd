@@ -63,21 +63,20 @@
                                         <th class="border-bottom-0">Nro Tramite</th>
                                         <th class="border-bottom-0">Tipo de Documento</th>
                                         <th class="border-bottom-0">Documento</th>
+                                        <th class="border-bottom-0">Acción</th>
                                         <th class="border-bottom-0">Persona</th>
 
-                                        <th class="border-bottom-0">Acción</th>
+                                        
 
                                     </tr>
                                 </thead>
                                 <tbody>
 
                                     <tr th:each="td : ${tramites}" th:if="${td.estado != 'X'}">
-                                        <td th:text="${td.nro_tramite}"></td>
+                                        <td th:text="${td.nro_tramite}"> </td>
                                         <td th:text="${td.tipoDocumento.nombre_tipo_documento}"></td>
                                         <td th:text="${td.documento.nombre_documento}"></td>
-                                        <td
-                                            th:text=" ${td.persona.ci}+'-'+${td.persona.nombre}+' '+${td.persona.ap_paterno}+' '+${td.persona.ap_materno}">
-                                        </td>
+                                       
                                        
 
 
@@ -122,9 +121,8 @@
                                                 </a>
                                             </div>
 
-
-
-
+                                        </td>
+                                        <td th:text=" ${td.persona.ci}+'-'+${td.persona.nombre}+' '+${td.persona.ap_paterno}+' '+${td.persona.ap_materno}">
                                         </td>
                                     </tr>
 
@@ -135,9 +133,10 @@
                                         <th class="border-bottom-0">Nro Tramite</th>
                                         <th class="border-bottom-0">Tipo de Documento</th>
                                         <th class="border-bottom-0">Documento</th>
+                                        <th class="border-bottom-0">Acción</th>
                                         <th class="border-bottom-0">Persona</th>
 
-                                        <th class="border-bottom-0">Acción</th>
+                                        
                                     </tr>
                                 </tfoot>
                             </table>

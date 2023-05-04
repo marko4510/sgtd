@@ -43,7 +43,7 @@
 
         <div class="row g-3 mb-3">
 
-          <form class="row g-3" th:action="@{/TituloDiplomaF}" method="post" enctype="multipart/form-data"
+          <form class="row g-3" th:action="@{/TituloDiplomaProvisionF}" method="post" enctype="multipart/form-data"
             th:object="${solicitudTitulo}">
             <input type="hidden" th:field="${solicitudTitulo.id_solicitud_titulo}">
             <input type="hidden" th:field="${persona.id_persona}">
