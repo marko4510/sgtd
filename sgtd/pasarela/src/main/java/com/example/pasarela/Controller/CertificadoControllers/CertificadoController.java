@@ -23,15 +23,33 @@ public class CertificadoController {
     public String inicioGenerarCertificado( Model model) {
     	model.addAttribute("personas", personaService.findAll());
     
-        return "certificado/gestionarCertificado";
+        return "certificado/generarTitulosDiplomaCertificado";
     }
 
-    @PostMapping("/generarCertificado")
-    public String generarCertificado(@RequestParam("id_persona") Long id_persona, Model model) {
+    @PostMapping("/generarCertificadoSupletorio")
+    public String generarCertificadoSupletorio(@RequestParam("id_persona") Long id_persona, Model model) {
     	
     	Persona persona = personaService.findOne(id_persona);
     	model.addAttribute("persona", persona);
     
-        return "certificado/generarCertificado";
+        return "certificado/certificadoSupletorio";
+    }
+
+    @PostMapping("/generarTituloProvisionNacional")
+    public String generarTituloProvisionNacional(@RequestParam("id_persona") Long id_persona, Model model) {
+    	
+    	Persona persona = personaService.findOne(id_persona);
+    	model.addAttribute("persona", persona);
+    
+        return "certificado/tituloProvisionNacional";
+    }
+
+    @PostMapping("/generarTitulo")
+    public String generarTitulo(@RequestParam("id_persona") Long id_persona, Model model) {
+    	
+    	Persona persona = personaService.findOne(id_persona);
+    	model.addAttribute("persona", persona);
+    
+        return "certificado/titulo";
     }
 }
