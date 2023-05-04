@@ -39,5 +39,8 @@ public class TipoDocumento implements Serializable{
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoDocumento", fetch = FetchType.LAZY)
 	private List<CostoDocumento> costoDocumento;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoDocumento", fetch = FetchType.LAZY)
+	private List<Tramite> tramite;
     
 }

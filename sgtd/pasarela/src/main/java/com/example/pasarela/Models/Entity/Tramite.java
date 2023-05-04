@@ -56,4 +56,9 @@ public class Tramite {
        @ManyToOne(fetch = FetchType.EAGER)
        @JoinColumn(name = "id_persona")
        private Persona persona;
+
+        //Tabla Persona
+        @ManyToOne(fetch = FetchType.EAGER)
+        @JoinColumn(name = "id_tipo_documento")
+        private TipoDocumento tipoDocumento;
 }

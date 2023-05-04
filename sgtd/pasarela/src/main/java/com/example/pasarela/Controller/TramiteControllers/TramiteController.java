@@ -24,6 +24,7 @@ import com.example.pasarela.Models.Entity.ArchivoAdjunto;
 import com.example.pasarela.Models.Service.IArchivoAdjuntoService;
 import com.example.pasarela.Models.Service.IDocumentoService;
 import com.example.pasarela.Models.Service.IPersonaService;
+import com.example.pasarela.Models.Service.ITipoDocumentoService;
 import com.example.pasarela.Models.Service.ITramiteService;
 import com.example.pasarela.Models.Utils.AdjuntarArchivo;
 import com.example.pasarela.Models.Entity.Tramite;
@@ -42,6 +43,9 @@ public class TramiteController {
     @Autowired
     private IPersonaService personaService;
 
+    @Autowired
+    private ITipoDocumentoService tipoDocumentoService;
+
     // Formulario para Registrar Tramite
     @RequestMapping(value = "/TramiteR", method = RequestMethod.GET) // Pagina principal
     public String Tramite(HttpServletRequest request, Model model) {
@@ -50,7 +54,7 @@ public class TramiteController {
             model.addAttribute("tramite", new Tramite());
             model.addAttribute("tramites", tramiteService.findAll());
             model.addAttribute("personas", personaService.findAll());
-
+            model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
             return "tramite/registrarTramites";
         } else {
             return "redirect:LoginR";
@@ -109,6 +113,7 @@ public class TramiteController {
         model.addAttribute("documentos", documentoService.findAll());
         model.addAttribute("tramites", tramiteService.findAll());
         model.addAttribute("personas", personaService.findAll());
+        model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
         model.addAttribute("edit", "true");
         return "tramite/registrarTramites";
 
