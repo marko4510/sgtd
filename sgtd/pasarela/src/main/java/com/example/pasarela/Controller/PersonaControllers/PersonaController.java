@@ -111,7 +111,7 @@ public class PersonaController {
 
         Usuario usuario = new Usuario();
         usuario.setContrasena(passw + "*");
-        usuario.setUsuario(persona.getCi());
+        usuario.setUsuario_nom(persona.getCi());
         usuario.setEstado("C");
         usuario.setPersona(persona);
         usuarioService.save(usuario);

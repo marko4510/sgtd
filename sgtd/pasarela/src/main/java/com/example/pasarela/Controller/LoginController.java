@@ -352,7 +352,7 @@ public class LoginController {
 
 			if (usuario == null) {
 				usuario = new Usuario();
-				usuario.setUsuario(user);
+				usuario.setUsuario_nom(user);
 				usuario.setContrasena(contrasena);
 				usuario.setPersona(persona);
 				usuario.setEstado("C");

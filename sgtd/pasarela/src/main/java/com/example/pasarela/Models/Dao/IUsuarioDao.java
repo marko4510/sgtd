@@ -7,7 +7,7 @@ import com.example.pasarela.Models.Entity.Usuario;
 
 public interface IUsuarioDao extends CrudRepository<Usuario, Long>{
     
-    @Query("select u from Usuario u where u.usuario = ?1 and u.contrasena = ?2")
+    @Query("select u from Usuario u where u.usuario_nom = ?1 and u.contrasena = ?2")
     public Usuario getUsuarioContraseña(String correo, String password);
 
     @Query("select u from Usuario u left join u.persona p where p.id_persona = ?1 and u.estado != 'T' ")

@@ -109,7 +109,7 @@ public class RegistrarController {
 
         Usuario usuario = new Usuario();
         usuario.setContrasena(pass + "*");
-        usuario.setUsuario(persona.getCi());
+        usuario.setUsuario_nom(persona.getCi());
         usuario.setEstado("C");
         usuario.setPersona(persona);
         usuarioService.save(usuario);
