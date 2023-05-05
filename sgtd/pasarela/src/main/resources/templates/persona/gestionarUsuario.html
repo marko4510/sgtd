@@ -66,6 +66,16 @@
                                             onkeyup="javascript:this.value=this.value.toUpperCase();"
                                             style="text-transform:uppercase;" required>
                                     </div>
+                                    <!--
+                                    <div class="col-md-5">
+                                        <label class="col-form-label">Rol</label>
+                                        <select class="form-select js-choice"
+                                            th:field="${usuario}" required>
+                                            <option value="">Seleccione un Departamento</option>
+                                            <option th:each="u : ${usuarios}" th:value="${u.id_usuario}"
+                                                th:if="${u.estado != 'X'}" th:text="${u.estado}"></option>
+                                        </select>
+                                    </div>-->
                                 </div>
                                 <br>
                                 <div class="text-center">
