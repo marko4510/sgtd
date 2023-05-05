@@ -57,12 +57,12 @@
                                             style="text-transform:uppercase;" required>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-5">
                                         <label class="col-form-label">Departamento</label>
-                                        <select class="form-select mb-3 shadow-none"
+                                        <select class="form-select js-choice"
                                             th:field="${provincia.departamento}" id="id_departamento"
-                                            name="id_departamento">
-                                            <option value="-1">Seleccione Departamento</option>
+                                            name="id_departamento" required>
+                                            <option value="">Seleccione un Departamento</option>
                                             <option th:each="dep : ${departamentos}" th:value="${dep.id_departamento}"
                                                 th:if="${dep.estado != 'X'}" th:text="${dep.nombre}"></option>
                                         </select>

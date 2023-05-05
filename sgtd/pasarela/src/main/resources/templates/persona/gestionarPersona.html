@@ -26,7 +26,7 @@
             <!--Inicio Topbar-->
             <nav th:replace="layout/topbar :: topbar"></nav>
             <!-- FINAL TOPBAR -->
-            
+
             <!-- INICIO PRESENTACION -->
             <div th:replace="layout/fragmento :: banner"></div>
             <!-- FIN INICIO PRESENTACION -->
@@ -90,47 +90,95 @@
                                     <div class="col-md-3">
                                         <label class="col-form-label">País</label>
                                         <select class="form-select mb-3 shadow-none" id="id_nacionalidad"
-                                            name="id_nacionalidad" onchange="myy()" >
-                                            <option value="-1">Seleccione Pais</option>
+                                            name="id_nacionalidad" onchange="myy()" required
+                                            th:field="${persona.provincia.departamento.nacionalidad}">
+                                            <option value="">Seleccione Pais</option>
                                             <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
                                                 th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}">
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label class="col-form-label">Departamento</label>
-                                        <select class="form-select mb-3 shadow-none" id="id_departamento"
-                                            name="id_departamento" onchange="provi()" required th:field="${persona.provincia.departamento}">
-                                            <option value="-1">Seleccione Departamento</option>
 
-                                        </select>
-                                    </div>
+                                    <th:block th:if="${edit} == null">
+                                        <div class="col-md-3" >
+                                            <label class="col-form-label">Departamento</label>
+                                            <select class="form-select mb-3 shadow-none" id="id_departamento"
+                                                name="id_departamento" onchange="provi()" required
+                                                th:field="${persona.provincia.departamento}">
+                                                <option value="">Seleccione Departamento</option>
+    
+                                            </select>
+                                        </div>
+                                    </th:block>
+                                    <th:block th:if="${edit} != null">
+                                        <div class="col-md-3">
+                                            <label class="col-form-label">Departamento</label>
+                                            <select class="form-select mb-3 shadow-none" id="id_departamento"
+                                                name="id_departamento"  required
+                                                th:field="${persona.provincia.departamento}">
+                                                <option value="">Seleccione Departamento</option>
+                                                <option th:each="dep : ${departamentos}" th:value="${dep.id_departamento}"
+                                                    th:if="${dep.estado != 'X'}" th:text="${dep.nombre}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </th:block>
+
+                                    <th:block th:if="${edit} == null">
                                     <div class="col-md-3">
                                         <label class="col-form-label">Provincia</label>
                                         <select class="form-select mb-3 shadow-none" id="id_provinci"
                                             name="id_provincia" required >
-                                            <option value="-1">Seleccione Provincia</option>
+                                            <option value="">Seleccione Provincia</option>
                                         </select>
                                     </div>
-
+                                    </th:block>
+                                    <th:block th:if="${edit} != null">
+                                        <div class="col-md-3">
+                                            <label class="col-form-label">Provincia</label>
+                                            <select class="form-select mb-3 shadow-none" id="id_provinci"
+                                                name="id_provincia"  required
+                                                th:field="${persona.provincia}" th:value="${persona.provincia}">
+                                                <option value="">Seleccione Provincia</option>
+                                                <option th:each="pro : ${provincias}" th:value="${pro.id_provincia}"
+                                                    th:if="${pro.estado != 'X'}" th:text="${pro.nombre_provincia}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </th:block>
                                     <div class="col-md-3">
                                         <label class="col-form-label">Carrera</label>
                                         <select class="form-select mb-3 shadow-none" id="id_carrer" name="id_carrera"
-                                            onchange="gradoAcad()" required >
-                                            <option value="-1">Seleccione Carrera</option>
+                                            onchange="gradoAcad()" required
+                                            th:field="${persona.gradoAcademico.carrera}">
+                                            <option value="">Seleccione Carrera</option>
                                             <option th:each="carr : ${carreras}" th:if="${carr.estado != 'X'}"
                                                 th:value="${carr.id_carrera}" th:text="${carr.nombre_carrera}">
                                             </option>
                                         </select>
                                     </div>
-
+                                    <th:block th:if="${edit} == null">
                                     <div class="col-md-3">
                                         <label class="col-form-label">Grado Academico</label>
-                                        <select class="form-select mb-3 shadow-none" id="id_grado_academic" 
-                                            name="id_grado_academico" required >
-                                            <option value="-1">Seleccione Grado Academico</option>
+                                        <select class="form-select mb-3 shadow-none" id="id_grado_academic"
+                                            name="id_grado_academico" required>
+                                            <option value="">Seleccione Grado Academico</option>
                                         </select>
                                     </div>
+                                </th:block>
+                                <th:block th:if="${edit} != null">
+                                    <div class="col-md-3">
+                                        <label class="col-form-label">Grado Academico</label>
+                                        <select class="form-select mb-3 shadow-none" id="id_grado_academic"
+                                            name="id_grado_academico"  required
+                                            th:field="${persona.gradoAcademico}">
+                                            <option value="">Seleccione Grado Academico</option>
+                                            <option th:each="gra : ${gradoAcademicos}" th:value="${gra.id_grado_academico}"
+                                                th:if="${gra.estado != 'X'}" th:text="${gra.nombre}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </th:block>
                                     <!--<div class="col-md-3">
                                         <label class="col-form-label">Rol</label>
                                         <select class="form-select mb-3 shadow-none" th:field="persona.estado" required>

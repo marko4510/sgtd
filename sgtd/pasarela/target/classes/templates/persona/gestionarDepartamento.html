@@ -61,12 +61,12 @@
                                             onkeyup="javascript:this.value=this.value.toUpperCase();"
                                             style="text-transform:uppercase;" required>
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label class="col-form-label">País</label>
-                                        <select class="form-select mb-3 shadow-none"
+                                        <select class="form-select mb-3 js-choice"
                                             th:field="${departamento.nacionalidad}" id="id_nacionalidad"
-                                            name="id_nacionalidad">
-                                            <option value="-1">Seleccione Pais</option>
+                                            name="id_nacionalidad" required>
+                                            <option value="">Seleccione un País</option>
                                             <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
                                                 th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}">
                                             </option>

@@ -120,15 +120,14 @@ public class PersonaController {
     }
 
     @RequestMapping(value = "/PersonaModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String PersonaMod(@Validated Persona persona, Model model,
-            @RequestParam(value = "id_provincia") Long id_pro,
-            @RequestParam(value = "id_grado_academico") Long id_gra) { // validar los datos capturados (1)
+    public String PersonaMod(@Validated Persona persona, Model model
+           ) { // validar los datos capturados (1)
 
-        Provincia provincia = provinciaService.findOne(id_pro);
-        GradoAcademico gradoAcademico = gradoAcademicoService.findOne(id_gra);
+       // Provincia provincia = provinciaService.findOne(id_pro);
+        //GradoAcademico gradoAcademico = gradoAcademicoService.findOne(id_gra);
         persona.setEstado("A");
-        persona.setProvincia(provincia);
-        persona.setGradoAcademico(gradoAcademico);
+       // persona.setProvincia(provincia);
+        //persona.setGradoAcademico(gradoAcademico);
         personaService.save(persona);
 
         return "redirect:/PersonasL";
@@ -156,7 +155,9 @@ public class PersonaController {
         model.addAttribute("personas", personaService.findAll());
         model.addAttribute("nacionalidades", nacionalidadService.findAll());
         model.addAttribute("departamentos", departamentoService.findAll());
+        model.addAttribute("provincias", provinciaService.findAll());
         model.addAttribute("carreras", carreraService.findAll());
+        model.addAttribute("gradoAcademicos", gradoAcademicoService.findAll());
         model.addAttribute("edit", "true");
 
         return "persona/gestionarPersona";
