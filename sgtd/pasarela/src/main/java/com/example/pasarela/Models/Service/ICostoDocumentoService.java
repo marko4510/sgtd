@@ -11,6 +11,7 @@ public interface ICostoDocumentoService {
 	public List<CostoDocumento> lista_costo_documento_supletorio(Long id_nacionalidad);
 
 	public List<CostoDocumento> lista_costo_documento_titulo(Long id_nacionalidad);
+	public List<CostoDocumento> lista_costo_documento_titulo_provision(Long id_nacionalidad);
 	
     public List<CostoDocumento> findAll();
 

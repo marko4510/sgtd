@@ -85,6 +85,26 @@ public class SolicitudTituloDiplomaController {
 
     }
 
+    @GetMapping(value = "/form-TituloDiplomaProvision/{id_persona}")
+    public String rec_formLegalizacionProvision(@PathVariable("id_persona") Long id_persona, Model model,
+            HttpServletRequest request) {
+        if (request.getSession().getAttribute("usuario") != null) {
+
+            Persona persona = personaService.findOne(id_persona);
+            Long nacionalidad = persona.getProvincia().getDepartamento().getNacionalidad().getId_nacionalidad();
+            model.addAttribute("costodocumentos", costoDocService.lista_costo_documento_titulo_provision(nacionalidad));
+            model.addAttribute("persona", persona);
+            model.addAttribute("personas", personaService.findAll());
+            model.addAttribute("gradoacademicos", gradoAcademicoService.findAll());
+            model.addAttribute("solicitudTitulo", new SolicitudTitulo());
+            
+            return "publico/titulod/formTituloDiplomaProvision";
+        } else {
+            return "redirect:/Inicio";
+        }
+
+    }
+
     // Boton para guardar del Formulario de Solicitud de Legalizacion
     @RequestMapping(value = "/TituloDiplomaF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
     public String TituloDiplomaPersonaF(@Validated Persona persona, SolicitudTitulo solicitudTitulo,
@@ -99,6 +119,7 @@ public class SolicitudTituloDiplomaController {
 
         solicitudTitulo.setFecha_solicitud(date1);
         solicitudTitulo.setEstado("Aprobado");
+      
         solicitudTitulo.setTipo_solicitud("Titulo o Diploma");
         solicitudTitulo.setUsuario(usuario);
         solicitudTituloService.save(solicitudTitulo);
@@ -110,4 +131,33 @@ public class SolicitudTituloDiplomaController {
 
         return "redirect:/Historial/" + id_usuario;
     }
+
+    
+    // Boton para guardar del Formulario de Solicitud de Legalizacion
+    @RequestMapping(value = "/TituloDiplomaProvisionF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
+    public String TituloDiplomaProvisionaF(@Validated Persona persona, SolicitudTitulo solicitudTitulo,
+            Model model, HttpServletRequest request, RedirectAttributes attr)
+            throws FileNotFoundException, IOException, ParseException { // validar los datos capturados (1)
+
+        // Capturar Usuario de la Sesión
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+        // Capturar Fecha de Registro de SolicitudLegalizacion
+        String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+        Date date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(timeStamp);
+
+        solicitudTitulo.setFecha_solicitud(date1);
+        solicitudTitulo.setEstado("Aprobado");
+      
+        solicitudTitulo.setTipo_solicitud("Titulo En Provisión Nacional");
+        solicitudTitulo.setUsuario(usuario);
+        solicitudTituloService.save(solicitudTitulo);
+
+        persona.setEstado("A");
+        personaService.save(persona);
+
+        Long id_usuario = usuario.getId_usuario();
+
+        return "redirect:/Historial/" + id_usuario;
+    }
+
 }

@@ -69,30 +69,15 @@
                                 <input type="hidden" name="id_archivo_adjunto"
                                     th:field="*{archivoAdjunto.id_archivo_adjunto}">
 
-                                    
                                     <div class="col-md-3">
-                                        <label class="form-label text-dark" for="inputState">Tipo de Documento</label>
-                                        <select class="form-select js-choice" id="tipoDocumento" size="1" name="tipoDocumento"
-                                            data-options='{"removeItemButton":true,"placeholder":true}' required>
-    
-                                            <th:block th:each="tdoc : ${tipoDocumentos}" th:if="${tramite.id_tramite == null}">
-                                                <option th:value="${tdoc.id_tipo_documento}" th:if="${tdoc.estado != 'X'}" selected
-                                                    th:text="${tdoc.nombre_tipo_documento}"></option>
-                                            </th:block>
-    
-                                            <th:block th:each="tdoc : ${tipoDocumentos}" th:if="${tramite.id_tramite != null}">
-                                                <option
-                                                    th:if="${tdoc.estado != 'X' && tdoc.nombre_tipo_documento == tramite.tipoDocumento.id_tipo_documento}"
-                                                    selected th:value="${ tdoc.id_tipo_documento}"
-                                                    th:text="${ tdoc.nombre_tipo_documento}"></option>
-                                                <option
-                                                    th:if="${tdoc.estado != 'X' && tdoc.nombre_tipo_documento != tramite.tipoDocumento.id_tipo_documento}"
-                                                    th:value="${ tdoc.id_tipo_documento}" th:text="${tdoc.nombre_tipo_documento}">
-                                                </option>
-                                            </th:block>
-    
-                                            <option th:if="${tramite.id_tramite == null}" selected disable hidden
-                                                label="Seleccionar..."></option>
+                                        <label class="form-label" for="inputState">Tipo Documento</label>
+                                        <select class="form-select js-choice" id="tipoDocumento"  size="1" name="tipoDocumento"
+                                            th:field="${tramite.tipoDocumento}" required>
+                                           
+                                            <option th:each="tdoc : ${tipoDocumentos}"
+                                                th:value="${tdoc.id_tipo_documento}" th:if="${tdoc.estado != 'X'}"
+                                                th:text="${tdoc.nombre_tipo_documento}">
+                                            </option>
                                         </select>
                                     </div>
                                 <div class="col-md-4">

@@ -53,5 +53,10 @@ public class CostoDocumentoServiceImpl implements ICostoDocumentoService{
     public List<CostoDocumento> lista_costo_documento_titulo(Long id_nacionalidad) {
       return (List<CostoDocumento>) costoDao.lista_costo_documento_titulo(id_nacionalidad);
     }
+
+    @Override
+    public List<CostoDocumento> lista_costo_documento_titulo_provision(Long id_nacionalidad) {
+      return (List<CostoDocumento>) costoDao.lista_costo_documento_titulo_provision(id_nacionalidad);
+    }
   
 }
