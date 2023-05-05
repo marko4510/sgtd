@@ -73,7 +73,7 @@ public class EmailServiceImpl implements IEmailService{
 
         try {
             helper.setTo(destinatario);
-            helper.setSubject("Registro exitoso al Sistema de Posgrado UAP");
+            helper.setSubject("Registro exitoso al Sistema de Titulos y Diplomas UAP");
             helper.setText(htmlContent, true);
             emailSender.send(message);
         } catch (MessagingException e) {

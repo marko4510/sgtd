@@ -12,8 +12,6 @@ import com.example.pasarela.Models.Service.Impl.EmailServiceImpl;
 @SpringBootApplication
 public class PasarelaApplication {
 
-	@Autowired
-	private EmailServiceImpl senderService;
 	public static void main(String[] args) {
 		SpringApplication.run(PasarelaApplication.class, args);
 	}
