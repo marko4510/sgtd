@@ -41,7 +41,7 @@ public class CertificadoController {
     	Persona persona = personaService.findOne(id_persona);
     	model.addAttribute("persona", persona);
     
-        return "certificado/tituloProvisionNacional";
+        return "certificado/plantillaAcademico";
     }
 
     @PostMapping("/generarTitulo")

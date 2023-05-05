@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:fragment="head">
+    <meta charset="utf-8">
+    <title>Pasarela de pagos</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
+    <!-- Favicon -->
+    <link rel="stylesheet" type="text/css" href="../../../../assets/css/sweetalert2.min.css">
+    <link href="../../../../assets3/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../../../../assets3/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="../../../../assets3/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../../../../assets3/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Header Start -->
+    <div th:fragment="menu" class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 bg-secondary d-none d-lg-block">
+                <a href="" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
+                    <h1 class="m-0 display-3 text-primary">UAP</h1>
+                </a>
+            </div>
+            <div class="col-lg-9">
+                <div class="row bg-dark d-none d-lg-flex">
+                    <div class="col-lg-7 text-left text-white">
+                        <div class="h-100 d-inline-flex align-items-center border-right border-primary py-2 px-3">
+                            <i class="fa fa-envelope text-primary mr-2"></i>
+                            <small>universidad.amazonica.pando@uap.edu.bo</small>
+                        </div>
+                        <div class="h-100 d-inline-flex align-items-center py-2 px-2">
+                            <i class="fa fa-phone-alt text-primary mr-2"></i>
+                            <small>(+591)3-842-2135</small>
+                        </div>
+                    </div>
+
+                </div>
+                <nav class="navbar navbar-expand-lg bg-white navbar-light p-0">
+                    <a href="" class="navbar-brand d-block d-lg-none">
+                        <h1 class="m-0 display-4 text-primary">Pasarela de pagos</h1>
+                    </a>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                        <div class="navbar-nav mr-auto py-0">
+                            <a href="../../../../Inicio" class="nav-item nav-link active">Inicio</a>
+                            <a href="../../../../TLegalizacion" class="nav-item nav-link">Legalizaciones</a>
+
+
+                         
+
+
+                            
+                            <a  href="../../../../TituloDiploma" class="nav-item nav-link">Titulos y Diplomas</a>
+                       
+
+                            <a href="../../../../Supletorio" class="nav-item nav-link">Certificados Supletorios</a>
+                            <!--<div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tramite</a>
+                                <div class="dropdown-menu rounded-0 m-0">
+                                    <a href="blog.html" class="dropdown-item">Legalizacion</a>
+                                    <a href="single.html" class="dropdown-item">Titulo</a>
+                                    <a class="dropdown-item">Supletorio</a>
+                                </div>
+                            </div>-->
+                            <!--<a href="contact.html" class="nav-item nav-link">Contacto</a>-->
+                        </div>
+                        <th:block th:if="${session.persona == null}">
+                            <a href="../../../../Registrarse"
+                                class="btn btn-success mr-3 d-none d-lg-block">Registrarse</a>
+                        </th:block>
+
+
+
+                        <th:block th:if="${session.persona != null}">
+                            <a th:href="${'../../../../Historial/' + session.usuario.id_usuario}"
+                                class="btn btn-success mr-1 d-none d-lg-block">Mis Solicitudes</a>
+                            <a href="../../../../cerrar_sesion2" class="btn btn-primary mr-1 d-none d-lg-block"
+                                data-bs-toggle="modal">Cerrar Session</a>
+
+                        </th:block>
+
+                        <th:block th:if="${session.persona == null}">
+                            <a href="#authentication-modal" class="btn btn-primary mr-1 d-none d-lg-block"
+                                data-bs-toggle="modal">Iniciar sesión</a>
+                        </th:block>
+
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+
+
+    <!-- Carousel Start -->
+    <div th:fragment="carousel" class="container-fluid p-0">
+        <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
+                <li data-target="#header-carousel" data-slide-to="1"></li>
+                <li data-target="#header-carousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="img-fluid" src="../../../../assets3/img/UAPfoto.jpg" alt="Image">
+                    <div class="carousel-caption d-flex align-items-center justify-content-center">
+                        <div class="p-5" style="width: 100%; max-width: 900px;">
+                            <h5 class="text-primary text-uppercase mb-md-3">Pasarela de pagos</h5>
+                            <h1 class="display-3 text-white mb-md-4"> UNIVERSIDAD AMAZONICA DE PANDO</h1>
+                            <a href="" class="btn btn-primary">Get A Quote</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="img-fluid" src="../../../../assets3/img/UAPfoto2.jpg" alt="Image">
+                    <div class="carousel-caption d-flex align-items-center justify-content-center">
+                        <div class="p-5" style="width: 100%; max-width: 900px;">
+                            <h5 class="text-primary text-uppercase mb-md-3">Pasarela de pagos</h5>
+                            <h1 class="display-3 text-white mb-md-4"> UNIVERSIDAD AMAZONICA DE PANDO</h1>
+                            <a href="" class="btn btn-primary">Get A Quote</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img class="img-fluid" src="../../../../assets3/img/UAPfoto.jpg" alt="Image">
+                    <div class="carousel-caption d-flex align-items-center justify-content-center">
+                        <div class="p-5" style="width: 100%; max-width: 900px;">
+                            <h5 class="text-primary text-uppercase mb-md-3">Pasarela de pagos</h5>
+                            <h1 class="display-3 text-white mb-md-4"> UNIVERSIDAD AMAZONICA DE PANDO</h1>
+                            <a href="" class="btn btn-primary">Get A Quote</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+
+    <!-- Footer Start -->
+    <div th:fragment="footer" class="container-fluid bg-dark text-white mt-5 py-5 px-sm-3 px-md-5">
+        <div class="row pt-5">
+            <div class="col-lg-3 col-md-6 mb-5" id="pieIzquierdo"> <!---->
+                <a href="index.html" class="navbar-brand">
+                    <h3 class="m-0 mt-n3 display-4 text-primary">UAP</h3>
+                </a>
+
+
+
+                <p><i class="fa fa-map-marker-alt text-primary mr-2"></i>Av. Las Palmas , Pando, BOLIVIA</p>
+                <p><i class="fa fa-phone-alt text-primary mr-2"></i>(+591)3-842-2135</p>
+                <!--<p><i class="fa fa-envelope text-primary mr-2"></i>Correo:</p>
+                <p>universidad.amazonica.pando@uap.edu.bo</p>-->
+            </div>
+            <div class="col-lg-6 col-md-6 mb-5" id="piePagina">
+                <h3 class="font-weight-semi-bold text-primary mb-4">Oficinas Administrativas</h3>
+
+                <p><i class="fa fa-map-marker-alt text-primary mr-2"></i>Calle Bruno Racua lado Plaza Potosí</p>
+                <p><i class="fa fa-phone-alt text-primary mr-2"></i>(+591)3-842-2135, 2136, 2139</p>
+                <h5 class="font-weight-semi-bold text-white mb-2">Horario de atención:</h5>
+                <p class="mb-1">lunes – viernes, 8AM – 6PM</p>
+                <!--<p class="mb-0">Sunday: Closed</p>-->
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-5">
+                <h4 class="font-weight-semi-bold text-primary mb-4">Horario de atención:</h4>
+                <p class="mb-1">Mañana:</p>
+                <p class="mb-1">lunes – viernes, 8AM – 12PM</p>
+                <br />
+                <p class="mb-1">Tarde:</p>
+                <p class="mb-1">lunes – viernes, 2PM – 6PM</p>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- Footer End -->
+
+    <!-- Modal Login Start -->
+    <div th:fragment="modalLogin" class="modal fade" id="authentication-modal" tabindex="-1" role="dialog"
+        aria-labelledby="authentication-modal-label" aria-hidden="true">
+        <div class="modal-dialog mt-6" role="document">
+            <div class="modal-content border-0 ">
+                <div class="modal-header px-5 position-relative modal-shape-header bg-shape justify-content-center">
+                    <div class="position-relative z-index-1 light ">
+                        <h4 class="mb-0 text-dark" id="authentication-modal-label">Sistema de Trámites en Línea</h4>
+
+                    </div>
+
+                </div>
+                <div class="modal-body py-4 px-5">
+                    <form action="/LogearseC" method="post">
+
+                        <div class="mb-3">
+                            <label class="form-label" for="modal-auth-email">Usuario </label>
+                            <input class="form-control" type="text" autocomplete="on" id="modal-auth-email"
+                                name="usuario" />
+                        </div>
+
+                        <div class="mb-3 ">
+                            <label class="form-label" for="modal-auth-password">Contraseña</label>
+                            <input class="form-control" type="password" autocomplete="on" id="modal-auth-password"
+                                name="contrasena" />
+
+
+                        </div>
+
+                        <div class="mb-3">
+                            <button class="btn btn-primary d-block w-100 mt-3" type="submit" name="submit">Iniciar
+                                Sesión</button>
+                        </div>
+                    </form>
+                    <div class="position-relative mt-5">
+                        <hr class="bg-300" />
+                        <div class="divider-content-center">Registrarse</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal Login End -->
+
+    <div th:fragment="script">
+        <script src="../../../../assets/js/sweetalert2.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="../../../../assets3/lib/easing/easing.min.js"></script>
+        <script src="../../../../assets3/lib/waypoints/waypoints.min.js"></script>
+        <script src="../../../../assets3/lib/counterup/counterup.min.js"></script>
+        <script src="../../../../assets3/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="../../../../assets3/lib/isotope/isotope.pkgd.min.js"></script>
+        <script src="../../../../assets3/lib/lightbox/js/lightbox.min.js"></script>
+
+        <!-- Contact Javascript File -->
+        <script src="../../../../assets3/mail/jqBootstrapValidation.min.js"></script>
+        <script src="../../../../assets3/mail/contact.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="../../../../assets3/js/main.js"></script>
+
+
+
+
+        <script src="../../../../vendors/bootstrap/bootstrap.min.js"></script>
+        <script src="../../../../vendors/anchorjs/anchor.min.js"></script>
+        <script src="../../../../vendors/prism/prism.js"></script>
+        <script src="../../../../assets/js/theme.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+        <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap4.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+
+                if ($("#example").length > 0) {
+                    var table = $('#example').DataTable({
+                        lengthChange: false,
+                        buttons: []
+                    });
+
+                    table.buttons().container()
+                        .appendTo('#example_wrapper .col-md-6:eq(0)');
+                }
+
+
+
+                else if ($(".mas-datatable").length > 0) {
+                    let tables = $(".mas-datatable").DataTable({
+                        lengthChange: false,
+                        buttons: []
+                    });
+
+                    table.buttons().container()
+                        .appendTo('#example_wrapper .col-md-6:eq(0)');
+
+                }
+            });
+        </script>
+
+
+    </div>
+
+
+</body>
+
+</html>
