@@ -24,6 +24,7 @@ import com.example.pasarela.Models.Entity.Provincia;
 import com.example.pasarela.Models.Entity.Usuario;
 import com.example.pasarela.Models.Service.ICarreraService;
 import com.example.pasarela.Models.Service.IDepartamentoService;
+import com.example.pasarela.Models.Service.IEmailService;
 import com.example.pasarela.Models.Service.IGradoAcademicoService;
 import com.example.pasarela.Models.Service.INacionalidadService;
 import com.example.pasarela.Models.Service.IPersonaService;
@@ -52,6 +53,9 @@ public class RegistrarController {
 
     @Autowired
     private ICarreraService carreraService;
+
+    @Autowired
+    private IEmailService emailService;
 
     // Vista del Formulario del boton Registrarse (layout2 - linea 76)
     @RequestMapping(value = "/Registrarse", method = RequestMethod.GET) // Pagina principal
@@ -112,7 +116,9 @@ public class RegistrarController {
         usuario.setUsuario_nom(persona.getCi());
         usuario.setEstado("C");
         usuario.setPersona(persona);
+        emailService.enviarMensajeRegistro(usuario, usuario.getContrasena());
         usuarioService.save(usuario);
+        
 
         return "redirect:/Inicio";
     }
