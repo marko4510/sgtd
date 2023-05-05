@@ -22,19 +22,51 @@
       <div class="center-text">
         <img width=137 height=169 src="../../../assets/images/uap.png" v:shapes="Imagen_x0020_1">
         <h2 class="title">UNIVERSIDAD AMAZÓNICA DE PANDO</h2>
+        <p>El Rector de la Universidad, hace saber que las presentes letras vieren:</p>
         <h3 class="title" th:text="${persona.nombre}+' '+ ${persona.ap_paterno}+ ' ' + ${persona.ap_materno}"></h3>
-        <p class="content">
-          De acuerdo a la Resolución del Consejo de Posgrado número 23/2023, se ha completado el registro del programa:
-          <!--
-          <strong
-            th:text="${prgPrograma.programa+' - '+prgDetallePrograma.plan+' - '+prgDetallePrograma.version+' - '+prgDetallePrograma.prgModalidad.modalidad}+'.'">
-          </strong>
-          -->
-          <br>
-          El mismo ya se encuentra disponible para asignar a distintos grupos de ejecución de acuerdo a la siguiente
-          malla:
-        </p>
+        <div style="display: inline-block; height: auto; width: 50%;">
+          <p  class="content"
+              th:text="'Nacido(a) el '+${#dates.format(persona.fecha_nacimiento, 'dd/MM/yyyy')}+' en '+${persona.provincia.nombre_provincia}+'-'+${persona.provincia.departamento.nombre}">
+            </p>
+            <p  class="content">Ha cumplido con todos los requisitos exigidos por la Ley, los Reglamentos
+              Universitarios y el Plan de Estudio de la Carrera de:</p>
+        </div>
       </div>
+      <h2 class="center-text" th:text="${persona.gradoAcademico.carrera.nombre_carrera}"></h2>
+
+      <div style="display: inline-block; height: auto;">
+        <p  class="content">
+          Por tanto:
+        </p>
+          <p  class="content">A nombre de la Universidad y en ejercicio de la Autonomía Universitaria consagrada en la
+            Constitución Política del Estado y en uso de sus facultades, le otorgan el presente 
+            <strong>DIPLOMA ACADÉMICO</strong> de:
+          </p>
+      </div>
+
+      <h2 class="center-text" th:text="${persona.gradoAcademico.nombre}+' en '+ ${persona.gradoAcademico.carrera.nombre_carrera}"></h2>
+     
+      <div style="display: inline-block; height: auto;">
+        
+          <p  class="content">como público testimonio de su idoneidad, para que sea reconocido como tal y goce de las preminencias correspondientes a los de su grado;
+            firmado y sellado con el gran sello de la Universidad y debidamente refrendado por el Secretario General.
+          </p>
+      </div>
+      
+        
+     
+    
+     
+      
+     
+    
+    <br>
+    <br>
+    <br>
+     
+
+
+
 
 
       <!--
@@ -134,13 +166,25 @@
       <p class="right-align">&nbsp;</p>
       <div class="d-flex justify-content-around">
         <div class="center-text">
-          <p class="left-align line-above">Director(a) de Posgrado
+          <p class="left-align line-above">MSc. Franz Navia Miranda
+          </p>
+          <p >Rector
+          </p>
+        </div>
+      </div>
+      <br>
+      <div class="d-flex justify-content-around">
+        <div class="center-text">
+          <p class="left-align line-above">MSc. Oscar Felipe Melgar Saucedo
+          </p>
+          <p >Vicerrector
           </p>
         </div>
         <div class="center-text">
           <p class="right-align line-above">
-            Vicerrector
+            MSc. Ariz Humerez Alvez
           </p>
+          <p> Secretaría General a.i.</p>
         </div>
       </div>
     </div>
