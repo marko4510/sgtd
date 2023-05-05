@@ -17,10 +17,7 @@ public class PasarelaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PasarelaApplication.class, args);
 	}
-	@EventListener(ApplicationReadyEvent.class)
-	public void sendEmail(){
-		senderService.enviarMensajeSimple("titulo.diploma@gmail.com", "Credencial de acceso", "este es el contenido de todo");
-	}
+	
 	
 
 }

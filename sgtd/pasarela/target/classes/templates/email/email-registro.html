@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+</head>
+
+<body>
+    <html>
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Credenciales del Sistema de Posgrado UAP</title>
+        <style>
+            * {
+                font-family: 'Roboto', sans-serif;
+            }
+
+            .bg-red-pg {
+                background-color: #ec2d2d;
+                opacity: 0.80;
+            }
+
+            .p-1 {
+                padding: 1.5rem;
+            }
+
+            .text-center {
+                text-align: center;
+            }
+
+            h1 {
+                color: #333;
+            }
+
+            p {
+                color: #333;
+            }
+
+            .card {
+                border-top: 1px solid #999;
+                border-bottom: 1px solid #999;
+                border-radius: 1rem;
+                padding: 1.5rem;
+                box-shadow: 0px 0px 5px 1px rgba(207, 207, 207, 0.41);
+                -webkit-box-shadow: 0px 0px 5px 1px rgba(207, 207, 207, 0.41);
+                -moz-box-shadow: 0px 0px 5px 1px rgba(207, 207, 207, 0.41);
+            }
+
+            .centered {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .rounded {
+                border-radius: 1rem
+            }
+
+            hr {
+                color: #000
+            }
+
+            .img-container img {
+                width: 220px;
+                height: 140px;
+            }
+
+            .text-muted {
+                color: #555;
+                font-size: 0.875rem
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="card">
+            <!-- <div class="centered bg-red-pg rounded px-1 text-center">
+                <h1>Credenciales de Acceso del Sistema de Posgrado UAP</h1>
+            </div> -->
+            <h1>Credencial de Acceso al Sistema de Titulos y Diplomas UAP</h1>
+            <hr>
+            <!-- <p>
+                Estimado(a): <span th:text="${nombres+' '+apellidos}"></span>.
+            </p> -->
+            <p>
+                Su credenciales de acceso al Sistema de Titulos y Diplomas de la UAP:
+            </p>
+            <p>
+                Nombre: <strong><span th:text="${persona}"></span></strong>
+                <br>
+                Usuario: <strong><span th:text="${username}"></span></strong>
+                <br>
+                Contraseña: <strong><span th:text="${contrasena}"></span></strong>
+            </p>
+            <p>
+                Le recordamos que es importante mantener sus credenciales de acceso seguras y confidenciales. Si desea
+                cambiar su contraseña por motivos de seguridad o por cualquier otra razón, puede hacerlo a través de la
+                sección de configuración de su cuenta en el Sistema de Posgrado UAP.
+            </p>
+            <br>
+            <hr>
+            <p>
+                <strong>¿Tiene problemas con sus credenciales de Acceso?</strong>
+            </p>
+            <p>
+                Puede ponerse en contacto con nuestro equipo de soporte a través de los canales designados o
+                apersonarse directamente a las oficinas de Posgrado UAP.
+            </p>
+            <br>
+            <div class="centered">
+                <div class="img-container">
+                    <!-- AL PARECER, NINGUNO SE MUESTRA EN EL CORREO, VER LUEGO -->
+                    <!-- <img src="LogoPG (SD).png" alt="LogoPG"> -->
+                    <!-- <img th:src="@{/img/logs/LogoPG (SD).png}" alt="LogoPG"> -->
+                    <!-- <img src="../../../../../../static/img/logs/LogoPG (SD).png" alt="LogoPG"> -->
+                </div>
+            </div>
+            <div class="centered text-center text-muted">
+                <p>Universidad Amazonica de Pando</p>
+            </div>
+            <br>
+        </div>
+    </body>
+
+    </html>
