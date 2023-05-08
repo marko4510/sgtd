@@ -50,6 +50,6 @@ public class CertificadoController {
     	Persona persona = personaService.findOne(id_persona);
     	model.addAttribute("persona", persona);
     
-        return "certificado/titulo";
+        return "certificado/plantillaSupleAcademico";
     }
 }
