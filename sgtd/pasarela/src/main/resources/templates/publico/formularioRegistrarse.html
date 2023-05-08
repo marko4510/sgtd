@@ -125,7 +125,7 @@
                         -->
                         <div class="col-md-3">
                           <label class="form-label" for="inputState">País</label>
-                          <select class="form-select js-choice" id="id_nacionalidad" name="id_nacionalidad" onchange="myy()" required>
+                          <select class="form-select " id="id_nacionalidad" name="id_nacionalidad" onchange="myy()" required>
                             <option value="-1">Seleccione Pais</option>
                             <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
                               th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}"></option>
@@ -133,7 +133,7 @@
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="inputState">Departamentos</label>
-                          <select class="form-select js-choice" id="id_departament" name="id_departamento" onchange="provin()" required>
+                          <select class="form-select " id="id_departament" name="id_departamento" onchange="provin()" required>
                             <option value="-1">Seleccione Departamento</option>
                             
                           </select>
@@ -141,7 +141,7 @@
 
                         <div class="col-md-3">
                           <label class="form-label" for="inputState">Provincia</label>
-                          <select class="form-select js-choice" id="id_provinci" name="id_provincia" required>
+                          <select class="form-select " id="id_provinci" name="id_provincia" required>
                             <option value="-1">Seleccione Provincia</option>
                             
 
@@ -149,7 +149,7 @@
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="inputState">Carrera</label>
-                          <select class="form-select js-choice" id="id_carrer" name="id_carrera" onchange="gradoAcad()"
+                          <select class="form-select" id="id_carrer" name="id_carrera" onchange="gradoAcad()"
                             required>
                             <option value="-1">Seleccione Carrera</option>
                             <option th:each="carr : ${carreras}" th:if="${carr.estado != 'X'}"
@@ -160,7 +160,7 @@
 
                         <div class="col-md-3">
                           <label class="form-label" for="inputState">Grado Academico</label>
-                          <select class="form-select js-choice" id="id_grado_academic" name="id_grado_academico"
+                          <select class="form-select " id="id_grado_academic" name="id_grado_academico"
                             required>
                             <option value="-1">Seleccione Grado</option>
                             <!--<option th:each="gra : ${gradoAcademicos}" th:value="${gra.id_grado_academico}"
