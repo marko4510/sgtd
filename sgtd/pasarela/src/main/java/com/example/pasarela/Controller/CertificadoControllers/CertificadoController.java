@@ -81,4 +81,23 @@ public class CertificadoController {
         model.addAttribute("nroTitulo", nroTitulo);
         return "certificado/plantillaTituloAcademico";
     }
+
+    @PostMapping("/generarTituloBachiller")
+    public String generarTituloBachiller(@RequestParam("id_persona") Long id_persona,
+    @RequestParam("tipoSerie") String tipoSerie,
+    @RequestParam("nroTitulo") String nroTitulo,
+    Model model) throws FileNotFoundException, IOException, ParseException{
+    	
+         // Capturar Fecha de Registro de SolicitudLegalizacion
+         Date fechaActual = new Date();
+         SimpleDateFormat formato = new SimpleDateFormat("d ' de ' ' ' MMMM ' del ' ' ' yyyy", new Locale("es", "ES"));
+         String fechaTexto = formato.format(fechaActual);
+
+    	Persona persona = personaService.findOne(id_persona);
+    	model.addAttribute("persona", persona);
+        model.addAttribute("fechaTitulo", fechaTexto);
+        model.addAttribute("tipoSerie", tipoSerie);
+        model.addAttribute("nroTitulo", nroTitulo);
+        return "certificado/plantillaBachiller";
+    }
 }
