@@ -60,9 +60,7 @@
                             <table id="datatable" class="table table-striped" data-toggle="data-table">
                                 <thead>
                                     <tr>
-                                        <th class="border-bottom-0">Nombre</th>
-                                        <th class="border-bottom-0">Apellido Paterno</th>
-                                        <th class="border-bottom-0">Apellido Materno</th>
+                                        <th class="border-bottom-0">Nombre Completo</th>
                                         <th class="border-bottom-0">Celular</th>
                                         <th class="border-bottom-0">Ci</th>
                                         <th class="border-bottom-0">Acción</th>
@@ -72,9 +70,7 @@
                                 <tbody>
 
                                     <tr th:each="per : ${personas}" th:if="${per.estado != 'X'}">
-                                        <td th:text="${per.nombre}"></td>
-                                        <td th:text="${per.ap_paterno}"></td>
-                                        <td th:text="${per.ap_materno}"></td>
+                                        <td th:text="${per.nombre}+' '+ ${per.ap_paterno} +' '+${per.ap_materno}"></td>
                                         <td th:text="${per.numero_contacto}"></td>
                                         <td th:text="${per.ci}"></td>
                                         <td>
@@ -136,9 +132,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th class="border-bottom-0">Nombre</th>
-                                        <th class="border-bottom-0">Apellido Paterno</th>
-                                        <th class="border-bottom-0">Apellido Materno</th>
+                                        <th class="border-bottom-0">Nombre Completo</th>
                                         <th class="border-bottom-0">Celular</th>
                                         <th class="border-bottom-0">Ci</th>
                                         <th class="border-bottom-0">Acción</th>

@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form th:action="${edit} ?@{/DepartamentoModF} :@{/DepartamentoF}" method="post">
+                            <form th:action="${edit} ?@{/DepartamentoModF} :@{/DepartamentoF}" method="post" onsubmit="return validarFormulario()">
                                 <input type="hidden" th:field="${departamento.id_departamento}">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -65,12 +65,13 @@
                                         <label class="col-form-label">País</label>
                                         <select class="form-select mb-3 js-choice"
                                             th:field="${departamento.nacionalidad}" id="id_nacionalidad"
-                                            name="id_nacionalidad" required>
+                                            name="id_nacionalidad" >
                                             <option value="">Seleccione un País</option>
                                             <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
                                                 th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}">
                                             </option>
                                         </select>
+                                        <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe seleccionar una opción</span>
                                     </div>
                                 </div>
                                 <br>
@@ -207,6 +208,16 @@
             }).then().done();
         }
     </script>
+     <script>
+        function validarFormulario() {
+          var opciones = document.getElementById("id_nacionalidad").value;
+          if (opciones == "") {
+            document.getElementById("mensaje-error").style.display = "block";
+            return false;
+          }
+          return true;
+        }
+      </script>
 
     <!--INICIO SCRIPTS-->
     <div th:replace="layout/script :: script"></div>

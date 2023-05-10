@@ -45,7 +45,7 @@
 
                         <div class="card-body">
 
-                            <form th:action="${edit} ?@{/ProvinciaModF} :@{/ProvinciaF}" method="post">
+                            <form th:action="${edit} ?@{/ProvinciaModF} :@{/ProvinciaF}" method="post" onsubmit="return validarFormulario()">
                                 <input type="hidden" th:field="${provincia.id_provincia}">
 
                                 <div class="row">
@@ -56,16 +56,20 @@
                                             onkeyup="javascript:this.value=this.value.toUpperCase();"
                                             style="text-transform:uppercase;" required>
                                     </div>
-
+                                  
+                                      
                                     <div class="col-md-5">
                                         <label class="col-form-label">Departamento</label>
                                         <select class="form-select js-choice"
                                             th:field="${provincia.departamento}" id="id_departamento"
-                                            name="id_departamento" required>
+                                            name="id_departamento" >
                                             <option value="">Seleccione un Departamento</option>
                                             <option th:each="dep : ${departamentos}" th:value="${dep.id_departamento}"
                                                 th:if="${dep.estado != 'X'}" th:text="${dep.nombre}"></option>
+                                                
                                         </select>
+                                       
+                                        <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe seleccionar una opción</span>
                                     </div>
                                 </div>
                                 <br>
@@ -201,7 +205,16 @@
             }).then().done();
         }
     </script>
-
+    <script>
+        function validarFormulario() {
+          var opciones = document.getElementById("id_departamento").value;
+          if (opciones == "") {
+            document.getElementById("mensaje-error").style.display = "block";
+            return false;
+          }
+          return true;
+        }
+      </script>
     <!--INICIO SCRIPTS-->
     <div th:replace="layout/script :: script"></div>
     <!--FINAL SCRIPTS-->

@@ -74,7 +74,7 @@
                                         <label class="form-label" for="inputState">Documento</label>
                                         <select class="form-select" id="documento" name="documento"
                                             th:field="${costoDocumento.documento}" required>
-                                            <option value="-1">Seleccione...</option>
+                                            <option value="">Seleccionar un documento</option>
                                             <option th:each="doc : ${documentos}" th:value="${doc.id_documento}"
                                                 th:if="${doc.estado != 'X'}" th:text="${doc.nombre_documento}">
                                             </option>
@@ -84,7 +84,7 @@
                                         <label class="form-label" for="inputState">Nacionalidad</label>
                                         <select class="form-select" id="nacionalidad" name="nacionalidad"
                                             th:field="${costoDocumento.nacionalidad}" required>
-                                            <option value="-1">Seleccione...</option>
+                                            <option value="">Seleccionar una Nacionalidad</option>
                                             <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
                                                 th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}">
                                             </option>
@@ -94,7 +94,7 @@
                                         <label class="form-label" for="inputState">Tipo Documento</label>
                                         <select class="form-select" id="tipoDocumento" name="tipoDocumento"
                                             th:field="${costoDocumento.tipoDocumento}" required>
-                                            <option value="-1">Seleccione...</option>
+                                            <option value="">Seleccionar un tipo de documento</option>
                                             <option th:each="tdoc : ${tipoDocumentos}"
                                                 th:value="${tdoc.id_tipo_documento}" th:if="${tdoc.estado != 'X'}"
                                                 th:text="${tdoc.nombre_tipo_documento}">

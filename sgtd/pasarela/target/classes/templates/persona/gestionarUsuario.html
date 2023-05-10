@@ -39,7 +39,7 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
-                                <h3 class="card-title">Administrar Carrera</h3>
+                                <h3 class="card-title">Administrar Rol de Usuarios</h3>
                             </div>
                         </div>
 
@@ -91,7 +91,7 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
-                                <h3 class="card-title">Listar Carrera</h3>
+                                <h3 class="card-title">Listar Usuarios</h3>
 
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="u : ${usuarios}" th:if="${u.estado != 'X'}">
-                                        <td th:text="${u.persona.nombre}"></td>
+                                        <td th:text="${u.persona.nombre}+ ' '+${u.persona.ap_paterno}+ ' '+${u.persona.ap_materno}"></td>
                                         <td th:text="${u.usuario_nom}"></td>
                                         <td th:text="${u.contrasena}"></td>
                                         <td th:text="${u.estado}"></td>

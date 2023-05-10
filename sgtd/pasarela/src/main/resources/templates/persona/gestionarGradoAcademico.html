@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form th:action="${edit} ?@{/gradoAcademicoModF} :@{/gradoAcademicoF}" method="post">
+                            <form th:action="${edit} ?@{/gradoAcademicoModF} :@{/gradoAcademicoF}" method="post" onsubmit="return validarFormulario()">
                                 <input type="hidden" th:field="${gradoAcademico.id_grado_academico}">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -56,12 +56,13 @@
                                     <div class="col-md-5">
                                         <div>
                                             <label class="col-form-label">Carrera</label>
-                                            <select class="form-select js-choice" size="1" th:field="${gradoAcademico.carrera}" required>
+                                            <select class="form-select js-choice" size="1" th:field="${gradoAcademico.carrera}" name="id_carrera" id="id_carrera">
                                                 <option value="">Seleccione una Carrera</option>
                                                 <option th:each="carr : ${carreras}" th:value="${carr.id_carrera}"
                                                     th:if="${carr.estado != 'X'}" th:text="${carr.nombre_carrera}">
                                                 </option>
                                             </select>
+                                            <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe seleccionar una opción</span>
                                         </div>
                                     </div>
                                 </div>
@@ -197,7 +198,16 @@
             }).then().done();
         }
     </script>
-
+      <script>
+        function validarFormulario() {
+          var opciones = document.getElementById("id_carrera").value;
+          if (opciones == "") {
+            document.getElementById("mensaje-error").style.display = "block";
+            return false;
+          }
+          return true;
+        }
+      </script>
     <!--INICIO SCRIPTS-->
     <div th:replace="layout/script :: script"></div>
     <!--FINAL SCRIPTS-->

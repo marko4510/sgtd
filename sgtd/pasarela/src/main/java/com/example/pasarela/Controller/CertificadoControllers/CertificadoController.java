@@ -168,6 +168,13 @@ public class CertificadoController {
         int anio = localDateFA.getYear();
         String anioS = convertirNumTexto(anio);
         Persona persona = personaService.findOne(id_persona);
+
+        String cadenaDepartamento = persona.getProvincia().getDepartamento().getNombre();
+        String cadenaProvincia = persona.getProvincia().getNombre_provincia();
+        String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
+        String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
+        model.addAttribute("departamento", cadenaDepartamentoC);
+        model.addAttribute("provincia", cadenaProvinciaC);
         model.addAttribute("persona", persona);
        
         model.addAttribute("tipoSerie", tipoSerie);

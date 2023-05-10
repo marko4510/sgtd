@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form th:action="${edit} ?@{/CarreraModF} :@{/CarreraF}" method="post">
+                            <form th:action="${edit} ?@{/CarreraModF} :@{/CarreraF}" method="post" >
                                 <input type="hidden" th:field="${carrera.id_carrera}">
                                 <div class="row">
                                     <div class="col-md-3">

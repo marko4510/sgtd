@@ -59,7 +59,7 @@
 
                         <div class="card-body">
 
-                            <form th:action="${edit} ?@{/DocumentoModF} :@{/DocumentoF}" method="post">
+                            <form th:action="${edit} ?@{/DocumentoModF} :@{/DocumentoF}" method="post" onsubmit="return validarFormulario()">
                                 <input type="hidden" th:field="${documento.id_documento}">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -77,12 +77,14 @@
                                             <label class="col-form-label">Tipo de Documento</label>
                                             <select class="form-select js-choice" multiple="multiple" size="3"
                                                 data-options='{"removeItemButton":true,"placeholder":true}'
-                                                th:field="${documento.tipoDocumento}">
+                                                th:field="${documento.tipoDocumento}" name="id_tipo_documento" id="id_tipo_documento">
                                                 <option th:each="tdoc : ${tiposdoc}"
                                                     th:value="${tdoc.id_tipo_documento}" th:if="${tdoc.estado != 'X'}"
                                                     th:text="${tdoc.nombre_tipo_documento}">
                                                 </option>
+
                                             </select>
+                                            <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe seleccionar una opción</span>
                                         </div>
                                     </div>
 
@@ -106,7 +108,7 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
-                                <h3 class="card-title">Listar Tipo de Documentos</h3>
+                                <h3 class="card-title">Lista de Documentos</h3>
 
                             </div>
                         </div>
@@ -239,6 +241,17 @@
             }).then().done();
         }
     </script>
+     <script>
+        function validarFormulario() {
+          var opciones = document.getElementById("id_tipo_documento").value;
+          if (opciones == "") {
+            document.getElementById("mensaje-error").style.display = "block";
+            return false;
+          }
+          return true;
+        }
+      </script>
+
  
 
 <!--INICIO SCRIPTS-->
