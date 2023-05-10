@@ -33,8 +33,10 @@ import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.SolicitudLegalizacion;
 import com.example.pasarela.Models.Entity.Usuario;
 import com.example.pasarela.Models.Service.IArchivoAdjuntoService;
+import com.example.pasarela.Models.Service.ICarreraService;
 import com.example.pasarela.Models.Service.ICostoDocumentoService;
 import com.example.pasarela.Models.Service.IDepartamentoService;
+import com.example.pasarela.Models.Service.IGradoAcademicoService;
 import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.ISolicitudLegalizacionService;
 import com.example.pasarela.Models.Service.IUsuarioService;
@@ -63,6 +65,12 @@ public class SolicitudLegalizacionController {
 
     @Autowired
     private ISolicitudLegalizacionService solicitudLegService;
+
+    @Autowired
+    private ICarreraService carreraService;
+
+    @Autowired
+    private IGradoAcademicoService gradoAcademicoService;
 
     // VISTA ADMIN, LISTAR SOLICITUDES DE LEGALIZACIONES
     @RequestMapping(value = "/SolicitudesLegalizaciones", method = RequestMethod.GET) // Pagina principal
@@ -124,6 +132,8 @@ public class SolicitudLegalizacionController {
             model.addAttribute("personas", personaService.findAll());
             model.addAttribute("archivosAdjuntos", archivoAdjuntoService.listarArchivoAdjunto().size());
             model.addAttribute("solicitudLegalizacion", new SolicitudLegalizacion());
+            model.addAttribute("carreras", carreraService.findAll());
+            model.addAttribute("gradoAcademicos", gradoAcademicoService.findAll());
             return "publico/legalizacion/FormularioLegalizacion";
         } else {
             return "redirect:/Inicio";

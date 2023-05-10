@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.SolicitudTitulo;
 import com.example.pasarela.Models.Entity.Usuario;
+import com.example.pasarela.Models.Service.ICarreraService;
 import com.example.pasarela.Models.Service.ICostoDocumentoService;
 import com.example.pasarela.Models.Service.IGradoAcademicoService;
 import com.example.pasarela.Models.Service.IPersonaService;
@@ -40,7 +41,11 @@ public class SolicitudTituloDiplomaController {
     private ICostoDocumentoService costoDocService;
 
     @Autowired
+    private ICarreraService carreraService;
+
+    @Autowired
     private IGradoAcademicoService gradoAcademicoService;
+
 
     @Autowired
     private ISolicitudTituloService solicitudTituloService;
@@ -76,7 +81,8 @@ public class SolicitudTituloDiplomaController {
             model.addAttribute("costodocumentos", costoDocService.lista_costo_documento_titulo(nacionalidad));
             model.addAttribute("persona", persona);
             model.addAttribute("personas", personaService.findAll());
-            model.addAttribute("gradoacademicos", gradoAcademicoService.findAll());
+            model.addAttribute("carreras", carreraService.findAll());
+            model.addAttribute("gradoAcademicos", gradoAcademicoService.findAll());
             model.addAttribute("solicitudTitulo", new SolicitudTitulo());
             return "publico/titulod/formTituloDiploma";
         } else {
@@ -95,7 +101,8 @@ public class SolicitudTituloDiplomaController {
             model.addAttribute("costodocumentos", costoDocService.lista_costo_documento_titulo_provision(nacionalidad));
             model.addAttribute("persona", persona);
             model.addAttribute("personas", personaService.findAll());
-            model.addAttribute("gradoacademicos", gradoAcademicoService.findAll());
+            model.addAttribute("carreras", carreraService.findAll());
+            model.addAttribute("gradoAcademicos", gradoAcademicoService.findAll());
             model.addAttribute("solicitudTitulo", new SolicitudTitulo());
             
             return "publico/titulod/formTituloDiplomaProvision";

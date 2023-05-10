@@ -130,17 +130,26 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Grado Academico</label>
-                            <select class="form-select" aria-label="Default select example">
-                              <th:block th:each="grado : ${gradoacademicos}">
-                                <option th:value="${grado.id_grado_academico}" th:if="${grado.estado != 'X'}" selected
-                                  th:text="${grado.nombre}"></option>
-                              </th:block>
-  
-  
-  
-                            </select>
-                          </div>
+                          <label class="form-label" for="inputState">Carrera</label>
+                          <select class="form-select " id="id_carrer" name="id_carrera" onchange="gradoAcad()"
+                            required>
+                            <option value="-1">Seleccione Carrera</option>
+                            <option th:each="carr : ${carreras}" th:if="${carr.estado != 'X'}"
+                              th:value="${carr.id_carrera}" th:text="${carr.nombre_carrera}">
+                            </option>
+                          </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                          <label class="form-label" for="inputState">Grado Academico</label>
+                          <select class="form-select " id="id_grado_academic" name="id_grado_academico"
+                            required>
+                            <option value="-1">Seleccione Grado</option>
+                            <!--<option th:each="gra : ${gradoAcademicos}" th:value="${gra.id_grado_academico}"
+                              th:if="${gra.estado != 'X'}" th:text="${gra.nombre}">
+                            </option>-->
+                          </select>
+                        </div>
 
                         <div class="col-md-6 mb-3">
                           <label class="form-label">Documento</label>
@@ -211,7 +220,26 @@
       }
     });
   </script>
-
+     <script type="text/javascript">
+      function gradoAcad() {
+    var j = document.getElementById("id_carrer").value;
+    //alert(i);
+    $.getJSON("/ggrados", {
+      carrerId: j,
+      ajax: 'true'
+    }, function (data) {
+      var html = '<option value="">--Grados--</option>';
+      var len = data.length;
+      for (var i = 0; i < len; i++) {
+        html += '<option value="' + data[i].id_grado_academico + '">'
+          + data[i].nombre + '</option>';
+      }
+      html += '</option>';
+      $('#id_grado_academic').html(html);
+    });
+  }//);
+  
+  </script>
   <!-- Footer Start -->
   <div th:replace="layout/layout2 :: footer">
 

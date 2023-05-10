@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.SolicitudSupletorio;
 import com.example.pasarela.Models.Entity.Usuario;
+import com.example.pasarela.Models.Service.ICarreraService;
 import com.example.pasarela.Models.Service.ICostoDocumentoService;
 import com.example.pasarela.Models.Service.IGradoAcademicoService;
 import com.example.pasarela.Models.Service.IPersonaService;
@@ -38,6 +39,9 @@ public class SolicitudSupletorioController {
 
     @Autowired
     private ICostoDocumentoService costoDocService;
+
+    @Autowired
+    private ICarreraService carreraService;
 
     @Autowired
     private IGradoAcademicoService gradoAcademicoService;
@@ -77,7 +81,8 @@ public class SolicitudSupletorioController {
             model.addAttribute("costodocumentos", costoDocService.lista_costo_documento_supletorio(nacionalidad));
             model.addAttribute("persona", persona);
             model.addAttribute("personas", personaService.findAll());
-            model.addAttribute("gradoacademicos", gradoAcademicoService.findAll());
+            model.addAttribute("carreras", carreraService.findAll());
+            model.addAttribute("gradoAcademicos", gradoAcademicoService.findAll());
             model.addAttribute("solicitudSupletorio", new SolicitudSupletorio());
             return "publico/supletorio/formulariosupletorio";
         } else {
