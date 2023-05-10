@@ -37,8 +37,9 @@
           </h6>
           <ul class="mb-4  mt-2">
 
-            <li> Si su carnet tiene complemento Ej: 1234567-1D, incluya el complemento en el campo de Cédula de Identidad</li>
-            <li> Si su carnet no tiene complemento (Su carnet es solo número Ej. 1234567)  </li>
+            <li> Si su carnet tiene complemento Ej: 1234567-1D, incluya el complemento en el campo de Cédula de
+              Identidad</li>
+            <li> Si su carnet no tiene complemento (Su carnet es solo número Ej. 1234567) </li>
 
 
           </ul>
@@ -58,16 +59,18 @@
         <div class="card-body d-flex flex-column justify-content-end">
           <div class="row justify-content-between">
             <div class="card-body bg-light">
+              <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                  th:if="${mensaje != null}">
+                  <h4 class="alert-body" th:text="${mensaje}"></h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
               <div class="row pt-5">
-
-
-
                 <div class="col-lg-12 col-md-4 mb-5" id="piePagina">
                   <div class="tab-content">
                     <div class="tab-pane preview-tab-pane active" role="tabpanel"
                       aria-labelledby="tab-dom-f1d388f8-6223-48cd-b720-917f0290eedd"
                       id="dom-f1d388f8-6223-48cd-b720-917f0290eedd">
-                      <form class="row g-3" th:action="@{/RegistroF}" method="post">
+                      <form class="row g-3" th:action="@{/RegistroF}" method="post" id="formulario-registro">
                         <input type="hidden" th:field="${persona.id_persona}">
 
                         <div class="col-md-3 mb-3">
@@ -105,7 +108,7 @@
                             required />
                         </div>
 
-                        
+
 
                         <div class="col-md-3 mb-3">
                           <label class="form-label">Fecha de Nacimiento </label>
@@ -125,7 +128,8 @@
                         -->
                         <div class="col-md-3">
                           <label class="form-label" for="inputState">País</label>
-                          <select class="form-select " id="id_nacionalidad" name="id_nacionalidad" onchange="myy()" required>
+                          <select class="form-select " id="id_nacionalidad" name="id_nacionalidad" onchange="myy()"
+                            required>
                             <option value="-1">Seleccione Pais</option>
                             <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
                               th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}"></option>
@@ -133,9 +137,10 @@
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="inputState">Departamentos</label>
-                          <select class="form-select " id="id_departament" name="id_departamento" onchange="provin()" required>
+                          <select class="form-select " id="id_departament" name="id_departamento" onchange="provin()"
+                            required>
                             <option value="-1">Seleccione Departamento</option>
-                            
+
                           </select>
                         </div>
 
@@ -143,14 +148,13 @@
                           <label class="form-label" for="inputState">Provincia</label>
                           <select class="form-select " id="id_provinci" name="id_provincia" required>
                             <option value="-1">Seleccione Provincia</option>
-                            
+
 
                           </select>
                         </div>
                         <div class="col-md-3">
                           <label class="form-label" for="inputState">Carrera</label>
-                          <select class="form-select" id="id_carrer" name="id_carrera" onchange="gradoAcad()"
-                            required>
+                          <select class="form-select" id="id_carrer" name="id_carrera" onchange="gradoAcad()" required>
                             <option value="-1">Seleccione Carrera</option>
                             <option th:each="carr : ${carreras}" th:if="${carr.estado != 'X'}"
                               th:value="${carr.id_carrera}" th:text="${carr.nombre_carrera}">
@@ -160,8 +164,7 @@
 
                         <div class="col-md-3">
                           <label class="form-label" for="inputState">Grado Academico</label>
-                          <select class="form-select " id="id_grado_academic" name="id_grado_academico"
-                            required>
+                          <select class="form-select " id="id_grado_academic" name="id_grado_academico" required>
                             <option value="-1">Seleccione Grado</option>
                             <!--<option th:each="gra : ${gradoAcademicos}" th:value="${gra.id_grado_academico}"
                               th:if="${gra.estado != 'X'}" th:text="${gra.nombre}">

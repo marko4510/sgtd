@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,7 +39,10 @@ public class Persona implements Serializable {
     private String ap_paterno;
     private String ap_materno;
     private String ci;
+
+    @Column(unique = true)
     private String correo;
+    
     private String estado;
     private String numero_contacto;
 
