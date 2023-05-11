@@ -73,14 +73,14 @@ public class TramiteController {
 
         AdjuntarArchivo adjuntarArchivo = new AdjuntarArchivo();
 
-        String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGD/tramite");
+        String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite");
         model.addAttribute("di", rutaArchivo);
         List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
         tramite.setNombreArchivo((listArchivos.size() + 1) + "-" + multipartFile.getOriginalFilename());
         Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
         archivoAdjunto.setNombre_archivo((listArchivos.size() + 1) + "-" + multipartFile.getOriginalFilename());
         archivoAdjunto.setTipo_archivo(multipartFile.getContentType());
-        archivoAdjunto.setRuta_archivo("sGD/tramite/");
+        archivoAdjunto.setRuta_archivo("SGTD/tramite/");
         archivoAdjunto.setEstado("A");
         ArchivoAdjunto archivoAdjunto2 = archivoAdjuntoService.registrarArchivoAdjunto(archivoAdjunto);
         List<Tramite> listaT = tramiteService.findAll();
@@ -126,7 +126,7 @@ public class TramiteController {
         MultipartFile multipartFile = tramite.getFile();
         ArchivoAdjunto archivoAdjunto = new ArchivoAdjunto();
         AdjuntarArchivo adjuntarArchivo = new AdjuntarArchivo();
-        String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGD/tramite");
+        String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite");
         List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
 
         tramite.setNombreArchivo((listArchivos.size() + 1) + "-" + multipartFile.getOriginalFilename());
@@ -135,7 +135,7 @@ public class TramiteController {
             ArchivoAdjunto barchivoAdjunto = archivoAdjuntoService
                     .buscarArchivoAdjuntoPorTramite(tramite.getArchivoAdjunto().getId_archivo_adjunto());
             barchivoAdjunto.setNombre_archivo(tramite.getNombreArchivo());
-            barchivoAdjunto.setRuta_archivo("SGD/tramite/");
+            barchivoAdjunto.setRuta_archivo("SGTD/tramite/");
             archivoAdjuntoService.modificarArchivoAdjunto(barchivoAdjunto);
         }
         tramite.setNro_tramite(tramite.getNro_tramite());
