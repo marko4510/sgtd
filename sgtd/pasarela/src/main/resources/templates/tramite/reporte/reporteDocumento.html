@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Carpeta de Trámite por Documento</title>
+
+  <style>
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin-bottom: 20px;
+			font-size: 14px;
+		}
+
+		table th, table td {
+			padding: 10px;
+			text-align: left;
+			border: 1px solid #ddd;
+		}
+
+		table th {
+			background-color: #f2f2f2;
+			font-weight: bold;
+			color: #333;
+		}
+
+		table tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		table tr:hover {
+			background-color: #ddd;
+		}
+	</style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="content-wrapper">
+      <section>
+        <!--
+        <input type="hidden" id="version" th:value="${prgDetallePrograma.version}">
+        <input type="hidden" id="sigla" th:value="${prgPrograma.sigla}">
+        -->
+      </section>
+
+      <div class="center-text">
+        
+        <h2 class="title">REPORTE DE CARPETA DE TRÁMITES POR TIPO DE DOCUMENTO</h2>
+        
+       
+     
+      </div>
+
+      <div class="card-body">
+        <table >
+            <thead>
+                <tr>
+                  <th class="border-bottom-0">#</th>
+                    <th class="border-bottom-0">Nro Tramite</th>
+                    <th class="border-bottom-0">Tipo de Documento</th>
+                    <th class="border-bottom-0">Documento</th>
+                    
+                    <th class="border-bottom-0">Persona</th>
+        
+                    
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr th:each="td, i : ${tramites}" th:if="${td.estado != 'X'}">
+                  <td th:text="${i.index + 1}"></td>
+                    <td th:text="${td.nro_tramite}"> </td>
+                    <td th:text="${td.tipoDocumento.nombre_tipo_documento}"></td>
+                    <td th:text="${td.documento.nombre_documento}"></td>
+                   
+                    <td th:text=" ${td.persona.ci}+'-'+${td.persona.nombre}+' '+${td.persona.ap_paterno}+' '+${td.persona.ap_materno}">
+
+
+                    </td>
+                </tr>
+
+
+            </tbody>
+            <tfoot>
+                <tr>
+                  <th class="border-bottom-0">#</th>
+                    <th class="border-bottom-0">Nro Tramite</th>
+                    <th class="border-bottom-0">Tipo de Documento</th>
+                    <th class="border-bottom-0">Documento</th>
+                    
+                    <th class="border-bottom-0">Persona</th>
+             
+                    
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+   
+    
+     
+  
+      
+        
+     
+    
+     
+      
+     
+    
+    <br>
+    <br>
+    <br>
+     
+
+
+
+
+
+      <!--
+      <div style="text-align:center; display: flex; justify-content: center;">
+        <table cellspacing="0" cellpadding="0" class="header-table">
+          <thead>
+            <tr class="header-row">
+              <td class="table-cell header-cell-others">
+                <p class="header-title"><strong>N°</strong></p>
+              </td>
+              <td class="header-cell header-cell-others">
+                <p class="header-title"><strong>SIGLA</strong></p>
+              </td>
+              <td class="header-cell header-cell-modulos">
+                <p class="header-title"><strong>MÓDULOS</strong></p>
+              </td>
+              <td class="header-cell header-cell-others">
+                <p class="header-title"><strong>HRS. PRS.</strong></p>
+              </td>
+              <td class="header-cell header-cell-others">
+                <p class="header-title"><strong>HRS. PRAC.</strong></p>
+              </td>
+              <td class="header-cell header-cell-others">
+                <p class="header-title"><strong>HRS. LECT.</strong></p>
+              </td>
+              <td class="header-cell header-cell-others">
+                <p class="header-title"><strong>TOTAL HRS. </strong></p>
+              </td>
+              <td class="header-cell header-cell-others">
+                <p class="header-title"><strong>CRED.</strong></p>
+              </td>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr class="table-row" id="iteracion" th:each="m : ${listaModulo}">
+              <td class="table-cell center-text bold-text">
+                <p th:text="${m.orden}"></p>
+              </td>
+              <td class="table-cell center-text bold-text">
+                <p th:text="${m.orden}" id="modulo-sigla"></p>
+              </td>
+              <td class="table-cell">
+                <p th:text="${m.modulo}" style="text-align: left;"></p>
+              </td>
+              <td class="table-cell center-text">
+                <p th:text="${m.horasPresenciales}"></p>
+              </td>
+              <td class="table-cell center-text">
+                <p th:text="${m.horasPracticas}"></p>
+              </td>
+              <td class="table-cell center-text">
+                <p th:text="${m.horasLectivas}"></p>
+              </td>
+              <td class="table-cell center-text bold-text">
+                <p th:text="${(m.horasPresenciales + m.horasPracticas + m.horasLectivas)}"></p>
+              </td>
+              <td class="table-cell center-text">
+                <p th:text="${m.creditos}"></p>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="table-row">
+              <td class="table-cell center-text"></td>
+              <td class="table-cell center-text"></td>
+              <td class="table-cell">
+                <p class="header-text bold-text"><em><u>TOTAL DE HORAS ACAD&Eacute;MICAS</u></em></p>
+              </td>
+              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
+                <p th:text="${totalPresencial != null? totalPresencial: 0}"></p>
+              </td>
+              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
+                <p th:text="${totalPractica != null? totalPractica : 0}"></p>
+              </td>
+              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
+                <p th:text="${totalLectiva != null? totalLectiva : 0}"></p>
+              </td>
+              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
+                <p th:text="${totalHoras}"></p>
+              </td>
+              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
+                <p th:text="${#numbers.formatDecimal(totalCreditos, 0, 1)}"></p>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      -->
+
+
+      
+     
+    </div>
+  </div>
+  <div class="out-container">
+    <div class="print-button-container">
+      <button id="printButton" class="print-button" onclick="window.print();">Imprimir</button>
+    </div>
+  </div>
+  <!-- <div class="container"></div> -->
+  <style>
+    /* IMPORT POPPINS FONT */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    * {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .print-button-container {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .print-button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 4px 2px;
+      cursor: pointer;
+      transition-duration: 0.4s;
+    }
+
+    .print-button:hover {
+      background-color: #45a049;
+    }
+
+    .container {
+
+      /* background-image: url("https://myfiles.space/user_files/156467_6e21e887604348de/1681994061_3-mds-melena-revollo-yusara-1/1681994061_3-mds-melena-revollo-yusara-1-1.jpeg"); */
+      background-image: url(/images/posgrado/membretado-carta.jpg);
+      /* background-image: url(/images/posgrado/membretado-oficio.jpeg); */
+      /* background-size: cover; */
+      background-size: contain;
+      /* background-position: center; */
+      background-repeat: no-repeat;
+      position: relative;
+      /* Adjust the container to office page size in cm */
+      width: 8.5in;
+      height: 14in;
+      border: 1px solid #2e2e2e;
+      margin-bottom: 1cm;
+    }
+
+    .content-wrapper {
+      padding: 140px 50px 100px 50px;
+    }
+
+    /* Page size and print settings */
+    @media print {
+      @page {
+        size: 8.5in 14in;
+        margin: 0;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .container {
+        page-break-after: always;
+        border: none;
+      }
+
+      .print-button-container {
+        display: none;
+      }
+    }
+
+    .clear {
+      clear: both;
+    }
+
+    .img-container {
+      margin: 0 auto;
+      display: block;
+      position: relative;
+    }
+
+    .hidden-img {
+      height: 0;
+      display: block;
+      position: absolute;
+      z-index: -65537;
+    }
+
+    .cert-number,
+    .mdpp {
+      text-align: right;
+      line-height: 115%;
+    }
+
+    .cert-number {
+      font-size: 8pt;
+    }
+
+    .mdpp {
+      font-size: 6pt;
+    }
+
+    .title {
+      margin-top: 0;
+      margin-bottom: 10pt;
+      text-align: center;
+      font-size: 20pt;
+      font-weight: 600;
+    }
+
+    .content {
+      margin-top: 0;
+      margin-bottom: 10pt;
+      text-align: justify;
+      line-height: 115%;
+      font-size: 10pt;
+    }
+
+    .header-table {
+      width: 550pt;
+      /* margin-right: auto;
+      margin-left: auto; */
+      border-collapse: collapse;
+      text-align: center;
+    }
+
+    .header-row {
+      height: 17pt;
+    }
+
+    .header-cell {
+      padding-right: 3.5pt;
+      padding-left: 3.5pt;
+      vertical-align: bottom;
+    }
+
+    .header-cell-modulos {
+      width: 266.2pt;
+      border-style: solid;
+      border-width: 0.75pt;
+      padding-right: 3.12pt;
+      padding-left: 3.12pt;
+      vertical-align: middle;
+      background-color: #b8cce4;
+    }
+
+    .header-cell-others {
+      border-top-style: solid;
+      border-top-width: 0.75pt;
+      border-right-style: solid;
+      border-right-width: 0.75pt;
+      border-bottom-style: solid;
+      border-bottom-width: 0.75pt;
+      padding-right: 3.12pt;
+      padding-left: 3.5pt;
+      vertical-align: middle;
+      background-color: #b8cce4;
+    }
+
+    .header-text {
+      margin-top: 0pt;
+      margin-bottom: 10pt;
+      line-height: 115%;
+      font-size: 10pt;
+    }
+
+    .header-title {
+      margin-top: 0pt;
+      margin-bottom: 10pt;
+      text-align: center;
+      line-height: 115%;
+      font-size: 11pt;
+    }
+
+    .table-row {
+      height: 27.1pt;
+    }
+
+    .table-cell {
+      width: auto;
+      border-style: solid;
+      border-width: 0.75pt;
+      padding-right: 3.12pt;
+      padding-left: 3.12pt;
+      vertical-align: middle;
+    }
+
+    .center-text {
+      text-align: center;
+    }
+
+    .bold-text {
+      font-weight: bold;
+    }
+
+    .d-flex {
+      display: flex;
+    }
+
+    .justify-content-around {
+      justify-content: space-around;
+    }
+
+    .line-above::before {
+      content: "";
+      display: block;
+      width: 200px;
+      height: 1px;
+      background-color: black;
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .line-above {
+      position: relative;
+    }
+
+    .right-align {
+      margin-top: 0pt;
+      margin-bottom: 0pt;
+      text-align: right;
+      line-height: 115%;
+      font-size: 10pt;
+      font-family: 'Century Gothic';
+    }
+
+    .center-align {
+      margin-top: 0pt;
+      margin-bottom: 0pt;
+      text-align: center;
+      line-height: 115%;
+      font-size: 9pt;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 10pt;
+      line-height: 115%;
+      font-size: 10pt;
+    }
+  </style>
+  <script th:src="@{/js/posgrado/romano.js}"></script>
+  <script>
+    const sigla = document.querySelector('#sigla').value;
+    const version = document.querySelector('#version').value;
+    const conversion = parseInt(romanToInt(version)) * 100;
+    console.log(conversion)
+
+    document.querySelectorAll('#iteracion').forEach((row) => {
+      const celda = row.querySelector('#modulo-sigla');
+      const orden = celda.textContent;
+      const versionOrden = conversion + parseInt(orden);
+      console.log(`${sigla}-${versionOrden}`);
+      celda.textContent = `${sigla}-${versionOrden}`;
+    });
+  </script>
+</body>
+
+</html>

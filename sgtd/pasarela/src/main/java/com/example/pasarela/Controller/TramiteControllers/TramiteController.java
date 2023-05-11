@@ -13,10 +13,12 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -272,5 +274,50 @@ public class TramiteController {
         response.setHeader("Content-Disposition", "inline; filename=" + file.getName());
         response.setHeader("Content-Length", String.valueOf(file.length()));
         return new FileSystemResource(file);
+    }
+
+
+    @GetMapping("/inicioReporteCarpetas")
+    public String inicioReporteCarpetas(Model model) {
+        model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
+        model.addAttribute("documentos", documentoService.findAll());
+        return "tramite/reporte/inicioReporteCarpetas.html";
+    }
+
+    @PostMapping("/generarReporteCarpetaTipoDocumento")
+    public String generarReporteCarpetaTipoDocumento(@RequestParam("id_tipo_documento") Long id_tipo_documento,
+            Model model) throws FileNotFoundException, IOException {
+
+        
+        
+        model.addAttribute("tramites", tramiteService.tramitePorTipoDocumento(id_tipo_documento));
+      
+
+        return "tramite/reporte/reporteTipoDocumento.html";
+    }
+
+    @PostMapping("/generarReporteCarpetaDocumento")
+    public String generarReporteCarpetaDocumento(@RequestParam("id_documento") Long id_documento,
+            Model model) throws FileNotFoundException, IOException {
+
+        
+        
+        model.addAttribute("tramites", tramiteService.tramitePorDocumento(id_documento));
+      
+
+        return "tramite/reporte/reporteDocumento.html";
+    }
+
+    @PostMapping("/generarReporteCarpetaDocumentoTipoDocumento")
+    public String generarReporteCarpetaDocumentoTipoDocumento(@RequestParam("id_documento") Long id_documento,
+    @RequestParam("id_tipo_documento") Long id_tipo_documento,
+            Model model) throws FileNotFoundException, IOException {
+
+        
+        
+        model.addAttribute("tramites", tramiteService.tramitePorDocumentoTipoDocumento(id_documento, id_tipo_documento));
+      
+
+        return "tramite/reporte/reporteDocumentoTipoDocumento.html";
     }
 }

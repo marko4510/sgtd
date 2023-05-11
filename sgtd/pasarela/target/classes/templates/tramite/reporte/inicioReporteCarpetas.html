@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/head :: head">
+
+
+
+</head>
+
+<body>
+    <!-- loader Start -->
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body"></div>
+        </div>
+    </div>
+    <!-- loader END -->
+
+    <!--INICIO SIDEBAR-->
+    <aside th:replace="layout/sidebar :: sidebar"></aside>
+    <!--FINAL SIDEBAR-->
+
+
+    <main class="main-content">
+        <div class="position-relative iq-banner">
+            <!--Inicio Topbar-->
+            <nav th:replace="layout/topbar :: topbar"></nav>
+            <!-- FINAL TOPBAR -->
+
+            <!-- INICIO PRESENTACION -->
+            <div th:replace="layout/fragmento :: banner"></div>
+            <!-- FIN INICIO PRESENTACION -->
+        </div>
+        <div class="conatiner-fluid content-inner mt-n5 py-0">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <!--FORM DE CARRERA-->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h3 class="card-title">Reportes de Carpetas de Trámites</h3>
+                            </div>
+                        </div>
+                        <br>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Por tipo de Documento</button>
+                            </li>
+                           
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Por Documento</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="bachiller-tab" data-bs-toggle="tab" data-bs-target="#bachiller" type="button" role="tab" aria-controls="contact" aria-selected="false">Por Documento y tipo de Documento</button>
+                              </li>
+                          </ul>
+                          <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="card-body">
+                                    <form th:action="@{/generarReporteCarpetaTipoDocumento}" method="post">
+        
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                
+                                                    <label class="col-form-label">Tipo Documento</label>
+                                                    <select class="form-select "
+                                                         id="id_tipo_documento" name="id_tipo_documento" required>
+                                                        <option value="">Seleccione un Tipo de Documento</option>
+                                                        <option th:each="tdoc : ${tipoDocumentos}" th:value="${tdoc.id_tipo_documento}"
+                                                            th:if="${tdoc.estado != 'X'}" th:text="${tdoc.nombre_tipo_documento}"></option>
+                                                            
+                                                    </select>
+
+                                            </div>
+                                          
+                                        
+                                        </div>
+        
+                                        <br>
+                                        <div class="text-center">
+                                            <button class="btn btn-primary" type="submit"
+                                                th:text="Generar"></button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                     
+                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <div class="card-body">
+                                <form th:action="@{/generarReporteCarpetaDocumento}" method="post">
+                                    <div class="row">
+                                        
+                                            <div class="col-md-5">
+                                                
+                                                    <label class="col-form-label">Documento</label>
+                                                    <select class="form-select "
+                                                         id="id_documento" name="id_documento" required>
+                                                        <option value="">Seleccione un Documento</option>
+                                                        <option th:each="doc : ${documentos}" th:value="${doc.id_documento}"
+                                                            th:if="${doc.estado != 'X'}" th:text="${doc.nombre_documento}"></option>
+                                                            
+                                                    </select>
+
+                                                    
+
+                                            </div>
+                                          
+                                        
+                                    
+                                    </div>
+                                </div>
+                                    <br>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" type="submit"
+                                            th:text="Generar"></button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="bachiller" role="tabpanel" aria-labelledby="bachiller-tab">
+                                <div class="card-body">
+                                <form th:action="@{/generarReporteCarpetaDocumentoTipoDocumento}" method="post">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                                
+                                            <label class="col-form-label">Tipo Documento</label>
+                                            <select class="form-select "
+                                                 id="id_tipo_documento" name="id_tipo_documento" required>
+                                                <option value="">Seleccione un Tipo de Documento</option>
+                                                <option th:each="tdoc : ${tipoDocumentos}" th:value="${tdoc.id_tipo_documento}"
+                                                    th:if="${tdoc.estado != 'X'}" th:text="${tdoc.nombre_tipo_documento}"></option>
+                                                    
+                                            </select>
+
+                                    </div>
+                                    <div class="col-md-5">
+                                                
+                                        <label class="col-form-label">Documento</label>
+                                        <select class="form-select "
+                                             id="id_documento" name="id_documento" required>
+                                            <option value="">Seleccione un Documento</option>
+                                            <option th:each="doc : ${documentos}" th:value="${doc.id_documento}"
+                                                th:if="${doc.estado != 'X'}" th:text="${doc.nombre_documento}"></option>
+                                                
+                                        </select>
+
+                                        
+
+                                </div>
+
+                                    </div>
+                                   
+                                </div>
+                                    <br>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" type="submit"
+                                            th:text="Generar"></button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            </div>
+                     
+                          </div>
+                       
+                    </div>
+                    <!--FIN FORM DE CARRERA-->
+
+         
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Footer Section Start -->
+        <footer th:replace="layout/footer :: footer">
+        </footer>
+        <!-- Footer Section End -->
+    </main>
+
+    <!-- INICIO TEMA -->
+    <a th:replace="layout/fragmento :: tuerca"></a>
+    <!-- FIN INICIO TEMA -->
+
+    <!-- INICIO CONTENIDO TEMA -->
+    <div th:replace="layout/fragmento :: tema"></div>
+    <!-- FIN INICIO CONTENIDO -->
+
+
+
+
+
+    <!--INICIO SCRIPTS-->
+    <div th:replace="layout/script :: script"></div>
+    <!--FINAL SCRIPTS-->
+</body>
+
+</html>

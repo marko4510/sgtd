@@ -39,4 +39,19 @@ public class TramiteServiceImpl implements ITramiteService{
         tramiteDao.deleteById(id);
     }
 
+    @Override
+    public List<Tramite> tramitePorTipoDocumento(Long id_tipo_documento) {
+        return (List<Tramite>) tramiteDao.tramitePorTipoDocumento(id_tipo_documento);
+    }
+
+    @Override
+    public List<Tramite> tramitePorDocumento(Long id_documento) {
+        return (List<Tramite>) tramiteDao.tramitePorDocumento(id_documento);
+    }
+
+    @Override
+    public List<Tramite> tramitePorDocumentoTipoDocumento(Long id_documento, Long id_tipo_documento) {
+        return (List<Tramite>) tramiteDao.tramitePorDocumentoTipoDocumento(id_documento,id_tipo_documento );
+    }
+
 }
