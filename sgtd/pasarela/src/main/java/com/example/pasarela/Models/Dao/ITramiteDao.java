@@ -32,6 +32,11 @@ public interface ITramiteDao extends CrudRepository<Tramite, Long> {
     @Query(value = "select * from pasarela_tramite as tra where tra.id_tipo_documento= 4", nativeQuery = true)
     public List<Tramite> listaCarpetaProvision();
 
+    //LISTAS PARA REPORTES POR GESTION
+
+    @Query(value = "select * from pasarela_tramite as tra where tra.gestion=?1 ", nativeQuery = true)
+    public List<Tramite> tramitePorGestion(String gestion);
+
     
     
 }

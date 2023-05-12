@@ -56,6 +56,7 @@ public class TramiteController {
     @RequestMapping(value = "/TramiteR", method = RequestMethod.GET) // Pagina principal
     public String Tramite(HttpServletRequest request, Model model) {
         if (request.getSession().getAttribute("usuario") != null) {
+
             model.addAttribute("documentos", documentoService.findAll());
             model.addAttribute("tramite", new Tramite());
             model.addAttribute("tramites", tramiteService.findAll());
@@ -330,5 +331,17 @@ public class TramiteController {
       
 
         return "tramite/reporte/reporteDocumentoTipoDocumento.html";
+    }
+
+    @PostMapping("/generarReporteCarpetaGestion")
+    public String generarReporteCarpetaGestion(@RequestParam("gestion") String gestion,
+            Model model) throws FileNotFoundException, IOException {
+
+        
+        
+        model.addAttribute("tramites", tramiteService.tramitePorGestion(gestion));
+        model.addAttribute("gestion", gestion);
+
+        return "tramite/reporte/reporteGestion.html";
     }
 }

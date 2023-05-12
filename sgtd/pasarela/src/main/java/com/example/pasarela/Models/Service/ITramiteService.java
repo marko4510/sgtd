@@ -25,4 +25,7 @@ public interface ITramiteService {
 	public List<Tramite> listaCarpetaSupletorio();
 	public List<Tramite> listaCarpetaTitulos();
 	public List<Tramite> listaCarpetaProvision();
+
+	//LISTAS PARA REPORTES POR GESTION
+	public List<Tramite> tramitePorGestion(String gestion);
 }
