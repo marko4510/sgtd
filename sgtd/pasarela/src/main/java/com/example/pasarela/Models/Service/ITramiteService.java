@@ -19,4 +19,10 @@ public interface ITramiteService {
 	public Tramite findOne(Long id);
 
 	public void delete(Long id);
+
+	//LISTAS DE CARPETAS POR TIPO DOCUMENTO
+	public List<Tramite> listaCarpetaLegalizacion();
+	public List<Tramite> listaCarpetaSupletorio();
+	public List<Tramite> listaCarpetaTitulos();
+	public List<Tramite> listaCarpetaProvision();
 }

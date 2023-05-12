@@ -54,4 +54,24 @@ public class TramiteServiceImpl implements ITramiteService{
         return (List<Tramite>) tramiteDao.tramitePorDocumentoTipoDocumento(id_documento,id_tipo_documento );
     }
 
+    @Override
+    public List<Tramite> listaCarpetaLegalizacion() {
+        return (List<Tramite>) tramiteDao.listaCarpetaLegalizacion();
+    }
+
+    @Override
+    public List<Tramite> listaCarpetaSupletorio() {
+        return (List<Tramite>) tramiteDao.listaCarpetaSupletorio();
+    }
+
+    @Override
+    public List<Tramite> listaCarpetaTitulos() {
+        return (List<Tramite>) tramiteDao.listaCarpetaTitulos();
+    }
+
+    @Override
+    public List<Tramite> listaCarpetaProvision() {
+        return (List<Tramite>) tramiteDao.listaCarpetaProvision();
+    }
+
 }
