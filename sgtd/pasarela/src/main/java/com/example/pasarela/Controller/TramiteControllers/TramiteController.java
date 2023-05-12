@@ -23,7 +23,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.pasarela.Models.Entity.ArchivoAdjunto;
+import com.example.pasarela.Models.Entity.Carrera;
 import com.example.pasarela.Models.Service.IArchivoAdjuntoService;
+import com.example.pasarela.Models.Service.ICarreraService;
 import com.example.pasarela.Models.Service.IDocumentoService;
 import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.ITipoDocumentoService;
@@ -31,6 +33,7 @@ import com.example.pasarela.Models.Service.ITramiteService;
 import com.example.pasarela.Models.Service.IUnidadService;
 import com.example.pasarela.Models.Utils.AdjuntarArchivo;
 import com.example.pasarela.Models.Entity.Tramite;
+import com.example.pasarela.Models.Entity.Unidad;
 
 @Controller
 public class TramiteController {
@@ -51,6 +54,9 @@ public class TramiteController {
 
     @Autowired
     private IUnidadService unidadService;
+
+    @Autowired
+    private ICarreraService carreraService;
 
     // Formulario para Registrar Tramite
     @RequestMapping(value = "/TramiteR", method = RequestMethod.GET) // Pagina principal
@@ -168,6 +174,8 @@ public class TramiteController {
             model.addAttribute("listaSupletorio", tramiteService.listaCarpetaSupletorio());
             model.addAttribute("listaTitulos", tramiteService.listaCarpetaTitulos());
             model.addAttribute("listaProvision", tramiteService.listaCarpetaProvision());
+            model.addAttribute("unidades", unidadService.findAll());
+        model.addAttribute("carreras", carreraService.findAll());
             return "tramite/listarTramites";
         } else {
             return "redirect:LoginR";
@@ -293,6 +301,8 @@ public class TramiteController {
     public String inicioReporteCarpetas(Model model) {
         model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
         model.addAttribute("documentos", documentoService.findAll());
+        model.addAttribute("unidades", unidadService.findAll());
+        model.addAttribute("carreras", carreraService.findAll());
         return "tramite/reporte/inicioReporteCarpetas.html";
     }
 
@@ -333,13 +343,19 @@ public class TramiteController {
         return "tramite/reporte/reporteDocumentoTipoDocumento.html";
     }
 
-    @PostMapping("/generarReporteCarpetaGestion")
-    public String generarReporteCarpetaGestion(@RequestParam("gestion") String gestion,
+    @PostMapping("/generarReporteCarpetaUnidadCarreraGestion")
+    public String generarReporteCarpetaUnidadCarreraGestion(
+        @RequestParam("id_unidad") Long id_unidad,
+        @RequestParam("id_carrera") Long id_carrera,
+        @RequestParam("gestion") String gestion,
             Model model) throws FileNotFoundException, IOException {
 
+        Unidad unidad = unidadService.findOne(id_unidad);
+        Carrera carrera = carreraService.findOne(id_carrera);
         
-        
-        model.addAttribute("tramites", tramiteService.tramitePorGestion(gestion));
+        model.addAttribute("tramites", tramiteService.reporteCarpetaPorUnidadCarreraGestion(id_unidad, id_carrera, gestion));
+        model.addAttribute("unidad", unidad);
+        model.addAttribute("carrera", carrera);
         model.addAttribute("gestion", gestion);
 
         return "tramite/reporte/reporteGestion.html";

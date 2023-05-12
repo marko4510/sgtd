@@ -468,10 +468,39 @@
                                     <div class="tab-content" id="v-pills-tabContent" style="width: 1500px; height: 1200;">
                                       <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
                                      
-                                       <h3 >Reporte por Gestión </h3>
+                                       <h3 >Reporte por Unidad, Carrera y Gestión </h3>
                                         
-                                            <form th:action="@{/generarReporteCarpetaGestion}" method="post">
+                                            <form th:action="@{/generarReporteCarpetaUnidadCarreraGestion}" method="post">
                                                 <div class="row">
+
+                                                    <div class="col-md-4 text-dark">
+                                                        <label class="col-form-label">Unidad</label>
+                                                        <select class="form-select "
+                                                        id="id_unidad" name="id_unidad" required>
+                                                            <option value="">Seleccione una Unidad</option>
+                                                            <option th:each="uni : ${unidades}" th:value="${uni.id_unidad}"
+                                                                th:if="${uni.estado != 'X'}" th:text="${uni.nombre_unidad}"></option>
+                                                                
+                                                        </select>
+                                                       
+                                                        
+                                                    </div>
+
+                                                    <div class="col-md-4 text-dark">
+                                                        <label class="col-form-label">Carreras</label>
+                                                        <select class="form-select "
+                                                        id="id_carrera" name="id_carrera" required>
+                                                            <option value="">Seleccione una Carrera</option>
+                                                            <option th:each="car : ${carreras}" th:value="${car.id_carrera}"
+                                                                th:if="${car.estado != 'X'}" th:text="${car.nombre_carrera}"></option>
+                                                                
+                                                        </select>
+                                                       
+                                                        
+                                                    </div>
+
+
+
                                                     <div class="col-md-4 text-dark">
                                                         <label class="col-form-label">Gestión</label>
                                                         <select class="form-select js-choice" name="gestion"required>

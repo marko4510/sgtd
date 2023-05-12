@@ -75,8 +75,10 @@ public class TramiteServiceImpl implements ITramiteService{
     }
 
     @Override
-    public List<Tramite> tramitePorGestion(String gestion) {
-        return (List<Tramite>) tramiteDao.tramitePorGestion(gestion);
+    public List<Tramite> reporteCarpetaPorUnidadCarreraGestion(Long id_unidad, Long id_carrera, String gestion) {
+        return (List<Tramite>) tramiteDao.reporteCarpetaPorUnidadCarreraGestion(id_unidad, id_carrera, gestion);
     }
+
+ 
 
 }

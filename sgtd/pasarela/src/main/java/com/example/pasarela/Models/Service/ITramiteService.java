@@ -27,5 +27,5 @@ public interface ITramiteService {
 	public List<Tramite> listaCarpetaProvision();
 
 	//LISTAS PARA REPORTES POR GESTION
-	public List<Tramite> tramitePorGestion(String gestion);
+	public List<Tramite> reporteCarpetaPorUnidadCarreraGestion(Long id_unidad, Long id_carrera, String gestion);
 }
