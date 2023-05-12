@@ -31,9 +31,10 @@ public class Tramite {
     private String nro_tramite;
     private String observacion;
     private Date fecha_recepcion;
-    private Date fecha_emision;
+    private Date fecha_titulacion;
     private String estado;
-
+    private String gestion;
+   
      
     @Transient
     private MultipartFile file; 
@@ -61,4 +62,9 @@ public class Tramite {
         @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "id_tipo_documento")
         private TipoDocumento tipoDocumento;
+
+         //Tabla Unidad
+         @ManyToOne(fetch = FetchType.EAGER)
+         @JoinColumn(name = "id_unidad")
+         private Unidad unidad;
 }
