@@ -3,6 +3,9 @@ package com.example.pasarela.Controller.TramiteControllers;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -301,25 +305,48 @@ public class TramiteController {
     }
 
 
-    @GetMapping("/inicioReporteCarpetas")
+    @GetMapping("/inicioReportes")
     public String inicioReporteCarpetas(Model model) {
         model.addAttribute("tipoDocumentos", tipoDocumentoService.findAll());
         model.addAttribute("documentos", documentoService.findAll());
         model.addAttribute("unidades", unidadService.findAll());
         model.addAttribute("carreras", carreraService.findAll());
-        return "tramite/reporte/inicioReporteCarpetas.html";
+        return "tramite/reporte/generarReportes.html";
     }
 
-    @PostMapping("/generarReporteCarpetaTipoDocumento")
-    public String generarReporteCarpetaTipoDocumento(@RequestParam("id_tipo_documento") Long id_tipo_documento,
+    @PostMapping("/generarReporteUnidadTipoDocGestion")
+    public String generarReporteUnidadTipoDocGestion(
+        @RequestParam("id_tipo_documento") Long id_tipo_documento,
+        @RequestParam("id_unidad") Long id_unidad,
+        @RequestParam("gestion") String gestion,
             Model model) throws FileNotFoundException, IOException {
 
+                Unidad unidad = unidadService.findOne(id_unidad);
+    
         
-        
-        model.addAttribute("tramites", tramiteService.tramitePorTipoDocumento(id_tipo_documento));
-      
+        model.addAttribute("tramites", tramiteService.tramitePorUnidadTipoDocumentoGestion(id_unidad, id_tipo_documento, gestion));
+        model.addAttribute("unidad", unidad);
+        model.addAttribute("gestion", gestion);
 
-        return "tramite/reporte/reporteTipoDocumento.html";
+        return "tramite/reporte/reporteTramiteTipoDocumentos.html";
+    }
+
+    @PostMapping("/generarReporteUnidadTipoDocDocGestion")
+    public String generarReporteUnidadTipoDocDocGestion(
+        @RequestParam("id_tipo_documento") Long id_tipo_documento,
+        @RequestParam("id_documento") Long id_documento,
+        @RequestParam("id_unidad") Long id_unidad,
+        @RequestParam("gestion") String gestion,
+            Model model) throws FileNotFoundException, IOException {
+
+                Unidad unidad = unidadService.findOne(id_unidad);
+    
+        
+        model.addAttribute("tramites", tramiteService.tramitePorUnidadTipoDocumentoDocumentoGestion(id_unidad, id_tipo_documento, id_documento, gestion));
+        model.addAttribute("unidad", unidad);
+        model.addAttribute("gestion", gestion);
+
+        return "tramite/reporte/reporteTramiteTipoDocumentosDoc.html";
     }
 
     @PostMapping("/generarReporteCarpetaDocumento")
@@ -346,6 +373,23 @@ public class TramiteController {
 
         return "tramite/reporte/reporteDocumentoTipoDocumento.html";
     }
+    //REPORTES POR GESTION
+    @PostMapping("/generarReporteTituladosUnidadGestion")
+    public String generarReporteTituladosUnidadGestion(
+        @RequestParam("id_unidad") Long id_unidad,
+        @RequestParam("gestion") String gestion,
+            Model model) throws FileNotFoundException, IOException {
+
+        Unidad unidad = unidadService.findOne(id_unidad);
+    
+        
+        model.addAttribute("tramites", tramiteService.reporteTituladosPorUnidadGestion(id_unidad, gestion));
+        model.addAttribute("unidad", unidad);
+        model.addAttribute("gestion", gestion);
+
+        return "tramite/reporte/reporteUnidad.html";
+    }
+
 
     @PostMapping("/generarReporteCarpetaUnidadCarreraGestion")
     public String generarReporteCarpetaUnidadCarreraGestion(
@@ -364,4 +408,40 @@ public class TramiteController {
 
         return "tramite/reporte/reporteGestion.html";
     }
+
+    @PostMapping("/generarReporteCarpetaUnidadCarreraGestionSexo")
+    public String generarReporteCarpetaUnidadCarreraGestionSexo(
+        @RequestParam("id_unidad") Long id_unidad,
+        @RequestParam("id_carrera") Long id_carrera,
+        @RequestParam("gestion") String gestion,
+        @RequestParam("sexo") String sexo,
+            Model model) throws FileNotFoundException, IOException {
+
+        Unidad unidad = unidadService.findOne(id_unidad);
+        Carrera carrera = carreraService.findOne(id_carrera);
+        
+        model.addAttribute("tramites", tramiteService.reporteCarpetaPorUnidadCarreraGestionSexo(id_unidad, id_carrera, gestion, sexo));
+        model.addAttribute("unidad", unidad);
+        model.addAttribute("carrera", carrera);
+        model.addAttribute("gestion", gestion);
+
+        return "tramite/reporte/reporteGestionSexo.html";
+    }
+
+    @PostMapping("/generarReporteTituladosPorFechas")
+    public String generarReporteTituladosPorFechas(
+        @RequestParam("fechaInicio") @DateTimeFormat(pattern= "yyyy-MM-dd") Date fechaInicio,
+        @RequestParam("fechaFin") @DateTimeFormat(pattern= "yyyy-MM-dd") Date fechaFin,
+            Model model) throws FileNotFoundException, IOException {
+
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                String fechaInicioFormateado = formato.format(fechaInicio);
+                String fechaFinFormateado = formato.format(fechaFin);
+        model.addAttribute("tramites", tramiteService.reporteTituladosPorFechas(fechaInicio, fechaFin));
+        model.addAttribute("fechaInicio", fechaInicioFormateado);
+        model.addAttribute("fechaFin", fechaFinFormateado);
+        return "tramite/reporte/reporteFechas.html";
+    }
+
+
 }

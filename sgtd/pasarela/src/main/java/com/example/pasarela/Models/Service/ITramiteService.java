@@ -1,5 +1,7 @@
 package com.example.pasarela.Models.Service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import com.example.pasarela.Models.Entity.Tramite;
@@ -27,5 +29,14 @@ public interface ITramiteService {
 	public List<Tramite> listaCarpetaProvision();
 
 	//LISTAS PARA REPORTES POR GESTION
+	public List<Tramite> reporteTituladosPorUnidadGestion(Long id_unidad, String gestion);
 	public List<Tramite> reporteCarpetaPorUnidadCarreraGestion(Long id_unidad, Long id_carrera, String gestion);
+
+	public List<Tramite> reporteCarpetaPorUnidadCarreraGestionSexo(Long id_unidad, Long id_carrera, String gestion, String sexo);
+
+	public List<Tramite> reporteTituladosPorFechas(Date fechaInicio, Date fechaFin);
+
+	//LISTAS PARA REPORTES POR TIPO DOCUMENTO
+	public List<Tramite> tramitePorUnidadTipoDocumentoGestion(Long id_unidad,Long id_tipo_documento,String gestion);
+	public List<Tramite> tramitePorUnidadTipoDocumentoDocumentoGestion(Long id_unidad,Long id_tipo_documento,Long id_documento,String gestion);
 }

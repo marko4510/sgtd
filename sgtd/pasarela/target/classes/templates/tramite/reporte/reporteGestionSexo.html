@@ -6,36 +6,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reporte de Carpeta de Trámite por Tipo Documento</title>
+  <title>Reporte de Carpeta de Trámite por Gestión</title>
 
   <style>
-		table {
-			border-collapse: collapse;
-			width: 100%;
-			margin-bottom: 20px;
-			font-size: 14px;
-		}
+  
 
-		table th, table td {
-			padding: 10px;
-			text-align: left;
-			border: 1px solid #ddd;
-		}
-
-		table th {
-			background-color: #f2f2f2;
-			font-weight: bold;
-			color: #333;
-		}
-
-		table tr:nth-child(even) {
-			background-color: #f2f2f2;
-		}
-
-		table tr:hover {
-			background-color: #ddd;
-		}
-	</style>
+  
+  </style>
 </head>
 
 <body>
@@ -48,59 +25,58 @@
         -->
       </section>
 
-      <div class="center-text">
-        
-        <h2 class="title">REPORTE DE CARPETA DE TRÁMITES POR TIPO DE DOCUMENTO</h2>
-        
-       
-     
-      </div>
-
       <div class="card-body">
-        <table >
-            <thead>
-                <tr>
-                  <th class="border-bottom-0">#</th>
-                    <th class="border-bottom-0">Nro Tramite</th>
-                    <th class="border-bottom-0">Tipo de Documento</th>
-                    <th class="border-bottom-0">Documento</th>
-                    
-                    <th class="border-bottom-0">Persona</th>
+        <table width="100%" border="1" cellspacing="0" cellpadding="0">  
+          <tr><td align="center" width="20%" ><img border="0" th:src="@{../../../../assets/images/uap.png}" class="img-rounded img-responsive"  alt="UAP" width="60" height="70"></td>
+               <td width="60%" height="100%"> <table border="0" width="100%" cellspacing="0" cellpadding="0">  
+                       <tr><td height="30" align="center"><font size="3" face="sans-serif"><b>REPORTE</b></font></font></td> </tr>    
+                       <tr><td height="50" align="center" valign="middle"><font size="5" face="sans-serif"><b>Lista de Titulados por Tipo de Sexo</b></font></td></tr>
+                    </table>
+                </td>
+               <td width="20%" align="center"> 
+                     <table border="1" width="100%" height="100%" cellspacing="0" cellpadding="0">  
+                         <tr><td   align="left"><font size="1" face="sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;REP: 003-C </font></td></tr>
+                         <tr><td  ><font size="1" face="sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;Versión</font></td></tr>
+                         <tr><td  align="left" ><font size="1" face="sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript: window.print()'>Valido 00-00-00</a></font></td> </tr> 
+                     </table>
+               </td>
+            </tr>
+            
+       </table>
+         <table width="100%" border="1" cellspacing="0" cellpadding="0">
+          <tr><td><strong>Unidad</strong><td th:text="${unidad.nombre_unidad}"></td></td><td><strong>Carrera</strong><td th:text="${carrera.nombre_carrera}"></td></td></tr>
+          <tr><td><strong>Gestión</strong><td th:text="${gestion}"></td></td><td><strong></strong><td></td></td></tr>
         
-                    
-
-                </tr>
-            </thead>
-            <tbody>
-
-                <tr th:each="td, i : ${tramites}" th:if="${td.estado != 'X'}">
-                  <td th:text="${i.index + 1}"></td>
-                    <td th:text="${td.nro_tramite}"> </td>
-                    <td th:text="${td.tipoDocumento.nombre_tipo_documento}"></td>
-                    <td th:text="${td.documento.nombre_documento}"></td>
-                   
-                    <td th:text=" ${td.persona.ci}+'-'+${td.persona.nombre}+' '+${td.persona.ap_paterno}+' '+${td.persona.ap_materno}">
-
-
-                    </td>
-                </tr>
-
-
-            </tbody>
-            <tfoot>
-                <tr>
-                  <th class="border-bottom-0">#</th>
-                    <th class="border-bottom-0">Nro Tramite</th>
-                    <th class="border-bottom-0">Tipo de Documento</th>
-                    <th class="border-bottom-0">Documento</th>
-                    
-                    <th class="border-bottom-0">Persona</th>
-             
-                    
-                </tr>
-            </tfoot>
         </table>
-    </div>
+        <table style=" width: 100%;
+        border-collapse: collapse; border: 1px solid black;">
+          <thead>
+          <tr>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">#</th>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">Nro Tramite</th>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">Tipo de Documento</th>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">Documento</th>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">Tipo Sexo</th>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">Persona</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="td, index : ${tramites}" th:if="${td.estado != 'X'}">
+            <td th:text="${index.index + 1}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+            <td th:text="${td.nro_tramite}" style="padding: 8px;text-align: left; border: 1px solid black;"> </td>
+            <td th:text="${td.tipoDocumento.nombre_tipo_documento}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+            <td th:text="${td.documento.nombre_documento}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+            <td th:text="${td.persona.sexo}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+            <td
+                th:text=" ${td.persona.ci}+'-'+${td.persona.nombre}+' '+${td.persona.ap_paterno}+' '+${td.persona.ap_materno}" style="padding: 8px;text-align: left; border: 1px solid black;">
+
+
+
+          </td>
+          </tr>
+        </tbody>
+        </table>
+      </div>
    
     
      

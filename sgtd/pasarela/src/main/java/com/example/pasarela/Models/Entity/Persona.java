@@ -39,6 +39,7 @@ public class Persona implements Serializable {
     private String ap_paterno;
     private String ap_materno;
     private String ci;
+    private String sexo;
 
     @Column(unique = true)
     private String correo;

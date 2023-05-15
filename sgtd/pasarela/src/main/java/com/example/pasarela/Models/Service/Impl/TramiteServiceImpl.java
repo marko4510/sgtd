@@ -1,4 +1,6 @@
 package com.example.pasarela.Models.Service.Impl;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 
@@ -77,6 +79,33 @@ public class TramiteServiceImpl implements ITramiteService{
     @Override
     public List<Tramite> reporteCarpetaPorUnidadCarreraGestion(Long id_unidad, Long id_carrera, String gestion) {
         return (List<Tramite>) tramiteDao.reporteCarpetaPorUnidadCarreraGestion(id_unidad, id_carrera, gestion);
+    }
+
+    @Override
+    public List<Tramite> reporteCarpetaPorUnidadCarreraGestionSexo(Long id_unidad, Long id_carrera, String gestion,
+            String sexo) {
+      return (List<Tramite>) tramiteDao.reporteCarpetaPorUnidadCarreraGestionSexo(id_unidad, id_carrera, gestion, sexo);
+    }
+
+    @Override
+    public List<Tramite> reporteTituladosPorFechas(Date fechaInicio, Date fechaFin) {
+        return (List<Tramite>) tramiteDao.reporteTituladosPorFechas(fechaInicio, fechaFin);
+    }
+
+    @Override
+    public List<Tramite> reporteTituladosPorUnidadGestion(Long id_unidad, String gestion) {
+        return (List<Tramite>) tramiteDao.reporteTituladosPorUnidadGestion(id_unidad, gestion);
+    }
+
+    @Override
+    public List<Tramite> tramitePorUnidadTipoDocumentoGestion(Long id_unidad, Long id_tipo_documento, String gestion) {
+        return (List<Tramite>) tramiteDao.tramitePorUnidadTipoDocumentoGestion(id_unidad, id_tipo_documento, gestion);
+    }
+
+    @Override
+    public List<Tramite> tramitePorUnidadTipoDocumentoDocumentoGestion(Long id_unidad, Long id_tipo_documento,
+            Long id_documento, String gestion) {
+                return (List<Tramite>) tramiteDao.tramitePorUnidadTipoDocumentoDocumentoGestion(id_unidad, id_tipo_documento, id_documento, gestion);
     }
 
  

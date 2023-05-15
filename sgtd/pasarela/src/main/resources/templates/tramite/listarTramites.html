@@ -78,11 +78,7 @@
                                     data-bs-target="#provision" type="button" role="tab" aria-controls="provision"
                                     aria-selected="false">Provisión Nacional</button>
                             </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="reporte-tab" data-bs-toggle="tab" data-bs-target="#reporte"
-                                    type="button" role="tab" aria-controls="reporte"
-                                    aria-selected="false">Reportes</button>
-                            </li>
+                      
                         </ul>
                         <div class="tab-content" id="myTabContent">
                         <!--INICIO LISTA CARPETAS LEGALIZACIONES-->
@@ -455,113 +451,7 @@
                           <!--FIN LISTA CARPETAS PROVISION NACIONAL-->
                         
 
-                           <!--INICIO LISTA CARPETAS REPORTES-->
-                           <div class="tab-pane fade" id="reporte" role="tabpanel" aria-labelledby="reporte-tab">
-                            <div class="card-body">
-                                <div class="d-flex align-items-start">
-                                    <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                      <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">General</button>
-                                      <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Género</button>
-                                      <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Fechas</button>
-                                      <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</button>
-                                    </div>
-                                    <div class="tab-content" id="v-pills-tabContent" style="width: 1500px; height: 1200;">
-                                      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                     
-                                       <h3 >Reporte por Unidad, Carrera y Gestión </h3>
-                                        
-                                            <form th:action="@{/generarReporteCarpetaUnidadCarreraGestion}" method="post">
-                                                <div class="row">
-
-                                                    <div class="col-md-4 text-dark">
-                                                        <label class="col-form-label">Unidad</label>
-                                                        <select class="form-select "
-                                                        id="id_unidad" name="id_unidad" required>
-                                                            <option value="">Seleccione una Unidad</option>
-                                                            <option th:each="uni : ${unidades}" th:value="${uni.id_unidad}"
-                                                                th:if="${uni.estado != 'X'}" th:text="${uni.nombre_unidad}"></option>
-                                                                
-                                                        </select>
-                                                       
-                                                        
-                                                    </div>
-
-                                                    <div class="col-md-4 text-dark">
-                                                        <label class="col-form-label">Carreras</label>
-                                                        <select class="form-select "
-                                                        id="id_carrera" name="id_carrera" required>
-                                                            <option value="">Seleccione una Carrera</option>
-                                                            <option th:each="car : ${carreras}" th:value="${car.id_carrera}"
-                                                                th:if="${car.estado != 'X'}" th:text="${car.nombre_carrera}"></option>
-                                                                
-                                                        </select>
-                                                       
-                                                        
-                                                    </div>
-
-
-
-                                                    <div class="col-md-4 text-dark">
-                                                        <label class="col-form-label">Gestión</label>
-                                                        <select class="form-select js-choice" name="gestion"required>
-                                                            <option value="">Seleccione una Gestión</option>
-                                                            <option value="2000">2000</option>
-                                                            <option value="2001">2001</option>
-                                                            <option value="2002">2002</option>
-                                                            <option value="2003">2003</option>
-                                                            <option value="2004">2004</option>
-                                                            <option value="2005">2005</option>
-                                                            <option value="2006">2006</option>
-                                                            <option value="2007">2007</option>
-                                                            <option value="2008">2008</option>
-                                                            <option value="2009">2009</option>
-                                                            <option value="2010">2010</option>
-                                                            <option value="2011">2011</option>
-                                                            <option value="2012">2012</option>
-                                                            <option value="2013">2013</option>
-                                                            <option value="2014">2014</option>
-                                                            <option value="2015">2015</option>
-                                                            <option value="2016">2016</option>
-                                                            <option value="2017">2017</option>
-                                                            <option value="2018">2018</option>
-                                                            <option value="2019">2019</option>
-                                                            <option value="2020">2020</option>
-                                                            <option value="2021">2021</option>
-                                                            <option value="2022">2022</option>
-                                                            <option value="2023">2023</option>
-                                                            <option value="2024">2024</option>
-                                                            <option value="2025">2025</option>
-                                                            <option value="2026">2026</option>
-                                                            <option value="2027">2027</option>
-                                                            <option value="2028">2028</option>
-                                                            <option value="2029">2029</option>
-                                                            <option value="2030">2030</option>
-                                                          </select>
-                                                        
-                                                    </div>
-                                                
-                                            </div>
-                                            <br>
-                                            <div class="text-center">
-                                                <button class="btn btn-primary" type="submit"
-                                                    th:text="${edit} ?'Actualizar' :'Registrar'"></button>
-                                            </div>
-                                            </form>
-
-                                       
-                                   
-                                    </div>
-
-                                      </div>
-                                      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
-                                      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">...</div>
-                                      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
-                                    </div>
-                                  </div>
-                            </div>
-                          
-                            </div>
-                           <!--FIN LISTA CARPETAS REPORTES-->
+                    
 
 
                           <div class="modal fade" tabindex="-1" id="ModalEvaluacion" role="dialog"
