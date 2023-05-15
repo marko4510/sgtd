@@ -43,7 +43,35 @@
        </table>
          <table width="100%" border="1" cellspacing="0" cellpadding="0">
           <tr><td><strong>Unidad</strong><td th:text="${unidad.nombre_unidad}"></td></td><td><strong>Carrera</strong><td th:text="${carrera.nombre_carrera}"></td></td></tr>
-          <tr><td><strong>Gestión</strong><td th:text="${gestion}"></td></td><td><strong>aaa</strong><td>eeee</td></td></tr>
+          <tr><td><strong>Gestión</strong><td th:text="${gestion}"></td></td><td><strong></strong><td></td></td></tr>
+        
+        </table>
+        <table width="100%" border="1" cellspacing="0" cellpadding="0">
+          <thead>
+          <tr>
+            <th >#</th>
+            <th >Nro Tramite</th>
+            <th >Tipo de Documento</th>
+            <th >Documento</th>
+
+            <th >Persona</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="td, index : ${tramites}" th:if="${td.estado != 'X'}">
+            <td th:text="${index.index + 1}" ></td>
+            <td th:text="${td.nro_tramite}"> </td>
+            <td th:text="${td.tipoDocumento.nombre_tipo_documento}"></td>
+            <td th:text="${td.documento.nombre_documento}"></td>
+
+            <td
+                th:text=" ${td.persona.ci}+'-'+${td.persona.nombre}+' '+${td.persona.ap_paterno}+' '+${td.persona.ap_materno}">
+
+
+
+            <td>
+          </tr>
+        </tbody>
         </table>
       </div>
    

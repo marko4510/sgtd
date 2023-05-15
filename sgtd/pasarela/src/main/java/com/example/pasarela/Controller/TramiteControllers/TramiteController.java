@@ -169,8 +169,12 @@ public class TramiteController {
     public String facultadL(Model model, HttpServletRequest request) {
         if (request.getSession().getAttribute("usuario") != null) {
             
+
+            
+
             model.addAttribute("tramites", tramiteService.findAll());
             model.addAttribute("listaLegalizacion", tramiteService.listaCarpetaLegalizacion());
+           
             model.addAttribute("listaSupletorio", tramiteService.listaCarpetaSupletorio());
             model.addAttribute("listaTitulos", tramiteService.listaCarpetaTitulos());
             model.addAttribute("listaProvision", tramiteService.listaCarpetaProvision());

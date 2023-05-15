@@ -32,6 +32,7 @@ import com.example.pasarela.Models.Entity.GradoAcademico;
 import com.example.pasarela.Models.Entity.Nacionalidad;
 import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.Provincia;
+import com.example.pasarela.Models.Entity.Tramite;
 import com.example.pasarela.Models.Entity.Usuario;
 import com.example.pasarela.Models.Service.ICarreraService;
 import com.example.pasarela.Models.Service.IDepartamentoService;
@@ -39,6 +40,7 @@ import com.example.pasarela.Models.Service.IGradoAcademicoService;
 import com.example.pasarela.Models.Service.INacionalidadService;
 import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.IProvinciaService;
+import com.example.pasarela.Models.Service.ITramiteService;
 import com.example.pasarela.Models.Service.IUsuarioService;
 
 @Controller
@@ -64,6 +66,9 @@ public class LoginController {
 
 	@Autowired
 	private IProvinciaService provinciaService;
+
+	@Autowired
+    private ITramiteService tramiteService;
 
 	// Funcion de visualizacion de iniciar sesiòn administrador
 	@RequestMapping(value = "/LoginR", method = RequestMethod.GET)
@@ -91,6 +96,8 @@ public class LoginController {
 
 			flash.addAttribute("success", usuario.getPersona().getNombre());
 
+			
+			
 			return "redirect:/AdmPG/";
 
 		} else {
@@ -103,6 +110,14 @@ public class LoginController {
 	@RequestMapping(value = "/AdmPG", method = RequestMethod.GET) // Pagina principal
 	public String Inicio(HttpServletRequest request, Model model) {
 		if (request.getSession().getAttribute("usuario") != null) {
+			List<Tramite> listL = tramiteService.listaCarpetaLegalizacion();
+			List<Tramite> listS = tramiteService.listaCarpetaSupletorio();
+			List<Tramite> listT = tramiteService.listaCarpetaTitulos();
+			List<Tramite> listP = tramiteService.listaCarpetaProvision();
+            model.addAttribute("listL", listL.size());
+			model.addAttribute("listS", listS.size());
+			model.addAttribute("listT", listT.size());
+			model.addAttribute("listP", listP.size());
 			return "adm";
 		} else {
 			return "redirect:LoginR";
