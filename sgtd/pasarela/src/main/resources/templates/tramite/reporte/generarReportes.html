@@ -45,57 +45,78 @@
                         <br>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Titulados PreGrado</button>
+                                <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                    aria-selected="true">Titulados PreGrado</button>
                             </li>
 
+<<<<<<< HEAD
                             
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="posgrado-tab" data-bs-toggle="tab" data-bs-target="#posgrado" type="button" role="tab" aria-controls="posgrado" aria-selected="false">Titulados PosGrado</button>
                               </li>
                            
+=======
+>>>>>>> 3cfa83791ead4638d51f07eb8ae87358be0f1766
                             <li class="nav-item" role="presentation">
-                              <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Trámites</button>
+                                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                                    type="button" role="tab" aria-controls="contact"
+                                    aria-selected="false">Trámites</button>
                             </li>
-                      
-                          </ul>
-                          <div class="tab-content" id="myTabContent">
+
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="card-body">
                                     <div class="d-flex align-items-start">
-                                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                                          <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home" aria-selected="true">Unidad</button>
-                                          <button class="nav-link" id="v-pills-carrera-tab" data-bs-toggle="pill" data-bs-target="#v-pills-carrera" type="button" role="tab" aria-controls="v-pills-carrera" aria-selected="false">Carrera</button>
-                                          <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false">Género</button>
-                                          <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Fechas</button>
+                                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                                            aria-orientation="vertical">
+                                            <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
+                                                data-bs-target="#v-pills-home" type="button" role="tab"
+                                                aria-controls="v-pills-home" aria-selected="true">Unidad</button>
+                                            <button class="nav-link" id="v-pills-carrera-tab" data-bs-toggle="pill"
+                                                data-bs-target="#v-pills-carrera" type="button" role="tab"
+                                                aria-controls="v-pills-carrera" aria-selected="false">Carrera</button>
+                                            <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                                data-bs-target="#v-pills-profile" type="button" role="tab"
+                                                aria-controls="v-pills-profile" aria-selected="false">Género</button>
+                                            <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill"
+                                                data-bs-target="#v-pills-messages" type="button" role="tab"
+                                                aria-controls="v-pills-messages" aria-selected="false">Fechas</button>
 
                                         </div>
-                                        <div class="tab-content" id="v-pills-tabContent" >
-                                          <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                         
-                                           <h3 >Reporte de Titulados por Unidad, Carrera y Gestión </h3>
-                                           <br>
-                                            
-                                                <form th:action="@{/generarReporteTituladosUnidadGestion}" method="post">
+                                        <div class="tab-content" id="v-pills-tabContent">
+                                            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                                                aria-labelledby="v-pills-home-tab">
+
+                                                <h3>Reporte de Titulados por Unidad, Carrera y Gestión </h3>
+                                                <br>
+
+                                                <form th:action="@{/generarReporteTituladosUnidadGestion}"
+                                                    method="post">
                                                     <div class="row">
-    
+
                                                         <div class="col-md-4 text-dark">
                                                             <label class="col-form-label">Unidad</label>
-                                                            <select class="form-select "
-                                                            id="id_unidad" name="id_unidad" required>
+                                                            <select class="form-select " id="id_unidad" name="id_unidad"
+                                                                required>
                                                                 <option value="">Seleccione una Unidad</option>
-                                                                <option th:each="uni : ${unidades}" th:value="${uni.id_unidad}"
-                                                                    th:if="${uni.estado != 'X'}" th:text="${uni.nombre_unidad}"></option>
-                                                                    
+                                                                <option th:each="uni : ${unidades}"
+                                                                    th:value="${uni.id_unidad}"
+                                                                    th:if="${uni.estado != 'X'}"
+                                                                    th:text="${uni.nombre_unidad}"></option>
+
                                                             </select>
-                                                           
-                                                            
+
+
                                                         </div>
-    
-    
-    
+
+
+
                                                         <div class="col-md-4 text-dark">
                                                             <label class="col-form-label">Gestión</label>
-                                                            <select class="form-select js-choice" name="gestion"required>
+                                                            <select class="form-select js-choice" name="gestion"
+                                                                required>
                                                                 <option value="">Seleccione una Gestión</option>
                                                                 <option value="2000">2000</option>
                                                                 <option value="2001">2001</option>
@@ -128,19 +149,19 @@
                                                                 <option value="2028">2028</option>
                                                                 <option value="2029">2029</option>
                                                                 <option value="2030">2030</option>
-                                                              </select>
-                                                            
+                                                            </select>
+
                                                         </div>
-                                                    
-                                                </div>
-                                                <br>
-                                                <div class="text-center">
-                                                    <button class="btn btn-success" type="submit"
-                                                        th:text="${edit} ?'Actualizar' :'Generar'"></button>
-                                                </div>
+
+                                                    </div>
+                                                    <br>
+                                                    <div class="text-center">
+                                                        <button class="btn btn-success" type="submit"
+                                                            th:text="${edit} ?'Actualizar' :'Generar'"></button>
+                                                    </div>
                                                 </form>
-    
-                                           
+
+
                                                 <br>
                                                 <br>
                                                 <br>
@@ -152,197 +173,210 @@
                                                 <br>
                                                 <br>
                                                 <br>
-                                        </div>
-                                        
-                                        <div class="tab-pane fade" id="v-pills-carrera" role="tabpanel" aria-labelledby="v-pills-carrera-tab">
-                                            <h3 >Reporte de Titulados por Unidad, Carrera y Gestión </h3>
-                                            <br>
-                                             
-                                                 <form th:action="@{/generarReporteCarpetaUnidadCarreraGestion}" method="post">
-                                                     <div class="row">
-     
-                                                         <div class="col-md-4 text-dark">
-                                                             <label class="col-form-label">Unidad</label>
-                                                             <select class="form-select "
-                                                             id="id_unidad" name="id_unidad" required>
-                                                                 <option value="">Seleccione una Unidad</option>
-                                                                 <option th:each="uni : ${unidades}" th:value="${uni.id_unidad}"
-                                                                     th:if="${uni.estado != 'X'}" th:text="${uni.nombre_unidad}"></option>
-                                                                     
-                                                             </select>
-                                                            
-                                                             
-                                                         </div>
-     
-                                                         <div class="col-md-4 text-dark">
-                                                             <label class="col-form-label">Carreras</label>
-                                                             <select class="form-select "
-                                                             id="id_carrera" name="id_carrera" required>
-                                                                 <option value="">Seleccione una Carrera</option>
-                                                                 <option th:each="car : ${carreras}" th:value="${car.id_carrera}"
-                                                                     th:if="${car.estado != 'X'}" th:text="${car.nombre_carrera}"></option>
-                                                                     
-                                                             </select>
-                                                            
-                                                             
-                                                         </div>
-     
-     
-     
-                                                         <div class="col-md-4 text-dark">
-                                                             <label class="col-form-label">Gestión</label>
-                                                             <select class="form-select js-choice" name="gestion"required>
-                                                                 <option value="">Seleccione una Gestión</option>
-                                                                 <option value="2000">2000</option>
-                                                                 <option value="2001">2001</option>
-                                                                 <option value="2002">2002</option>
-                                                                 <option value="2003">2003</option>
-                                                                 <option value="2004">2004</option>
-                                                                 <option value="2005">2005</option>
-                                                                 <option value="2006">2006</option>
-                                                                 <option value="2007">2007</option>
-                                                                 <option value="2008">2008</option>
-                                                                 <option value="2009">2009</option>
-                                                                 <option value="2010">2010</option>
-                                                                 <option value="2011">2011</option>
-                                                                 <option value="2012">2012</option>
-                                                                 <option value="2013">2013</option>
-                                                                 <option value="2014">2014</option>
-                                                                 <option value="2015">2015</option>
-                                                                 <option value="2016">2016</option>
-                                                                 <option value="2017">2017</option>
-                                                                 <option value="2018">2018</option>
-                                                                 <option value="2019">2019</option>
-                                                                 <option value="2020">2020</option>
-                                                                 <option value="2021">2021</option>
-                                                                 <option value="2022">2022</option>
-                                                                 <option value="2023">2023</option>
-                                                                 <option value="2024">2024</option>
-                                                                 <option value="2025">2025</option>
-                                                                 <option value="2026">2026</option>
-                                                                 <option value="2027">2027</option>
-                                                                 <option value="2028">2028</option>
-                                                                 <option value="2029">2029</option>
-                                                                 <option value="2030">2030</option>
-                                                               </select>
-                                                             
-                                                         </div>
-                                                     
-                                                 </div>
-                                                 <br>
-                                                 <div class="text-center">
-                                                     <button class="btn btn-success" type="submit"
-                                                         th:text="${edit} ?'Actualizar' :'Generar'"></button>
-                                                 </div>
-                                                 </form>
-     
-                                            
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                            
-                                        </div>
-                                          <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-                                       
-                                            <h3 >Reporte de Titulados por Unidad,Carrera,Gestión y Tipo Sexo </h3>
-                                            <br>
-                                            <form th:action="@{/generarReporteCarpetaUnidadCarreraGestionSexo}" method="post">
-                                                <div class="row">
-    
-                                                    <div class="col-md-4 text-dark">
-                                                        <label class="col-form-label">Unidad</label>
-                                                        <select class="form-select "
-                                                        id="id_unidad" name="id_unidad" required>
-                                                            <option value="">Seleccione una Unidad</option>
-                                                            <option th:each="uni : ${unidades}" th:value="${uni.id_unidad}"
-                                                                th:if="${uni.estado != 'X'}" th:text="${uni.nombre_unidad}"></option>
-                                                                
-                                                        </select>
-                                                       
-                                                        
-                                                    </div>
-    
-                                                    <div class="col-md-4 text-dark">
-                                                        <label class="col-form-label">Carreras</label>
-                                                        <select class="form-select "
-                                                        id="id_carrera" name="id_carrera" required>
-                                                            <option value="">Seleccione una Carrera</option>
-                                                            <option th:each="car : ${carreras}" th:value="${car.id_carrera}"
-                                                                th:if="${car.estado != 'X'}" th:text="${car.nombre_carrera}"></option>
-                                                                
-                                                        </select>
-                                                       
-                                                        
-                                                    </div>
-    
-    
-    
-                                                    <div class="col-md-4 text-dark">
-                                                        <label class="col-form-label">Gestión</label>
-                                                        <select class="form-select js-choice" name="gestion"required>
-                                                            <option value="">Seleccione una Gestión</option>
-                                                            <option value="2000">2000</option>
-                                                            <option value="2001">2001</option>
-                                                            <option value="2002">2002</option>
-                                                            <option value="2003">2003</option>
-                                                            <option value="2004">2004</option>
-                                                            <option value="2005">2005</option>
-                                                            <option value="2006">2006</option>
-                                                            <option value="2007">2007</option>
-                                                            <option value="2008">2008</option>
-                                                            <option value="2009">2009</option>
-                                                            <option value="2010">2010</option>
-                                                            <option value="2011">2011</option>
-                                                            <option value="2012">2012</option>
-                                                            <option value="2013">2013</option>
-                                                            <option value="2014">2014</option>
-                                                            <option value="2015">2015</option>
-                                                            <option value="2016">2016</option>
-                                                            <option value="2017">2017</option>
-                                                            <option value="2018">2018</option>
-                                                            <option value="2019">2019</option>
-                                                            <option value="2020">2020</option>
-                                                            <option value="2021">2021</option>
-                                                            <option value="2022">2022</option>
-                                                            <option value="2023">2023</option>
-                                                            <option value="2024">2024</option>
-                                                            <option value="2025">2025</option>
-                                                            <option value="2026">2026</option>
-                                                            <option value="2027">2027</option>
-                                                            <option value="2028">2028</option>
-                                                            <option value="2029">2029</option>
-                                                            <option value="2030">2030</option>
-                                                          </select>
-                                                        
-                                                    </div>
-                                                    <div class="col-md-4 text-dark">
-                                                        <label class="col-form-label">Sexo</label>
-                                                        <select class="form-select " name="sexo"required>
-                                                            <option value="">Seleccione un Tipo de Sexo</option>
-                                                            <option value="Masculino">Masculino</option>
-                                                            <option value="Femenino">Femenino</option>
-                                                        
-                                                            
-                                                          </select>
-                                                        
-                                                    </div>
-                                                
                                             </div>
-                                            <br>
-                                            <div class="text-center">
-                                                <button class="btn btn-success" type="submit"
-                                                    th:text="${edit} ?'Actualizar' :'Generar'"></button>
+
+                                            <div class="tab-pane fade" id="v-pills-carrera" role="tabpanel"
+                                                aria-labelledby="v-pills-carrera-tab">
+                                                <h3>Reporte de Titulados por Unidad, Carrera y Gestión </h3>
+                                                <br>
+
+                                                <form th:action="@{/generarReporteCarpetaUnidadCarreraGestion}"
+                                                    method="post">
+                                                    <div class="row">
+
+                                                        <div class="col-md-4 text-dark">
+                                                            <label class="col-form-label">Unidad</label>
+                                                            <select class="form-select " id="id_unidad" name="id_unidad"
+                                                                required>
+                                                                <option value="">Seleccione una Unidad</option>
+                                                                <option th:each="uni : ${unidades}"
+                                                                    th:value="${uni.id_unidad}"
+                                                                    th:if="${uni.estado != 'X'}"
+                                                                    th:text="${uni.nombre_unidad}"></option>
+
+                                                            </select>
+
+
+                                                        </div>
+
+                                                        <div class="col-md-4 text-dark">
+                                                            <label class="col-form-label">Carreras</label>
+                                                            <select class="form-select " id="id_carrera"
+                                                                name="id_carrera" required>
+                                                                <option value="">Seleccione una Carrera</option>
+                                                                <option th:each="car : ${carreras}"
+                                                                    th:value="${car.id_carrera}"
+                                                                    th:if="${car.estado != 'X'}"
+                                                                    th:text="${car.nombre_carrera}"></option>
+
+                                                            </select>
+
+
+                                                        </div>
+
+
+
+                                                        <div class="col-md-4 text-dark">
+                                                            <label class="col-form-label">Gestión</label>
+                                                            <select class="form-select js-choice" name="gestion"
+                                                                required>
+                                                                <option value="">Seleccione una Gestión</option>
+                                                                <option value="2000">2000</option>
+                                                                <option value="2001">2001</option>
+                                                                <option value="2002">2002</option>
+                                                                <option value="2003">2003</option>
+                                                                <option value="2004">2004</option>
+                                                                <option value="2005">2005</option>
+                                                                <option value="2006">2006</option>
+                                                                <option value="2007">2007</option>
+                                                                <option value="2008">2008</option>
+                                                                <option value="2009">2009</option>
+                                                                <option value="2010">2010</option>
+                                                                <option value="2011">2011</option>
+                                                                <option value="2012">2012</option>
+                                                                <option value="2013">2013</option>
+                                                                <option value="2014">2014</option>
+                                                                <option value="2015">2015</option>
+                                                                <option value="2016">2016</option>
+                                                                <option value="2017">2017</option>
+                                                                <option value="2018">2018</option>
+                                                                <option value="2019">2019</option>
+                                                                <option value="2020">2020</option>
+                                                                <option value="2021">2021</option>
+                                                                <option value="2022">2022</option>
+                                                                <option value="2023">2023</option>
+                                                                <option value="2024">2024</option>
+                                                                <option value="2025">2025</option>
+                                                                <option value="2026">2026</option>
+                                                                <option value="2027">2027</option>
+                                                                <option value="2028">2028</option>
+                                                                <option value="2029">2029</option>
+                                                                <option value="2030">2030</option>
+                                                            </select>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <br>
+                                                    <div class="text-center">
+                                                        <button class="btn btn-success" type="submit"
+                                                            th:text="${edit} ?'Actualizar' :'Generar'"></button>
+                                                    </div>
+                                                </form>
+
+
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+
                                             </div>
-                                            </form>
-                                            <br>
+                                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
+                                                aria-labelledby="v-pills-profile-tab">
+
+                                                <h3>Reporte de Titulados por Unidad,Carrera,Gestión y Tipo Sexo </h3>
+                                                <br>
+                                                <form th:action="@{/generarReporteCarpetaUnidadCarreraGestionSexo}"
+                                                    method="post">
+                                                    <div class="row">
+
+                                                        <div class="col-md-4 text-dark">
+                                                            <label class="col-form-label">Unidad</label>
+                                                            <select class="form-select " id="id_unidad" name="id_unidad"
+                                                                required>
+                                                                <option value="">Seleccione una Unidad</option>
+                                                                <option th:each="uni : ${unidades}"
+                                                                    th:value="${uni.id_unidad}"
+                                                                    th:if="${uni.estado != 'X'}"
+                                                                    th:text="${uni.nombre_unidad}"></option>
+
+                                                            </select>
+
+
+                                                        </div>
+
+                                                        <div class="col-md-4 text-dark">
+                                                            <label class="col-form-label">Carreras</label>
+                                                            <select class="form-select " id="id_carrera"
+                                                                name="id_carrera" required>
+                                                                <option value="">Seleccione una Carrera</option>
+                                                                <option th:each="car : ${carreras}"
+                                                                    th:value="${car.id_carrera}"
+                                                                    th:if="${car.estado != 'X'}"
+                                                                    th:text="${car.nombre_carrera}"></option>
+
+                                                            </select>
+
+
+                                                        </div>
+
+
+
+                                                        <div class="col-md-4 text-dark">
+                                                            <label class="col-form-label">Gestión</label>
+                                                            <select class="form-select js-choice" name="gestion"
+                                                                required>
+                                                                <option value="">Seleccione una Gestión</option>
+                                                                <option value="2000">2000</option>
+                                                                <option value="2001">2001</option>
+                                                                <option value="2002">2002</option>
+                                                                <option value="2003">2003</option>
+                                                                <option value="2004">2004</option>
+                                                                <option value="2005">2005</option>
+                                                                <option value="2006">2006</option>
+                                                                <option value="2007">2007</option>
+                                                                <option value="2008">2008</option>
+                                                                <option value="2009">2009</option>
+                                                                <option value="2010">2010</option>
+                                                                <option value="2011">2011</option>
+                                                                <option value="2012">2012</option>
+                                                                <option value="2013">2013</option>
+                                                                <option value="2014">2014</option>
+                                                                <option value="2015">2015</option>
+                                                                <option value="2016">2016</option>
+                                                                <option value="2017">2017</option>
+                                                                <option value="2018">2018</option>
+                                                                <option value="2019">2019</option>
+                                                                <option value="2020">2020</option>
+                                                                <option value="2021">2021</option>
+                                                                <option value="2022">2022</option>
+                                                                <option value="2023">2023</option>
+                                                                <option value="2024">2024</option>
+                                                                <option value="2025">2025</option>
+                                                                <option value="2026">2026</option>
+                                                                <option value="2027">2027</option>
+                                                                <option value="2028">2028</option>
+                                                                <option value="2029">2029</option>
+                                                                <option value="2030">2030</option>
+                                                            </select>
+
+                                                        </div>
+                                                        <div class="col-md-4 text-dark">
+                                                            <label class="col-form-label">Sexo</label>
+                                                            <select class="form-select " name="sexo" required>
+                                                                <option value="">Seleccione un Tipo de Sexo</option>
+                                                                <option value="Masculino">Masculino</option>
+                                                                <option value="Femenino">Femenino</option>
+
+
+                                                            </select>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <br>
+                                                    <div class="text-center">
+                                                        <button class="btn btn-success" type="submit"
+                                                            th:text="${edit} ?'Actualizar' :'Generar'"></button>
+                                                    </div>
+                                                </form>
                                                 <br>
                                                 <br>
                                                 <br>
@@ -353,61 +387,64 @@
                                                 <br>
                                                 <br>
                                                 <br>
-    
-                                          </div>
-                                          <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                                            <h3 >Reporte de Titulados por Intervalo de Fechas </h3>
-                                            <br>
-                                             
-                                                 <form th:action="@{/generarReporteTituladosPorFechas}" method="post">
-                                                     <div class="row">
-     
-                                                      
-     
-                                                       
-     
+                                                <br>
+
+                                            </div>
+                                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
+                                                aria-labelledby="v-pills-messages-tab">
+                                                <h3>Reporte de Titulados por Intervalo de Fechas </h3>
+                                                <br>
+
+                                                <form th:action="@{/generarReporteTituladosPorFechas}" method="post">
+                                                    <div class="row">
+
+
+
+
+
                                                         <div class="col-md-4">
                                                             <label class="col-form-label">Fecha Inicio</label>
                                                             <input class="form-control" type="date" name="fechaInicio"
                                                                 required>
                                                         </div>
-    
+
                                                         <div class="col-md-4">
                                                             <label class="col-form-label">Fecha Fin</label>
                                                             <input class="form-control" type="date" name="fechaFin"
-                                                                 required>
+                                                                required>
                                                         </div>
-     
-                                                    
-                                                     
-                                                 </div>
-                                                 <br>
-                                                 <div class="text-center">
-                                                     <button class="btn btn-success" type="submit"
-                                                         th:text="${edit} ?'Actualizar' :'Generar'"></button>
-                                                 </div>
-                                                 </form>
-     
-                                            
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-    
-                                          </div>
-                           
+
+
+
+                                                    </div>
+                                                    <br>
+                                                    <div class="text-center">
+                                                        <button class="btn btn-success" type="submit"
+                                                            th:text="${edit} ?'Actualizar' :'Generar'"></button>
+                                                    </div>
+                                                </form>
+
+
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+
+                                            </div>
+
                                         </div>
-                                      </div>
+                                    </div>
                                 </div>
 
                             </div>
+<<<<<<< HEAD
                             
 
                             <div class="tab-pane fade " id="posgrado" role="tabpanel" aria-labelledby="posgrado-tab">
@@ -626,56 +663,73 @@
                                 </div>
 
                             </div>
+=======
+
+>>>>>>> 3cfa83791ead4638d51f07eb8ae87358be0f1766
 
                             <div class="tab-pane fade " id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <div class="card-body">
                                     <div class="d-flex align-items-start">
-                                        <div class="nav flex-column nav-pills me-3" id="x-pills-tab" role="tablist" aria-orientation="vertical">
-                                          <button class="nav-link active" id="x-pills-general-tab" data-bs-toggle="pill" data-bs-target="#x-pills-general" type="button" role="tab" aria-controls="x-pills-general" aria-selected="true">General</button>
-                                          <button class="nav-link" id="x-pills-documento-tab" data-bs-toggle="pill" data-bs-target="#x-pills-documento" type="button" role="tab" aria-controls="x-pills-documento" aria-selected="false">Documento</button>
-                                          
+                                        <div class="nav flex-column nav-pills me-3" id="x-pills-tab" role="tablist"
+                                            aria-orientation="vertical">
+                                            <button class="nav-link active" id="x-pills-general-tab"
+                                                data-bs-toggle="pill" data-bs-target="#x-pills-general" type="button"
+                                                role="tab" aria-controls="x-pills-general"
+                                                aria-selected="true">General</button>
+                                            <button class="nav-link" id="x-pills-documento-tab" data-bs-toggle="pill"
+                                                data-bs-target="#x-pills-documento" type="button" role="tab"
+                                                aria-controls="x-pills-documento"
+                                                aria-selected="false">Documento</button>
+
 
                                         </div>
-                                        <div class="tab-content" id="x-pills-tabContent" >
-                                          <div class="tab-pane fade show active" id="x-pills-general" role="tabpanel" aria-labelledby="x-pills-general-tab">
-                                         
-                                           <h3 >Reporte de Trámites Por Unidad, Tipo Documento y Gestión </h3>
-                                           <br>
-                                            
+                                        <div class="tab-content" id="x-pills-tabContent">
+                                            <div class="tab-pane fade show active" id="x-pills-general" role="tabpanel"
+                                                aria-labelledby="x-pills-general-tab">
+
+                                                <h3>Reporte de Trámites Por Unidad, Tipo Documento y Gestión </h3>
+                                                <br>
+
                                                 <form th:action="@{/generarReporteUnidadTipoDocGestion}" method="post">
                                                     <div class="row">
-    
+
                                                         <div class="col-md-5 text-dark">
                                                             <label class="col-form-label">Unidad</label>
-                                                            <select class="form-select "
-                                                            id="id_unidad" name="id_unidad" required>
+                                                            <select class="form-select " id="id_unidad" name="id_unidad"
+                                                                required>
                                                                 <option value="">Seleccione una Unidad</option>
-                                                                <option th:each="uni : ${unidades}" th:value="${uni.id_unidad}"
-                                                                    th:if="${uni.estado != 'X'}" th:text="${uni.nombre_unidad}"></option>
-                                                                    
+                                                                <option th:each="uni : ${unidades}"
+                                                                    th:value="${uni.id_unidad}"
+                                                                    th:if="${uni.estado != 'X'}"
+                                                                    th:text="${uni.nombre_unidad}"></option>
+
                                                             </select>
-                                                           
-                                                            
+
+
                                                         </div>
 
                                                         <div class="col-md-5 text-dark">
                                                             <label class="col-form-label">Tipo Documento</label>
-                                                            <select class="form-select "
-                                                            id="id_tipo_documento" name="id_tipo_documento" required>
-                                                                <option value="">Seleccione un tipo de Documento</option>
-                                                                <option th:each="td : ${tipoDocumentos}" th:value="${td.id_tipo_documento}"
-                                                                    th:if="${td.estado != 'X'}" th:text="${td.nombre_tipo_documento}"></option>
-                                                                    
+                                                            <select class="form-select " id="id_tipo_documento"
+                                                                name="id_tipo_documento" required>
+                                                                <option value="">Seleccione un tipo de Documento
+                                                                </option>
+                                                                <option th:each="td : ${tipoDocumentos}"
+                                                                    th:value="${td.id_tipo_documento}"
+                                                                    th:if="${td.estado != 'X'}"
+                                                                    th:text="${td.nombre_tipo_documento}"></option>
+
                                                             </select>
-                                                           
-                                                            
+
+
                                                         </div>
-    
-    
-    
+
+
+
                                                         <div class="col-md-5 text-dark">
                                                             <label class="col-form-label">Gestión</label>
-                                                            <select class="form-select js-choice" name="gestion"required>
+                                                            <select class="form-select js-choice" name="gestion"
+                                                                required>
                                                                 <option value="">Seleccione una Gestión</option>
                                                                 <option value="2000">2000</option>
                                                                 <option value="2001">2001</option>
@@ -708,156 +762,167 @@
                                                                 <option value="2028">2028</option>
                                                                 <option value="2029">2029</option>
                                                                 <option value="2030">2030</option>
-                                                              </select>
-                                                            
+                                                            </select>
+
                                                         </div>
-                                                    
-                                                </div>
-                                                <br>
-                                                <div class="text-center">
-                                                    <button class="btn btn-success" type="submit"
-                                                        th:text="${edit} ?'Actualizar' :'Generar'"></button>
-                                                </div>
+
+                                                    </div>
+                                                    <br>
+                                                    <div class="text-center">
+                                                        <button class="btn btn-success" type="submit"
+                                                            th:text="${edit} ?'Actualizar' :'Generar'"></button>
+                                                    </div>
                                                 </form>
-    
-                                           
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <br>
-                                                <br>
-                                        </div>
-                                        
-                                        <div class="tab-pane fade" id="x-pills-documento" role="tabpanel" aria-labelledby="x-pills-documento-tab">
-                                            <h3 >Reporte de Trámites Por Unidad, Tipo Documento, Documento y Gestión </h3>
-                                            <br>
-                                             
-                                            <form th:action="@{/generarReporteUnidadTipoDocDocGestion}" method="post">
-                                                <div class="row">
-
-                                                    <div class="col-md-5 text-dark">
-                                                        <label class="col-form-label">Unidad</label>
-                                                        <select class="form-select "
-                                                        id="id_unidad" name="id_unidad" required>
-                                                            <option value="">Seleccione una Unidad</option>
-                                                            <option th:each="uni : ${unidades}" th:value="${uni.id_unidad}"
-                                                                th:if="${uni.estado != 'X'}" th:text="${uni.nombre_unidad}"></option>
-                                                                
-                                                        </select>
-                                                       
-                                                        
-                                                    </div>
-
-                                                    <div class="col-md-5 text-dark">
-                                                        <label class="col-form-label">Tipo Documento</label>
-                                                        <select class="form-select "
-                                                        id="id_tipo_documento" name="id_tipo_documento" required>
-                                                            <option value="">Seleccione un tipo de Documento</option>
-                                                            <option th:each="td : ${tipoDocumentos}" th:value="${td.id_tipo_documento}"
-                                                                th:if="${td.estado != 'X'}" th:text="${td.nombre_tipo_documento}"></option>
-                                                                
-                                                        </select>
-                                                       
-                                                        
-                                                    </div>
-
-                                                    <div class="col-md-5 text-dark">
-                                                        <label class="col-form-label">Documento</label>
-                                                        <select class="form-select "
-                                                        id="id_documento" name="id_documento" required>
-                                                            <option value="">Seleccione un Documento</option>
-                                                            <option th:each="doc : ${documentos}" th:value="${doc.id_documento}"
-                                                                th:if="${doc.estado != 'X'}" th:text="${doc.nombre_documento}"></option>
-                                                                
-                                                        </select>
-                                                       
-                                                        
-                                                    </div>
 
 
-
-                                                    <div class="col-md-5 text-dark">
-                                                        <label class="col-form-label">Gestión</label>
-                                                        <select class="form-select js-choice" name="gestion"required>
-                                                            <option value="">Seleccione una Gestión</option>
-                                                            <option value="2000">2000</option>
-                                                            <option value="2001">2001</option>
-                                                            <option value="2002">2002</option>
-                                                            <option value="2003">2003</option>
-                                                            <option value="2004">2004</option>
-                                                            <option value="2005">2005</option>
-                                                            <option value="2006">2006</option>
-                                                            <option value="2007">2007</option>
-                                                            <option value="2008">2008</option>
-                                                            <option value="2009">2009</option>
-                                                            <option value="2010">2010</option>
-                                                            <option value="2011">2011</option>
-                                                            <option value="2012">2012</option>
-                                                            <option value="2013">2013</option>
-                                                            <option value="2014">2014</option>
-                                                            <option value="2015">2015</option>
-                                                            <option value="2016">2016</option>
-                                                            <option value="2017">2017</option>
-                                                            <option value="2018">2018</option>
-                                                            <option value="2019">2019</option>
-                                                            <option value="2020">2020</option>
-                                                            <option value="2021">2021</option>
-                                                            <option value="2022">2022</option>
-                                                            <option value="2023">2023</option>
-                                                            <option value="2024">2024</option>
-                                                            <option value="2025">2025</option>
-                                                            <option value="2026">2026</option>
-                                                            <option value="2027">2027</option>
-                                                            <option value="2028">2028</option>
-                                                            <option value="2029">2029</option>
-                                                            <option value="2030">2030</option>
-                                                          </select>
-                                                        
-                                                    </div>
-                                                
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
                                             </div>
-                                            <br>
-                                            <div class="text-center">
-                                                <button class="btn btn-success" type="submit"
-                                                    th:text="${edit} ?'Actualizar' :'Generar'"></button>
+
+                                            <div class="tab-pane fade" id="x-pills-documento" role="tabpanel"
+                                                aria-labelledby="x-pills-documento-tab">
+                                                <h3>Reporte de Trámites Por Unidad, Tipo Documento, Documento y Gestión
+                                                </h3>
+                                                <br>
+
+                                                <form th:action="@{/generarReporteUnidadTipoDocDocGestion}"
+                                                    method="post">
+                                                    <div class="row">
+
+                                                        <div class="col-md-5 text-dark">
+                                                            <label class="col-form-label">Unidad</label>
+                                                            <select class="form-select " id="id_unidad" name="id_unidad"
+                                                                required>
+                                                                <option value="">Seleccione una Unidad</option>
+                                                                <option th:each="uni : ${unidades}"
+                                                                    th:value="${uni.id_unidad}"
+                                                                    th:if="${uni.estado != 'X'}"
+                                                                    th:text="${uni.nombre_unidad}"></option>
+
+                                                            </select>
+
+
+                                                        </div>
+
+                                                        <div class="col-md-5 text-dark">
+                                                            <label class="col-form-label">Tipo Documento</label>
+                                                            <select class="form-select " id="id_tipo_documento"
+                                                                name="id_tipo_documento" required>
+                                                                <option value="">Seleccione un tipo de Documento
+                                                                </option>
+                                                                <option th:each="td : ${tipoDocumentos}"
+                                                                    th:value="${td.id_tipo_documento}"
+                                                                    th:if="${td.estado != 'X'}"
+                                                                    th:text="${td.nombre_tipo_documento}"></option>
+
+                                                            </select>
+
+
+                                                        </div>
+
+                                                        <div class="col-md-5 text-dark">
+                                                            <label class="col-form-label">Documento</label>
+                                                            <select class="form-select " id="id_documento"
+                                                                name="id_documento" required>
+                                                                <option value="">Seleccione un Documento</option>
+                                                                <option th:each="doc : ${documentos}"
+                                                                    th:value="${doc.id_documento}"
+                                                                    th:if="${doc.estado != 'X'}"
+                                                                    th:text="${doc.nombre_documento}"></option>
+
+                                                            </select>
+
+
+                                                        </div>
+
+
+
+                                                        <div class="col-md-5 text-dark">
+                                                            <label class="col-form-label">Gestión</label>
+                                                            <select class="form-select js-choice" name="gestion"
+                                                                required>
+                                                                <option value="">Seleccione una Gestión</option>
+                                                                <option value="2000">2000</option>
+                                                                <option value="2001">2001</option>
+                                                                <option value="2002">2002</option>
+                                                                <option value="2003">2003</option>
+                                                                <option value="2004">2004</option>
+                                                                <option value="2005">2005</option>
+                                                                <option value="2006">2006</option>
+                                                                <option value="2007">2007</option>
+                                                                <option value="2008">2008</option>
+                                                                <option value="2009">2009</option>
+                                                                <option value="2010">2010</option>
+                                                                <option value="2011">2011</option>
+                                                                <option value="2012">2012</option>
+                                                                <option value="2013">2013</option>
+                                                                <option value="2014">2014</option>
+                                                                <option value="2015">2015</option>
+                                                                <option value="2016">2016</option>
+                                                                <option value="2017">2017</option>
+                                                                <option value="2018">2018</option>
+                                                                <option value="2019">2019</option>
+                                                                <option value="2020">2020</option>
+                                                                <option value="2021">2021</option>
+                                                                <option value="2022">2022</option>
+                                                                <option value="2023">2023</option>
+                                                                <option value="2024">2024</option>
+                                                                <option value="2025">2025</option>
+                                                                <option value="2026">2026</option>
+                                                                <option value="2027">2027</option>
+                                                                <option value="2028">2028</option>
+                                                                <option value="2029">2029</option>
+                                                                <option value="2030">2030</option>
+                                                            </select>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <br>
+                                                    <div class="text-center">
+                                                        <button class="btn btn-success" type="submit"
+                                                            th:text="${edit} ?'Actualizar' :'Generar'"></button>
+                                                    </div>
+                                                </form>
+
+
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+
                                             </div>
-                                            </form>
-     
-                                            
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                                 <br>
-                                            
+
+
                                         </div>
-                            
-                           
-                                        </div>
-                                      </div>
+                                    </div>
                                 </div>
 
                             </div>
-                          
-                     
-                          </div>
-                       
+
+
+                        </div>
+
                     </div>
                     <!--FIN FORM DE CARRERA-->
 
-         
+
                 </div>
             </div>
         </div>
