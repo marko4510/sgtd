@@ -9,184 +9,94 @@
   <title>Reporte de Carpeta de Trámite por Gestión</title>
 
   <style>
-	
-	</style>
+
+  </style>
 </head>
 
 <body>
   <div class="container">
     <div class="content-wrapper">
       <section>
-        <!--
-        <input type="hidden" id="version" th:value="${prgDetallePrograma.version}">
-        <input type="hidden" id="sigla" th:value="${prgPrograma.sigla}">
-        -->
       </section>
-
       <div class="card-body">
-        <table width="100%" border="1" cellspacing="0" cellpadding="0">  
-          <tr><td align="center" width="20%" ><img border="0" th:src="@{../../../../assets/images/uap.png}" class="img-rounded img-responsive"  alt="UAP" width="60" height="70"></td>
-               <td width="60%" height="100%"> <table border="0" width="100%" cellspacing="0" cellpadding="0">  
-                       <tr><td height="30" align="center"><font size="3" face="sans-serif"><b>REPORTE</b></font></font></td> </tr>    
-                       <tr><td height="50" align="center" valign="middle"><font size="5" face="sans-serif"><b>Lista de Titulados por Unidad</b></font></td></tr>
-                    </table>
-                </td>
-               <td width="20%" align="center"> 
-                     <table border="1" width="100%" height="100%" cellspacing="0" cellpadding="0">  
-                         <tr><td   align="left"><font size="1" face="sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;REP: 003-C </font></td></tr>
-                         <tr><td  ><font size="1" face="sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;Versión</font></td></tr>
-                         <tr><td  align="left" ><font size="1" face="sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript: window.print()'>Valido 00-00-00</a></font></td> </tr> 
-                     </table>
-               </td>
-            </tr>
-            
-       </table>
-         <table width="100%" border="1" cellspacing="0" cellpadding="0">
-          <tr><td><strong>Unidad</strong><td th:text="${unidad.nombre_unidad}"></td></td><td><strong>Gestión</strong><td th:text="${gestion}"></td></td></tr>
-   
-        
+        <table width="100%" border="1" cellspacing="0" cellpadding="0">
+          <tr>
+            <td align="center" width="20%"><img border="0" th:src="@{../../../../assets/images/uap.png}"
+                class="img-rounded img-responsive" alt="UAP" width="60" height="70"></td>
+            <td width="60%" height="100%">
+              <table border="0" width="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td height="30" align="center">
+                    <font size="3" face="sans-serif"><b>REPORTE</b></font>
+                    </font>
+                  </td>
+                </tr>
+                <tr>
+                  <td height="50" align="center" valign="middle">
+                    <font size="5" face="sans-serif"><b>Lista de Titulados por Unidad</b></font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="20%" align="center">
+              <table border="1" width="100%" height="100%" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="left">
+                    <font size="1" face="sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;REP: 003-C </font>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <font size="1" face="sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;Versión</font>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    <font size="1" face="sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;<a href='javascript: window.print()'>Valido
+                        00-00-00</a></font>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <table width="100%" border="1" cellspacing="0" cellpadding="0">
+          <tr>
+            <td><strong>Unidad</strong>
+            <td th:text="${unidad.nombre_unidad}"></td>
+            </td>
+            <td><strong>Gestión</strong>
+            <td th:text="${gestion}"></td>
+            </td>
+          </tr>
         </table>
         <table style=" width: 100%;
         border-collapse: collapse; border: 1px solid black;">
           <thead>
-          <tr>
-            <th style="padding: 8px;text-align: left; border: 1px solid black;">#</th>
-            <th style="padding: 8px;text-align: left; border: 1px solid black;">Nro Tramite</th>
-            <th style="padding: 8px;text-align: left; border: 1px solid black;">Tipo de Documento</th>
-            <th style="padding: 8px;text-align: left; border: 1px solid black;">Documento</th>
-
-            <th style="padding: 8px;text-align: left; border: 1px solid black;">Persona</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr th:each="td, index : ${tramites}" th:if="${td.estado != 'X'}">
-            <td th:text="${index.index + 1}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
-            <td th:text="${td.nro_tramite}" style="padding: 8px;text-align: left; border: 1px solid black;"> </td>
-            <td th:text="${td.tipoDocumento.nombre_tipo_documento}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
-            <td th:text="${td.documento.nombre_documento}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
-
-            <td
-                th:text=" ${td.persona.ci}+'-'+${td.persona.nombre}+' '+${td.persona.ap_paterno}+' '+${td.persona.ap_materno}" style="padding: 8px;text-align: left; border: 1px solid black;">
-
-
-
-          </td>
-          </tr>
-        </tbody>
-        </table>
-      </div>
-   
-    
-     
-  
-      
-        
-     
-    
-     
-      
-     
-    
-    <br>
-    <br>
-    <br>
-     
-
-
-
-
-
-      <!--
-      <div style="text-align:center; display: flex; justify-content: center;">
-        <table cellspacing="0" cellpadding="0" class="header-table">
-          <thead>
-            <tr class="header-row">
-              <td class="table-cell header-cell-others">
-                <p class="header-title"><strong>N°</strong></p>
-              </td>
-              <td class="header-cell header-cell-others">
-                <p class="header-title"><strong>SIGLA</strong></p>
-              </td>
-              <td class="header-cell header-cell-modulos">
-                <p class="header-title"><strong>MÓDULOS</strong></p>
-              </td>
-              <td class="header-cell header-cell-others">
-                <p class="header-title"><strong>HRS. PRS.</strong></p>
-              </td>
-              <td class="header-cell header-cell-others">
-                <p class="header-title"><strong>HRS. PRAC.</strong></p>
-              </td>
-              <td class="header-cell header-cell-others">
-                <p class="header-title"><strong>HRS. LECT.</strong></p>
-              </td>
-              <td class="header-cell header-cell-others">
-                <p class="header-title"><strong>TOTAL HRS. </strong></p>
-              </td>
-              <td class="header-cell header-cell-others">
-                <p class="header-title"><strong>CRED.</strong></p>
-              </td>
+            <tr>
+              <th style="padding: 8px;text-align: left; border: 1px solid black;">#</th>
+              <th style="padding: 8px;text-align: left; border: 1px solid black;">Nro Tramite</th>
+              <th style="padding: 8px;text-align: left; border: 1px solid black;">Tipo de Documento</th>
+              <th style="padding: 8px;text-align: left; border: 1px solid black;">Documento</th>
+              <th style="padding: 8px;text-align: left; border: 1px solid black;">Persona</th>
             </tr>
           </thead>
-
           <tbody>
-            <tr class="table-row" id="iteracion" th:each="m : ${listaModulo}">
-              <td class="table-cell center-text bold-text">
-                <p th:text="${m.orden}"></p>
-              </td>
-              <td class="table-cell center-text bold-text">
-                <p th:text="${m.orden}" id="modulo-sigla"></p>
-              </td>
-              <td class="table-cell">
-                <p th:text="${m.modulo}" style="text-align: left;"></p>
-              </td>
-              <td class="table-cell center-text">
-                <p th:text="${m.horasPresenciales}"></p>
-              </td>
-              <td class="table-cell center-text">
-                <p th:text="${m.horasPracticas}"></p>
-              </td>
-              <td class="table-cell center-text">
-                <p th:text="${m.horasLectivas}"></p>
-              </td>
-              <td class="table-cell center-text bold-text">
-                <p th:text="${(m.horasPresenciales + m.horasPracticas + m.horasLectivas)}"></p>
-              </td>
-              <td class="table-cell center-text">
-                <p th:text="${m.creditos}"></p>
+            <tr th:each="td, index : ${tramites}" th:if="${td.estado != 'X'}">
+              <td th:text="${index.index + 1}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+              <td th:text="${td.nro_tramite}" style="padding: 8px;text-align: left; border: 1px solid black;"> </td>
+              <td th:text="${td.tipoDocumento.nombre_tipo_documento}"
+                style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+              <td th:text="${td.documento.nombre_documento}"
+                style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+              <td
+                th:text=" ${td.persona.ci}+'-'+${td.persona.nombre}+' '+${td.persona.ap_paterno}+' '+${td.persona.ap_materno}"
+                style="padding: 8px;text-align: left; border: 1px solid black;">
               </td>
             </tr>
           </tbody>
-          <tfoot>
-            <tr class="table-row">
-              <td class="table-cell center-text"></td>
-              <td class="table-cell center-text"></td>
-              <td class="table-cell">
-                <p class="header-text bold-text"><em><u>TOTAL DE HORAS ACAD&Eacute;MICAS</u></em></p>
-              </td>
-              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
-                <p th:text="${totalPresencial != null? totalPresencial: 0}"></p>
-              </td>
-              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
-                <p th:text="${totalPractica != null? totalPractica : 0}"></p>
-              </td>
-              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
-                <p th:text="${totalLectiva != null? totalLectiva : 0}"></p>
-              </td>
-              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
-                <p th:text="${totalHoras}"></p>
-              </td>
-              <td class="table-cell center-text bold-text" style="background-color:#95b3d7;">
-                <p th:text="${#numbers.formatDecimal(totalCreditos, 0, 1)}"></p>
-              </td>
-            </tr>
-          </tfoot>
         </table>
       </div>
-      -->
-
-
-      
-     
     </div>
   </div>
   <div class="out-container">
@@ -245,13 +155,13 @@
     }
 
     .content-wrapper {
-      padding: 140px 50px 100px 50px;
+      padding: 20px 30px 100px 30px;
     }
 
     /* Page size and print settings */
     @media print {
       @page {
-        size: 8.5in 14in;
+        size: A4;
         margin: 0;
       }
 
