@@ -47,6 +47,11 @@
                             <li class="nav-item" role="presentation">
                               <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Titulados PreGrado</button>
                             </li>
+
+                            
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="posgrado-tab" data-bs-toggle="tab" data-bs-target="#posgrado" type="button" role="tab" aria-controls="posgrado" aria-selected="false">Titulados PosGrado</button>
+                              </li>
                            
                             <li class="nav-item" role="presentation">
                               <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Trámites</button>
@@ -403,7 +408,224 @@
                                 </div>
 
                             </div>
-                     
+                            
+
+                            <div class="tab-pane fade " id="posgrado" role="tabpanel" aria-labelledby="posgrado-tab">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="nav flex-column nav-pills me-3" id="s-pills-tab" role="tablist" aria-orientation="vertical">
+                                            
+                                          <button class="nav-link active" id="s-pills-general-tab" data-bs-toggle="pill" data-bs-target="#s-pills-general" type="button" role="tab" aria-controls="s-pills-general" aria-selected="true">Doctorado</button>
+                                          <button class="nav-link" id="s-pills-maestria-tab" data-bs-toggle="pill" data-bs-target="#s-pills-maestria" type="button" role="tab" aria-controls="s-pills-maestria" aria-selected="false">Maestría</button>
+                                          <button class="nav-link" id="s-pills-documento-tab" data-bs-toggle="pill" data-bs-target="#s-pills-documento" type="button" role="tab" aria-controls="s-pills-documento" aria-selected="false">Fecha</button>
+                                          
+
+                                        </div>
+                                        <div class="tab-content" id="s-pills-tabContent" >
+                                          <div class="tab-pane fade show active" id="s-pills-general" role="tabpanel" aria-labelledby="s-pills-general-tab">
+                                         
+                                           <h3 >Reporte de Titulados de Posgrado en Doctorado y por Gestión</h3>
+                                           <br>
+                                            
+                                                <form th:action="@{/generarReporteTituladosDoctorado}" method="post">
+                                                    <div class="row">
+    
+                                                       
+                                                        <div class="col-md-4 text-dark">
+                                                            <label class="col-form-label">Gestión</label>
+                                                            <select class="form-select js-choice" name="gestion"required>
+                                                                <option value="">Seleccione una Gestión</option>
+                                                                <option value="2000">2000</option>
+                                                                <option value="2001">2001</option>
+                                                                <option value="2002">2002</option>
+                                                                <option value="2003">2003</option>
+                                                                <option value="2004">2004</option>
+                                                                <option value="2005">2005</option>
+                                                                <option value="2006">2006</option>
+                                                                <option value="2007">2007</option>
+                                                                <option value="2008">2008</option>
+                                                                <option value="2009">2009</option>
+                                                                <option value="2010">2010</option>
+                                                                <option value="2011">2011</option>
+                                                                <option value="2012">2012</option>
+                                                                <option value="2013">2013</option>
+                                                                <option value="2014">2014</option>
+                                                                <option value="2015">2015</option>
+                                                                <option value="2016">2016</option>
+                                                                <option value="2017">2017</option>
+                                                                <option value="2018">2018</option>
+                                                                <option value="2019">2019</option>
+                                                                <option value="2020">2020</option>
+                                                                <option value="2021">2021</option>
+                                                                <option value="2022">2022</option>
+                                                                <option value="2023">2023</option>
+                                                                <option value="2024">2024</option>
+                                                                <option value="2025">2025</option>
+                                                                <option value="2026">2026</option>
+                                                                <option value="2027">2027</option>
+                                                                <option value="2028">2028</option>
+                                                                <option value="2029">2029</option>
+                                                                <option value="2030">2030</option>
+                                                              </select>
+                                                            
+                                                        </div>
+                                                     
+    
+    
+    
+                                                
+                                                    
+                                                </div>
+                                                <br>
+                                                <div class="text-center">
+                                                    <button class="btn btn-success" type="submit"
+                                                        th:text="${edit} ?'Actualizar' :'Generar'"></button>
+                                                </div>
+                                                </form>
+    
+                                           
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                                <br>
+                                        </div>
+                                        
+                                        <div class="tab-pane fade" id="s-pills-maestria" role="tabpanel" aria-labelledby="s-pills-maestria-tab">
+                                            <h3 >Reporte de Titulados de Posgrado en Maestría por Gestión </h3>
+                                            <br>
+                                             
+                                            <form th:action="@{/generarReporteTituladosMaestria}" method="post">
+                                                <div class="row">
+
+                                                  
+                                                    <div class="col-md-4 text-dark">
+                                                        <label class="col-form-label">Gestión</label>
+                                                        <select class="form-select js-choice" name="gestion"required>
+                                                            <option value="">Seleccione una Gestión</option>
+                                                            <option value="2000">2000</option>
+                                                            <option value="2001">2001</option>
+                                                            <option value="2002">2002</option>
+                                                            <option value="2003">2003</option>
+                                                            <option value="2004">2004</option>
+                                                            <option value="2005">2005</option>
+                                                            <option value="2006">2006</option>
+                                                            <option value="2007">2007</option>
+                                                            <option value="2008">2008</option>
+                                                            <option value="2009">2009</option>
+                                                            <option value="2010">2010</option>
+                                                            <option value="2011">2011</option>
+                                                            <option value="2012">2012</option>
+                                                            <option value="2013">2013</option>
+                                                            <option value="2014">2014</option>
+                                                            <option value="2015">2015</option>
+                                                            <option value="2016">2016</option>
+                                                            <option value="2017">2017</option>
+                                                            <option value="2018">2018</option>
+                                                            <option value="2019">2019</option>
+                                                            <option value="2020">2020</option>
+                                                            <option value="2021">2021</option>
+                                                            <option value="2022">2022</option>
+                                                            <option value="2023">2023</option>
+                                                            <option value="2024">2024</option>
+                                                            <option value="2025">2025</option>
+                                                            <option value="2026">2026</option>
+                                                            <option value="2027">2027</option>
+                                                            <option value="2028">2028</option>
+                                                            <option value="2029">2029</option>
+                                                            <option value="2030">2030</option>
+                                                          </select>
+                                                        
+                                                    </div>  
+                                                   
+
+
+
+                                                 
+                                                
+                                            </div>
+                                            <br>
+                                            <div class="text-center">
+                                                <button class="btn btn-success" type="submit"
+                                                    th:text="${edit} ?'Actualizar' :'Generar'"></button>
+                                            </div>
+                                            </form>
+     
+                                            
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                            
+                                        </div>
+
+                                        <div class="tab-pane fade" id="s-pills-documento" role="tabpanel" aria-labelledby="s-pills-documento-tab">
+                                            <h3 >Reporte de Titulados de Posgrado por Intervalo de Fechas </h3>
+                                            <br>
+                                             
+                                            <form th:action="@{/generarReporteTituladosPosgradoPorFechas}" method="post">
+                                                <div class="row">
+
+                                                  
+                                                    <div class="col-md-4">
+                                                        <label class="col-form-label">Fecha Inicio</label>
+                                                        <input class="form-control" type="date" name="fechaInicio"
+                                                            required>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label class="col-form-label">Fecha Fin</label>
+                                                        <input class="form-control" type="date" name="fechaFin"
+                                                             required>
+                                                    </div>
+                                                   
+
+
+
+                                                 
+                                                
+                                            </div>
+                                            <br>
+                                            <div class="text-center">
+                                                <button class="btn btn-success" type="submit"
+                                                    th:text="${edit} ?'Actualizar' :'Generar'"></button>
+                                            </div>
+                                            </form>
+     
+                                            
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                                 <br>
+                                            
+                                        </div>
+                            
+                           
+                                        </div>
+                                      </div>
+                                </div>
+
+                            </div>
 
                             <div class="tab-pane fade " id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <div class="card-body">

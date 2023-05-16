@@ -443,5 +443,44 @@ public class TramiteController {
         return "tramite/reporte/reporteFechas.html";
     }
 
+    @PostMapping("/generarReporteTituladosDoctorado")
+    public String generarReporteTituladosDoctorado(
+        @RequestParam("gestion") String gestion,
+       
+            Model model) throws FileNotFoundException, IOException {
+
+            
+        model.addAttribute("tramites", tramiteService.reporteTituladosDoctorado(gestion));
+        model.addAttribute("gestion", gestion);
+        return "tramite/reporte/reporteDoctorado.html";
+    }
+
+    @PostMapping("/generarReporteTituladosMaestria")
+    public String generarReporteTituladosMaestria(
+        @RequestParam("gestion") String gestion,
+       
+            Model model) throws FileNotFoundException, IOException {
+
+            
+        model.addAttribute("tramites", tramiteService.reporteTituladosMaestria(gestion));
+        model.addAttribute("gestion", gestion);
+        return "tramite/reporte/reporteMaestria.html";
+    }
+
+    @PostMapping("/generarReporteTituladosPosgradoPorFechas")
+    public String generarReporteTituladosPosgradoPorFechas(
+        @RequestParam("fechaInicio") @DateTimeFormat(pattern= "yyyy-MM-dd") Date fechaInicio,
+        @RequestParam("fechaFin") @DateTimeFormat(pattern= "yyyy-MM-dd") Date fechaFin,
+            Model model) throws FileNotFoundException, IOException {
+
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                String fechaInicioFormateado = formato.format(fechaInicio);
+                String fechaFinFormateado = formato.format(fechaFin);
+        model.addAttribute("tramites", tramiteService.reporteTituladosPosgradoPorFechas(fechaInicio, fechaFin));
+        model.addAttribute("fechaInicio", fechaInicioFormateado);
+        model.addAttribute("fechaFin", fechaFinFormateado);
+        return "tramite/reporte/reportePosgradoFechas.html";
+    }
+
 
 }

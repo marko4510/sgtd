@@ -58,4 +58,14 @@ public interface ITramiteDao extends CrudRepository<Tramite, Long> {
 
     @Query(value = "select * from pasarela_tramite as tra where tra.id_documento=?1 AND tra.id_tipo_documento=?2", nativeQuery = true)
     public List<Tramite> tramitePorDocumentoTipoDocumento(Long id_documento, Long id_tipo_documento);
+
+    //LISTA DE REPORTES TITULADOS EN POSGRADO
+    @Query(value = "SELECT * FROM pasarela_tramite as tr INNER JOIN pasarela_persona as per ON tr.id_persona=per.id_persona INNER JOIN pasarela_documento as doc ON tr.id_documento=doc.id_documento INNER JOIN pasarela_tipo_documento as td ON tr.id_tipo_documento=td.id_tipo_documento WHERE doc.nombre_documento='DOCTORADO' AND tr.gestion= ?1 AND td.nombre_tipo_documento = 'TÍTULO / DIPLOMA'", nativeQuery = true)
+    public List<Tramite> reporteTituladosDoctorado(String gestion);
+
+    @Query(value = "SELECT * FROM pasarela_tramite as tr INNER JOIN pasarela_persona as per ON tr.id_persona=per.id_persona INNER JOIN pasarela_documento as doc ON tr.id_documento=doc.id_documento INNER JOIN pasarela_tipo_documento as td ON tr.id_tipo_documento=td.id_tipo_documento WHERE doc.nombre_documento='MAESTRIA' AND tr.gestion= ?1 AND td.nombre_tipo_documento = 'TÍTULO / DIPLOMA'", nativeQuery = true)
+    public List<Tramite> reporteTituladosMaestria(String gestion);
+
+    @Query(value = "SELECT   * FROM pasarela_tramite as tr INNER JOIN pasarela_tipo_documento as td ON td.id_tipo_documento = tr.id_tipo_documento INNER JOIN pasarela_documento as doc ON doc.id_documento = tr.id_documento WHERE tr.fecha_titulacion BETWEEN :fechaInicio AND :fechaFin AND td.nombre_tipo_documento = 'TÍTULO / DIPLOMA' AND (doc.nombre_documento = 'DOCTORADO' OR doc.nombre_documento = 'MAESTRIA')", nativeQuery = true)
+    public List<Tramite> reporteTituladosPosgradoPorFechas(Date fechaInicio, Date fechaFin);
 }

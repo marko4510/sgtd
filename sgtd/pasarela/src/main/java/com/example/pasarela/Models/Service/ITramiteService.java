@@ -39,4 +39,9 @@ public interface ITramiteService {
 	//LISTAS PARA REPORTES POR TIPO DOCUMENTO
 	public List<Tramite> tramitePorUnidadTipoDocumentoGestion(Long id_unidad,Long id_tipo_documento,String gestion);
 	public List<Tramite> tramitePorUnidadTipoDocumentoDocumentoGestion(Long id_unidad,Long id_tipo_documento,Long id_documento,String gestion);
+
+	//LISTA PARA REPORTES DE TITULADOS DE POSGRADO
+	public List<Tramite> reporteTituladosDoctorado(String gestion);
+	public List<Tramite> reporteTituladosMaestria(String gestion);
+	public List<Tramite> reporteTituladosPosgradoPorFechas(Date fechaInicio, Date fechaFin);
 }
