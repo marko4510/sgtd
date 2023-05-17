@@ -720,33 +720,24 @@
 
                                                         <div class="col-md-5 text-dark">
                                                             <label class="col-form-label">Trámite</label>
-                                                            <select class="form-select " id="id_tipo_documento"
-                                                                name="id_tipo_documento" required>
-                                                                <option value="">Seleccione un Trámite
+                                                            <select class="form-select" id="id_tipo_documen" name="id_tipo_documento" onchange="TipoDoc()" required>
+                                                                <option value="">Seleccione un Trámite</option>
+                                                                <option th:each="td : ${tipoDocumentos}" th:if="${td.estado != 'X'}"
+                                                                    th:value="${td.id_tipo_documento}" th:text="${td.nombre_tipo_documento}">
                                                                 </option>
-                                                                <option th:each="td : ${tipoDocumentos}"
-                                                                    th:value="${td.id_tipo_documento}"
-                                                                    th:if="${td.estado != 'X'}"
-                                                                    th:text="${td.nombre_tipo_documento}"></option>
 
                                                             </select>
-
-
                                                         </div>
 
                                                         <div class="col-md-5 text-dark">
-                                                            <label class="col-form-label">Documento</label>
-                                                            <select class="form-select " id="id_documento"
-                                                                name="id_documento" required>
+                                                            <label class="col-form-label">Documentos</label>
+                                                            <select class="form-select " id="id_documen" name="id_documento" required>
                                                                 <option value="">Seleccione un Documento</option>
                                                                 <option th:each="doc : ${documentos}"
                                                                     th:value="${doc.id_documento}"
                                                                     th:if="${doc.estado != 'X'}"
                                                                     th:text="${doc.nombre_documento}"></option>
-
                                                             </select>
-
-
                                                         </div>
 
                                                         <div class="col-md-3">
@@ -813,8 +804,8 @@
 
                                                         <div class="col-md-5 text-dark">
                                                             <label class="col-form-label">Trámite</label>
-                                                            <select class="form-select" id="id_tipo_documen" name="id_tipo_documento" onchange="TipoDoc()" required>
-                                                                <option value="-1">Seleccione un Trámite</option>
+                                                            <select class="form-select" id="id_tipo_documen2" name="id_tipo_documento" onchange="TipoDoc2()" required>
+                                                                <option value="">Seleccione un Trámite</option>
                                                                 <option th:each="td : ${tipoDocumentos}" th:if="${td.estado != 'X'}"
                                                                     th:value="${td.id_tipo_documento}" th:text="${td.nombre_tipo_documento}">
                                                                 </option>
@@ -824,12 +815,12 @@
 
                                                         <div class="col-md-5 text-dark">
                                                             <label class="col-form-label">Documento</label>
-                                                            <select class="form-select " id="id_documen" name="id_documento" required>
-                                                                <option value="-1">Seleccione un Documento</option>
-                                                                <!--<option th:each="doc : ${documentos}"
+                                                            <select class="form-select " id="id_documen2" name="id_documento" required>
+                                                                <option value="">Seleccione un Documento</option>  
+                                                                <option th:each="doc : ${documentos}"
                                                                     th:value="${doc.id_documento}"
                                                                     th:if="${doc.estado != 'X'}"
-                                                                    th:text="${doc.nombre_documento}"></option>-->
+                                                                    th:text="${doc.nombre_documento}"></option>
                                                             </select>
                                                         </div>
 
@@ -939,9 +930,31 @@
                 }
                 html += '</option>';
                 $('#id_documen').html(html);
+  
             });
         }//);
     </script>
+
+<script type="text/javascript">
+    function TipoDoc2() {
+        var j = document.getElementById("id_tipo_documen2").value;
+        //alert(i);
+        $.getJSON("/documentos", {
+            tipoDocId: j,
+            ajax: 'true'
+        }, function (data) {
+            var html = '<option value="">--Doc--</option>';
+            var len = data.length;
+            for (var i = 0; i < len; i++) {
+                html += '<option value="' + data[i].id_documento + '">'
+                    + data[i].nombre_documento + '</option>';
+            }
+            html += '</option>';
+            $('#id_documen2').html(html);
+
+        });
+    }//);
+</script>
 
     <!-- INICIO TEMA -->
     <a th:replace="layout/fragmento :: tuerca"></a>

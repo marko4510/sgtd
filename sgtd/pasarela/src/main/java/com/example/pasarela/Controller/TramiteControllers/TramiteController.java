@@ -333,7 +333,7 @@ public class TramiteController {
             Model model) throws FileNotFoundException, IOException {
 
                 Unidad unidad = unidadService.findOne(id_unidad);
-                TipoDocumento tipoDocumento = tipoDocumentoService.findOne(id_documento);
+                TipoDocumento tipoDocumento = tipoDocumentoService.findOne(id_tipo_documento);
                 Documento documento = documentoService.findOne(id_documento);
                 SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
                 String fechaInicioFormateado = formato.format(fechaInicio);
@@ -358,7 +358,7 @@ public class TramiteController {
             Model model) throws FileNotFoundException, IOException {
 
                 Unidad unidad = unidadService.findOne(id_unidad);
-                TipoDocumento tipoDocumento = tipoDocumentoService.findOne(id_documento);
+                TipoDocumento tipoDocumento = tipoDocumentoService.findOne(id_tipo_documento);
                 Documento documento = documentoService.findOne(id_documento);
         
         model.addAttribute("tramites", tramiteService.tramitePorUnidadTipoDocumentoDocumentoGestion(id_unidad, id_tipo_documento, id_documento, gestion));
