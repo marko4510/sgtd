@@ -315,6 +315,13 @@ public class TramiteController {
         model.addAttribute("carreras", carreraService.findAll());
         return "tramite/reporte/generarReportes.html";
     }
+    /*aqui debe venir  para el select anidado */
+    @RequestMapping(value = "/documentos", method = RequestMethod.GET)
+    public @ResponseBody List<Documento> findAllAgencie(
+            @RequestParam(value = "tipoDocId", required = true) Long TdocId) {
+        List<Documento> Documentos = documentoService.documentoPorIdTipodoc(TdocId);
+        return Documentos;
+    }
 
     @PostMapping("/generarReporteUnidadTipoDocFechas")
     public String generarReporteUnidadTipoDocFechas(

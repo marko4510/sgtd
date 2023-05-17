@@ -16,6 +16,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,13 +37,15 @@ public class TipoDocumento implements Serializable{
     private String nombre_tipo_documento;
     private String estado;
 
-    
+    @JsonIgnore
     @ManyToMany(mappedBy = "tipoDocumento")
     private Set<Documento> documento;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoDocumento", fetch = FetchType.LAZY)
 	private List<CostoDocumento> costoDocumento;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "tipoDocumento", fetch = FetchType.LAZY)
 	private List<Tramite> tramite;
     

@@ -38,4 +38,10 @@ public class DocumentoServiceImpl implements IDocumentoService{
         // TODO Auto-generated method stub
         documentoDao.deleteById(id);
     }
+
+    @Override
+    public List<Documento> documentoPorIdTipodoc(Long id_tipo_documento) {
+        // TODO Auto-generated method stub
+        return (List<Documento>) documentoDao.documentoPorIdTipodoc(id_tipo_documento);
+    }
 }
