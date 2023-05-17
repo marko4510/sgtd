@@ -123,6 +123,17 @@ public class TramiteServiceImpl implements ITramiteService{
         return (List<Tramite>) tramiteDao.reporteTituladosPosgradoPorFechas(fechaInicio, fechaFin);
     }
 
+    @Override
+    public List<Tramite> tramitePorUnidadTipoDocumentoDocumentoFechas(Long id_unidad, Long id_tipo_documento,
+            Long id_documento, Date fecha1, Date fecha2) {
+                return (List<Tramite>) tramiteDao.tramitePorUnidadTipoDocumentoDocumentoFechas(id_unidad, id_tipo_documento, id_documento, fecha1, fecha2);
+    }
+
+   
+
+
+  
+
  
 
 }

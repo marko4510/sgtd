@@ -28,6 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.pasarela.Models.Entity.ArchivoAdjunto;
 import com.example.pasarela.Models.Entity.Carrera;
+import com.example.pasarela.Models.Entity.Documento;
+import com.example.pasarela.Models.Entity.TipoDocumento;
 import com.example.pasarela.Models.Service.IArchivoAdjuntoService;
 import com.example.pasarela.Models.Service.ICarreraService;
 import com.example.pasarela.Models.Service.IDocumentoService;
@@ -314,21 +316,30 @@ public class TramiteController {
         return "tramite/reporte/generarReportes.html";
     }
 
-    @PostMapping("/generarReporteUnidadTipoDocGestion")
-    public String generarReporteUnidadTipoDocGestion(
+    @PostMapping("/generarReporteUnidadTipoDocFechas")
+    public String generarReporteUnidadTipoDocFechas(
         @RequestParam("id_tipo_documento") Long id_tipo_documento,
         @RequestParam("id_unidad") Long id_unidad,
-        @RequestParam("gestion") String gestion,
+        @RequestParam("id_documento") Long id_documento,
+        @RequestParam("fechaInicio") @DateTimeFormat(pattern= "yyyy-MM-dd") Date fechaInicio,
+        @RequestParam("fechaFin") @DateTimeFormat(pattern= "yyyy-MM-dd") Date fechaFin,
             Model model) throws FileNotFoundException, IOException {
 
                 Unidad unidad = unidadService.findOne(id_unidad);
-    
+                TipoDocumento tipoDocumento = tipoDocumentoService.findOne(id_documento);
+                Documento documento = documentoService.findOne(id_documento);
+                SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+                String fechaInicioFormateado = formato.format(fechaInicio);
+                String fechaFinFormateado = formato.format(fechaFin);
         
-        model.addAttribute("tramites", tramiteService.tramitePorUnidadTipoDocumentoGestion(id_unidad, id_tipo_documento, gestion));
+        model.addAttribute("tramites", tramiteService.tramitePorUnidadTipoDocumentoDocumentoFechas(id_unidad, id_tipo_documento, id_documento, fechaInicio, fechaFin));
         model.addAttribute("unidad", unidad);
-        model.addAttribute("gestion", gestion);
+        model.addAttribute("tipoDocumento", tipoDocumento);
+        model.addAttribute("documento", documento);
+        model.addAttribute("fechaInicio", fechaInicioFormateado);
+        model.addAttribute("fechaFin", fechaFinFormateado);
 
-        return "tramite/reporte/reporteTramiteTipoDocumentos.html";
+        return "tramite/reporte/reporteTramiteTipoDocumentosFechas.html";
     }
 
     @PostMapping("/generarReporteUnidadTipoDocDocGestion")
@@ -340,11 +351,14 @@ public class TramiteController {
             Model model) throws FileNotFoundException, IOException {
 
                 Unidad unidad = unidadService.findOne(id_unidad);
-    
+                TipoDocumento tipoDocumento = tipoDocumentoService.findOne(id_documento);
+                Documento documento = documentoService.findOne(id_documento);
         
         model.addAttribute("tramites", tramiteService.tramitePorUnidadTipoDocumentoDocumentoGestion(id_unidad, id_tipo_documento, id_documento, gestion));
         model.addAttribute("unidad", unidad);
         model.addAttribute("gestion", gestion);
+        model.addAttribute("tipoDocumento", tipoDocumento);
+        model.addAttribute("documento", documento);
 
         return "tramite/reporte/reporteTramiteTipoDocumentosDoc.html";
     }
@@ -424,6 +438,7 @@ public class TramiteController {
         model.addAttribute("unidad", unidad);
         model.addAttribute("carrera", carrera);
         model.addAttribute("gestion", gestion);
+        model.addAttribute("sexo", sexo);
 
         return "tramite/reporte/reporteGestionSexo.html";
     }

@@ -28,7 +28,7 @@
           <tr><td align="center" width="20%" ><img border="0" th:src="@{../../../../assets/images/uap.png}" class="img-rounded img-responsive"  alt="UAP" width="60" height="70"></td>
                <td width="60%" height="100%"> <table border="0" width="100%" cellspacing="0" cellpadding="0">  
                        <tr><td height="30" align="center"><font size="3" face="sans-serif"><b>REPORTE</b></font></font></td> </tr>    
-                       <tr><td height="50" align="center" valign="middle"><font size="5" face="sans-serif"><b>Lista de Titulados por Unidad</b></font></td></tr>
+                       <tr><td height="50" align="center" valign="middle"><font size="5" face="sans-serif"><b>Trámites por Unidad y Gestión</b></font></td></tr>
                     </table>
                 </td>
                <td width="20%" align="center"> 
@@ -42,7 +42,7 @@
             
        </table>
          <table width="100%" border="1" cellspacing="0" cellpadding="0">
-          <tr><td><strong>Unidad</strong><td th:text="${unidad.nombre_unidad}"></td></td><td><strong>Gestión</strong><td th:text="${gestion}"></td></td></tr>
+          <tr ><td><strong>Unidad</strong><td th:text="${unidad.nombre_unidad}"></td></td><td><strong>Trámite</strong><td th:text="${tipoDocumento.nombre_tipo_documento}"></td></td><td><strong>Gestión</strong><td th:text="${gestion}"></td></tr>
    
         
         </table>
@@ -52,17 +52,20 @@
           <tr>
             <th style="padding: 8px;text-align: left; border: 1px solid black;">#</th>
             <th style="padding: 8px;text-align: left; border: 1px solid black;">Nro Tramite</th>
-            <th style="padding: 8px;text-align: left; border: 1px solid black;">Tipo de Documento</th>
+        
             <th style="padding: 8px;text-align: left; border: 1px solid black;">Documento</th>
 
             <th style="padding: 8px;text-align: left; border: 1px solid black;">Persona</th>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">Fecha Recepción</th>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">Fecha Conclusión</th>
+       
           </tr>
         </thead>
         <tbody>
           <tr th:each="td, index : ${tramites}" th:if="${td.estado != 'X'}">
             <td th:text="${index.index + 1}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
             <td th:text="${td.nro_tramite}" style="padding: 8px;text-align: left; border: 1px solid black;"> </td>
-            <td th:text="${td.tipoDocumento.nombre_tipo_documento}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+           
             <td th:text="${td.documento.nombre_documento}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
 
             <td
@@ -71,6 +74,8 @@
 
 
           </td>
+          <td th:text="${td.fecha_recepcion}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+          <td th:text="${td.fecha_titulacion}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
           </tr>
         </tbody>
         </table>

@@ -39,8 +39,8 @@ public interface ITramiteDao extends CrudRepository<Tramite, Long> {
     public List<Tramite> reporteCarpetaPorUnidadCarreraGestionSexo(Long id_unidad, Long id_carrera, String gestion, String sexo);
 
     //LISTA DE REPORTES POR FECHA
-    @Query(value = "SELECT   * FROM pasarela_tramite as tr INNER JOIN pasarela_tipo_documento as td ON td.id_tipo_documento = tr.id_tipo_documento INNER JOIN pasarela_documento as doc ON doc.id_documento = tr.id_documento WHERE tr.fecha_titulacion BETWEEN :fechaInicio AND :fechaFin AND td.nombre_tipo_documento = 'TÍTULO / DIPLOMA' AND doc.nombre_documento = 'LICENCIATURA' ", nativeQuery = true)
-    public List<Tramite> reporteTituladosPorFechas(Date fechaInicio, Date fechaFin);
+    @Query(value = "SELECT   * FROM pasarela_tramite as tr INNER JOIN pasarela_tipo_documento as td ON td.id_tipo_documento = tr.id_tipo_documento INNER JOIN pasarela_documento as doc ON doc.id_documento = tr.id_documento WHERE tr.fecha_titulacion BETWEEN :fechaInicial AND :fechaFinal AND td.nombre_tipo_documento = 'TÍTULO / DIPLOMA' AND doc.nombre_documento = 'LICENCIATURA' ", nativeQuery = true)
+    public List<Tramite> reporteTituladosPorFechas(Date fechaInicial, Date fechaFinal);
 
     //LISTA DE REPORTES POR TIPO DOCUMENTOS
     @Query(value = "SELECT * FROM pasarela_tramite as tr INNER JOIN pasarela_tipo_documento as td ON td.id_tipo_documento = tr.id_tipo_documento INNER JOIN pasarela_unidad as uni ON tr.id_unidad = uni.id_unidad WHERE uni.id_unidad = ?1 AND td.id_tipo_documento = ?2 AND tr.gestion = ?3", nativeQuery = true)
@@ -49,6 +49,8 @@ public interface ITramiteDao extends CrudRepository<Tramite, Long> {
     @Query(value = "SELECT * FROM pasarela_tramite as tr INNER JOIN pasarela_tipo_documento as td ON td.id_tipo_documento = tr.id_tipo_documento INNER JOIN pasarela_documento as doc ON doc.id_documento = tr.id_documento INNER JOIN pasarela_unidad as uni ON tr.id_unidad = uni.id_unidad WHERE uni.id_unidad = ?1 AND td.id_tipo_documento = ?2 AND doc.id_documento = ?3 AND tr.gestion = ?4 ", nativeQuery = true)
     public List<Tramite> tramitePorUnidadTipoDocumentoDocumentoGestion(Long id_unidad,Long id_tipo_documento,Long id_documento,String gestion);
 
+    @Query(value = "SELECT * FROM pasarela_tramite as tr INNER JOIN pasarela_tipo_documento as td ON td.id_tipo_documento = tr.id_tipo_documento INNER JOIN pasarela_documento as doc ON doc.id_documento = tr.id_documento INNER JOIN pasarela_unidad as uni ON tr.id_unidad = uni.id_unidad WHERE uni.id_unidad = ?1 AND td.id_tipo_documento = ?2 AND doc.id_documento = ?3 AND tr.fecha_titulacion BETWEEN ?4 AND ?5", nativeQuery = true)
+    public List<Tramite> tramitePorUnidadTipoDocumentoDocumentoFechas(Long id_unidad,Long id_tipo_documento,Long id_documento,Date fecha1, Date fecha2);
 
     @Query(value = "select * from pasarela_tramite as tra where tra.id_tipo_documento=?1", nativeQuery = true)
     public List<Tramite> tramitePorTipoDocumento(Long id_tipo_documento);
