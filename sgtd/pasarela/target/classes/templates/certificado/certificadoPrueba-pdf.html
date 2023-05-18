@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Documento PDF</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <h1>Certificado Prueba PDF</h1>
+    
+    <p>Bienvenido, <span th:text="${nombre}"></span></p>
+    
+    <p>Este es un ejemplo de un documento PDF generado desde una vista HTML utilizando Spring Boot.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>Jane</td>
+                <td>Smith</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>Mike</td>
+                <td>Johnson</td>
+                <td>40</td>
+            </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>Jane</td>
+                <td>Smith</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>Mike</td>
+                <td>Johnson</td>
+                <td>40</td>
+            </tr>
+        </tbody>
+    </table>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>Jane</td>
+                <td>Smith</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>Mike</td>
+                <td>Johnson</td>
+                <td>40</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
