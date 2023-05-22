@@ -1,113 +1,43 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
+
 <head>
-    <meta charset="UTF-8"/>
-    <title>Documento PDF</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="Aspose.Words for .NET 22.7.0" />
+    <title></title>
     <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        th {
-            background-color: #f2f2f2;
-        }
-        
-        tr:hover {
-            background-color: #f5f5f5;
+        @page {
+            size: legal;
         }
     </style>
 </head>
-<body>
-    <h1>Certificado Prueba PDF</h1>
-    
-    <p>Bienvenido, <span th:text="${nombre}"></span></p>
-    
-    <p>Este es un ejemplo de un documento PDF generado desde una vista HTML utilizando Spring Boot.</p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Edad</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td>Jane</td>
-                <td>Smith</td>
-                <td>25</td>
-            </tr>
-            <tr>
-                <td>Mike</td>
-                <td>Johnson</td>
-                <td>40</td>
-            </tr>
-        </tbody>
-    </table>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Edad</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td>Jane</td>
-                <td>Smith</td>
-                <td>25</td>
-            </tr>
-            <tr>
-                <td>Mike</td>
-                <td>Johnson</td>
-                <td>40</td>
-            </tr>
-        </tbody>
-    </table>
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Edad</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>John</td>
-                <td>Doe</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td>Jane</td>
-                <td>Smith</td>
-                <td>25</td>
-            </tr>
-            <tr>
-                <td>Mike</td>
-                <td>Johnson</td>
-                <td>40</td>
-            </tr>
-        </tbody>
-    </table>
+<body style="font-family:'Times New Roman'; font-size:12pt">
+    <div>
+        <p style="margin-top:50.85pt; margin-left:444.7pt; margin-bottom:0pt; text-align:justify; line-height:13.4pt">
+            <span style="font-family:Arial" th:text="${nroTitulo}">123456</span></p>
+        <p style="margin-top:162.1pt; margin-bottom:0pt; text-align:justify; line-height:28pt"><span
+                style="font-size:25.5pt" th:text="${persona.nombre}+' '+${persona.ap_paterno}+' '+${persona.ap_materno}">MARCO ALEJANDRO CUELLAR FERREIRA</span></p>
+        <p style="margin-top:32.9pt; margin-left:170.55pt; margin-bottom:0pt; text-align:justify; line-height:13.25pt">
+            <span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
+            </span><span th:text="${#dates.format(persona.fecha_nacimiento, 'dd/MM/yyyy')}+' '+${provincia}+'-'+${departamento}">31/07/1999 Andres Ibañez-Santa Cruz</span></p>
+        <p style="margin:0.05pt 125.6pt 0pt 133.8pt; text-align:center; line-height:145.1pt"><span
+                style="font-size:25.5pt" th:text="${persona.gradoAcademico.carrera.nombre_carrera}">Ingeniería de Sistemas Universitario</span></p>
+        <p style="margin-top:101.15pt; margin-left:158.05pt; margin-bottom:0pt; text-align:justify; line-height:15.5pt">
+            <span style="font-size:13pt" th:text="${dia}">18</span><span style="font-size:13pt; letter-spacing:32.8pt"> </span><span
+                style="font-size:13pt" th:text="${mes}">Mayo</span><span style="font-size:13pt; letter-spacing:98.75pt"> </span><span
+                style="font-size:13pt" th:text="${gestion}">Veintitrés</span></p>
+        <p style="margin-top:61.15pt; margin-left:187.4pt; margin-bottom:0pt; text-align:justify; line-height:12.15pt">
+            <span style="font-size:11pt; -aw-import:spaces">&#xa0;</span><span style="font-size:11pt">MSc. Franz Navia
+                Miranda</span><span style="font-size:11pt; -aw-import:spaces">&#xa0; </span></p>
+        <p style="margin-top:32.3pt; margin-left:10.25pt; margin-bottom:0pt; text-align:justify; line-height:14.4pt">
+            <span style="font-size:11pt; -aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0; </span><span
+                style="font-size:11pt">MSc. Oscar Felipe Melgar Saucedo </span><span
+                style="font-size:11pt; letter-spacing:170.55pt; -aw-import:spaces">&#xa0;</span><span
+                style="font-size:11pt">MSc. Ariz Humerez Alvez</span></p>
+        <p style="margin-top:0pt; margin-left:465.3pt; margin-bottom:0pt; text-align:justify; line-height:12.15pt"><span
+                style="font-size:11pt">a.i.</span></p>
+    </div>
 </body>
+
 </html>

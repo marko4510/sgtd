@@ -2,20 +2,29 @@ package com.example.pasarela.Controller.prueba;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.example.pasarela.Models.Entity.Persona;
+import com.example.pasarela.Models.Entity.Titulo;
+import com.example.pasarela.Models.Entity.TituloGenerado;
 import com.example.pasarela.Models.Service.IPersonaService;
+import com.example.pasarela.Models.Service.ITituloGeneradoService;
+import com.example.pasarela.Models.Service.ITituloService;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,7 +32,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -32,6 +43,12 @@ public class PdfController {
 
     @Autowired
     private IPersonaService personaService;
+
+    @Autowired
+    private ITituloService tituloService;
+
+    @Autowired
+    private ITituloGeneradoService tituloGeneradoService;
     
     private final TemplateEngine templateEngine;
     
@@ -135,7 +152,7 @@ public class PdfController {
         String htmlContent = templateEngine.process("certificado/certificadoPrueba-pdf", context);
 
         // Directorio donde se guardará el archivo PDF en el disco local C
-        String directorioSalida = "C:/prueba";
+        String directorioSalida = "C:/SGTD/generados/titulos";
 
         // Nombre del archivo PDF
         String nombreArchivo = "certificadoPrueba.pdf";
@@ -157,7 +174,7 @@ public class PdfController {
     }
 
     @PostMapping("/generarTituloPdf")
-    public String generarTituloPdf(@RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,@RequestParam("nroTitulo") String nroTitulo, Model model) {
+    public String generarTituloPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,@RequestParam("nroTitulo") String nroTitulo, Model model) throws FileNotFoundException, IOException, ParseException {
         
       Date fechaActual = new Date();
       LocalDate localDateFA = convertirDateALocalDate(fechaActual);
@@ -188,26 +205,53 @@ public class PdfController {
      String htmlContent = templateEngine.process("certificado/certificadoPrueba-pdf", context);
 
      // Directorio donde se guardará el archivo PDF en el disco local C
-     String directorioSalida = "C:/prueba";
-
+     String directorioSalida = "C:/SGTD/generados/titulos";
+     TituloGenerado tituloGenerado = new TituloGenerado();
+   
      // Nombre del archivo PDF
-     String nombreArchivo = "tituloPrueba.pdf";
+     String nombreArchivo = nroTitulo+"-Titulo-"+persona.getCi()+".pdf";
 
      // Generar la ruta completa del archivo
-     String rutaCompleta = directorioSalida + "/" + nombreArchivo;
+     String rutaCompleta =directorioSalida + "/" + nombreArchivo;
 
-     // Generar el documento PDF utilizando Flying Saucer
-     try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
-         ITextRenderer renderer = new ITextRenderer();
-         renderer.setDocumentFromString(htmlContent);
-         renderer.layout();
-         renderer.createPDF(outputStream);
-         renderer.finishPDF();
-     } catch (Exception e) {
-         // Manejar la excepción según sea necesario
-     }
-    
-    return "redirect:inicioGenerarCertificado";
+     // Crear los directorios si no existen
+    File directorio = new File(directorioSalida);
+    if (!directorio.exists()) {
+        directorio.mkdirs();
     }
+
+      // Generar el documento PDF utilizando Flying Saucer
+      try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+        
+        // Establecer tamaño de página Legal
+        renderer.layout();
+        renderer.createPDF(outputStream);
+    } catch (Exception e) {
+        // Manejar la excepción según sea necesario
+    }
+
+    //Registrar titulo Generado 
+    
+    tituloGenerado.setNombre_archivo(nombreArchivo);
+    tituloGenerado.setRuta_archivo("SGTD/generados/titulos/"+nombreArchivo);
+    tituloGenerado.setEstado("A");
+    TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+
+
+    //Registrar titulo
+
+    titulo.setTituloGenerado(tituloGenerado2);
+    titulo.setNro_titulo(nroTitulo);
+    titulo.setEstado("A");
+    titulo.setFecha_generacion(localDateFA);
+    tituloService.save(titulo);
+
+
+
+    return "redirect:listarTitulos";
+    }
+  
     
 }
