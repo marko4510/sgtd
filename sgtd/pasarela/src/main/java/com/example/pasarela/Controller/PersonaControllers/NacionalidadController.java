@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.Nacionalidad;
 import com.example.pasarela.Models.Service.INacionalidadService;
@@ -35,10 +36,13 @@ public class NacionalidadController {
 
 	// FUNCION PARA GUARDAR LA NACIONALIDAD
 	@RequestMapping(value = "/NacionalidadF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String PersonaF(@Validated Nacionalidad nacionalidad) { // validar los datos capturados (1)
+	public String PersonaF(@Validated Nacionalidad nacionalidad, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
 		nacionalidad.setEstado("A");
 		nacionalidadService.save(nacionalidad);
+		redirectAttrs
+				.addFlashAttribute("mensaje", "Registro Exitoso del País")
+				.addFlashAttribute("clase", "success alert-dismissible fade show");
 
 		return "redirect:/NacionalidadR";
 	}
