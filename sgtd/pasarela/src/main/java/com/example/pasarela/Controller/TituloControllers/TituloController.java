@@ -50,7 +50,7 @@ public class TituloController {
             @PathVariable("id") long id_titulo) throws FileNotFoundException {
         TituloGenerado tituloGenerado = tituloGeneradoService.buscarTituloGeneradoPorTitulo(id_titulo);
 
-        File file = new File("C:/" + tituloGenerado.getRuta_archivo());
+        File file = new File(tituloGenerado.getRuta_archivo());
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=" + file.getName());
         response.setHeader("Content-Length", String.valueOf(file.length()));

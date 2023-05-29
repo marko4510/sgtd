@@ -1,9 +1,16 @@
 package com.example.pasarela.Controller.PersonaControllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.pasarela.Models.Entity.Departamento;
 import com.example.pasarela.Models.Entity.GradoAcademico;
@@ -49,6 +57,27 @@ public class PersonaController {
 
     @Autowired
     private ICarreraService carreraService;
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
+    
+    public String guardarFirma(MultipartFile archivo) {
+		String uniqueFilename = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename();
+
+		Path rootPath = Paths.get("firmas/").resolve(uniqueFilename);
+		Path rootAbsolutPath = rootPath.toAbsolutePath();
+
+		log.info("rootPath: " + rootPath);
+		log.info("rootAbsolutPath: " + rootAbsolutPath);
+
+		try {
+
+			Files.copy(archivo.getInputStream(), rootAbsolutPath);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return uniqueFilename;
+	}
 
     // FUNCION PARA LA VISUALIZACION DEL REGISTRO DE PERSONA
     @RequestMapping(value = "/PersonaR", method = RequestMethod.GET) // Pagina principal
@@ -95,41 +124,55 @@ public class PersonaController {
     @RequestMapping(value = "/PersonaF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
     public String PersonaF(@Validated Persona persona, Model model,
             @RequestParam(value = "id_provincia") Long id_pro,
+            @RequestParam(name = "file", required = false) MultipartFile archivo,
             @RequestParam(value = "id_grado_academico") Long id_gra) { // validar los datos capturados (1)
 
         RandomAlfanumeric randomAlfanumeric = new RandomAlfanumeric();
 
         int i = 5;
         String passw = randomAlfanumeric.getRandomString(i);
-
+        
         Provincia provincia = provinciaService.findOne(id_pro);
         GradoAcademico gradoAcademico = gradoAcademicoService.findOne(id_gra);
         persona.setEstado("A");
         persona.setProvincia(provincia);
         persona.setGradoAcademico(gradoAcademico);
-        personaService.save(persona);
+        
+        
 
         Usuario usuario = new Usuario();
+        
         usuario.setContrasena(passw + "*");
         usuario.setUsuario_nom(persona.getCi());
         usuario.setEstado("C");
+        if (!archivo.isEmpty()) {
+			persona.setDigital(guardarFirma(archivo));
+			usuario.setEstado("F");
+		}
+        personaService.save(persona);
         usuario.setPersona(persona);
+
+        
+    
+                
+
         usuarioService.save(usuario);
 
         return "redirect:/PersonasL";
     }
 
     @RequestMapping(value = "/PersonaModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String PersonaMod(@Validated Persona persona, Model model
+    public String PersonaMod(@Validated Persona persona,  @RequestParam(name = "file", required = false) MultipartFile archivo, Model model
            ) { // validar los datos capturados (1)
 
-       // Provincia provincia = provinciaService.findOne(id_pro);
-        //GradoAcademico gradoAcademico = gradoAcademicoService.findOne(id_gra);
+        Usuario usuario = usuarioService.getUsuarioPersona(persona.getId_persona());
         persona.setEstado("A");
-       // persona.setProvincia(provincia);
-        //persona.setGradoAcademico(gradoAcademico);
+        if (!archivo.isEmpty()) {
+			persona.setDigital(guardarFirma(archivo));
+			usuario.setEstado("F");
+		}
         personaService.save(persona);
-
+        usuarioService.save(usuario);
         return "redirect:/PersonasL";
     }
 
@@ -176,4 +219,6 @@ public class PersonaController {
         return "redirect:/PersonasL";
 
     }
+
+   
 }

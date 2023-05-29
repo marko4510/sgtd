@@ -26,6 +26,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -205,20 +207,17 @@ public class PdfController {
      String htmlContent = templateEngine.process("certificado/certificadoPrueba-pdf", context);
 
      // Directorio donde se guardará el archivo PDF en el disco local C
-     String directorioSalida = "C:/SGTD/generados/titulos";
+     Path rootPathTitulos = Paths.get("archivos/titulos/");
+		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
      TituloGenerado tituloGenerado = new TituloGenerado();
    
      // Nombre del archivo PDF
      String nombreArchivo = nroTitulo+"-Titulo-"+persona.getCi()+".pdf";
 
      // Generar la ruta completa del archivo
-     String rutaCompleta =directorioSalida + "/" + nombreArchivo;
+     String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
 
-     // Crear los directorios si no existen
-    File directorio = new File(directorioSalida);
-    if (!directorio.exists()) {
-        directorio.mkdirs();
-    }
+    
 
       // Generar el documento PDF utilizando Flying Saucer
       try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
@@ -235,7 +234,7 @@ public class PdfController {
     //Registrar titulo Generado 
     
     tituloGenerado.setNombre_archivo(nombreArchivo);
-    tituloGenerado.setRuta_archivo("SGTD/generados/titulos/"+nombreArchivo);
+    tituloGenerado.setRuta_archivo(rutaCompleta);
     tituloGenerado.setEstado("A");
     TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
 
@@ -243,6 +242,7 @@ public class PdfController {
     //Registrar titulo
 
     titulo.setTituloGenerado(tituloGenerado2);
+    titulo.setPersona(persona);
     titulo.setNro_titulo(nroTitulo);
     titulo.setEstado("A");
     titulo.setFecha_generacion(localDateFA);

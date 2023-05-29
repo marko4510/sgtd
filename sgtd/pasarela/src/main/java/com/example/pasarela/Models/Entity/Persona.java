@@ -50,6 +50,9 @@ public class Persona implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_nacimiento;
 
+    private String digital;
+    private String claveP;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
     private List<Usuario> usuarios;
@@ -57,6 +60,10 @@ public class Persona implements Serializable {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
     private List<Tramite> tramite;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "persona", fetch = FetchType.LAZY)
+    private List<Titulo> titulo;
 
 
 

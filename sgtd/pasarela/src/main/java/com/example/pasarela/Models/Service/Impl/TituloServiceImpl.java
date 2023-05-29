@@ -33,5 +33,10 @@ public class TituloServiceImpl implements ITituloService{
     public void delete(Long id) {
         tituloDao.deleteById(id);
     }
+
+    @Override
+    public List<Titulo> titulosSinFirmar() {
+        return (List<Titulo>) tituloDao.titulosSinFirmar();
+    }
     
 }

@@ -6,7 +6,7 @@ import com.example.pasarela.Models.Entity.Titulo;
 
 public interface ITituloService {
 
-
+	public List<Titulo> titulosSinFirmar();
     public List<Titulo> findAll();
 
 

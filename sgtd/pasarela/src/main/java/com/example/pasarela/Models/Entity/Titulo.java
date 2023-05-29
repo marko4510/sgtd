@@ -41,12 +41,19 @@ public class Titulo implements Serializable{
     
     private String estado;
 
+    private String documento_firmado;
+
  
 
      //Tabla Archivo Adjunto
      @ManyToOne(fetch = FetchType.EAGER)
      @JoinColumn(name = "id_titulo_generado")
      private TituloGenerado tituloGenerado;
+
+     //Tabla Archivo Adjunto
+     @ManyToOne(fetch = FetchType.EAGER)
+     @JoinColumn(name = "id_persona")
+     private Persona persona;
 
 
 
