@@ -15,6 +15,7 @@ import com.example.pasarela.Models.Entity.TituloGenerado;
 import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.ITituloGeneradoService;
 import com.example.pasarela.Models.Service.ITituloService;
+import com.example.pasarela.Models.Utils.Archive;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -54,6 +55,8 @@ public class PdfController {
     
     private final TemplateEngine templateEngine;
     
+    Archive archive = new Archive();
+
     public int calcularEdad(LocalDate fechaNacimiento) {
         LocalDate fechaActual = LocalDate.now();
         return Period.between(fechaNacimiento, fechaActual).getYears();
@@ -188,11 +191,11 @@ public class PdfController {
       String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
       String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
       String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
-
-    //
-    //Codigo para generar PDF
-    //
-
+      String codigo = archive.getMD5(id_persona+"");
+   
+      Path rootPathPlantilla = Paths.get("plantillas/");
+      Path rootAbsolutPathPlantilla = rootPathPlantilla.toAbsolutePath();
+      String plantilla = rootAbsolutPathPlantilla+"/plantilla_titulo_academico.pdf";
      // Crear el contexto con los datos necesarios para la vista
      Context context = new Context();
      // Agregar los datos que necesites en tu vista
@@ -203,6 +206,8 @@ public class PdfController {
      context.setVariable("mes", cadenaMesC);
      context.setVariable("gestion", gestion);
      context.setVariable("nroTitulo", nroTitulo);
+     context.setVariable("codigo", codigo);
+     context.setVariable("plantilla", plantilla);
      // Renderizar la vista HTML utilizando Thymeleaf
      String htmlContent = templateEngine.process("certificado/certificadoPrueba-pdf", context);
 

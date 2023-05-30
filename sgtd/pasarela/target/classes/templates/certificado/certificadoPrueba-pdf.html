@@ -12,21 +12,22 @@
     </style>
 </head>
 
-<body style="font-family:'Times New Roman'; font-size:12pt">
+<body style="font-family:'Times New Roman'; font-size:12pt;  ">
     <div>
-        <p style="margin-top:50.85pt; margin-left:444.7pt; margin-bottom:0pt; text-align:justify; line-height:13.4pt">
+        <p style="margin-top:150.85pt; margin-left:444.7pt; margin-bottom:0pt; text-align:justify; line-height:13.4pt">
             <span style="font-family:Arial" th:text="${nroTitulo}">123456</span></p>
-        <p style="margin-top:162.1pt; margin-bottom:0pt; text-align:justify; line-height:28pt"><span
+        <p style="margin-top:162.1pt; margin-bottom:0pt; text-align:center; line-height:28pt"><span
                 style="font-size:25.5pt" th:text="${persona.nombre}+' '+${persona.ap_paterno}+' '+${persona.ap_materno}">MARCO ALEJANDRO CUELLAR FERREIRA</span></p>
         <p style="margin-top:32.9pt; margin-left:170.55pt; margin-bottom:0pt; text-align:justify; line-height:13.25pt">
-            <span style="-aw-import:spaces">&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;
-            </span><span th:text="${#dates.format(persona.fecha_nacimiento, 'dd/MM/yyyy')}+' '+${provincia}+'-'+${departamento}">31/07/1999 Andres Ibañez-Santa Cruz</span></p>
-        <p style="margin:0.05pt 125.6pt 0pt 133.8pt; text-align:center; line-height:145.1pt"><span
-                style="font-size:25.5pt" th:text="${persona.gradoAcademico.carrera.nombre_carrera}">Ingeniería de Sistemas Universitario</span></p>
+            <span style="margin-right: 40px;"></span>
+            <span style="margin-right: 40px;" th:text="${#dates.format(persona.fecha_nacimiento, 'dd/MM/yyyy')}">31/07/1999 Andres Ibañez-Santa Cruz</span>
+            <span style="margin-right: 40px;" th:text="${provincia}+'-'+${departamento}">31/07/1999 Andres Ibañez-Santa Cruz</span></p>
+        <p style="margin-top:90.1pt; margin-bottom:0pt; text-align:center; "><span
+                style="font-size:28.5pt" th:text="${persona.gradoAcademico.nombre}">Ingeniería de Sistemas Universitario</span></p>
         <p style="margin-top:101.15pt; margin-left:158.05pt; margin-bottom:0pt; text-align:justify; line-height:15.5pt">
-            <span style="font-size:13pt" th:text="${dia}">18</span><span style="font-size:13pt; letter-spacing:32.8pt"> </span><span
-                style="font-size:13pt" th:text="${mes}">Mayo</span><span style="font-size:13pt; letter-spacing:98.75pt"> </span><span
-                style="font-size:13pt" th:text="${gestion}">Veintitrés</span></p>
+            <span style="font-size:13pt; margin-right: 40px;" th:text="${dia}">18</span><span style="font-size:13pt; letter-spacing:32.8pt"> </span><span
+                style="font-size:13pt; margin-right: 80px;" th:text="${mes}">Mayo</span><span style="font-size:13pt; letter-spacing:98.75pt"> </span><span
+                style="font-size:13pt;" th:text="${gestion}">Veintitrés</span></p>
         <p style="margin-top:61.15pt; margin-left:187.4pt; margin-bottom:0pt; text-align:justify; line-height:12.15pt">
             <span style="font-size:11pt; -aw-import:spaces">&#xa0;</span><span style="font-size:11pt">MSc. Franz Navia
                 Miranda</span><span style="font-size:11pt; -aw-import:spaces">&#xa0; </span></p>
@@ -37,6 +38,8 @@
                 style="font-size:11pt">MSc. Ariz Humerez Alvez</span></p>
         <p style="margin-top:0pt; margin-left:465.3pt; margin-bottom:0pt; text-align:justify; line-height:12.15pt"><span
                 style="font-size:11pt">a.i.</span></p>
+        <p ><strong>INCLUYE FIRMA DIGITAL AVALADO POR ADSIB</strong></p>
+        <p th:text="${codigo}"></p>
     </div>
 </body>
 
