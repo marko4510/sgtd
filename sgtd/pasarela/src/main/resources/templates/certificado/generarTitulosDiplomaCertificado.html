@@ -146,7 +146,7 @@
                             </div>
                             <div class="tab-pane fade" id="bachiller" role="tabpanel" aria-labelledby="bachiller-tab">
                                 <div class="card-body">
-                                <form th:action="@{/generarTituloBachiller}" method="post">
+                                <form th:action="@{/generarTituloBachillerPdf}" method="post">
                                     <div class="row">
                                     <div class="col-md-6">
                                         <div>
@@ -158,22 +158,21 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-2">
-                                        <div>
-                                            <label class="col-form-label">Tipo Serie</label>
-                                            <select class="form-select" name="tipoSerie">
-                                                <option value="D" selected>D</option>
-                                                <option value="E" >E</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3">
-                              
-                                            <label class="col-form-label">Número Titulo</label>
-                                        <input class="form-control" name="nroTitulo" type="text" required>
-                                               
-                                          
-                                 
+                                    <div class="col-md-3 text-dark">
+                                        <label class="col-form-label">Gestión</label>
+                                        <select class="form-select js-choice" name="gestion"
+                                            required>
+                                            <option value="">Seleccione una Gestión</option>
+                                            <option value="Veintitrés">2023</option>
+                                            <option value="Veinticuatro">2024</option>
+                                            <option value="Veinticinco">2025</option>
+                                            <option value="Veintiséis">2026</option>
+                                            <option value="Veintisiete">2027</option>
+                                            <option value="Veintiocho">2028</option>
+                                            <option value="Veintinueve">2029</option>
+                                            <option value="Treinta">2030</option>
+                                        </select>
+
                                     </div>
                                 </div>
                                     <br>

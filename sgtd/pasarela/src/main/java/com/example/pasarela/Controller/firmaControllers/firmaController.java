@@ -2,12 +2,7 @@ package com.example.pasarela.Controller.firmaControllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.pdfbox.cos.COSDictionary;
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSString;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.interactive.digitalsignature.PDSignature;
-import org.apache.pdfbox.pdmodel.interactive.digitalsignature.SignatureOptions;
+
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.Titulo;
@@ -27,17 +23,14 @@ import com.example.pasarela.Models.Utils.Archive;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
-import java.security.KeyStore;
-import java.security.PrivateKey;
+
 import java.security.Security;
-import java.security.cert.Certificate;
+
 import java.util.List;
 
 @Controller
@@ -63,7 +56,7 @@ public class firmaController {
     }
 
     @PostMapping("/firmarDocumento")
-    public String firmarDocumento(@RequestParam("clavePrivada") String clavePrivada, HttpServletRequest request)
+    public String firmarDocumento(@RequestParam("clavePrivada") String clavePrivada, HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
             throws GeneralSecurityException, IOException, DocumentException {
         // Obtener la entidad "Usuario" a partir del usuario en sesión
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
@@ -73,7 +66,10 @@ public class firmaController {
 
         // Validar la clave privada ingresada
         if (!persona.getClaveP().equals(clavePrivada)) {
-            return "FirmaR";
+            redirectAttrs
+            .addFlashAttribute("mensaje3", "Clave Privada Incorrecta!")
+            .addFlashAttribute("clase3", "warning alert-dismissible fade show");
+            return "redirect:/FirmaR";
         }
 
         Path rootPathFirmas = Paths.get("archivos/firmas/");
@@ -89,7 +85,8 @@ public class firmaController {
         Security.addProvider(provider);
 
         List<Titulo> listaTitulos = tituloService.titulosSinFirmar();
-        if (listaTitulos != null) {
+    
+        if (!listaTitulos.isEmpty()) {
             for (Titulo titulo : listaTitulos) {
                 archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
                         persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
@@ -108,9 +105,19 @@ public class firmaController {
                         rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
                 tituloService.save(titulo);
             }
+            redirectAttrs
+            .addFlashAttribute("mensaje", "Documentos Firmados con Exito!")
+            .addFlashAttribute("clase", "success alert-dismissible fade show");
         }
+        if (listaTitulos.isEmpty()) {
+        redirectAttrs
+        .addFlashAttribute("mensaje2", "No hay Documentos para Firmar!")
+        .addFlashAttribute("clase2", "danger alert-dismissible fade show");    
+        }
+        
+       
 
-        return "firmar/firmaTitulos";
+        return "redirect:/FirmaR";
 
     }
 

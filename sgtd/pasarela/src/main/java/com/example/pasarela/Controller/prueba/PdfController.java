@@ -257,6 +257,95 @@ public class PdfController {
 
     return "redirect:listarTitulos";
     }
+
+    @PostMapping("/generarTituloBachillerPdf")
+    public String generarTituloBachillerPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion, Model model) throws FileNotFoundException, IOException, ParseException {
+        
+      Persona persona = personaService.findOne(id_persona);
+      // Capturar Fecha Actual
+      Date fechaActual = new Date();
+      LocalDate localDateFA = convertirDateALocalDate(fechaActual);
+      int dia = localDateFA.getDayOfMonth();
+      String diaS = convertirNumTexto(dia);
+      String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+      int anio = localDateFA.getYear();
+  
+      SimpleDateFormat formato = new SimpleDateFormat("dd ' de ' ' ' MMMM ' del ' ' ' yyyy", new Locale("es", "ES"));
+      String fechaTexto = formato.format(fechaActual);
+      // Calcular Edad
+      Date fechaEdad = persona.getFecha_nacimiento();
+  
+      LocalDate localDate = convertirDateALocalDate(fechaEdad);
+  
+      int edad = calcularEdad(localDate);
+  
+      String cadenaDepartamento = persona.getProvincia().getDepartamento().getNombre();
+      String cadenaProvincia = persona.getProvincia().getNombre_provincia();
+      String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
+      String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
+      List<Titulo> listTitulo = tituloService.findAll();
+      String nroTitulo = (listTitulo.size() + 1)+"";
+     // Crear el contexto con los datos necesarios para la vista
+     Context context = new Context();
+     // Agregar los datos que necesites en tu vista
+     context.setVariable("persona", persona);
+     context.setVariable("fechaTitulo", fechaTexto);
+     context.setVariable("edad", edad);
+     context.setVariable("departamento", cadenaDepartamentoC);
+     context.setVariable("provincia", cadenaProvinciaC);
+     context.setVariable("dia", diaS);
+     context.setVariable("mes", mes);
+     context.setVariable("anio", anio);
+
+     // Renderizar la vista HTML utilizando Thymeleaf
+     String htmlContent = templateEngine.process("certificado/bachillerPrueba-pdf", context);
+
+     // Directorio donde se guardará el archivo PDF en el disco local C
+     Path rootPathTitulos = Paths.get("archivos/titulos/");
+		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+     TituloGenerado tituloGenerado = new TituloGenerado();
+   
+     // Nombre del archivo PDF
+     String nombreArchivo = nroTitulo +"-Diploma"+"-Bachiller-"+persona.getCi()+".pdf";
+
+     // Generar la ruta completa del archivo
+     String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
+
+    
+
+      // Generar el documento PDF utilizando Flying Saucer
+      try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+        
+        // Establecer tamaño de página Legal
+        renderer.layout();
+        renderer.createPDF(outputStream);
+    } catch (Exception e) {
+        // Manejar la excepción según sea necesario
+    }
+
+    //Registrar titulo Generado 
+    
+    tituloGenerado.setNombre_archivo(nombreArchivo);
+    tituloGenerado.setRuta_archivo(rutaCompleta);
+    tituloGenerado.setEstado("A");
+    TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+
+
+    //Registrar titulo
+
+    titulo.setTituloGenerado(tituloGenerado2);
+    titulo.setPersona(persona);
+    titulo.setNro_titulo(nroTitulo);
+    titulo.setEstado("A");
+    titulo.setFecha_generacion(localDateFA);
+    tituloService.save(titulo);
+
+
+
+    return "redirect:listarTitulos";
+    }
   
     
 }

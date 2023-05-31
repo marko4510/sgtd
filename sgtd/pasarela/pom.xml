@@ -19,16 +19,22 @@
 	<dependencies>
 	<!-- Dependencias Para Generar PDF de VISTA HTML INICIO-->
 	<!-- Dependencias de Thymeleaf -->
+	<dependency>
+			<groupId>org.bouncycastle</groupId>
+			<artifactId>bcpkix-jdk15on</artifactId>
+			<version>1.49</version>
+		</dependency>
+		
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-thymeleaf</artifactId>
     </dependency>
 
     <!-- Dependencias de Flying Saucer -->
-    <dependency>
+     <dependency>
         <groupId>org.xhtmlrenderer</groupId>
-        <artifactId>flying-saucer-pdf</artifactId>
-        <version>9.1.22</version>
+        <artifactId>flying-saucer-pdf-itext5</artifactId>
+        <version>9.1.13</version>
     </dependency>
 
     <!-- Dependencia para el motor de renderizado de Flying Saucer -->
