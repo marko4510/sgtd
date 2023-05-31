@@ -16,6 +16,7 @@ import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.ITituloGeneradoService;
 import com.example.pasarela.Models.Service.ITituloService;
 import com.example.pasarela.Models.Utils.Archive;
+import com.itextpdf.text.DocumentException;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -179,7 +180,7 @@ public class PdfController {
     }
 
     @PostMapping("/generarTituloPdf")
-    public String generarTituloPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,@RequestParam("nroTitulo") String nroTitulo, Model model) throws FileNotFoundException, IOException, ParseException {
+    public String generarTituloPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,@RequestParam("nroTitulo") String nroTitulo, Model model) throws FileNotFoundException, IOException, ParseException, DocumentException {
         
       Date fechaActual = new Date();
       LocalDate localDateFA = convertirDateALocalDate(fechaActual);
@@ -211,16 +212,19 @@ public class PdfController {
      // Renderizar la vista HTML utilizando Thymeleaf
      String htmlContent = templateEngine.process("certificado/certificadoPrueba-pdf", context);
 
-     // Directorio donde se guardará el archivo PDF en el disco local C
+     // Directorio donde se guardará el archivo PDF 
      Path rootPathTitulos = Paths.get("archivos/titulos/");
 		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+   
+
      TituloGenerado tituloGenerado = new TituloGenerado();
    
      // Nombre del archivo PDF
-     String nombreArchivo = nroTitulo+"-Titulo-"+persona.getCi()+".pdf";
+     String nombreArchivo = codigo+".pdf";
 
      // Generar la ruta completa del archivo
      String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
+
 
     
 
@@ -235,7 +239,7 @@ public class PdfController {
     } catch (Exception e) {
         // Manejar la excepción según sea necesario
     }
-
+    
     //Registrar titulo Generado 
     
     tituloGenerado.setNombre_archivo(nombreArchivo);
@@ -259,9 +263,10 @@ public class PdfController {
     }
 
     @PostMapping("/generarTituloBachillerPdf")
-    public String generarTituloBachillerPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion, Model model) throws FileNotFoundException, IOException, ParseException {
+    public String generarTituloBachillerPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion, Model model) throws FileNotFoundException, IOException, ParseException, DocumentException {
         
       Persona persona = personaService.findOne(id_persona);
+      String codigo = archive.getMD5(id_persona+"");
       // Capturar Fecha Actual
       Date fechaActual = new Date();
       LocalDate localDateFA = convertirDateALocalDate(fechaActual);
@@ -296,6 +301,7 @@ public class PdfController {
      context.setVariable("dia", diaS);
      context.setVariable("mes", mes);
      context.setVariable("anio", anio);
+     context.setVariable("codigo", codigo);
 
      // Renderizar la vista HTML utilizando Thymeleaf
      String htmlContent = templateEngine.process("certificado/bachillerPrueba-pdf", context);
@@ -303,14 +309,24 @@ public class PdfController {
      // Directorio donde se guardará el archivo PDF en el disco local C
      Path rootPathTitulos = Paths.get("archivos/titulos/");
 		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+
+     // Directorio donde se guardará el archivo PDF con Plantilla 
+     Path rootPathTitulosP = Paths.get("archivos/titulos/bachiller");
+     Path rootAbsolutPathTitulosP = rootPathTitulosP.toAbsolutePath();
+      // Directorio de la Plantilla 
+      Path rootPathPlantillaPath = Paths.get("plantillas/");
+      Path rootAbsolutPathPlantillasPath = rootPathPlantillaPath.toAbsolutePath();
      TituloGenerado tituloGenerado = new TituloGenerado();
    
      // Nombre del archivo PDF
-     String nombreArchivo = nroTitulo +"-Diploma"+"-Bachiller-"+persona.getCi()+".pdf";
+     String nombreArchivo = codigo+".pdf";
 
      // Generar la ruta completa del archivo
      String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
+     //Ruta completa de la Plantilla
+     String rutaCompletaP = rootAbsolutPathPlantillasPath + "/esc.jpg";
 
+      String rutaCompletaSalida = rootAbsolutPathTitulosP +"/"+nombreArchivo;
     
 
       // Generar el documento PDF utilizando Flying Saucer
@@ -324,11 +340,11 @@ public class PdfController {
     } catch (Exception e) {
         // Manejar la excepción según sea necesario
     }
-
+    archive.plantilla(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
     //Registrar titulo Generado 
     
     tituloGenerado.setNombre_archivo(nombreArchivo);
-    tituloGenerado.setRuta_archivo(rutaCompleta);
+    tituloGenerado.setRuta_archivo(rutaCompletaSalida);
     tituloGenerado.setEstado("A");
     TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
 

@@ -75,8 +75,7 @@ public class firmaController {
         Path rootPathFirmas = Paths.get("archivos/firmas/");
         Path rootAbsolutPathFirmas = rootPathFirmas.toAbsolutePath();
 
-        Path rootPathTitulos = Paths.get("archivos/titulos/");
-        Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+        
 
         Path rootPathFirmados = Paths.get("archivos/firmados/");
         Path rootAbsolutPathFirmados = rootPathFirmados.toAbsolutePath();
@@ -90,7 +89,7 @@ public class firmaController {
             for (Titulo titulo : listaTitulos) {
                 archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
                         persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
-                        rootAbsolutPathTitulos.toString() + "/" + titulo.getTituloGenerado().getNombre_archivo(),
+                        titulo.getTituloGenerado().getRuta_archivo(),
                         rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
                 TituloGenerado tituloGenerado = new TituloGenerado();
                 // Registrar titulo Generado
