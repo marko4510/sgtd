@@ -63,7 +63,7 @@ public class PersonaController {
     public String guardarFirma(MultipartFile archivo) {
 		String uniqueFilename = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename();
 
-		Path rootPath = Paths.get("firmas/").resolve(uniqueFilename);
+		Path rootPath = Paths.get("archivos/firmas/").resolve(uniqueFilename);
 		Path rootAbsolutPath = rootPath.toAbsolutePath();
 
 		log.info("rootPath: " + rootPath);
