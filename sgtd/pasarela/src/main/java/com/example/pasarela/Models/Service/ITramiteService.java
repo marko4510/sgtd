@@ -45,5 +45,7 @@ public interface ITramiteService {
 	//LISTA PARA REPORTES DE TITULADOS DE POSGRADO
 	public List<Tramite> reporteTituladosDoctorado(String gestion);
 	public List<Tramite> reporteTituladosMaestria(String gestion);
+	public List<Tramite> reporteTituladosDiplomado(String gestion);
+	public List<Tramite> reporteTituladosEspecialidad(String gestion);
 	public List<Tramite> reporteTituladosPosgradoPorFechas(Date fechaInicio, Date fechaFin);
 }

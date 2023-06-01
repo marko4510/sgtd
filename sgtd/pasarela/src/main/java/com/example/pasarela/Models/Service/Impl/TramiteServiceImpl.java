@@ -129,6 +129,18 @@ public class TramiteServiceImpl implements ITramiteService{
                 return (List<Tramite>) tramiteDao.tramitePorUnidadTipoDocumentoDocumentoFechas(id_unidad, id_tipo_documento, id_documento, fecha1, fecha2);
     }
 
+    @Override
+    public List<Tramite> reporteTituladosDiplomado(String gestion) {
+        // TODO Auto-generated method stub
+        return (List<Tramite>) tramiteDao.reporteTituladosDiplomado(gestion);
+    }
+
+    @Override
+    public List<Tramite> reporteTituladosEspecialidad(String gestion) {
+        // TODO Auto-generated method stub
+        return (List<Tramite>) tramiteDao.reporteTituladosEspecialidad(gestion);
+    }
+
    
 
 

@@ -489,6 +489,30 @@ public class TramiteController {
         return "tramite/reporte/reporteMaestria.html";
     }
 
+    @PostMapping("/generarReporteTituladosDiplomado")
+    public String generarReporteTituladosDiplomado(
+        @RequestParam("gestion") String gestion,
+       
+            Model model) throws FileNotFoundException, IOException {
+
+            
+        model.addAttribute("tramites", tramiteService.reporteTituladosDiplomado(gestion));
+        model.addAttribute("gestion", gestion);
+        return "tramite/reporte/reporteDiplomado.html";
+    }
+
+    @PostMapping("/generarReporteTituladosEspecialidad")
+    public String generarReporteTituladosEspecialidad(
+        @RequestParam("gestion") String gestion,
+       
+            Model model) throws FileNotFoundException, IOException {
+
+            
+        model.addAttribute("tramites", tramiteService.reporteTituladosEspecialidad(gestion));
+        model.addAttribute("gestion", gestion);
+        return "tramite/reporte/reporteEspecialidad.html";
+    }
+
     @PostMapping("/generarReporteTituladosPosgradoPorFechas")
     public String generarReporteTituladosPosgradoPorFechas(
         @RequestParam("fechaInicio") @DateTimeFormat(pattern= "yyyy-MM-dd") Date fechaInicio,

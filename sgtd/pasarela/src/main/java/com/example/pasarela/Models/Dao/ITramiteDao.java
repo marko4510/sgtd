@@ -68,6 +68,12 @@ public interface ITramiteDao extends CrudRepository<Tramite, Long> {
     @Query(value = "SELECT * FROM pasarela_tramite as tr INNER JOIN pasarela_persona as per ON tr.id_persona=per.id_persona INNER JOIN pasarela_documento as doc ON tr.id_documento=doc.id_documento INNER JOIN pasarela_tipo_documento as td ON tr.id_tipo_documento=td.id_tipo_documento WHERE doc.nombre_documento='MAESTRIA' AND tr.gestion= ?1 AND td.nombre_tipo_documento = 'TÍTULO / DIPLOMA'", nativeQuery = true)
     public List<Tramite> reporteTituladosMaestria(String gestion);
 
+    @Query(value = "SELECT * FROM pasarela_tramite as tr INNER JOIN pasarela_persona as per ON tr.id_persona=per.id_persona INNER JOIN pasarela_documento as doc ON tr.id_documento=doc.id_documento INNER JOIN pasarela_tipo_documento as td ON tr.id_tipo_documento=td.id_tipo_documento WHERE doc.nombre_documento='DIPLOMADO' AND tr.gestion= ?1 AND td.nombre_tipo_documento = 'TÍTULO / DIPLOMA'", nativeQuery = true)
+    public List<Tramite> reporteTituladosDiplomado(String gestion);
+
+    @Query(value = "SELECT * FROM pasarela_tramite as tr INNER JOIN pasarela_persona as per ON tr.id_persona=per.id_persona INNER JOIN pasarela_documento as doc ON tr.id_documento=doc.id_documento INNER JOIN pasarela_tipo_documento as td ON tr.id_tipo_documento=td.id_tipo_documento WHERE doc.nombre_documento='ESPECIALIDAD' AND tr.gestion= ?1 AND td.nombre_tipo_documento = 'TÍTULO / DIPLOMA'", nativeQuery = true)
+    public List<Tramite> reporteTituladosEspecialidad(String gestion);
+
     @Query(value = "SELECT   * FROM pasarela_tramite as tr INNER JOIN pasarela_tipo_documento as td ON td.id_tipo_documento = tr.id_tipo_documento INNER JOIN pasarela_documento as doc ON doc.id_documento = tr.id_documento WHERE tr.fecha_titulacion BETWEEN :fechaInicio AND :fechaFin AND td.nombre_tipo_documento = 'TÍTULO / DIPLOMA' AND (doc.nombre_documento = 'DOCTORADO' OR doc.nombre_documento = 'MAESTRIA')", nativeQuery = true)
     public List<Tramite> reporteTituladosPosgradoPorFechas(Date fechaInicio, Date fechaFin);
 }
