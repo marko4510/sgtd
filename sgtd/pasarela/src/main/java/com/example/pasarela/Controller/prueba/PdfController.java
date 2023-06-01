@@ -362,6 +362,99 @@ public class PdfController {
 
     return "redirect:listarTitulos";
     }
+
+
+    @PostMapping("/generarTituloProvisionPdf")
+    public String generarTituloProvisionPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,@RequestParam("nroTitulo") String nroTitulo, Model model) throws FileNotFoundException, IOException, ParseException, DocumentException {
+        
+      Date fechaActual = new Date();
+      
+      LocalDate localDateFA = convertirDateALocalDate(fechaActual);
+      int diaNum = localDateFA.getDayOfMonth();
+      String dia = convertirNumTexto(diaNum);
+      String diaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(dia);
+      String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+      Persona persona = personaService.findOne(id_persona);
+      String cadenaDepartamento = persona.getProvincia().getDepartamento().getNombre();
+      String cadenaProvincia = persona.getProvincia().getNombre_provincia();
+      String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
+      String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
+      String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
+      String codigo = archive.getMD5(id_persona+"");
+   
+      Date fechaNacimiento = persona.getFecha_nacimiento();
+      LocalDate localDateFa2 = convertirDateALocalDate(fechaNacimiento);
+      int diaN = localDateFa2.getDayOfMonth();
+      String mesN = localDateFa2.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+      int anioN = localDateFa2.getYear();
+     // Crear el contexto con los datos necesarios para la vista
+     Context context = new Context();
+     // Agregar los datos que necesites en tu vista
+     context.setVariable("departamento", cadenaDepartamentoC);
+     context.setVariable("provincia",cadenaProvinciaC);
+     context.setVariable("persona",persona);
+     context.setVariable("dia",diaC);
+     context.setVariable("diaN",diaN);
+     context.setVariable("mesN",mesN);
+     context.setVariable("anioN",anioN);
+     context.setVariable("mes", cadenaMesC);
+     context.setVariable("gestion", gestion);
+     context.setVariable("nroTitulo", nroTitulo);
+     context.setVariable("codigo", codigo);
+
+     // Renderizar la vista HTML utilizando Thymeleaf
+     String htmlContent = templateEngine.process("certificado/provisionPrueba-pdf", context);
+
+     // Directorio donde se guardará el archivo PDF 
+     Path rootPathTitulos = Paths.get("archivos/titulos/provision");
+		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+   
+
+     TituloGenerado tituloGenerado = new TituloGenerado();
+   
+     // Nombre del archivo PDF
+     String nombreArchivo = codigo+".pdf";
+
+     // Generar la ruta completa del archivo
+     String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
+
+
+    
+
+      // Generar el documento PDF utilizando Flying Saucer
+      try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+        
+        // Establecer tamaño de página Legal
+        renderer.layout();
+        renderer.createPDF(outputStream);
+    } catch (Exception e) {
+        // Manejar la excepción según sea necesario
+    }
+    
+    //Registrar titulo Generado 
+    
+    tituloGenerado.setNombre_archivo(nombreArchivo);
+    tituloGenerado.setRuta_archivo(rutaCompleta);
+    tituloGenerado.setEstado("A");
+    TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+
+
+    //Registrar titulo
+
+    titulo.setTituloGenerado(tituloGenerado2);
+    titulo.setPersona(persona);
+    titulo.setNro_titulo(nroTitulo);
+    titulo.setEstado("A");
+    titulo.setFecha_generacion(localDateFA);
+    tituloService.save(titulo);
+
+
+
+    return "redirect:listarTitulos";
+    }
+
   
     
 }
