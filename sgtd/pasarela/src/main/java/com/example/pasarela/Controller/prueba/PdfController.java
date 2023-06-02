@@ -254,6 +254,7 @@ public class PdfController {
     titulo.setPersona(persona);
     titulo.setNro_titulo(nroTitulo);
     titulo.setEstado("A");
+    titulo.setTipo_titulo("Academico");
     titulo.setFecha_generacion(localDateFA);
     tituloService.save(titulo);
 
@@ -346,6 +347,7 @@ public class PdfController {
     tituloGenerado.setNombre_archivo(nombreArchivo);
     tituloGenerado.setRuta_archivo(rutaCompletaSalida);
     tituloGenerado.setEstado("A");
+   
     TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
 
 
@@ -355,6 +357,7 @@ public class PdfController {
     titulo.setPersona(persona);
     titulo.setNro_titulo(nroTitulo);
     titulo.setEstado("A");
+    titulo.setTipo_titulo("Bachiller");
     titulo.setFecha_generacion(localDateFA);
     tituloService.save(titulo);
 
@@ -447,6 +450,7 @@ public class PdfController {
     titulo.setPersona(persona);
     titulo.setNro_titulo(nroTitulo);
     titulo.setEstado("A");
+    titulo.setTipo_titulo("Provision");
     titulo.setFecha_generacion(localDateFA);
     tituloService.save(titulo);
 

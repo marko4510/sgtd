@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.pasarela.Models.Entity.Autoridad;
 import com.example.pasarela.Models.Entity.Carrera;
 import com.example.pasarela.Models.Entity.Departamento;
 import com.example.pasarela.Models.Entity.GradoAcademico;
@@ -34,6 +35,7 @@ import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.Provincia;
 import com.example.pasarela.Models.Entity.Tramite;
 import com.example.pasarela.Models.Entity.Usuario;
+import com.example.pasarela.Models.Service.IAutoridadService;
 import com.example.pasarela.Models.Service.ICarreraService;
 import com.example.pasarela.Models.Service.IDepartamentoService;
 import com.example.pasarela.Models.Service.IGradoAcademicoService;
@@ -70,6 +72,9 @@ public class LoginController {
 	@Autowired
     private ITramiteService tramiteService;
 
+	@Autowired
+    private IAutoridadService autoridadService;
+
 	// Funcion de visualizacion de iniciar sesiòn administrador
 	@RequestMapping(value = "/LoginR", method = RequestMethod.GET)
 	public String LoginR(Model model) {
@@ -90,7 +95,10 @@ public class LoginController {
 				return "redirect:/cerrar_sesionAdm";
 			}
 			HttpSession sessionAdministrador = request.getSession(true);
+			
 
+			
+			
 			sessionAdministrador.setAttribute("usuario", usuario);
 			sessionAdministrador.setAttribute("persona", usuario.getPersona());
 
@@ -110,6 +118,7 @@ public class LoginController {
 	@RequestMapping(value = "/AdmPG", method = RequestMethod.GET) // Pagina principal
 	public String Inicio(HttpServletRequest request, Model model) {
 		if (request.getSession().getAttribute("usuario") != null) {
+		
 			List<Tramite> listL = tramiteService.listaCarpetaLegalizacion();
 			List<Tramite> listS = tramiteService.listaCarpetaSupletorio();
 			List<Tramite> listT = tramiteService.listaCarpetaTitulos();
@@ -118,6 +127,7 @@ public class LoginController {
 			model.addAttribute("listS", listS.size());
 			model.addAttribute("listT", listT.size());
 			model.addAttribute("listP", listP.size());
+			
 			return "adm";
 		} else {
 			return "redirect:LoginR";

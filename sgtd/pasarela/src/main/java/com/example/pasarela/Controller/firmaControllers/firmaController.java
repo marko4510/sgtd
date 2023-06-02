@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.pasarela.Models.Entity.Autoridad;
 import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.Titulo;
 import com.example.pasarela.Models.Entity.TituloGenerado;
 import com.example.pasarela.Models.Entity.Usuario;
+import com.example.pasarela.Models.Service.IAutoridadService;
 import com.example.pasarela.Models.Service.ITituloGeneradoService;
 import com.example.pasarela.Models.Service.ITituloService;
 import com.example.pasarela.Models.Utils.Archive;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 
 
@@ -40,23 +43,94 @@ public class firmaController {
 
     @Autowired
     private ITituloGeneradoService tituloGeneradoService;
-
+    @Autowired
+    private IAutoridadService autoridadService;
     Archive archive = new Archive();
 
     @RequestMapping(value = "/FirmaR", method = RequestMethod.GET) // Pagina principal
     public String Carrera(HttpServletRequest request, Model model) {
         if (request.getSession().getAttribute("usuario") != null) {
-
+            Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+			// Obtener la entidad "Persona" asociada al usuario
+			Persona persona = usuario.getPersona();
+			Long id_p = persona.getId_persona();
+			Autoridad autoridad = autoridadService.autoridadPorIdPersona(id_p);
             model.addAttribute("titulos", tituloService.findAll());
-
+            model.addAttribute("autoridad", autoridad);
             return "firmar/firmaTitulos";
         } else {
             return "redirect:LoginR";
         }
     }
 
-    @PostMapping("/firmarDocumento")
-    public String firmarDocumento(@RequestParam("clavePrivada") String clavePrivada, HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
+    @PostMapping("/firmarDocumentoRector")
+    public String firmarDocumentoRector(@RequestParam("clavePrivada") String clavePrivada, HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
+            throws GeneralSecurityException, IOException, DocumentException {
+        // Obtener la entidad "Usuario" a partir del usuario en sesión
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+
+        // Obtener la entidad "Persona" asociada al usuario
+        Persona persona = usuario.getPersona();
+
+        // Validar la clave privada ingresada
+        if (!persona.getClaveP().equals(clavePrivada)) {
+            redirectAttrs
+            .addFlashAttribute("mensaje3", "Clave Privada Incorrecta!")
+            .addFlashAttribute("clase3", "warning alert-dismissible fade show");
+            return "redirect:/FirmaR";
+        }
+
+        Path rootPathFirmas = Paths.get("archivos/firmas/");
+        Path rootAbsolutPathFirmas = rootPathFirmas.toAbsolutePath();
+
+        
+
+        Path rootPathFirmados = Paths.get("archivos/firmados/");
+        Path rootAbsolutPathFirmados = rootPathFirmados.toAbsolutePath();
+       
+        BouncyCastleProvider provider = new BouncyCastleProvider();
+        Security.addProvider(provider);
+
+        List<Titulo> listaTitulos = tituloService.titulosSinFirmar();
+    
+        if (!listaTitulos.isEmpty()) {
+            for (Titulo titulo : listaTitulos) {
+                archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
+                        persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
+                        titulo.getTituloGenerado().getRuta_archivo(),
+                        rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
+                TituloGenerado tituloGenerado = new TituloGenerado();
+                // Registrar titulo Generado
+
+                tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
+                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString() +titulo.getTituloGenerado().getNombre_archivo());
+                tituloGenerado.setEstado("A");
+                TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+                titulo.setEstado("A");
+                titulo.setTituloGenerado(tituloGenerado2);
+                titulo.setDocumento_firmado(
+                        rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
+                tituloService.save(titulo);
+            }
+            redirectAttrs
+            .addFlashAttribute("mensaje", "Documentos Firmados con Exito!")
+            .addFlashAttribute("clase", "success alert-dismissible fade show");
+        }
+        if (listaTitulos.isEmpty()) {
+        redirectAttrs
+        .addFlashAttribute("mensaje2", "No hay Documentos para Firmar!")
+        .addFlashAttribute("clase2", "danger alert-dismissible fade show");    
+        }
+        
+       
+
+        return "redirect:/FirmaR";
+
+    }
+
+
+    @PostMapping("/firmarDocumentoVicerrector")
+    public String firmarDocumentoVicerrector(@RequestParam("clavePrivada") String clavePrivada, HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
             throws GeneralSecurityException, IOException, DocumentException {
         // Obtener la entidad "Usuario" a partir del usuario en sesión
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
@@ -83,7 +157,7 @@ public class firmaController {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        List<Titulo> listaTitulos = tituloService.titulosSinFirmar();
+        List<Titulo> listaTitulos = tituloService.titulosAcademicosSinFirmar();
     
         if (!listaTitulos.isEmpty()) {
             for (Titulo titulo : listaTitulos) {
@@ -98,7 +172,7 @@ public class firmaController {
                 tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
                 tituloGenerado.setEstado("A");
                 TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
-                titulo.setEstado("F");
+                titulo.setEstado("A");
                 titulo.setTituloGenerado(tituloGenerado2);
                 titulo.setDocumento_firmado(
                         rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
@@ -119,5 +193,15 @@ public class firmaController {
         return "redirect:/FirmaR";
 
     }
+
+
+    public int contarFirmas(String rutaDocumento)
+        throws IOException, GeneralSecurityException {
+    PdfReader reader = new PdfReader(rutaDocumento);
+    int numFirmas = reader.getAcroFields().getSignatureNames().size();
+    reader.close();
+    return numFirmas;
+}
+
 
 }

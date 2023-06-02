@@ -20,6 +20,9 @@ import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,7 +46,11 @@ public class Titulo implements Serializable{
 
     private String documento_firmado;
 
- 
+    private String tipo_titulo;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "titulo", fetch = FetchType.LAZY)
+    private List<Firma> firma;
 
      //Tabla Archivo Adjunto
      @ManyToOne(fetch = FetchType.EAGER)
