@@ -96,6 +96,23 @@
                               
                             </form>
                         </th:block>
+                        <th:block th:if="${autoridad.cargo == 'Secretario General' }">
+                            <form th:action="${edit} ?@{/CarreraModF} :@{/firmarDocumentoSecretario}" method="post" >
+                                <div class="row">
+                                    <div class="col">
+                                        <input class="form-control" id="nombre_tipo_documento" type="text" name="clavePrivada"
+                                        placeholder="Ingrese su Clave Privada" required>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-primary" type="submit"
+                                        th:text="${edit} ?'Actualizar' :'Firmar'"></button> 
+                                    </div>
+                                </div>
+                          
+                               
+                              
+                            </form>
+                        </th:block>
                         </div>
                     </div>
                     <!--FIN FORM DE CARRERA-->

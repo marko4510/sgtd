@@ -38,7 +38,7 @@
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
                                 <h3 class="card-title">Lista de Titulos Generados</h3>
-
+                               
                             </div>
 
 
@@ -64,22 +64,39 @@
                                         <thead>
                                             <tr>
                                                 <th class="border-bottom-0">Número de Titulo</th>
+                                                <th class="border-bottom-0">Firmas</th>
                                                 <th class="border-bottom-0">Persona</th>
                                                 <th class="border-bottom-0">Fecha Generación</th>
-                                            
+                                                
                                                 <th class="border-bottom-0">Accion</th>
         
                                             </tr>
                                         </thead>
                                         <tbody>
         
-                                            <tr th:each="tis : ${titulos}" th:if="${tis.estado == 'A'}">
+                                            <tr th:each="tis : ${titulosConFirmas}" th:if="${tis.key.estado == 'A'}">
                                              
-                                                <td th:text="${tis.nro_titulo}"></td>
-                                                <td th:text="${tis.persona.nombre}+' '+${tis.persona.ap_paterno}+' '+${tis.persona.ap_materno}"></td>
-                                                <td th:text="${tis.fecha_generacion}"></td>
-                                    
-        
+                                                <td th:text="${tis.key.nro_titulo}"></td>
+                                                <td>
+                                                    <ul th:if="${tis.value.empty}">
+                                                      <li>Sin Firmas</li>
+                                                    </ul>
+                                                    <ul th:unless="${tis.value.empty}">
+                                                      <li th:each="firma : ${tis.value}" th:text="${firma.autoridad.cargo}"></li>
+                                                    </ul>
+                                                  </td>
+
+                                                <td th:text="${tis.key.persona.nombre}+' '+${tis.key.persona.ap_paterno}+' '+${tis.key.persona.ap_materno}"></td>
+                                                <td th:text="${tis.key.fecha_generacion}"></td>
+                                               
+                                                  
+                                              
+                                                        
+                                                   
+                                                   
+                                                  
+
+                                          
                                            
                                              
                                                 <td>
@@ -92,7 +109,7 @@
         
                                                         
                                                             <a type="button" lass="btn btn-sm btn-icon btn-warning"
-                                                            th:onclick="renombrar([[${tis.id_titulo}]])" title="Ver"
+                                                            th:onclick="renombrar([[${tis.key.id_titulo}]])" title="Ver"
                                                             data-original-title="Ver">
                                                             <svg class="icon-32" width="32" viewBox="0 0 24 24" fill="none"
                                                                 xmlns="http://www.w3.org/2000/svg">
@@ -119,9 +136,10 @@
                                         <tfoot>
                                             <tr>
                                                 <th class="border-bottom-0">Número de Titulo</th>
+                                                <th class="border-bottom-0">Firmas</th>
                                                 <th class="border-bottom-0">Nombre de Archivo</th>
                                                 <th class="border-bottom-0">Fecha Generación</th>
-                                            
+                                           
                                                 <th class="border-bottom-0">Accion</th>
                                             </tr>
                                         </tfoot>

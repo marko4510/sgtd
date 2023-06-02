@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.Autoridad;
+import com.example.pasarela.Models.Entity.Firma;
 import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.Titulo;
 import com.example.pasarela.Models.Entity.TituloGenerado;
 import com.example.pasarela.Models.Entity.Usuario;
 import com.example.pasarela.Models.Service.IAutoridadService;
+import com.example.pasarela.Models.Service.IFirmaService;
 import com.example.pasarela.Models.Service.ITituloGeneradoService;
 import com.example.pasarela.Models.Service.ITituloService;
 import com.example.pasarela.Models.Utils.Archive;
@@ -45,6 +47,8 @@ public class firmaController {
     private ITituloGeneradoService tituloGeneradoService;
     @Autowired
     private IAutoridadService autoridadService;
+    @Autowired
+    private IFirmaService firmaService;
     Archive archive = new Archive();
 
     @RequestMapping(value = "/FirmaR", method = RequestMethod.GET) // Pagina principal
@@ -71,7 +75,8 @@ public class firmaController {
 
         // Obtener la entidad "Persona" asociada al usuario
         Persona persona = usuario.getPersona();
-
+        Long id_p = persona.getId_persona();
+		Autoridad autoridad = autoridadService.autoridadPorIdPersona(id_p);
         // Validar la clave privada ingresada
         if (!persona.getClaveP().equals(clavePrivada)) {
             redirectAttrs
@@ -98,18 +103,21 @@ public class firmaController {
                 archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
                         persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
                         titulo.getTituloGenerado().getRuta_archivo(),
-                        rootAbsolutPathFirmados.toString() + "/" + titulo.getTituloGenerado().getNombre_archivo());
-                TituloGenerado tituloGenerado = new TituloGenerado();
+                        rootAbsolutPathFirmados.toString() + "/rector" + titulo.getTituloGenerado().getNombre_archivo());
+                        TituloGenerado tituloGenerado = new TituloGenerado();
+                        Firma firma = new Firma();
                 // Registrar titulo Generado
 
                 tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
-                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString()+"/" +titulo.getTituloGenerado().getNombre_archivo());
+                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString()+"/rector" +titulo.getTituloGenerado().getNombre_archivo());
                 tituloGenerado.setEstado("A");
                 TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+                firma.setTitulo(titulo);
+                firma.setAutoridad(autoridad);
+                firmaService.save(firma);
                 titulo.setEstado("A");
                 titulo.setTituloGenerado(tituloGenerado2);
-                titulo.setDocumento_firmado(
-                        rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
+                titulo.setDocumento_firmado(rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
                 tituloService.save(titulo);
             }
             redirectAttrs
@@ -137,7 +145,9 @@ public class firmaController {
 
         // Obtener la entidad "Persona" asociada al usuario
         Persona persona = usuario.getPersona();
-
+        Long id_p = persona.getId_persona();
+		Autoridad autoridad = autoridadService.autoridadPorIdPersona(id_p);
+        // Validar la clave privada ingresada
         // Validar la clave privada ingresada
         if (!persona.getClaveP().equals(clavePrivada)) {
             redirectAttrs
@@ -164,14 +174,88 @@ public class firmaController {
                 archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
                         persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
                         titulo.getTituloGenerado().getRuta_archivo(),
-                        rootAbsolutPathFirmados.toString() + "/" + titulo.getTituloGenerado().getNombre_archivo());
+                        rootAbsolutPathFirmados.toString() + "/vicerrector" + titulo.getTituloGenerado().getNombre_archivo());
                 TituloGenerado tituloGenerado = new TituloGenerado();
+                Firma firma = new Firma();
                 // Registrar titulo Generado
 
                 tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
-                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString()+"/" +titulo.getTituloGenerado().getNombre_archivo());
+                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString()+"/vicerrector" +titulo.getTituloGenerado().getNombre_archivo());
                 tituloGenerado.setEstado("A");
                 TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+                firma.setTitulo(titulo);
+                firma.setAutoridad(autoridad);
+                firmaService.save(firma);
+                titulo.setEstado("A");
+                titulo.setTituloGenerado(tituloGenerado2);
+                titulo.setDocumento_firmado(
+                        rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
+                tituloService.save(titulo);
+            }
+            redirectAttrs
+            .addFlashAttribute("mensaje", "Documentos Firmados con Exito!")
+            .addFlashAttribute("clase", "success alert-dismissible fade show");
+        }
+        if (listaTitulos.isEmpty()) {
+        redirectAttrs
+        .addFlashAttribute("mensaje2", "No hay Documentos para Firmar!")
+        .addFlashAttribute("clase2", "danger alert-dismissible fade show");    
+        }
+        
+       
+
+        return "redirect:/FirmaR";
+
+    }
+
+    @PostMapping("/firmarDocumentoSecretario")
+    public String firmarDocumentoSecretario(@RequestParam("clavePrivada") String clavePrivada, HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
+            throws GeneralSecurityException, IOException, DocumentException {
+        // Obtener la entidad "Usuario" a partir del usuario en sesión
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+
+        // Obtener la entidad "Persona" asociada al usuario
+        Persona persona = usuario.getPersona();
+        Long id_p = persona.getId_persona();
+		Autoridad autoridad = autoridadService.autoridadPorIdPersona(id_p);
+        // Validar la clave privada ingresada
+        if (!persona.getClaveP().equals(clavePrivada)) {
+            redirectAttrs
+            .addFlashAttribute("mensaje3", "Clave Privada Incorrecta!")
+            .addFlashAttribute("clase3", "warning alert-dismissible fade show");
+            return "redirect:/FirmaR";
+        }
+
+        Path rootPathFirmas = Paths.get("archivos/firmas/");
+        Path rootAbsolutPathFirmas = rootPathFirmas.toAbsolutePath();
+
+        
+
+        Path rootPathFirmados = Paths.get("archivos/firmados/");
+        Path rootAbsolutPathFirmados = rootPathFirmados.toAbsolutePath();
+       
+        BouncyCastleProvider provider = new BouncyCastleProvider();
+        Security.addProvider(provider);
+
+        List<Titulo> listaTitulos = tituloService.titulosSinFirmar();
+    
+        if (!listaTitulos.isEmpty()) {
+            for (Titulo titulo : listaTitulos) {
+                archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
+                        persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
+                        titulo.getTituloGenerado().getRuta_archivo(),
+                        rootAbsolutPathFirmados.toString() + "/secretario" + titulo.getTituloGenerado().getNombre_archivo());
+                TituloGenerado tituloGenerado = new TituloGenerado();
+                Firma firma = new Firma();
+                // Registrar titulo Generado
+
+                tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
+                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString()+"/secretario" +titulo.getTituloGenerado().getNombre_archivo());
+                tituloGenerado.setEstado("A");
+                TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+                firma.setTitulo(titulo);
+                firma.setAutoridad(autoridad);
+                firmaService.save(firma);
                 titulo.setEstado("A");
                 titulo.setTituloGenerado(tituloGenerado2);
                 titulo.setDocumento_firmado(

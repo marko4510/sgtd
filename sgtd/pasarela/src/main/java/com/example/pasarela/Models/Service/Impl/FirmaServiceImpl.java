@@ -35,5 +35,11 @@ public class FirmaServiceImpl implements IFirmaService{
     public void delete(Long id) {
         firmaDao.deleteById(id);
     }
+
+    @Override
+    public List<Firma> Firmas(Long id_titulo) {
+        return (List<Firma>) firmaDao.Firmas(id_titulo);
+    }
+
     
 }
