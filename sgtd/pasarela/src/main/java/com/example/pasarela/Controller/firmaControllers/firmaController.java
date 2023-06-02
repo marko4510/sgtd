@@ -98,12 +98,12 @@ public class firmaController {
                 archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
                         persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
                         titulo.getTituloGenerado().getRuta_archivo(),
-                        rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
+                        rootAbsolutPathFirmados.toString() + "/" + titulo.getTituloGenerado().getNombre_archivo());
                 TituloGenerado tituloGenerado = new TituloGenerado();
                 // Registrar titulo Generado
 
                 tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
-                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString() +titulo.getTituloGenerado().getNombre_archivo());
+                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString()+"/" +titulo.getTituloGenerado().getNombre_archivo());
                 tituloGenerado.setEstado("A");
                 TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
                 titulo.setEstado("A");
@@ -153,23 +153,23 @@ public class firmaController {
 
         Path rootPathFirmados = Paths.get("archivos/firmados/");
         Path rootAbsolutPathFirmados = rootPathFirmados.toAbsolutePath();
-
+       
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        List<Titulo> listaTitulos = tituloService.titulosAcademicosSinFirmar();
+        List<Titulo> listaTitulos = tituloService.titulosSinFirmar();
     
         if (!listaTitulos.isEmpty()) {
             for (Titulo titulo : listaTitulos) {
                 archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
                         persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
                         titulo.getTituloGenerado().getRuta_archivo(),
-                        rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
+                        rootAbsolutPathFirmados.toString() + "/" + titulo.getTituloGenerado().getNombre_archivo());
                 TituloGenerado tituloGenerado = new TituloGenerado();
                 // Registrar titulo Generado
 
-                tituloGenerado.setNombre_archivo("/I"+ titulo.getTituloGenerado().getNombre_archivo());
-                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
+                tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
+                tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString()+"/" +titulo.getTituloGenerado().getNombre_archivo());
                 tituloGenerado.setEstado("A");
                 TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
                 titulo.setEstado("A");
