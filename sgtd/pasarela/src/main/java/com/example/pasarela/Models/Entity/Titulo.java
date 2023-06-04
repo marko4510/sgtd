@@ -47,6 +47,9 @@ public class Titulo implements Serializable{
     private String documento_firmado;
 
     private String tipo_titulo;
+    private String firma_rector;
+    private String firma_vicerrector;
+    private String firma_secretario;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "titulo", fetch = FetchType.LAZY)

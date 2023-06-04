@@ -10,7 +10,10 @@ public interface ITituloService {
 	public List<Titulo> titulosAcademicosSinFirmar();
     public List<Titulo> findAll();
 
-
+	public List<Titulo> titulosSinFirmarRector();
+	public List<Titulo> titulosSinFirmarVicerrector();
+	public List<Titulo> titulosSinFirmarSecretario();
+	
 	public void save(Titulo titulo);
 
 	public Titulo findOne(Long id);

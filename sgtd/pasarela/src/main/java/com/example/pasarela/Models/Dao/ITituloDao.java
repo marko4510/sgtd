@@ -12,6 +12,15 @@ public interface ITituloDao extends CrudRepository<Titulo, Long>{
     @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A'", nativeQuery = true)
     public List<Titulo> titulosSinFirmar();
 
+    @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND firma_rector IS NULL", nativeQuery = true)
+    public List<Titulo> titulosSinFirmarRector();
+
+    @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND tipo_titulo = 'Academico' AND firma_vicerrector IS NULL", nativeQuery = true)
+    public List<Titulo> titulosSinFirmarVicerrector();
+
+    @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND firma_secretario IS NULL", nativeQuery = true)
+    public List<Titulo> titulosSinFirmarSecretario();
+
     @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND tipo_titulo = 'Academico'", nativeQuery = true)
     public List<Titulo> titulosAcademicosSinFirmar();
 

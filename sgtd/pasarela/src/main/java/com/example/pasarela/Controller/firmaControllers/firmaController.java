@@ -62,6 +62,9 @@ public class firmaController {
             model.addAttribute("titulos", tituloService.findAll());
             model.addAttribute("titulosAca", tituloService.titulosAcademicosSinFirmar());
             model.addAttribute("autoridad", autoridad);
+            model.addAttribute("titulosR", tituloService.titulosSinFirmarRector());
+            model.addAttribute("titulosV", tituloService.titulosSinFirmarVicerrector());
+            model.addAttribute("titulosS", tituloService.titulosSinFirmarSecretario());
             return "firmar/firmaTitulos";
         } else {
             return "redirect:LoginR";
@@ -97,7 +100,7 @@ public class firmaController {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        List<Titulo> listaTitulos = tituloService.titulosSinFirmar();
+        List<Titulo> listaTitulos = tituloService.titulosSinFirmarRector();
     
         if (!listaTitulos.isEmpty()) {
             for (Titulo titulo : listaTitulos) {
@@ -117,6 +120,7 @@ public class firmaController {
                 firma.setAutoridad(autoridad);
                 firmaService.save(firma);
                 titulo.setEstado("A");
+                titulo.setFirma_rector("A");
                 titulo.setTituloGenerado(tituloGenerado2);
                 titulo.setDocumento_firmado(rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
                 tituloService.save(titulo);
@@ -168,7 +172,7 @@ public class firmaController {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        List<Titulo> listaTitulos = tituloService.titulosAcademicosSinFirmar();
+        List<Titulo> listaTitulos = tituloService.titulosSinFirmarVicerrector();
     
         if (!listaTitulos.isEmpty()) {
             for (Titulo titulo : listaTitulos) {
@@ -188,6 +192,7 @@ public class firmaController {
                 firma.setAutoridad(autoridad);
                 firmaService.save(firma);
                 titulo.setEstado("A");
+                titulo.setFirma_vicerrector("A");
                 titulo.setTituloGenerado(tituloGenerado2);
                 titulo.setDocumento_firmado(
                         rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
@@ -238,7 +243,7 @@ public class firmaController {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        List<Titulo> listaTitulos = tituloService.titulosSinFirmar();
+        List<Titulo> listaTitulos = tituloService.titulosSinFirmarSecretario();
     
         if (!listaTitulos.isEmpty()) {
             for (Titulo titulo : listaTitulos) {
@@ -258,6 +263,7 @@ public class firmaController {
                 firma.setAutoridad(autoridad);
                 firmaService.save(firma);
                 titulo.setEstado("A");
+                titulo.setFirma_secretario("A");
                 titulo.setTituloGenerado(tituloGenerado2);
                 titulo.setDocumento_firmado(
                         rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
