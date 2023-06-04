@@ -64,8 +64,9 @@
                                         <thead>
                                             <tr>
                                                 <th class="border-bottom-0">Número de Titulo</th>
+                                                <th class="border-bottom-0">Tipo de Titulo</th>
                                                 <th class="border-bottom-0">Firmas</th>
-                                                <th class="border-bottom-0">Persona</th>
+                                              
                                                 <th class="border-bottom-0">Fecha Generación</th>
                                                 
                                                 <th class="border-bottom-0">Accion</th>
@@ -77,6 +78,7 @@
                                             <tr th:each="tis : ${titulosConFirmas}" th:if="${tis.key.estado == 'A'}">
                                              
                                                 <td th:text="${tis.key.nro_titulo}"></td>
+                                                <td th:text="${tis.key.tipo_titulo}"></td>
                                                 <td>
                                                     <ul th:if="${tis.value.empty}">
                                                       <li>Sin Firmas</li>
@@ -86,7 +88,7 @@
                                                     </ul>
                                                   </td>
 
-                                                <td th:text="${tis.key.persona.nombre}+' '+${tis.key.persona.ap_paterno}+' '+${tis.key.persona.ap_materno}"></td>
+                                                
                                                 <td th:text="${tis.key.fecha_generacion}"></td>
                                                
                                                   
@@ -136,8 +138,9 @@
                                         <tfoot>
                                             <tr>
                                                 <th class="border-bottom-0">Número de Titulo</th>
+                                                <th class="border-bottom-0">Tipo de Titulo</th>
                                                 <th class="border-bottom-0">Firmas</th>
-                                                <th class="border-bottom-0">Nombre de Archivo</th>
+                                       
                                                 <th class="border-bottom-0">Fecha Generación</th>
                                            
                                                 <th class="border-bottom-0">Accion</th>

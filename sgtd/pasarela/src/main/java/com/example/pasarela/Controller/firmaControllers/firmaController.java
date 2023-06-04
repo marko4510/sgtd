@@ -60,6 +60,7 @@ public class firmaController {
 			Long id_p = persona.getId_persona();
 			Autoridad autoridad = autoridadService.autoridadPorIdPersona(id_p);
             model.addAttribute("titulos", tituloService.findAll());
+            model.addAttribute("titulosAca", tituloService.titulosAcademicosSinFirmar());
             model.addAttribute("autoridad", autoridad);
             return "firmar/firmaTitulos";
         } else {
@@ -167,7 +168,7 @@ public class firmaController {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        List<Titulo> listaTitulos = tituloService.titulosSinFirmar();
+        List<Titulo> listaTitulos = tituloService.titulosAcademicosSinFirmar();
     
         if (!listaTitulos.isEmpty()) {
             for (Titulo titulo : listaTitulos) {

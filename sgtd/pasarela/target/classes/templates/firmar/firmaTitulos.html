@@ -209,7 +209,7 @@
                                     </thead>
                                     <tbody>
     
-                                        <tr th:each="tis : ${titulos}" th:if="${tis.estado != 'F' && tis.tipo_titulo == 'Academico' }">
+                                        <tr th:each="tis : ${titulosAca}" th:if="${tis.estado != 'F' && tis.tipo_titulo == 'Academico' }">
                                          
                                             <td th:text="${tis.nro_titulo}"></td>
                                             <td th:text="${tis.persona.nombre}+' '+${tis.persona.ap_paterno}+' '+${tis.persona.ap_materno}"></td>
