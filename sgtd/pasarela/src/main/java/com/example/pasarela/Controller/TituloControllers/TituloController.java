@@ -44,15 +44,29 @@ public class TituloController {
     public String listarTitulos(Model model, HttpServletRequest request) {
         if (request.getSession().getAttribute("usuario") != null) {
 
-            List<Titulo> titulos = tituloService.findAll();
-            Map<Titulo, List<Firma>> titulosConFirmas = new LinkedHashMap<>(); // Usar LinkedHashMap en lugar de HashMap
-            
-            for (Titulo titulo : titulos) {
-                List<Firma> firmas = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
-                titulosConFirmas.put(titulo, firmas); // Agregar el título y las firmas al mapa
+            List<Titulo> titulosA = tituloService.titulosAcademicos();
+            Map<Titulo, List<Firma>> titulosConFirmasA = new LinkedHashMap<>(); // Usar LinkedHashMap en lugar de HashMap
+            List<Titulo> titulosB = tituloService.titulosBachiller();
+            Map<Titulo, List<Firma>> titulosConFirmasB = new LinkedHashMap<>();
+            List<Titulo> titulosP = tituloService.titulosProvision();
+            Map<Titulo, List<Firma>> titulosConFirmasP = new LinkedHashMap<>();
+
+            for (Titulo titulo : titulosA) {
+                List<Firma> firmasA = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
+                titulosConFirmasA.put(titulo, firmasA); // Agregar el título y las firmas al mapa
+            }
+            for (Titulo titulo : titulosB) {
+                List<Firma> firmasB = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
+                titulosConFirmasB.put(titulo, firmasB); // Agregar el título y las firmas al mapa
+            }
+            for (Titulo titulo : titulosP) {
+                List<Firma> firmasP = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
+                titulosConFirmasP.put(titulo, firmasP); // Agregar el título y las firmas al mapa
             }
             
-            model.addAttribute("titulosConFirmas", titulosConFirmas); // Agregar el mapa al modelo
+            model.addAttribute("titulosA", titulosConFirmasA);
+            model.addAttribute("titulosB", titulosConFirmasB);
+            model.addAttribute("titulosP", titulosConFirmasP); // Agregar el mapa al modelo
             return "certificado/listarTitulos";
         } else {
             return "redirect:LoginR";

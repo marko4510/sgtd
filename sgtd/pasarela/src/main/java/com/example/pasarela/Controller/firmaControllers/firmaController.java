@@ -60,7 +60,7 @@ public class firmaController {
 			Long id_p = persona.getId_persona();
 			Autoridad autoridad = autoridadService.autoridadPorIdPersona(id_p);
             model.addAttribute("titulos", tituloService.findAll());
-            model.addAttribute("titulosAca", tituloService.titulosAcademicosSinFirmar());
+       
             model.addAttribute("autoridad", autoridad);
             model.addAttribute("titulosR", tituloService.titulosSinFirmarRector());
             model.addAttribute("titulosV", tituloService.titulosSinFirmarVicerrector());

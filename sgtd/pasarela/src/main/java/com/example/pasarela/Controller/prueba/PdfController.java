@@ -192,7 +192,7 @@ public class PdfController {
       String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
       String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
       String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
-      String codigo = archive.getMD5(id_persona+"");
+      String codigo = archive.getMD5(titulo.getId_titulo()+"");
    
       Path rootPathPlantilla = Paths.get("plantillas/");
       Path rootAbsolutPathPlantilla = rootPathPlantilla.toAbsolutePath();

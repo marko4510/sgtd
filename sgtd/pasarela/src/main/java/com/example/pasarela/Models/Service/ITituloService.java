@@ -7,7 +7,9 @@ import com.example.pasarela.Models.Entity.Titulo;
 public interface ITituloService {
 
 	public List<Titulo> titulosSinFirmar();
-	public List<Titulo> titulosAcademicosSinFirmar();
+	public List<Titulo> titulosAcademicos();
+	public List<Titulo> titulosBachiller();
+	public List<Titulo> titulosProvision();
     public List<Titulo> findAll();
 
 	public List<Titulo> titulosSinFirmarRector();

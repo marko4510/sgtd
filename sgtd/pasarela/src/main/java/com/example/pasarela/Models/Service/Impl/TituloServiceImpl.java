@@ -40,8 +40,8 @@ public class TituloServiceImpl implements ITituloService{
     }
 
     @Override
-    public List<Titulo> titulosAcademicosSinFirmar() {
-        return (List<Titulo>) tituloDao.titulosAcademicosSinFirmar();
+    public List<Titulo> titulosAcademicos() {
+        return (List<Titulo>) tituloDao.titulosAcademicos();
     }
 
     @Override
@@ -57,6 +57,16 @@ public class TituloServiceImpl implements ITituloService{
     @Override
     public List<Titulo> titulosSinFirmarSecretario() {
         return (List<Titulo>) tituloDao.titulosSinFirmarSecretario();
+    }
+
+    @Override
+    public List<Titulo> titulosBachiller() {
+        return (List<Titulo>) tituloDao.titulosBachiller();
+    }
+
+    @Override
+    public List<Titulo> titulosProvision() {
+        return (List<Titulo>) tituloDao.titulosProvision();
     }
     
 }

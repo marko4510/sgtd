@@ -22,7 +22,13 @@ public interface ITituloDao extends CrudRepository<Titulo, Long>{
     public List<Titulo> titulosSinFirmarSecretario();
 
     @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND tipo_titulo = 'Academico'", nativeQuery = true)
-    public List<Titulo> titulosAcademicosSinFirmar();
+    public List<Titulo> titulosAcademicos();
+
+    @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND tipo_titulo = 'Bachiller'", nativeQuery = true)
+    public List<Titulo> titulosBachiller();
+
+    @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND tipo_titulo = 'Provision'", nativeQuery = true)
+    public List<Titulo> titulosProvision();
 
     //@Query(value = "SELECT * FROM public.pasarela_titulo WHERE (tipo_titulo = 'Bachiller' OR tipo_titulo = 'Academico') AND estado = 'A'", nativeQuery = true)
 //public List<Titulo> titulosBachillerAcademicoSinFirmar();
