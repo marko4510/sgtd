@@ -61,10 +61,13 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label class="col-form-label">Rol del Usuario</label>
-                                        <input class="form-control" type="text"
-                                            th:field="${usuario.estado}"
-                                            onkeyup="javascript:this.value=this.value.toUpperCase();"
-                                            style="text-transform:uppercase;" required>
+                                            <select class="form-select " th:field="${usuario.estado}"
+                                            required>
+                                            <option value="">Seleccione el Rol</option>
+                                            <option value="C">Normal</option>
+                                            <option value="D">Administrativo</option>
+
+                                        </select>
                                     </div>
                                     <!--
                                     <div class="col-md-5">
@@ -109,7 +112,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="u : ${usuarios}" th:if="${u.estado != 'X'}">
+                                    <tr th:each="u : ${usuarios}" th:if="${u.estado == 'C'}">
                                         <td th:text="${u.persona.nombre}+ ' '+${u.persona.ap_paterno}+ ' '+${u.persona.ap_materno}"></td>
                                         <td th:text="${u.usuario_nom}"></td>
                                         <td th:text="${u.contrasena}"></td>
