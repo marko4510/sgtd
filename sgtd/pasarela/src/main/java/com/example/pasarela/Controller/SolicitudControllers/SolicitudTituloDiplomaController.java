@@ -167,4 +167,16 @@ public class SolicitudTituloDiplomaController {
         return "redirect:/Historial/" + id_usuario;
     }
 
+
+    @GetMapping(value = "/formularioPagarT")
+    public String pagarT( Model model,HttpServletRequest request) {
+        if (request.getSession().getAttribute("usuario") != null) {
+
+            return "publico/titulod/formularioPagarT";
+        } else {
+            return "redirect:/Inicio";
+        }
+
+    }
+
 }
