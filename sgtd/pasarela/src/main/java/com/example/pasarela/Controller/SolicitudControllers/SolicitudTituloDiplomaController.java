@@ -171,12 +171,26 @@ public class SolicitudTituloDiplomaController {
     @GetMapping(value = "/formularioPagarT")
     public String pagarT( Model model,HttpServletRequest request) {
         if (request.getSession().getAttribute("usuario") != null) {
-
+            Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+            Long id_usuario = usuario.getId_usuario();
+            SolicitudTitulo solicitudTitulo = solicitudTituloService.SolicitudPorUsuario(id_usuario);
+            model.addAttribute("solicitudTitulo", solicitudTitulo);
             return "publico/titulod/formularioPagarT";
         } else {
             return "redirect:/Inicio";
         }
 
+    }
+
+    @RequestMapping(value = "/pagoSolicitudTitulo", method = RequestMethod.POST) // Enviar datos de Registro a Lista
+    public String pagoSolicitudTitulo(@Validated  SolicitudTitulo solicitudTitulo, HttpServletRequest request) { // validar los datos capturados (1)
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+        Long id_usuario = usuario.getId_usuario();
+        solicitudTitulo.setEstado("Pagado");
+
+        solicitudTituloService.save(solicitudTitulo);
+
+        return "redirect:/Historial/" + id_usuario;
     }
 
 }

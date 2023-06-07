@@ -15,4 +15,6 @@ public interface ISolicitudTituloService {
 	public SolicitudTitulo findOne(Long id);
 
 	public void delete(Long id);
+
+	public SolicitudTitulo SolicitudPorUsuario(Long id_usuario);
 }

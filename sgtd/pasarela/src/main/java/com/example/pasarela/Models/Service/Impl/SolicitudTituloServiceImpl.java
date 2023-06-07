@@ -39,5 +39,10 @@ public class SolicitudTituloServiceImpl implements ISolicitudTituloService{
     public void delete(Long id) {
         solicitudTituloDao.deleteById(id);
     }
+
+    @Override
+    public SolicitudTitulo SolicitudPorUsuario(Long id_usuario) {
+        return solicitudTituloDao.SolicitudPorUsuario(id_usuario);
+    }
      
 }

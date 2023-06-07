@@ -51,8 +51,11 @@
                 </div>
                 <br>
 
-                <form th:action="${edit} ?@{/TipoDocumentoModF} :@{/TipoDocumentoF}" method="post">
-                  <input type="hidden" th:field="${tipoDocumento.id_tipo_documento}">
+                <form th:action="${edit} ?@{/TipoDocumentoModF} :@{/pagoSolicitudTitulo}" method="post">
+                  <input type="hidden" th:field="${solicitudTitulo.id_solicitud_titulo}">
+                  <input type="hidden" th:field="${solicitudTitulo.costoDocumento}">
+                  <input type="hidden" th:field="${solicitudTitulo.usuario}">
+
                   <div class="row">
                      
 
