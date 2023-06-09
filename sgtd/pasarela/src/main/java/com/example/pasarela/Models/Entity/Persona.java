@@ -41,7 +41,7 @@ public class Persona implements Serializable {
     private String ci;
     private String sexo;
 
-    @Column(unique = true)
+
     private String correo;
     
     private String estado;

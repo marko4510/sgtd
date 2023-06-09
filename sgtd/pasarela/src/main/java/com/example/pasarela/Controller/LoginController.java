@@ -283,7 +283,6 @@ public class LoginController {
 				// DEPARTAMENTO================================
 				String e = data.get("departamento").toString();
 				List<Departamento> lDepartamentos = departamentoService.findAll();
-
 				Departamento a = new Departamento();
 
 				if (lDepartamentos.size() == 0) {

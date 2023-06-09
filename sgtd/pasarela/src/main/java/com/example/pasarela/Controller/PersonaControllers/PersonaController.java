@@ -170,9 +170,10 @@ public class PersonaController {
         if (!archivo.isEmpty()) {
 			persona.setDigital(guardarFirma(archivo));
 			usuario.setEstado("F");
+            usuarioService.save(usuario);
 		}
         personaService.save(persona);
-        usuarioService.save(usuario);
+        
         return "redirect:/PersonasL";
     }
 
