@@ -26,7 +26,7 @@
             <!--Inicio Topbar-->
             <nav th:replace="layout/topbar :: topbar"></nav>
             <!-- FINAL TOPBAR -->
-            
+
             <!-- INICIO PRESENTACION -->
             <div th:replace="layout/fragmento :: banner"></div>
             <!-- FIN INICIO PRESENTACION -->
@@ -51,22 +51,25 @@
                                     </svg>
                                     Nuevo</a>
                             </div>
-                          
+
                         </div>
 
                         <br>
 
                         <div class="card-body">
+                            <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                                th:if="${mensaje != null}">
+                                <h4 class="alert-body" th:text="${mensaje}"></h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+
                             <div th:class="'alert alert-' + (${clase2 != null} ? ${clase2} : info)" role="alert"
-                            th:if="${mensaje2 != null}">
-                            <h4 class="alert-body" th:text="${mensaje2}"></h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                             </div>
-                             <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
-                             th:if="${mensaje != null}">
-                             <h4 class="alert-body" th:text="${mensaje}"></h4>
-                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                              </div>
+                                th:if="${mensaje2 != null}">
+                                <h4 class="alert-body" th:text="${mensaje2}"></h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
                             <table id="datatable" class="table table-striped" data-toggle="data-table">
                                 <thead>
                                     <tr>

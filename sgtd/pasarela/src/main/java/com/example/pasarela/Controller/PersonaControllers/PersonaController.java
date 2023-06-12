@@ -60,25 +60,25 @@ public class PersonaController {
     private ICarreraService carreraService;
 
     private final Logger log = LoggerFactory.getLogger(getClass());
-    
+
     public String guardarFirma(MultipartFile archivo) {
-		String uniqueFilename = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename();
+        String uniqueFilename = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename();
 
-		Path rootPath = Paths.get("archivos/firmas/").resolve(uniqueFilename);
-		Path rootAbsolutPath = rootPath.toAbsolutePath();
+        Path rootPath = Paths.get("archivos/firmas/").resolve(uniqueFilename);
+        Path rootAbsolutPath = rootPath.toAbsolutePath();
 
-		log.info("rootPath: " + rootPath);
-		log.info("rootAbsolutPath: " + rootAbsolutPath);
+        log.info("rootPath: " + rootPath);
+        log.info("rootAbsolutPath: " + rootAbsolutPath);
 
-		try {
+        try {
 
-			Files.copy(archivo.getInputStream(), rootAbsolutPath);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return uniqueFilename;
-	}
+            Files.copy(archivo.getInputStream(), rootAbsolutPath);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return uniqueFilename;
+    }
 
     // FUNCION PARA LA VISUALIZACION DEL REGISTRO DE PERSONA
     @RequestMapping(value = "/PersonaR", method = RequestMethod.GET) // Pagina principal
@@ -123,7 +123,7 @@ public class PersonaController {
 
     // FUNCION PARA GUARDAR EL REGISTRO DE PERSONA
     @RequestMapping(value = "/PersonaF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String PersonaF(@Validated Persona persona, Model model,
+    public String PersonaF(@Validated Persona persona, RedirectAttributes redirectAttrs, Model model,
             @RequestParam(value = "id_provincia") Long id_pro,
             @RequestParam(name = "file", required = false) MultipartFile archivo,
             @RequestParam(value = "id_grado_academico") Long id_gra) { // validar los datos capturados (1)
@@ -132,51 +132,49 @@ public class PersonaController {
 
         int i = 5;
         String passw = randomAlfanumeric.getRandomString(i);
-        
+
         Provincia provincia = provinciaService.findOne(id_pro);
         GradoAcademico gradoAcademico = gradoAcademicoService.findOne(id_gra);
         persona.setEstado("A");
         persona.setProvincia(provincia);
         persona.setGradoAcademico(gradoAcademico);
-        
-        
 
         Usuario usuario = new Usuario();
-        
+
         usuario.setContrasena(passw + "*");
         usuario.setUsuario_nom(persona.getCi());
         usuario.setEstado("C");
         if (!archivo.isEmpty()) {
-			persona.setDigital(guardarFirma(archivo));
-			usuario.setEstado("F");
-		}
+            persona.setDigital(guardarFirma(archivo));
+            usuario.setEstado("F");
+        }
         personaService.save(persona);
         usuario.setPersona(persona);
 
-        
-    
-                
-
         usuarioService.save(usuario);
+        redirectAttrs
+                .addFlashAttribute("mensaje", "Registro Exitoso de la Persona")
+                .addFlashAttribute("clase", "success alert-dismissible fade show");
 
         return "redirect:/PersonasL";
     }
 
     @RequestMapping(value = "/PersonaModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String PersonaMod(@Validated Persona persona,  @RequestParam(name = "file", required = false) MultipartFile archivo, Model model,
-           RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
+    public String PersonaMod(@Validated Persona persona,
+            @RequestParam(name = "file", required = false) MultipartFile archivo, Model model,
+            RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
         Usuario usuario = usuarioService.getUsuarioPersona(persona.getId_persona());
         persona.setEstado("A");
         if (!archivo.isEmpty()) {
-			persona.setDigital(guardarFirma(archivo));
-			usuario.setEstado("F");
+            persona.setDigital(guardarFirma(archivo));
+            usuario.setEstado("F");
             usuarioService.save(usuario);
-		}
+        }
         personaService.save(persona);
         redirectAttrs
-				.addFlashAttribute("mensaje", "Datos de la Persona Actualizados Correctamente")
-				.addFlashAttribute("clase", "success alert-dismissible fade show");
+                .addFlashAttribute("mensaje2", "Datos de la Persona Actualizados Correctamente")
+                .addFlashAttribute("clase2", "success alert-dismissible fade show");
         return "redirect:/PersonasL";
     }
 
@@ -224,5 +222,4 @@ public class PersonaController {
 
     }
 
-   
 }
