@@ -37,10 +37,10 @@
 
                     <!--FORM DE CARRERA-->
                     <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
-                            th:if="${mensaje != null}">
-                            <h4 class="alert-body" th:text="${mensaje}"></h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                        th:if="${mensaje != null}">
+                        <h4 class="alert-body" th:text="${mensaje}"></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
@@ -49,7 +49,8 @@
                         </div>
 
                         <div class="card-body">
-                            <form th:action="${edit} ?@{/PersonaModF} :@{/PersonaF}" method="post" enctype="multipart/form-data">
+                            <form th:action="${edit} ?@{/PersonaModF} :@{/PersonaF}" method="post"
+                                enctype="multipart/form-data">
                                 <input type="hidden" th:field="${persona.id_persona}">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -83,7 +84,7 @@
                                             <option value="Masculino">Masculino</option>
                                             <option value="Femenino">Femenino</option>
                                         </select>
-                                       
+
                                     </div>
                                     <div class="col-md-3">
                                         <label class="col-form-label">Correo</label>
@@ -114,13 +115,13 @@
                                     </div>
 
                                     <th:block th:if="${edit} == null">
-                                        <div class="col-md-3" >
+                                        <div class="col-md-3">
                                             <label class="col-form-label">Departamento</label>
                                             <select class="form-select mb-3 shadow-none" id="id_departamento"
                                                 name="id_departamento" onchange="provi()" required
                                                 th:field="${persona.provincia.departamento}">
                                                 <option value="">Seleccione Departamento</option>
-    
+
                                             </select>
                                         </div>
                                     </th:block>
@@ -128,31 +129,32 @@
                                         <div class="col-md-3">
                                             <label class="col-form-label">Departamento</label>
                                             <select class="form-select mb-3 shadow-none" id="id_departamento"
-                                                name="id_departamento"  required
+                                                name="id_departamento" required
                                                 th:field="${persona.provincia.departamento}">
                                                 <option value="">Seleccione Departamento</option>
-                                                <option th:each="dep : ${departamentos}" th:value="${dep.id_departamento}"
-                                                    th:if="${dep.estado != 'X'}" th:text="${dep.nombre}">
+                                                <option th:each="dep : ${departamentos}"
+                                                    th:value="${dep.id_departamento}" th:if="${dep.estado != 'X'}"
+                                                    th:text="${dep.nombre}">
                                                 </option>
                                             </select>
                                         </div>
                                     </th:block>
 
                                     <th:block th:if="${edit} == null">
-                                    <div class="col-md-3">
-                                        <label class="col-form-label">Provincia</label>
-                                        <select class="form-select mb-3 shadow-none" id="id_provinci"
-                                            name="id_provincia" required >
-                                            <option value="">Seleccione Provincia</option>
-                                        </select>
-                                    </div>
+                                        <div class="col-md-3">
+                                            <label class="col-form-label">Provincia</label>
+                                            <select class="form-select mb-3 shadow-none" id="id_provinci"
+                                                name="id_provincia" required>
+                                                <option value="">Seleccione Provincia</option>
+                                            </select>
+                                        </div>
                                     </th:block>
                                     <th:block th:if="${edit} != null">
                                         <div class="col-md-3">
                                             <label class="col-form-label">Provincia</label>
                                             <select class="form-select mb-3 shadow-none" id="id_provinci"
-                                                name="id_provincia"  required
-                                                th:field="${persona.provincia}" th:value="${persona.provincia}">
+                                                name="id_provincia" required th:field="${persona.provincia}"
+                                                th:value="${persona.provincia}">
                                                 <option value="">Seleccione Provincia</option>
                                                 <option th:each="pro : ${provincias}" th:value="${pro.id_provincia}"
                                                     th:if="${pro.estado != 'X'}" th:text="${pro.nombre_provincia}">
@@ -172,36 +174,37 @@
                                         </select>
                                     </div>
                                     <th:block th:if="${edit} == null">
-                                    <div class="col-md-3">
-                                        <label class="col-form-label">Grado Academico</label>
-                                        <select class="form-select mb-3 shadow-none" id="id_grado_academic"
-                                            name="id_grado_academico" required>
-                                            <option value="">Seleccione Grado Academico</option>
-                                        </select>
+                                        <div class="col-md-3">
+                                            <label class="col-form-label">Grado Academico</label>
+                                            <select class="form-select mb-3 shadow-none" id="id_grado_academic"
+                                                name="id_grado_academico" required>
+                                                <option value="">Seleccione Grado Academico</option>
+                                            </select>
+                                        </div>
+                                    </th:block>
+                                    <th:block th:if="${edit} != null">
+                                        <div class="col-md-3">
+                                            <label class="col-form-label">Grado Academico</label>
+                                            <select class="form-select mb-3 shadow-none" id="id_grado_academic"
+                                                name="id_grado_academico" required th:field="${persona.gradoAcademico}">
+                                                <option value="">Seleccione Grado Academico</option>
+                                                <option th:each="gra : ${gradoAcademicos}"
+                                                    th:value="${gra.id_grado_academico}" th:if="${gra.estado != 'X'}"
+                                                    th:text="${gra.nombre}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </th:block>
+                                    <div class="col-md-6">
+                                        <label class="col-form-label" for="customFile">Adjuntar Certificado
+                                            Digital</label>
+                                        <input class="form-control" id="customFile" type="file" name="file"
+                                            accept=".p12" />
                                     </div>
-                                </th:block>
-                                <th:block th:if="${edit} != null">
                                     <div class="col-md-3">
-                                        <label class="col-form-label">Grado Academico</label>
-                                        <select class="form-select mb-3 shadow-none" id="id_grado_academic"
-                                            name="id_grado_academico"  required
-                                            th:field="${persona.gradoAcademico}">
-                                            <option value="">Seleccione Grado Academico</option>
-                                            <option th:each="gra : ${gradoAcademicos}" th:value="${gra.id_grado_academico}"
-                                                th:if="${gra.estado != 'X'}" th:text="${gra.nombre}">
-                                            </option>
-                                        </select>
+                                        <label class="col-form-label">Clave</label>
+                                        <input class="form-control" type="password" th:field="${persona.claveP}">
                                     </div>
-                                </th:block>
-                                <div class="col-md-6">
-                                    <label class="col-form-label" for="customFile">Adjuntar Certificado Digital</label>
-                                    <input class="form-control" id="customFile" type="file" name="file"
-                                        accept=".p12" />
-                                </div>
-                                <div class="col-md-3">
-                                    <label class="col-form-label">Clave</label>
-                                    <input class="form-control" type="password" th:field="${persona.claveP}">
-                                </div>
 
                                     <!--<div class="col-md-3">
                                         <label class="col-form-label">Rol</label>
@@ -242,27 +245,27 @@
     <!-- FIN INICIO CONTENIDO -->
     <script>
         $('input[type="file"]').on('change', function () {
-          var ext = $(this).val().split('.').pop();
-          if ($(this).val() != '') {
-            if (ext == "p12") {
-             
-              if ($(this)[0].files[0].size > 1048576) {
-                console.log("El documento excede el tamaño máximo");
-                $('#modal-title').text('¡Precaución!');
-                $('#modal-msg').html("Se solicita un archivo no mayor a 1MB. Por favor verifica.");
-                $("#modal-gral").modal();
-                $(this).val('');
-              } else {
-                $("#modal-gral").hide();
-              }
+            var ext = $(this).val().split('.').pop();
+            if ($(this).val() != '') {
+                if (ext == "p12") {
+
+                    if ($(this)[0].files[0].size > 1048576) {
+                        console.log("El documento excede el tamaño máximo");
+                        $('#modal-title').text('¡Precaución!');
+                        $('#modal-msg').html("Se solicita un archivo no mayor a 1MB. Por favor verifica.");
+                        $("#modal-gral").modal();
+                        $(this).val('');
+                    } else {
+                        $("#modal-gral").hide();
+                    }
+                }
+                else {
+                    $(this).val('');
+                    alert("Extensión no permitida: " + ext);
+                }
             }
-            else {
-              $(this).val('');
-              alert("Extensión no permitida: " + ext);
-            }
-          }
         });
-      </script>
+    </script>
 
 
     <script type="text/javascript">

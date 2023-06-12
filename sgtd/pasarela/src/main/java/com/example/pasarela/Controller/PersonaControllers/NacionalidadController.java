@@ -63,9 +63,12 @@ public class NacionalidadController {
 
 	// FUNCION PARA GUARDAR LA NACIONALIDAD
 	@RequestMapping(value = "/NacionalidadModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String NacionalidadModF(@Validated Nacionalidad nacionalidad) { // validar los datos capturados (1)
+	public String NacionalidadModF(@Validated Nacionalidad nacionalidad, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
 		nacionalidadService.save(nacionalidad);
+		redirectAttrs
+				.addFlashAttribute("mensaje", "Datos del País Actualizados Correctamente")
+				.addFlashAttribute("clase", "success alert-dismissible fade show");
 
 		return "redirect:/NacionalidadR";
 	}

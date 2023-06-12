@@ -213,7 +213,7 @@ public class TramiteController {
     }
 
     @PostMapping(value = "/TramiteModF")
-    public String modificarContratacionesSicoes(@Validated Tramite tramite, Model model, HttpServletRequest request)
+    public String modificarContratacionesSicoes(@Validated Tramite tramite, RedirectAttributes redirectAttrs, Model model, HttpServletRequest request)
             throws IOException {
 
         MultipartFile multipartFile = tramite.getFile();
@@ -292,6 +292,9 @@ public class TramiteController {
 
         }
 
+        redirectAttrs
+                .addFlashAttribute("mensaje2", "Datos del Tramite Actualizados Correctamente")
+                .addFlashAttribute("clase2", "success alert-dismissible fade show");
         
 
         return "redirect:/TramiteL";

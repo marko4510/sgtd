@@ -36,13 +36,12 @@
                 <div class="col-sm-12">
 
                     <!--FORM DE CARRERA-->
-
-                    <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                    <div class="card">
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
                             th:if="${mensaje != null}">
                             <h4 class="alert-body" th:text="${mensaje}"></h4>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
                                 <h3 class="card-title">Administrar Carrera</h3>
@@ -50,7 +49,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form th:action="${edit} ?@{/CarreraModF} :@{/CarreraF}" method="post" >
+                            <form th:action="${edit} ?@{/CarreraModF} :@{/CarreraF}" method="post">
                                 <input type="hidden" th:field="${carrera.id_carrera}">
                                 <div class="row">
                                     <div class="col-md-3">

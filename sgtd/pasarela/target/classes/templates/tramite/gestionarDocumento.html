@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head th:replace="layout/head :: head">
-    
-    
+
+
 
 </head>
 
@@ -35,6 +35,17 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                            th:if="${mensaje != null}">
+                            <h4 class="alert-body" th:text="${mensaje}"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <div th:class="'alert alert-' + (${clase2 != null} ? ${clase2} : info)" role="alert"
+                            th:if="${mensaje2 != null}">
+                            <h4 class="alert-body" th:text="${mensaje2}"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
                                 <h3 class="card-title">Administrar Documento</h3>
@@ -59,7 +70,8 @@
 
                         <div class="card-body">
 
-                            <form th:action="${edit} ?@{/DocumentoModF} :@{/DocumentoF}" method="post" onsubmit="return validarFormulario()">
+                            <form th:action="${edit} ?@{/DocumentoModF} :@{/DocumentoF}" method="post"
+                                onsubmit="return validarFormulario()">
                                 <input type="hidden" th:field="${documento.id_documento}">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -77,20 +89,22 @@
                                             <label class="col-form-label">Tipo de Documento</label>
                                             <select class="form-select js-choice" multiple="multiple" size="3"
                                                 data-options='{"removeItemButton":true,"placeholder":true}'
-                                                th:field="${documento.tipoDocumento}" name="id_tipo_documento" id="id_tipo_documento">
+                                                th:field="${documento.tipoDocumento}" name="id_tipo_documento"
+                                                id="id_tipo_documento">
                                                 <option th:each="tdoc : ${tiposdoc}"
                                                     th:value="${tdoc.id_tipo_documento}" th:if="${tdoc.estado != 'X'}"
                                                     th:text="${tdoc.nombre_tipo_documento}">
                                                 </option>
 
                                             </select>
-                                            <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe seleccionar una opción</span>
+                                            <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe
+                                                seleccionar una opción</span>
                                         </div>
                                     </div>
 
-                                  
-                                       
-                                    
+
+
+
 
                                 </div>
                                 <br>
@@ -241,22 +255,22 @@
             }).then().done();
         }
     </script>
-     <script>
+    <script>
         function validarFormulario() {
-          var opciones = document.getElementById("id_tipo_documento").value;
-          if (opciones == "") {
-            document.getElementById("mensaje-error").style.display = "block";
-            return false;
-          }
-          return true;
+            var opciones = document.getElementById("id_tipo_documento").value;
+            if (opciones == "") {
+                document.getElementById("mensaje-error").style.display = "block";
+                return false;
+            }
+            return true;
         }
-      </script>
+    </script>
 
- 
 
-<!--INICIO SCRIPTS-->
-<div th:replace="layout/script :: script"></div>
-<!--FINAL SCRIPTS-->
+
+    <!--INICIO SCRIPTS-->
+    <div th:replace="layout/script :: script"></div>
+    <!--FINAL SCRIPTS-->
 
 
 </body>

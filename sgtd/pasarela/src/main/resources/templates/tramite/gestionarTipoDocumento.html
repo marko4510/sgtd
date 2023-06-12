@@ -35,6 +35,17 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card">
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                            th:if="${mensaje != null}">
+                            <h4 class="alert-body" th:text="${mensaje}"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <div th:class="'alert alert-' + (${clase2 != null} ? ${clase2} : info)" role="alert"
+                            th:if="${mensaje2 != null}">
+                            <h4 class="alert-body" th:text="${mensaje2}"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
                                 <h3 class="card-title">Administrar Tipo de Documento</h3>

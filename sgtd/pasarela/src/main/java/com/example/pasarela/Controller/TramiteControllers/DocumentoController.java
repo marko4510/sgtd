@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Service.IDocumentoService;
 import com.example.pasarela.Models.Service.ITipoDocumentoService;
@@ -40,7 +41,7 @@ public class DocumentoController {
 
     // Boton para Guardar Documento
     @RequestMapping(value = "/DocumentoF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String DocumentoF(@Validated Documento documento,
+    public String DocumentoF(@Validated Documento documento, RedirectAttributes redirectAttrs,
             @RequestParam(value = "tipoDocumento") Long[] id_tipo_documento) { // validar los datos capturados (1)
         for (int i = 0; i < id_tipo_documento.length; i++) {
             System.out.println(id_tipo_documento[i]);
@@ -48,6 +49,9 @@ public class DocumentoController {
         }
         documento.setEstado("A");
         documentoService.save(documento);
+        redirectAttrs
+                .addFlashAttribute("mensaje", "Registro Exitoso del Documento")
+                .addFlashAttribute("clase", "success alert-dismissible fade show");
 
         return "redirect:/DocumentoR";
     }
@@ -75,7 +79,7 @@ public class DocumentoController {
 
     // Boton para Guardar Documento
     @RequestMapping(value = "/DocumentoModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String DocumentoModF(@Validated Documento documento,
+    public String DocumentoModF(@Validated Documento documento, RedirectAttributes redirectAttrs,
             @RequestParam(value = "tipoDocumento") Long[] id_tipo_documento) { // validar los datos capturados (1)
         for (int i = 0; i < id_tipo_documento.length; i++) {
             System.out.println(id_tipo_documento[i]);
@@ -83,6 +87,9 @@ public class DocumentoController {
         }
         documento.setEstado("A");
         documentoService.save(documento);
+        redirectAttrs
+                .addFlashAttribute("mensaje2", "Datos del Documento Actualizados Correctamente")
+                .addFlashAttribute("clase2", "success alert-dismissible fade show");
 
         return "redirect:/DocumentoR";
     }

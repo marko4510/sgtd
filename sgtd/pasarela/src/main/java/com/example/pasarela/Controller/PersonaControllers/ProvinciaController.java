@@ -68,10 +68,13 @@ public class ProvinciaController {
 
 	// FUNCION PARA GUARDAR EL departamento
 	@RequestMapping(value = "/ProvinciaModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String provinciaModF(@Validated Provincia provincia) { // validar los datos capturados (1)
+	public String provinciaModF(@Validated Provincia provincia, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
 		provincia.setEstado("A");
 		provinciaService.save(provincia);
+		redirectAttrs
+				.addFlashAttribute("mensaje", "Datos de la Provincia Actualizado correctamente")
+				.addFlashAttribute("clase", "success alert-dismissible fade show");
 
 		return "redirect:/ProvinciaR";
 	}

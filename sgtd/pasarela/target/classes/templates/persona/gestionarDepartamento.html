@@ -36,13 +36,18 @@
                 <div class="col-sm-12">
 
                     <!--FORM DE CARRERA-->
-
-                    <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                    <div class="card">
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
                             th:if="${mensaje != null}">
                             <h4 class="alert-body" th:text="${mensaje}"></h4>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    <div class="card">
+
+                        <div th:class="'alert alert-' + (${clase2 != null} ? ${clase2} : info)" role="alert"
+                            th:if="${mensaje2 != null}">
+                            <h4 class="alert-body" th:text="${mensaje2}"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
                                 <h3 class="card-title">Administrar Departamento</h3>
@@ -50,7 +55,8 @@
                         </div>
 
                         <div class="card-body">
-                            <form th:action="${edit} ?@{/DepartamentoModF} :@{/DepartamentoF}" method="post" onsubmit="return validarFormulario()">
+                            <form th:action="${edit} ?@{/DepartamentoModF} :@{/DepartamentoF}" method="post"
+                                onsubmit="return validarFormulario()">
                                 <input type="hidden" th:field="${departamento.id_departamento}">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -71,13 +77,14 @@
                                         <label class="col-form-label">País</label>
                                         <select class="form-select mb-3 js-choice"
                                             th:field="${departamento.nacionalidad}" id="id_nacionalidad"
-                                            name="id_nacionalidad" >
+                                            name="id_nacionalidad">
                                             <option value="">Seleccione un País</option>
                                             <option th:each="nac : ${nacionalidades}" th:value="${nac.id_nacionalidad}"
                                                 th:if="${nac.estado != 'X'}" th:text="${nac.nombre_nacionalidad}">
                                             </option>
                                         </select>
-                                        <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe seleccionar una opción</span>
+                                        <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe
+                                            seleccionar una opción</span>
                                     </div>
                                 </div>
                                 <br>
@@ -214,16 +221,16 @@
             }).then().done();
         }
     </script>
-     <script>
+    <script>
         function validarFormulario() {
-          var opciones = document.getElementById("id_nacionalidad").value;
-          if (opciones == "") {
-            document.getElementById("mensaje-error").style.display = "block";
-            return false;
-          }
-          return true;
+            var opciones = document.getElementById("id_nacionalidad").value;
+            if (opciones == "") {
+                document.getElementById("mensaje-error").style.display = "block";
+                return false;
+            }
+            return true;
         }
-      </script>
+    </script>
 
     <!--INICIO SCRIPTS-->
     <div th:replace="layout/script :: script"></div>

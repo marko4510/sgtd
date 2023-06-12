@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.TipoDocumento;
 import com.example.pasarela.Models.Service.ITipoDocumentoService;
@@ -36,10 +37,13 @@ public class TipoDocumentoController {
 
     // Boton para Guardar TipoDocumento
     @RequestMapping(value = "/TipoDocumentoF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String PersonaF(@Validated TipoDocumento tipoDocumento) { // validar los datos capturados (1)
+    public String PersonaF(@Validated TipoDocumento tipoDocumento, RedirectAttributes redirectAttrs) {
 
         tipoDocumento.setEstado("A");
         tipoDocumentoService.save(tipoDocumento);
+        redirectAttrs
+                .addFlashAttribute("mensaje", "Registro Exitoso del Tipo Documento")
+                .addFlashAttribute("clase", "success alert-dismissible fade show");
 
         return "redirect:/TipoDocumentoR"; // cambiar a TipoDocumentoL
     }
@@ -68,10 +72,13 @@ public class TipoDocumentoController {
     // Boton para Guardar Modificacion de TipoDocumento
 
     @RequestMapping(value = "/TipoDocumentoModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String TipoDocumentoModF(@Validated TipoDocumento tipoDocumento) { // validar los datos capturados (1)
+    public String TipoDocumentoModF(@Validated TipoDocumento tipoDocumento, RedirectAttributes redirectAttrs) {
 
         tipoDocumento.setEstado("A");
         tipoDocumentoService.save(tipoDocumento);
+        redirectAttrs
+                .addFlashAttribute("mensaje2", "Datos del Tipo Documento Actualizados Correctamente")
+                .addFlashAttribute("clase2", "success alert-dismissible fade show");
 
         return "redirect:/TipoDocumentoR";
     }

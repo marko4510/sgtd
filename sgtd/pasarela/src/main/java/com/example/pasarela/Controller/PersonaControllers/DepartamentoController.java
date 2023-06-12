@@ -68,9 +68,12 @@ public class DepartamentoController {
 
 	// FUNCION PARA GUARDAR EL departamento
 	@RequestMapping(value = "/DepartamentoModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String departamentoModF(@Validated Departamento departamento) { // validar los datos capturados (1)
+	public String departamentoModF(@Validated Departamento departamento, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
 		departamentoService.save(departamento);
+		redirectAttrs
+				.addFlashAttribute("mensaje2", "Datos del Departamento Actualizados Correctamente")
+				.addFlashAttribute("clase2", "success alert-dismissible fade show");
 
 		return "redirect:/DepartamentoR";
 	}
