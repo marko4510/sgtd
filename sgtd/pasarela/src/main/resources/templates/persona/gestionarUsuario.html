@@ -36,13 +36,18 @@
                 <div class="col-sm-12">
 
                     <!--FORM DE CARRERA-->
-
-                    <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                    <div class="card">
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
                             th:if="${mensaje != null}">
                             <h4 class="alert-body" th:text="${mensaje}"></h4>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    <div class="card">
+
+                        <div th:class="'alert alert-' + (${clase2 != null} ? ${clase2} : info)" role="alert"
+                            th:if="${mensaje2 != null}">
+                            <h4 class="alert-body" th:text="${mensaje2}"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
                                 <h3 class="card-title">Administrar Rol de Usuarios</h3>
@@ -50,25 +55,24 @@
                         </div>
 
                         <div class="card-body">
-                            
+
                             <form th:action="${edit} ?@{/UsuarioModF} :@{/UsuarioF}" method="post">
                                 <input type="hidden" th:field="${usuario.id_usuario}">
                                 <input type="hidden" th:field="${usuario.persona.id_persona}">
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label class="col-form-label">Usuario</label>
-                                        <input class="form-control" type="text"
-                                            th:field="${usuario.usuario_nom}" required>
+                                        <input class="form-control" type="text" th:field="${usuario.usuario_nom}"
+                                            required>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="col-form-label">Contraseña</label>
-                                        <input class="form-control" type="text"
-                                            th:field="${usuario.contrasena}" required>
+                                        <input class="form-control" type="text" th:field="${usuario.contrasena}"
+                                            required>
                                     </div>
                                     <div class="col-md-3">
                                         <label class="col-form-label">Rol del Usuario</label>
-                                            <select class="form-select " th:field="${usuario.estado}"
-                                            required>
+                                        <select class="form-select " th:field="${usuario.estado}" required>
                                             <option value="">Seleccione el Rol</option>
                                             <option value="C">Normal</option>
                                             <option value="D">Administrativo</option>
@@ -119,7 +123,9 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="u : ${usuarios}" th:if="${u.estado == 'C'}">
-                                        <td th:text="${u.persona.nombre}+ ' '+${u.persona.ap_paterno}+ ' '+${u.persona.ap_materno}"></td>
+                                        <td
+                                            th:text="${u.persona.nombre}+ ' '+${u.persona.ap_paterno}+ ' '+${u.persona.ap_materno}">
+                                        </td>
                                         <td th:text="${u.usuario_nom}"></td>
                                         <td th:text="${u.contrasena}"></td>
                                         <td th:text="${u.estado}"></td>

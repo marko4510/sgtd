@@ -39,7 +39,7 @@ public class GradoAcademicoController {
 	}
 
 	// FUNCION PARA GUARDAR El Grado Academico
-	@RequestMapping(value = "/gradoAcademicoF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
+	@RequestMapping(value = "/gradoAcademicoF", method = RequestMethod.POST) // Enviar datos de Registro a, RedirectAttributes redirectAttrs Lista
 	public String gradoAcademicoF(@Validated GradoAcademico gradoAcademico, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
 		gradoAcademico.setEstado("A");
@@ -59,6 +59,8 @@ public class GradoAcademicoController {
 
 		model.addAttribute("gradoAcademico", gradoAcademico);
 		model.addAttribute("gradosAcademicos", gradoAcademicoService.findAll());
+		model.addAttribute("carreras", carreraService.findAll());
+		model.addAttribute("edit", "true");
 		// model.addAttribute("nacionalidades", nacionalidadService.findAll());
 
 		return "persona/gestionarGradoAcademico";
@@ -67,10 +69,13 @@ public class GradoAcademicoController {
 
 	// FUNCION PARA GUARDAR El Grado Academico
 	@RequestMapping(value = "/gradoAcademicoModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String gradoAcademicoModF(@Validated GradoAcademico gradoAcademico) { // validar los datos capturados (1)
+	public String gradoAcademicoModF(@Validated GradoAcademico gradoAcademico, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
 		gradoAcademico.setEstado("A");
 		gradoAcademicoService.save(gradoAcademico);
+		redirectAttrs
+				.addFlashAttribute("mensaje2", "Datos del Grado Academico Actualizados Correctamente")
+				.addFlashAttribute("clase2", "success alert-dismissible fade show");
 
 		return "redirect:/gradoAcademicoR";
 	}

@@ -56,9 +56,12 @@ public class UsuarioController {
 
     }
     @RequestMapping(value = "/UsuarioModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String usuario_mod(@Validated Usuario usuario) { // validar los datos capturados (1)
+    public String usuario_mod(@Validated Usuario usuario, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
         usuarioService.save(usuario);
+        redirectAttrs
+				.addFlashAttribute("mensaje2", "Datos del Usuario Actualizados Correctamente")
+				.addFlashAttribute("clase2", "success alert-dismissible fade show");
         return "redirect:/UsuarioL";
     }
 }

@@ -58,10 +58,14 @@ public class CarreraController {
     }
 
     @RequestMapping(value = "/CarreraModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String carrera_mod(@Validated Carrera carrera) { // validar los datos capturados (1)
+    public String carrera_mod(@Validated Carrera carrera, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
         carrera.setEstado("A");
         carreraService.save(carrera);
+        redirectAttrs
+            .addFlashAttribute("mensaje2", "Datos de la Carrera Actualizados Correctamente")
+            .addFlashAttribute("clase2", "success alert-dismissible fade show");
+
 
         return "redirect:/CarreraR";
     }

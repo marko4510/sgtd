@@ -26,7 +26,7 @@
             <!--Inicio Topbar-->
             <nav th:replace="layout/topbar :: topbar"></nav>
             <!-- FINAL TOPBAR -->
-            
+
             <!-- INICIO PRESENTACION -->
             <div th:replace="layout/fragmento :: banner"></div>
             <!-- FIN INICIO PRESENTACION -->
@@ -36,12 +36,18 @@
                 <div class="col-sm-12">
 
                     <!--FORM DE CARRERA-->
-                    <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+
+                    <div class="card">
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
                             th:if="${mensaje != null}">
                             <h4 class="alert-body" th:text="${mensaje}"></h4>
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    <div class="card">
+                        <div th:class="'alert alert-' + (${clase2 != null} ? ${clase2} : info)" role="alert"
+                            th:if="${mensaje2 != null}">
+                            <h4 class="alert-body" th:text="${mensaje2}"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <div class="card-header d-flex justify-content-between">
                             <div class="header-title">
                                 <h3 class="card-title">Administrar Grados Academicos</h3>
@@ -49,7 +55,8 @@
                         </div>
 
                         <div class="card-body">
-                            <form th:action="${edit} ?@{/gradoAcademicoModF} :@{/gradoAcademicoF}" method="post" onsubmit="return validarFormulario()">
+                            <form th:action="${edit} ?@{/gradoAcademicoModF} :@{/gradoAcademicoF}" method="post"
+                                onsubmit="return validarFormulario()">
                                 <input type="hidden" th:field="${gradoAcademico.id_grado_academico}">
                                 <div class="row">
                                     <div class="col-md-3">
@@ -61,13 +68,15 @@
                                     <div class="col-md-5">
                                         <div>
                                             <label class="col-form-label">Carrera</label>
-                                            <select class="form-select js-choice" size="1" th:field="${gradoAcademico.carrera}" name="id_carrera" id="id_carrera">
+                                            <select class="form-select js-choice" size="1"
+                                                th:field="${gradoAcademico.carrera}" name="id_carrera" id="id_carrera">
                                                 <option value="">Seleccione una Carrera</option>
                                                 <option th:each="carr : ${carreras}" th:value="${carr.id_carrera}"
                                                     th:if="${carr.estado != 'X'}" th:text="${carr.nombre_carrera}">
                                                 </option>
                                             </select>
-                                            <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe seleccionar una opción</span>
+                                            <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe
+                                                seleccionar una opción</span>
                                         </div>
                                     </div>
                                 </div>
@@ -203,16 +212,16 @@
             }).then().done();
         }
     </script>
-      <script>
+    <script>
         function validarFormulario() {
-          var opciones = document.getElementById("id_carrera").value;
-          if (opciones == "") {
-            document.getElementById("mensaje-error").style.display = "block";
-            return false;
-          }
-          return true;
+            var opciones = document.getElementById("id_carrera").value;
+            if (opciones == "") {
+                document.getElementById("mensaje-error").style.display = "block";
+                return false;
+            }
+            return true;
         }
-      </script>
+    </script>
     <!--INICIO SCRIPTS-->
     <div th:replace="layout/script :: script"></div>
     <!--FINAL SCRIPTS-->
