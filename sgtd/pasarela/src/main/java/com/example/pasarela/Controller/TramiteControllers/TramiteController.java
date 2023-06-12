@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.ArchivoAdjunto;
 import com.example.pasarela.Models.Entity.Carrera;
@@ -82,7 +83,7 @@ public class TramiteController {
     }
 
     @RequestMapping(value = "/TramiteF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String TramiteF(@Validated Tramite tramite, Model model) throws FileNotFoundException, IOException { // validar
+    public String TramiteF(@Validated Tramite tramite, RedirectAttributes redirectAttrs, Model model) throws FileNotFoundException, IOException { // validar
                                                                                                                 // los
 
         MultipartFile multipartFile = tramite.getFile();
@@ -165,6 +166,9 @@ public class TramiteController {
             
                     tramiteService.save(tramite);
                     } 
+            redirectAttrs
+                .addFlashAttribute("mensaje", "Registro Exitoso del Tramite")
+                .addFlashAttribute("clase", "success alert-dismissible fade show");
       
 
         return "redirect:/TramiteL";

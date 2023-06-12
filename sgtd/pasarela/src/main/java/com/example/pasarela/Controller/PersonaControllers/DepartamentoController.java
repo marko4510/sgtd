@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.Departamento;
 import com.example.pasarela.Models.Service.IDepartamentoService;
@@ -39,10 +40,13 @@ public class DepartamentoController {
 
 	// FUNCION PARA GUARDAR EL departamento
 	@RequestMapping(value = "/DepartamentoF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String PersonaF(@Validated Departamento departamento) { // validar los datos capturados (1)
+	public String PersonaF(@Validated Departamento departamento, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
 		departamento.setEstado("A");
 		departamentoService.save(departamento);
+		redirectAttrs
+				.addFlashAttribute("mensaje", "Registro Exitoso del Departamento")
+				.addFlashAttribute("clase", "success alert-dismissible fade show");
 
 		return "redirect:/DepartamentoR";
 	}

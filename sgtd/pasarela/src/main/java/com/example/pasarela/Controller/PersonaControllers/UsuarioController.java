@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.Usuario;
 import com.example.pasarela.Models.Service.IUsuarioService;
@@ -32,9 +33,12 @@ public class UsuarioController {
     }
     
     @RequestMapping(value = "/UsuarioF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String UsuarioF(@Validated Usuario usuario) { // validar los datos capturados (1)
+    public String UsuarioF(@Validated Usuario usuario, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
         usuarioService.save(usuario);
+        redirectAttrs
+				.addFlashAttribute("mensaje", "Registro Exitoso del Usuario")
+				.addFlashAttribute("clase", "success alert-dismissible fade show");
 
         return "redirect:/UsuarioL";
     }

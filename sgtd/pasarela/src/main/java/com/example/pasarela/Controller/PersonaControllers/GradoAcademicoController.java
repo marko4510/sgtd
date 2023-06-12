@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.GradoAcademico;
 import com.example.pasarela.Models.Service.ICarreraService;
@@ -39,10 +40,13 @@ public class GradoAcademicoController {
 
 	// FUNCION PARA GUARDAR El Grado Academico
 	@RequestMapping(value = "/gradoAcademicoF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String gradoAcademicoF(@Validated GradoAcademico gradoAcademico) { // validar los datos capturados (1)
+	public String gradoAcademicoF(@Validated GradoAcademico gradoAcademico, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
 		gradoAcademico.setEstado("A");
 		gradoAcademicoService.save(gradoAcademico);
+		redirectAttrs
+				.addFlashAttribute("mensaje", "Registro Exitoso del Grado Academico")
+				.addFlashAttribute("clase", "success alert-dismissible fade show");
 
 		return "redirect:/gradoAcademicoR";
 	}

@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.Carrera;
 import com.example.pasarela.Models.Service.ICarreraService;
@@ -32,10 +33,13 @@ public class CarreraController {
     }
 
     @RequestMapping(value = "/CarreraF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String CarreraF(@Validated Carrera carrera) { // validar los datos capturados (1)
+    public String CarreraF(@Validated Carrera carrera, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
         carrera.setEstado("A");
         carreraService.save(carrera);
+        redirectAttrs
+				.addFlashAttribute("mensaje", "Registro Exitoso de la Carrera")
+				.addFlashAttribute("clase", "success alert-dismissible fade show");
 
         return "redirect:/CarreraR";
     }

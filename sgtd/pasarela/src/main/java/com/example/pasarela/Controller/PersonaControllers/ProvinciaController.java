@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.Provincia;
 import com.example.pasarela.Models.Service.IDepartamentoService;
@@ -39,10 +40,13 @@ public class ProvinciaController {
 
 	// FUNCION PARA GUARDAR EL departamento
 	@RequestMapping(value = "/ProvinciaF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-	public String PersonaF(@Validated Provincia provincia) { // validar los datos capturados (1)
+	public String PersonaF(@Validated Provincia provincia, RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
 		provincia.setEstado("A");
 		provinciaService.save(provincia);
+		redirectAttrs
+				.addFlashAttribute("mensaje", "Registro Exitoso de la Provincia")
+				.addFlashAttribute("clase", "success alert-dismissible fade show");
 
 		return "redirect:/ProvinciaR";
 	}
