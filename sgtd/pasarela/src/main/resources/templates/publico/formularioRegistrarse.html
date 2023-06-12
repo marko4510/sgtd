@@ -152,9 +152,12 @@
 
                           </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                           <label class="form-label" for="inputState">Carrera</label>
-                          <select class="form-select" id="id_carrer" name="id_carrera" onchange="gradoAcad()" required>
+                          <select class="form-select" id="id_carrer" name="id_carrera" onchange="gradoAcad()" required
+                          multiple="multiple" size="3"
+                          data-options='{"removeItemButton":true,"placeholder":true}'
+                          >
                             <option value="-1">Seleccione Carrera</option>
                             <option th:each="carr : ${carreras}" th:if="${carr.estado != 'X'}"
                               th:value="${carr.id_carrera}" th:text="${carr.nombre_carrera}">

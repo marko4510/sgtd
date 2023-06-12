@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.Departamento;
 import com.example.pasarela.Models.Entity.GradoAcademico;
@@ -162,8 +163,8 @@ public class PersonaController {
     }
 
     @RequestMapping(value = "/PersonaModF", method = RequestMethod.POST) // Enviar datos de Registro a Lista
-    public String PersonaMod(@Validated Persona persona,  @RequestParam(name = "file", required = false) MultipartFile archivo, Model model
-           ) { // validar los datos capturados (1)
+    public String PersonaMod(@Validated Persona persona,  @RequestParam(name = "file", required = false) MultipartFile archivo, Model model,
+           RedirectAttributes redirectAttrs) { // validar los datos capturados (1)
 
         Usuario usuario = usuarioService.getUsuarioPersona(persona.getId_persona());
         persona.setEstado("A");
@@ -173,7 +174,9 @@ public class PersonaController {
             usuarioService.save(usuario);
 		}
         personaService.save(persona);
-        
+        redirectAttrs
+				.addFlashAttribute("mensaje", "Datos de la Persona Actualizados Correctamente")
+				.addFlashAttribute("clase", "success alert-dismissible fade show");
         return "redirect:/PersonasL";
     }
 

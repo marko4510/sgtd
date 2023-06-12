@@ -74,11 +74,11 @@ public class ReciboApiController {
 	
 
     @RequestMapping(value = "/reciboApi", method = RequestMethod.POST)
-    public String reciboApi(@RequestParam(value = "codigo") String codigo, Model model, HttpServletRequest request,
+    public String reciboApi(@RequestParam(value = "codigo") String codigo,@RequestParam(value = "gestion") String gestion, Model model, HttpServletRequest request,
 	RedirectAttributes redirectAttrs) throws ParseException {
-
+		String codigo_recibo = codigo +"/"+gestion;
         Map<String, Object> requests = new HashMap<String, Object>();
-        requests.put("code", codigo);
+        requests.put("code", codigo_recibo);
         String url = "http://181.115.188.250:9993/v1/service/api/abd0b66440194985807c94c918fa319c";
         String key = "key 4d177e5f89ef62d1ce4b3fab51a58b77640d04246d38ccde163b3855e7237828";
         HttpHeaders headers = new HttpHeaders();
