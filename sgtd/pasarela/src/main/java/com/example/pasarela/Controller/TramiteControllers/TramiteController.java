@@ -3,6 +3,8 @@ package com.example.pasarela.Controller.TramiteControllers;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
@@ -92,14 +94,19 @@ public class TramiteController {
 
         System.out.println(tramite.getTipoDocumento().getNombre_tipo_documento());
         if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("LEGALIZACIÓN")) {
-        String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite/legalizacion");
+
+         Path rootPath = Paths.get("archivos/tramites/legalizacion/");
+        Path rootAbsolutPath = rootPath.toAbsolutePath();
+        String rutaDirectorio = rootAbsolutPath+"";
+
+        String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
         model.addAttribute("di", rutaArchivo);
         List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
         tramite.setNombreArchivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +".pdf");
         Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
         archivoAdjunto.setNombre_archivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +".pdf");
         archivoAdjunto.setTipo_archivo(multipartFile.getContentType());
-        archivoAdjunto.setRuta_archivo("SGTD/tramite/legalizacion/");
+        archivoAdjunto.setRuta_archivo(rutaArchivo);
         archivoAdjunto.setEstado("A");
         ArchivoAdjunto archivoAdjunto2 = archivoAdjuntoService.registrarArchivoAdjunto(archivoAdjunto);
         List<Tramite> listaT = tramiteService.findAll();
@@ -111,14 +118,18 @@ public class TramiteController {
         }
 
         if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("SUPLETORIO") ) {
-            String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite/supletorio");
+             Path rootPath = Paths.get("archivos/tramites/supletorio/");
+            Path rootAbsolutPath = rootPath.toAbsolutePath();
+            String rutaDirectorio = rootAbsolutPath+"";
+            
+            String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
             model.addAttribute("di", rutaArchivo);
             List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
             tramite.setNombreArchivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +".pdf");
             Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
             archivoAdjunto.setNombre_archivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +".pdf");
             archivoAdjunto.setTipo_archivo(multipartFile.getContentType());
-            archivoAdjunto.setRuta_archivo("SGTD/tramite/supletorio/");
+            archivoAdjunto.setRuta_archivo(rutaArchivo);
             archivoAdjunto.setEstado("A");
             ArchivoAdjunto archivoAdjunto2 = archivoAdjuntoService.registrarArchivoAdjunto(archivoAdjunto);
             List<Tramite> listaT = tramiteService.findAll();
@@ -130,14 +141,18 @@ public class TramiteController {
             }
             
             if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("TÍTULO / DIPLOMA")) {
-                String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite/titulos");
+                Path rootPath = Paths.get("archivos/tramites/titulacion/");
+            Path rootAbsolutPath = rootPath.toAbsolutePath();
+            String rutaDirectorio = rootAbsolutPath+"";
+
+                String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
                 model.addAttribute("di", rutaArchivo);
                 List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
                 tramite.setNombreArchivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +".pdf");
                 Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
                 archivoAdjunto.setNombre_archivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +".pdf");
                 archivoAdjunto.setTipo_archivo(multipartFile.getContentType());
-                archivoAdjunto.setRuta_archivo("SGTD/tramite/titulos/");
+                archivoAdjunto.setRuta_archivo(rutaArchivo);
                 archivoAdjunto.setEstado("A");
                 ArchivoAdjunto archivoAdjunto2 = archivoAdjuntoService.registrarArchivoAdjunto(archivoAdjunto);
                 List<Tramite> listaT = tramiteService.findAll();
@@ -149,14 +164,17 @@ public class TramiteController {
                 }   
 
                 if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("PROVISIÓN NACIONAL")) {
-                    String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite/provisionN");
+                     Path rootPath = Paths.get("archivos/tramites/provisionN/");
+            Path rootAbsolutPath = rootPath.toAbsolutePath();
+            String rutaDirectorio = rootAbsolutPath+"";
+                    String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
                     model.addAttribute("di", rutaArchivo);
                     List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
                     tramite.setNombreArchivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +".pdf");
                     Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
                     archivoAdjunto.setNombre_archivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +".pdf");
                     archivoAdjunto.setTipo_archivo(multipartFile.getContentType());
-                    archivoAdjunto.setRuta_archivo("SGTD/tramite/provisionN/");
+                    archivoAdjunto.setRuta_archivo(rutaArchivo);
                     archivoAdjunto.setEstado("A");
                     ArchivoAdjunto archivoAdjunto2 = archivoAdjuntoService.registrarArchivoAdjunto(archivoAdjunto);
                     List<Tramite> listaT = tramiteService.findAll();
@@ -215,21 +233,25 @@ public class TramiteController {
     @PostMapping(value = "/TramiteModF")
     public String modificarContratacionesSicoes(@Validated Tramite tramite, RedirectAttributes redirectAttrs, Model model, HttpServletRequest request)
             throws IOException {
-
+                
         MultipartFile multipartFile = tramite.getFile();
         ArchivoAdjunto archivoAdjunto = new ArchivoAdjunto();
         AdjuntarArchivo adjuntarArchivo = new AdjuntarArchivo();
 
         if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("LEGALIZACIÓN")) {
-            String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite/legalizacion");
+              Path rootPath = Paths.get("archivos/tramites/legalizacion/");
+            Path rootAbsolutPath = rootPath.toAbsolutePath();
+            String rutaDirectorio = rootAbsolutPath+"";
+            String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
             List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
             tramite.setNombreArchivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +"-mod"+".pdf");
+            System.out.println(tramite.getNombreArchivo());
         Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
         if (ad == 1) {
             ArchivoAdjunto barchivoAdjunto = archivoAdjuntoService
-                    .buscarArchivoAdjuntoPorTramite(tramite.getArchivoAdjunto().getId_archivo_adjunto());
+                    .buscarArchivoAdjuntoPorTramite(tramite.getId_tramite());
             barchivoAdjunto.setNombre_archivo(tramite.getNombreArchivo());
-            barchivoAdjunto.setRuta_archivo("SGTD/tramite/legalizacion/");
+            barchivoAdjunto.setRuta_archivo(rutaArchivo);
             archivoAdjuntoService.modificarArchivoAdjunto(barchivoAdjunto);
         }
         tramite.setNro_tramite(tramite.getNro_tramite());
@@ -239,15 +261,18 @@ public class TramiteController {
         }
 
         if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("SUPLETORIO")) {
-            String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite/supletorio");
+              Path rootPath = Paths.get("archivos/tramites/supletorio/");
+            Path rootAbsolutPath = rootPath.toAbsolutePath();
+            String rutaDirectorio = rootAbsolutPath+"";
+            String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
             List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
             tramite.setNombreArchivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +"-mod"+".pdf");
         Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
         if (ad == 1) {
             ArchivoAdjunto barchivoAdjunto = archivoAdjuntoService
-                    .buscarArchivoAdjuntoPorTramite(tramite.getArchivoAdjunto().getId_archivo_adjunto());
+                    .buscarArchivoAdjuntoPorTramite(tramite.getId_tramite());
             barchivoAdjunto.setNombre_archivo(tramite.getNombreArchivo());
-            barchivoAdjunto.setRuta_archivo("SGTD/tramite/supletorio/");
+            barchivoAdjunto.setRuta_archivo(rutaArchivo);
             archivoAdjuntoService.modificarArchivoAdjunto(barchivoAdjunto);
         }
         tramite.setNro_tramite(tramite.getNro_tramite());
@@ -257,15 +282,18 @@ public class TramiteController {
         }
       
         if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("TÍTULO / DIPLOMA")) {
-            String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite/titulos");
+                Path rootPath = Paths.get("archivos/tramites/titulacion/");
+                Path rootAbsolutPath = rootPath.toAbsolutePath();
+            String rutaDirectorio = rootAbsolutPath+"";
+            String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
             List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
             tramite.setNombreArchivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +"-mod"+".pdf");
         Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
         if (ad == 1) {
             ArchivoAdjunto barchivoAdjunto = archivoAdjuntoService
-                    .buscarArchivoAdjuntoPorTramite(tramite.getArchivoAdjunto().getId_archivo_adjunto());
+                    .buscarArchivoAdjuntoPorTramite(tramite.getId_tramite());
             barchivoAdjunto.setNombre_archivo(tramite.getNombreArchivo());
-            barchivoAdjunto.setRuta_archivo("SGTD/tramite/titulos/");
+            barchivoAdjunto.setRuta_archivo(rutaArchivo);
             archivoAdjuntoService.modificarArchivoAdjunto(barchivoAdjunto);
         }
         tramite.setNro_tramite(tramite.getNro_tramite());
@@ -275,15 +303,18 @@ public class TramiteController {
         }
 
         if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("PROVISIÓN NACIONAL")) {
-            String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGTD/tramite/provisionN");
+              Path rootPath = Paths.get("archivos/tramites/provisionN/");
+                Path rootAbsolutPath = rootPath.toAbsolutePath();
+            String rutaDirectorio = rootAbsolutPath+"";
+            String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
             List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
             tramite.setNombreArchivo((listArchivos.size() + 1)+"-" +tramite.getPersona().getCi()  +"-mod"+".pdf");
         Integer ad = adjuntarArchivo.adjuntarArchivoTramite(tramite, rutaArchivo);
         if (ad == 1) {
             ArchivoAdjunto barchivoAdjunto = archivoAdjuntoService
-                    .buscarArchivoAdjuntoPorTramite(tramite.getArchivoAdjunto().getId_archivo_adjunto());
+                    .buscarArchivoAdjuntoPorTramite(tramite.getId_tramite());
             barchivoAdjunto.setNombre_archivo(tramite.getNombreArchivo());
-            barchivoAdjunto.setRuta_archivo("SGTD/tramite/provisionN/");
+            barchivoAdjunto.setRuta_archivo(rutaArchivo);
             archivoAdjuntoService.modificarArchivoAdjunto(barchivoAdjunto);
         }
         tramite.setNro_tramite(tramite.getNro_tramite());
@@ -306,7 +337,7 @@ public class TramiteController {
             @PathVariable("id") long id_tramite) throws FileNotFoundException {
         ArchivoAdjunto ArchivoAdjuntos = archivoAdjuntoService.buscarArchivoAdjuntoPorTramite(id_tramite);
         System.out.println(ArchivoAdjuntos + "+++++++++++++++++++++++++++++++++");
-        File file = new File("C:/" + ArchivoAdjuntos.getRuta_archivo() + ArchivoAdjuntos.getNombre_archivo());
+        File file = new File(ArchivoAdjuntos.getRuta_archivo() + ArchivoAdjuntos.getNombre_archivo());
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=" + file.getName());
         response.setHeader("Content-Length", String.valueOf(file.length()));

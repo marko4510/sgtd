@@ -18,7 +18,7 @@ public class AdjuntarArchivo {
      }
     
     public String crearSacDirectorio(String sDirectorio){
-        File directorio = new File("C:/"+sDirectorio);
+        File directorio = new File(sDirectorio);
         if (!directorio.exists()) {
             if (directorio.mkdirs()) {
                   return  directorio.getPath()+"/";
