@@ -132,6 +132,7 @@
                                 <thead>
                                     <tr>
                                         <th class="border-bottom-0">Número de Titulo</th>
+                                        <th class="border-bottom-0">Tipo Titulo</th>
                                         <th class="border-bottom-0">Persona</th>
                                         <th class="border-bottom-0">Fecha Generación</th>
                                     
@@ -144,6 +145,7 @@
                                     <tr th:each="tis : ${titulosR}" th:if="${tis.estado != 'F'}">
                                      
                                         <td th:text="${tis.nro_titulo}"></td>
+                                        <td th:text="${tis.tipo_titulo}"></td>
                                         <td th:text="${tis.persona.nombre}+' '+${tis.persona.ap_paterno}+' '+${tis.persona.ap_materno}"></td>
                                         <td th:text="${tis.fecha_generacion}"></td>
                             
@@ -187,6 +189,7 @@
                                 <tfoot>
                                     <tr>
                                         <th class="border-bottom-0">Número de Titulo</th>
+                                        <th class="border-bottom-0">Tipo Titulo</th>
                                         <th class="border-bottom-0">Nombre de Archivo</th>
                                         <th class="border-bottom-0">Fecha Generación</th>
                                     
@@ -200,6 +203,7 @@
                                     <thead>
                                         <tr>
                                             <th class="border-bottom-0">Número de Titulo</th>
+                                            <th class="border-bottom-0">Tipo Titulo</th>
                                             <th class="border-bottom-0">Persona</th>
                                             <th class="border-bottom-0">Fecha Generación</th>
                                         
@@ -212,6 +216,7 @@
                                         <tr th:each="tis : ${titulosV}" th:if="${tis.estado != 'F' && tis.tipo_titulo == 'Academico' }">
                                          
                                             <td th:text="${tis.nro_titulo}"></td>
+                                            <td th:text="${tis.tipo_titulo}"></td>
                                             <td th:text="${tis.persona.nombre}+' '+${tis.persona.ap_paterno}+' '+${tis.persona.ap_materno}"></td>
                                             <td th:text="${tis.fecha_generacion}"></td>
                                 
@@ -255,6 +260,7 @@
                                     <tfoot>
                                         <tr>
                                             <th class="border-bottom-0">Número de Titulo</th>
+                                            <th class="border-bottom-0">Tipo Titulo</th>
                                             <th class="border-bottom-0">Nombre de Archivo</th>
                                             <th class="border-bottom-0">Fecha Generación</th>
                                         
@@ -268,6 +274,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="border-bottom-0">Número de Titulo</th>
+                                                <th class="border-bottom-0">Tipo Titulo</th>
                                                 <th class="border-bottom-0">Persona</th>
                                                 <th class="border-bottom-0">Fecha Generación</th>
                                             
@@ -280,6 +287,7 @@
                                             <tr th:each="tis : ${titulosS}" th:if="${tis.estado != 'F'  }">
                                              
                                                 <td th:text="${tis.nro_titulo}"></td>
+                                                <td th:text="${tis.tipo_titulo}"></td>
                                                 <td th:text="${tis.persona.nombre}+' '+${tis.persona.ap_paterno}+' '+${tis.persona.ap_materno}"></td>
                                                 <td th:text="${tis.fecha_generacion}"></td>
                                     
@@ -323,6 +331,7 @@
                                         <tfoot>
                                             <tr>
                                                 <th class="border-bottom-0">Número de Titulo</th>
+                                                <th class="border-bottom-0">Tipo Titulo</th>
                                                 <th class="border-bottom-0">Nombre de Archivo</th>
                                                 <th class="border-bottom-0">Fecha Generación</th>
                                             

@@ -53,7 +53,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <a type="button" class="btn btn-success btn-sm" href="../../../../PersonaR">
+                                <a type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     <svg class="icon-32" width="15" viewBox="0 0 24 24" fill="none"
                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -62,18 +62,37 @@
                                     </svg>
                                     Nuevo</a>
                             </div>
-
+                           
                         </div>
-
+                      
                         <br>
-
+                   
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="exampleModalLabel">Registrar Persona</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <a type="button" class="btn btn-success " href="../../../../PersonaR">
+                                        Manual
+                                        </a>
+                                        <a type="button" class="btn btn-info " href="../../../../InicioRecibo">
+                                            Por Recibo
+                                        </a>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            </div>
                         <div class="card-body">
 
                             <table id="datatable" class="table table-striped" data-toggle="data-table">
                                 <thead>
                                     <tr>
                                         <th class="border-bottom-0">Nombre Completo</th>
-                                        <th class="border-bottom-0">Celular</th>
+                   
                                         <th class="border-bottom-0">Ci</th>
                                         <th class="border-bottom-0">Acción</th>
 
@@ -83,7 +102,7 @@
 
                                     <tr th:each="per : ${personas}" th:if="${per.estado != 'X'}">
                                         <td th:text="${per.nombre}+' '+ ${per.ap_paterno} +' '+${per.ap_materno}"></td>
-                                        <td th:text="${per.numero_contacto}"></td>
+                       
                                         <td th:text="${per.ci}"></td>
                                         <td>
                                             <div class="flex align-items-center list-user-action">
@@ -145,7 +164,7 @@
                                 <tfoot>
                                     <tr>
                                         <th class="border-bottom-0">Nombre Completo</th>
-                                        <th class="border-bottom-0">Celular</th>
+                           
                                         <th class="border-bottom-0">Ci</th>
                                         <th class="border-bottom-0">Acción</th>
                                     </tr>

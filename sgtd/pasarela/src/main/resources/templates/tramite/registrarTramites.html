@@ -67,33 +67,76 @@
                                 <input type="hidden" th:field="${tramite.nro_tramite}">
                                
                                 <input type="hidden" name="id_archivo_adjunto" th:field="*{archivoAdjunto.id_archivo_adjunto}">
+                                <div class="row">
+                                   
+
+                                    <div class="col-md-3 mb-3 ">
+                                        <label class="col-form-label">Trámite</label>
+                                        <select  th:field="${tramite.tipoDocumento}" class="form-select" id="id_tipo_documen" name="id_tipo_documento" onchange="TipoDoc()" required>
+                                            <option value="">Seleccione un Trámite</option>
+                                            <option th:each="td : ${tipoDocumentos}" th:if="${td.estado != 'X'}"
+                                                th:value="${td.id_tipo_documento}" th:text="${td.nombre_tipo_documento}">
+                                            </option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-3 mb-3 ">
+                                        <label class="col-form-label">Documentos</label>
+                                        <select th:field="${tramite.documento}" class="form-select " id="id_documen" name="id_documento"  required>
+                                            <option value="">Seleccione un Documento</option>
+                                            <option th:each="doc : ${documentos}"
+                                                th:value="${doc.id_documento}"
+                                                th:if="${doc.estado != 'X'}"
+                                                th:text="${doc.nombre_documento}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-6 mb-3 ">
+                                        <label class="col-form-label">Persona</label>
+                                        <div class=" input-group"> 
+                                           
+                                            <select class="form-select js-choice"
+                                            th:field="${tramite.persona}" id="persona"
+                                            name="persona" >
+                                            <option value="">----- Seleccione una Persona -----</option>
+                                            <option th:each="per : ${personas}" th:value="${per.id_persona}"
+                                                th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}"></option>
+                                                
+                                        </select>
+                                            <div class="input-group-append">
+                                              <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
+                                            </div>
+                                      
+                                        </div>  
+                                    </div>  
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="exampleModalLabel">Registrar Persona</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-center">
+                                                    <a type="button" class="btn btn-success " href="../../../../PersonaR">
+                                                    Manual
+                                                    </a>
+                                                    <a type="button" class="btn btn-info " href="../../../../InicioRecibo">
+                                                        Por Recibo
+                                                    </a>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                        </div>
+                               
+                                </div>
 
                                     <div class="row">
+                           
+                                       
 
-                                        <div class="col-md-4 mb-3 text-dark">
-                                            <label class="col-form-label">Trámite</label>
-                                            <select  th:field="${tramite.tipoDocumento}" class="form-select" id="id_tipo_documen" name="id_tipo_documento" onchange="TipoDoc()" required>
-                                                <option value="">Seleccione un Trámite</option>
-                                                <option th:each="td : ${tipoDocumentos}" th:if="${td.estado != 'X'}"
-                                                    th:value="${td.id_tipo_documento}" th:text="${td.nombre_tipo_documento}">
-                                                </option>
-
-                                            </select>
-                                        </div>
-
-                                        <div class="col-md-4 mb-3 text-dark">
-                                            <label class="col-form-label">Documentos</label>
-                                            <select th:field="${tramite.documento}" class="form-select " id="id_documen" name="id_documento"  required>
-                                                <option value="">Seleccione un Documento</option>
-                                                <option th:each="doc : ${documentos}"
-                                                    th:value="${doc.id_documento}"
-                                                    th:if="${doc.estado != 'X'}"
-                                                    th:text="${doc.nombre_documento}"></option>
-                                            </select>
-                                        </div>
-
-
-                                <div class="col-md-3 mb-3 text-dark">
+                                <div class="col-md-3 mb-3 ">
                                     <label class="col-form-label" for="inputState">Unidad</label>
                                     <select class="form-select" 
                                     th:field="${tramite.unidad}" id="unidad"  name="unidad" required>
@@ -103,31 +146,7 @@
                         
                                     </select>
                                 </div>
-
-                            </div>
-                            <div class="col-md-5 text-dark">
-                                <label class="col-form-label">Persona</label>
-                                <select class="form-select js-choice"
-                                    th:field="${tramite.persona}" id="persona"
-                                    name="persona" >
-                                    <option value="">Seleccione una Persona</option>
-                                    <option th:each="per : ${personas}" th:value="${per.id_persona}"
-                                        th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}"></option>
-                                        
-                                </select>
-                               
-                                <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe seleccionar una Persona</span>
-                            </div>
-                   
-
-                              
-                                <div class="col-md-6 text-dark">
-                                    <label class="col-form-label" for="customFile">Adjuntar Respaldo</label>
-                                    <input class="form-control" id="customFile" type="file" th:field="*{file}"
-                                        accept="application/pdf" />
-                                </div>
-
-                                <div class="col-md-3 text-dark">
+                                <div class="col-md-3 ">
                                     <label class="col-form-label">Gestión</label>
                                     <select class="form-select js-choice" name="gestion" th:field="${tramite.gestion}" required>
                                         <option value="">Seleccione una Gestión</option>
@@ -165,24 +184,38 @@
                                       </select>
                                     
                                 </div>
-
-                                <div class="col-md-4 ">
-                                    <label class="col-form-label text-dark">Fecha de Recepción</label>
+                                <div class="col-md-3 ">
+                                    <label class="col-form-label ">Fecha de Recepción</label>
                                     <input class="form-control" id="fechaR" type="date"
                                         th:field="${tramite.fecha_recepcion}" required>
                                 </div>
-                                <div class="col-md-4 ">
-                                    <label class="col-form-label text-dark">Fecha de Titulación</label>
+                                <div class="col-md-3 ">
+                                    <label class="col-form-label ">Fecha de Titulación</label>
                                     <input class="form-control" id="fechaT" type="date"
                                         th:field="${tramite.fecha_titulacion}" required>
                                 </div>
+                            </div>
+                          
+                    
+
+                         
+                              
+                                <div class="col-md-7 ">
+                                    <label class="col-form-label" for="customFile">Adjuntar Respaldo</label>
+                                    <input class="form-control" id="customFile" type="file" th:field="*{file}"
+                                        accept="application/pdf" />
+                                </div>
+
+                            
+
+                              
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label text-dark" for="exampleFormControlTextarea1">Observación</label>
+                                    <label class="col-form-label " for="exampleFormControlTextarea1">Observación</label>
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" th:field="${tramite.observacion}"></textarea>
                                 </div>
                                
-
+                               
                                 <div class="text-center">
                                     <button class="btn btn-primary" type="submit"
                                         th:text="${edit} ?'Actualizar' :'Registrar'"></button>
@@ -200,6 +233,7 @@
                     <br>
                     <br>
                     <br>
+                   
                     </div>
 
 

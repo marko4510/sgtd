@@ -75,6 +75,7 @@
                                         <select class="form-select " th:field="${usuario.estado}" required>
                                             <option value="">Seleccione el Rol</option>
                                             <option value="C">Normal</option>
+                                            <option value="F">Firmante</option>
                                             <option value="D">Administrativo</option>
 
                                         </select>
@@ -122,7 +123,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="u : ${usuarios}" th:if="${u.estado == 'C'}">
+                                    <tr th:each="u : ${usuarios}" th:if="${u.estado == 'C' OR u.estado == 'F'}">
                                         <td
                                             th:text="${u.persona.nombre}+ ' '+${u.persona.ap_paterno}+ ' '+${u.persona.ap_materno}">
                                         </td>
