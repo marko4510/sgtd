@@ -110,7 +110,7 @@ public class Archive {
 		// Creo una imagen para agregarla y le pongo propiedades de posicion y escala
 		Image image = Image.getInstance(plantilla);
 		image.setAbsolutePosition(0, 0);
-		image.scalePercent(24);
+		image.scalePercent(48);
 		// Agrego una imagen, la cual ya tiene las propiedades de posicion
 		cb.addImage(image);
 		// Cierro el stamper y se crea el archivo.

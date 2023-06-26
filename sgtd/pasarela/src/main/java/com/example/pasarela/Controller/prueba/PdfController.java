@@ -459,6 +459,148 @@ public class PdfController {
     return "redirect:listarTitulos";
     }
 
+
+     @PostMapping("/generarTituloPlantillaPdf")
+    public String generarTituloPlantillaPdf(@RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla,@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,@RequestParam("nroTitulo") String nroTitulo, Model model) throws FileNotFoundException, IOException, ParseException, DocumentException {
+        
+      Date fechaActual = new Date();
+      LocalDate localDateFA = convertirDateALocalDate(fechaActual);
+      int dia = localDateFA.getDayOfMonth();
+      String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+      Persona persona = personaService.findOne(id_persona);
+      String cadenaDepartamento = persona.getProvincia().getDepartamento().getNombre();
+      String cadenaProvincia = persona.getProvincia().getNombre_provincia();
+      String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
+      String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
+      String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
+      String codigo = archive.getMD5(titulo.getId_titulo()+"");
+   
+      Path rootPathPlantilla = Paths.get("plantillas/");
+      Path rootAbsolutPathPlantilla = rootPathPlantilla.toAbsolutePath();
+      String plantilla = rootAbsolutPathPlantilla+"/plantilla_titulo_academico.pdf";
+     // Crear el contexto con los datos necesarios para la vista
+     Context context = new Context();
+     // Agregar los datos que necesites en tu vista
+     context.setVariable("departamento", cadenaDepartamentoC);
+     context.setVariable("provincia",cadenaProvinciaC);
+     context.setVariable("persona",persona);
+     context.setVariable("dia",dia);
+     context.setVariable("mes", cadenaMesC);
+     context.setVariable("gestion", gestion);
+     context.setVariable("nroTitulo", nroTitulo);
+     context.setVariable("codigo", codigo);
+     context.setVariable("plantilla", plantilla);
+     // Renderizar la vista HTML utilizando Thymeleaf
+     String htmlContent = templateEngine.process("certificado/certificadoPrueba-pdf", context);
+      if (usarPlantilla) {
+        // Directorio donde se guardará el archivo PDF en el disco local C
+     Path rootPathTitulos = Paths.get("archivos/titulos/");
+		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+
+     // Directorio donde se guardará el archivo PDF con Plantilla 
+     Path rootPathTitulosP = Paths.get("archivos/titulos/titulosP");
+     Path rootAbsolutPathTitulosP = rootPathTitulosP.toAbsolutePath();
+      // Directorio de la Plantilla 
+      Path rootPathPlantillaPath = Paths.get("plantillas/");
+      Path rootAbsolutPathPlantillasPath = rootPathPlantillaPath.toAbsolutePath();
+     TituloGenerado tituloGenerado = new TituloGenerado();
+        // Nombre del archivo PDF
+     String nombreArchivo = codigo+".pdf";
+
+     // Generar la ruta completa del archivo
+     String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
+     //Ruta completa de la Plantilla
+     String rutaCompletaP = rootAbsolutPathPlantillasPath + "/tituloAcademico.jpg";
+
+      String rutaCompletaSalida = rootAbsolutPathTitulosP +"/"+nombreArchivo;
+         // Generar el documento PDF utilizando Flying Saucer
+      try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+        
+        // Establecer tamaño de página Legal
+        renderer.layout();
+        renderer.createPDF(outputStream);
+    } catch (Exception e) {
+        // Manejar la excepción según sea necesario
+    }
+    archive.plantilla(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
+    //Registrar titulo Generado 
+    
+    tituloGenerado.setNombre_archivo(nombreArchivo);
+    tituloGenerado.setRuta_archivo(rutaCompletaSalida);
+    tituloGenerado.setEstado("A");
+   
+    TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+
+
+    //Registrar titulo
+
+    titulo.setTituloGenerado(tituloGenerado2);
+    titulo.setPersona(persona);
+    titulo.setNro_titulo(nroTitulo);
+    titulo.setEstado("A");
+    titulo.setTipo_titulo("Academico");
+    titulo.setFecha_generacion(localDateFA);
+    tituloService.save(titulo);
+
+
+
+    return "redirect:listarTitulos";
+      }else{
+       // Directorio donde se guardará el archivo PDF 
+     Path rootPathTitulos = Paths.get("archivos/titulos/");
+		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+   
+
+     TituloGenerado tituloGenerado = new TituloGenerado();
+   
+     // Nombre del archivo PDF
+     String nombreArchivo = codigo+".pdf";
+
+     // Generar la ruta completa del archivo
+     String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
+
+
+    
+
+      // Generar el documento PDF utilizando Flying Saucer
+      try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+        
+        // Establecer tamaño de página Legal
+        renderer.layout();
+        renderer.createPDF(outputStream);
+    } catch (Exception e) {
+        // Manejar la excepción según sea necesario
+    }
+    
+    //Registrar titulo Generado 
+    
+    tituloGenerado.setNombre_archivo(nombreArchivo);
+    tituloGenerado.setRuta_archivo(rutaCompleta);
+    tituloGenerado.setEstado("A");
+    TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+
+
+    //Registrar titulo
+
+    titulo.setTituloGenerado(tituloGenerado2);
+    titulo.setPersona(persona);
+    titulo.setNro_titulo(nroTitulo);
+    titulo.setEstado("A");
+    titulo.setTipo_titulo("Academico");
+    titulo.setFecha_generacion(localDateFA);
+    tituloService.save(titulo);
+
+
+
+    return "redirect:listarTitulos";
+      }
+    
+    }
+
   
     
 }

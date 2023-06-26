@@ -72,7 +72,9 @@ public class firmaController {
     }
 
     @PostMapping("/firmarDocumentoRector")
-    public String firmarDocumentoRector(@RequestParam("clavePrivada") String clavePrivada, HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
+    public String firmarDocumentoRector(@RequestParam("clavePrivada") String clavePrivada,
+    @RequestParam(value = "tituloSeleccionado", required = false) List<Long> titulosSeleccionados,
+    HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
             throws GeneralSecurityException, IOException, DocumentException {
         // Obtener la entidad "Usuario" a partir del usuario en sesión
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
@@ -100,11 +102,12 @@ public class firmaController {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        List<Titulo> listaTitulos = tituloService.titulosSinFirmarRector();
-    
-        if (!listaTitulos.isEmpty()) {
-            for (Titulo titulo : listaTitulos) {
-                archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
+        //List<Titulo> listaTitulos = tituloService.titulosSinFirmarRector();
+        if (titulosSeleccionados != null && !titulosSeleccionados.isEmpty()) {
+        for (Long tituloId : titulosSeleccionados) {
+            // Obtener el objeto Titulo correspondiente al ID
+            Titulo titulo = tituloService.findOne(tituloId);
+              archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
                         persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
                         titulo.getTituloGenerado().getRuta_archivo(),
                         rootAbsolutPathFirmados.toString() + "/rector" + titulo.getTituloGenerado().getNombre_archivo());
@@ -128,12 +131,17 @@ public class firmaController {
             redirectAttrs
             .addFlashAttribute("mensaje", "Documentos Firmados con Exito!")
             .addFlashAttribute("clase", "success alert-dismissible fade show");
-        }
-        if (listaTitulos.isEmpty()) {
-        redirectAttrs
+         
+        }else{
+             redirectAttrs
         .addFlashAttribute("mensaje2", "No hay Documentos para Firmar!")
-        .addFlashAttribute("clase2", "danger alert-dismissible fade show");    
+        .addFlashAttribute("clase2", "danger alert-dismissible fade show"); 
         }
+        
+
+      
+          
+        
         
        
 
@@ -143,7 +151,9 @@ public class firmaController {
 
 
     @PostMapping("/firmarDocumentoVicerrector")
-    public String firmarDocumentoVicerrector(@RequestParam("clavePrivada") String clavePrivada, HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
+    public String firmarDocumentoVicerrector(@RequestParam("clavePrivada") String clavePrivada, 
+    @RequestParam(value = "tituloSeleccionado", required = false) List<Long> titulosSeleccionados,
+    HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
             throws GeneralSecurityException, IOException, DocumentException {
         // Obtener la entidad "Usuario" a partir del usuario en sesión
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
@@ -172,16 +182,16 @@ public class firmaController {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        List<Titulo> listaTitulos = tituloService.titulosSinFirmarVicerrector();
-    
-        if (!listaTitulos.isEmpty()) {
-            for (Titulo titulo : listaTitulos) {
-                archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
+         if (titulosSeleccionados != null && !titulosSeleccionados.isEmpty()) {
+        for (Long tituloId : titulosSeleccionados) {
+            // Obtener el objeto Titulo correspondiente al ID
+            Titulo titulo = tituloService.findOne(tituloId);
+              archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
                         persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
                         titulo.getTituloGenerado().getRuta_archivo(),
                         rootAbsolutPathFirmados.toString() + "/vicerrector" + titulo.getTituloGenerado().getNombre_archivo());
-                TituloGenerado tituloGenerado = new TituloGenerado();
-                Firma firma = new Firma();
+                        TituloGenerado tituloGenerado = new TituloGenerado();
+                        Firma firma = new Firma();
                 // Registrar titulo Generado
 
                 tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
@@ -194,18 +204,17 @@ public class firmaController {
                 titulo.setEstado("A");
                 titulo.setFirma_vicerrector("A");
                 titulo.setTituloGenerado(tituloGenerado2);
-                titulo.setDocumento_firmado(
-                        rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
+                titulo.setDocumento_firmado(rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
                 tituloService.save(titulo);
             }
             redirectAttrs
             .addFlashAttribute("mensaje", "Documentos Firmados con Exito!")
             .addFlashAttribute("clase", "success alert-dismissible fade show");
-        }
-        if (listaTitulos.isEmpty()) {
-        redirectAttrs
+         
+        }else{
+             redirectAttrs
         .addFlashAttribute("mensaje2", "No hay Documentos para Firmar!")
-        .addFlashAttribute("clase2", "danger alert-dismissible fade show");    
+        .addFlashAttribute("clase2", "danger alert-dismissible fade show"); 
         }
         
        
@@ -215,7 +224,9 @@ public class firmaController {
     }
 
     @PostMapping("/firmarDocumentoSecretario")
-    public String firmarDocumentoSecretario(@RequestParam("clavePrivada") String clavePrivada, HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
+    public String firmarDocumentoSecretario(@RequestParam("clavePrivada") String clavePrivada, 
+     @RequestParam(value = "tituloSeleccionado", required = false) List<Long> titulosSeleccionados,
+    HttpServletRequest request, RedirectAttributes redirectAttrs,Model model)
             throws GeneralSecurityException, IOException, DocumentException {
         // Obtener la entidad "Usuario" a partir del usuario en sesión
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
@@ -243,16 +254,16 @@ public class firmaController {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        List<Titulo> listaTitulos = tituloService.titulosSinFirmarSecretario();
-    
-        if (!listaTitulos.isEmpty()) {
-            for (Titulo titulo : listaTitulos) {
-                archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
+         if (titulosSeleccionados != null && !titulosSeleccionados.isEmpty()) {
+        for (Long tituloId : titulosSeleccionados) {
+            // Obtener el objeto Titulo correspondiente al ID
+            Titulo titulo = tituloService.findOne(tituloId);
+              archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
                         persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
                         titulo.getTituloGenerado().getRuta_archivo(),
                         rootAbsolutPathFirmados.toString() + "/secretario" + titulo.getTituloGenerado().getNombre_archivo());
-                TituloGenerado tituloGenerado = new TituloGenerado();
-                Firma firma = new Firma();
+                        TituloGenerado tituloGenerado = new TituloGenerado();
+                        Firma firma = new Firma();
                 // Registrar titulo Generado
 
                 tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
@@ -265,18 +276,17 @@ public class firmaController {
                 titulo.setEstado("A");
                 titulo.setFirma_secretario("A");
                 titulo.setTituloGenerado(tituloGenerado2);
-                titulo.setDocumento_firmado(
-                        rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
+                titulo.setDocumento_firmado(rootAbsolutPathFirmados.toString() + "/I" + titulo.getTituloGenerado().getNombre_archivo());
                 tituloService.save(titulo);
             }
             redirectAttrs
             .addFlashAttribute("mensaje", "Documentos Firmados con Exito!")
             .addFlashAttribute("clase", "success alert-dismissible fade show");
-        }
-        if (listaTitulos.isEmpty()) {
-        redirectAttrs
+         
+        }else{
+             redirectAttrs
         .addFlashAttribute("mensaje2", "No hay Documentos para Firmar!")
-        .addFlashAttribute("clase2", "danger alert-dismissible fade show");    
+        .addFlashAttribute("clase2", "danger alert-dismissible fade show"); 
         }
         
        
