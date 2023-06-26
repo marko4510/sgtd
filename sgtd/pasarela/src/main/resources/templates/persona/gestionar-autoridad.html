@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/head :: head">
+</head>
+
+<body>
+    <!-- loader Start -->
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body"></div>
+        </div>
+    </div>
+    <!-- loader END -->
+
+    <!--INICIO SIDEBAR-->
+    <aside th:replace="layout/sidebar :: sidebar"></aside>
+    <!--FINAL SIDEBAR-->
+
+    <main class="main-content">
+        <div class="position-relative iq-banner">
+            <!--Inicio Topbar-->
+            <nav th:replace="layout/topbar :: topbar"></nav>
+            <!-- FINAL TOPBAR -->
+
+            <!-- INICIO PRESENTACION -->
+            <div th:replace="layout/fragmento :: banner"></div>
+            <!-- FIN INICIO PRESENTACION -->
+        </div>
+        <div class="conatiner-fluid content-inner mt-n5 py-0">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <!--FORM DE CARRERA-->
+                    <div class="card">
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                            th:if="${mensaje != null}">
+                            <h4 class="alert-body" th:text="${mensaje}"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <div th:class="'alert alert-' + (${clase2 != null} ? ${clase2} : info)" role="alert"
+                            th:if="${mensaje2 != null}">
+                            <h4 class="alert-body" th:text="${mensaje2}"></h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h3 class="card-title">Administrar Autoridad</h3>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <form th:action="${edit} ?@{/AutoridadModF} :@{/AutoridadF}" method="post">
+                                <input type="hidden" th:field="${autoridad.id_autoridad}">
+                                <div class="row">
+                                    
+                                    <div class="col-md-4">
+                                        <label class="col-form-label">Cargo</label>
+                                        <select class="form-select " th:field="${autoridad.cargo}" required>
+                                            <option value="">Seleccione el Cargo</option>
+                                            <option value="Rector">Rector</option>
+                                            <option value="Vicerector">Vicerector</option>
+                                            <option value="Secretario General">Secretario General</option>
+
+                                        </select>
+                                        <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe
+                                            seleccionar una opción</span>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="col-form-label">Persona</label>
+                                        <select class="form-select mb-3 js-choice"
+                                            th:field="${autoridad.persona}">
+                                            <option value="">Seleccione una Persona</option>
+                                            <option th:each="per : ${personas}" th:value="${per.id_persona}"
+                                                th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}">
+                                            </option>
+                                        </select>
+                                        <span id="mensaje-error" style="display:none;color:rgb(185, 130, 12); ">Debe
+                                            seleccionar una opción</span>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="text-center">
+                                    <button class="btn btn-primary" type="submit"
+                                        th:text="${edit} ?'Actualizar' :'Registrar'"></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!--FIN FORM DE CARRERA-->
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Footer Section Start -->
+        <footer th:replace="layout/footer :: footer">
+        </footer>
+        <!-- Footer Section End -->
+    </main>
+
+    <!-- INICIO TEMA -->
+    <a th:replace="layout/fragmento :: tuerca"></a>
+    <!-- FIN INICIO TEMA -->
+
+    <!-- INICIO CONTENIDO TEMA -->
+    <div th:replace="layout/fragmento :: tema"></div>
+    <!-- FIN INICIO CONTENIDO -->
+
+
+
+
+    <script>
+        function MandarURL(a) {
+            swal({
+                title: 'Eliminar Registro?',
+                type: 'error',
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: "Cancelar",
+                html:
+                    "<a type='button' class='swal2-styled ' style='display: inline-block; background-color: rgb(48, 133, 214); border-left-color: rgb(48, 133, 214); border-right-color: rgb(48, 133, 214); padding: 13px 35px 13px 35px;' data-original-title='' title='' href='../../../../eliminar-carrera/" + a + "'  >" +
+                    "Eliminar" +
+                    "</a>",
+            }).then().done();
+        }
+    </script>
+
+    <!--INICIO SCRIPTS-->
+    <div th:replace="layout/script :: script"></div>
+    <!--FINAL SCRIPTS-->
+</body>
+
+</html>

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.pasarela.Models.Entity.Carrera;
 import com.example.pasarela.Models.Entity.Departamento;
 import com.example.pasarela.Models.Entity.GradoAcademico;
 import com.example.pasarela.Models.Entity.Provincia;
@@ -180,14 +181,22 @@ public class PersonaController {
 
     // FUNCION PARA LISTAR LOS REGISTRO DE PERSONA
     @RequestMapping(value = "/PersonasL", method = RequestMethod.GET) // Pagina principal
-    public String facultadL(Model model) {
-        model.addAttribute("personas", personaService.findAll());
-        model.addAttribute("nacionalidades", nacionalidadService.findAll());
-        model.addAttribute("departamentos", departamentoService.findAll());
-        model.addAttribute("gradoAcademicos", gradoAcademicoService.findAll());
-        model.addAttribute("carreras", carreraService.findAll());
-        model.addAttribute("provincias", provinciaService.findAll());
-        return "persona/listarPersona";
+    public String facultadL(HttpServletRequest request, Model model) {
+
+        if (request.getSession().getAttribute("usuario") != null) {
+
+            model.addAttribute("personas", personaService.findAll());
+            model.addAttribute("nacionalidades", nacionalidadService.findAll());
+            model.addAttribute("departamentos", departamentoService.findAll());
+            model.addAttribute("gradoAcademicos", gradoAcademicoService.findAll());
+            model.addAttribute("carreras", carreraService.findAll());
+            model.addAttribute("provincias", provinciaService.findAll());
+
+            return "persona/listarPersona";
+        } else {
+            return "redirect:LoginR";
+        }
+        
     }
 
     // FUNCION PARA EDITAR EL REGISTRO DE PERSONA
