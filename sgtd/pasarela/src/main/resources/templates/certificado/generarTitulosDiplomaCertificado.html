@@ -211,8 +211,15 @@
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                                 <div class="card-body">
-                                    <form th:action="@{/generarTituloProvisionPdf}" method="post">
-                                 
+                                    <form th:action="@{/generarTituloProvisionPlantillaPdf}" method="post">
+                                        <div class="checkbox mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="usarPlantilla" value="true">
+                                                <label class="form-check-label" for="flexCheckDefault3">
+                                                    Incluir Plantilla
+                                                </label>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div>

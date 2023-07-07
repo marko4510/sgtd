@@ -12,6 +12,7 @@ import org.xhtmlrenderer.pdf.ITextRenderer;
 import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.Titulo;
 import com.example.pasarela.Models.Entity.TituloGenerado;
+import com.example.pasarela.Models.Entity.Tramite;
 import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.ITituloGeneradoService;
 import com.example.pasarela.Models.Service.ITituloService;
@@ -461,8 +462,8 @@ public class PdfController {
 
 
      @PostMapping("/generarTituloPlantillaPdf")
-    public String generarTituloPlantillaPdf(@RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla,@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,@RequestParam("nroTitulo") String nroTitulo, Model model) throws FileNotFoundException, IOException, ParseException, DocumentException {
-        
+    public String generarTituloPlantillaPdf(@Validated Titulo titulo, @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,@RequestParam("nroTitulo") String nroTitulo, Model model) throws FileNotFoundException, IOException, ParseException, DocumentException {
+      List<Titulo> listTitulo = tituloService.findAll();
       Date fechaActual = new Date();
       LocalDate localDateFA = convertirDateALocalDate(fechaActual);
       int dia = localDateFA.getDayOfMonth();
@@ -473,7 +474,7 @@ public class PdfController {
       String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
       String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
       String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
-      String codigo = archive.getMD5(titulo.getId_titulo()+"");
+      String codigo = archive.getMD5((listTitulo.size()+1)+"");
    
       Path rootPathPlantilla = Paths.get("plantillas/");
       Path rootAbsolutPathPlantilla = rootPathPlantilla.toAbsolutePath();
@@ -591,6 +592,158 @@ public class PdfController {
     titulo.setNro_titulo(nroTitulo);
     titulo.setEstado("A");
     titulo.setTipo_titulo("Academico");
+    titulo.setFecha_generacion(localDateFA);
+    tituloService.save(titulo);
+
+
+
+    return "redirect:listarTitulos";
+      }
+    
+    }
+
+
+     @PostMapping("/generarTituloProvisionPlantillaPdf")
+    public String generarTituloProvisionPlantillaPdf(@Validated Titulo titulo, @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla, @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,@RequestParam("nroTitulo") String nroTitulo, Model model) throws FileNotFoundException, IOException, ParseException, DocumentException {
+      List<Titulo> listTitulo = tituloService.findAll();
+       Date fechaActual = new Date();
+      
+      LocalDate localDateFA = convertirDateALocalDate(fechaActual);
+      int diaNum = localDateFA.getDayOfMonth();
+      String dia = convertirNumTexto(diaNum);
+      String diaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(dia);
+      String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+      Persona persona = personaService.findOne(id_persona);
+      String cadenaDepartamento = persona.getProvincia().getDepartamento().getNombre();
+      String cadenaProvincia = persona.getProvincia().getNombre_provincia();
+      String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
+      String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
+      String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
+      String codigo = archive.getMD5((listTitulo.size()+1)+"");
+       Date fechaNacimiento = persona.getFecha_nacimiento();
+      LocalDate localDateFa2 = convertirDateALocalDate(fechaNacimiento);
+      int diaN = localDateFa2.getDayOfMonth();
+      String mesN = localDateFa2.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+      int anioN = localDateFa2.getYear();
+
+      Path rootPathPlantilla = Paths.get("plantillas/");
+      Path rootAbsolutPathPlantilla = rootPathPlantilla.toAbsolutePath();
+      String plantilla = rootAbsolutPathPlantilla+"/tituloProvision.pdf";
+     // Crear el contexto con los datos necesarios para la vista
+     Context context = new Context();
+     // Agregar los datos que necesites en tu vista
+      context.setVariable("departamento", cadenaDepartamentoC);
+     context.setVariable("provincia",cadenaProvinciaC);
+     context.setVariable("persona",persona);
+     context.setVariable("dia",diaC);
+     context.setVariable("diaN",diaN);
+     context.setVariable("mesN",mesN);
+     context.setVariable("anioN",anioN);
+     context.setVariable("mes", cadenaMesC);
+     context.setVariable("gestion", gestion);
+     context.setVariable("nroTitulo", nroTitulo);
+     context.setVariable("codigo", codigo);
+     // Renderizar la vista HTML utilizando Thymeleaf
+     String htmlContent = templateEngine.process("certificado/provisionPrueba-pdf", context);
+      if (usarPlantilla) {
+        // Directorio donde se guardará el archivo PDF en el disco local C
+     Path rootPathTitulos = Paths.get("archivos/titulos/provision");
+		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+
+     // Directorio donde se guardará el archivo PDF con Plantilla 
+     Path rootPathTitulosP = Paths.get("archivos/titulos/provisionP");
+     Path rootAbsolutPathTitulosP = rootPathTitulosP.toAbsolutePath();
+      // Directorio de la Plantilla 
+      Path rootPathPlantillaPath = Paths.get("plantillas/");
+      Path rootAbsolutPathPlantillasPath = rootPathPlantillaPath.toAbsolutePath();
+     TituloGenerado tituloGenerado = new TituloGenerado();
+        // Nombre del archivo PDF
+     String nombreArchivo = codigo+".pdf";
+
+     // Generar la ruta completa del archivo
+     String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
+     //Ruta completa de la Plantilla
+     String rutaCompletaP = rootAbsolutPathPlantillasPath + "/tituloProvision.jpg";
+
+      String rutaCompletaSalida = rootAbsolutPathTitulosP +"/"+nombreArchivo;
+         // Generar el documento PDF utilizando Flying Saucer
+      try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+        
+        // Establecer tamaño de página Legal
+        renderer.layout();
+        renderer.createPDF(outputStream);
+    } catch (Exception e) {
+        // Manejar la excepción según sea necesario
+    }
+    archive.plantilla(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
+    //Registrar titulo Generado 
+    
+    tituloGenerado.setNombre_archivo(nombreArchivo);
+    tituloGenerado.setRuta_archivo(rutaCompletaSalida);
+    tituloGenerado.setEstado("A");
+   
+    TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+
+
+    //Registrar titulo
+
+    titulo.setTituloGenerado(tituloGenerado2);
+    titulo.setPersona(persona);
+    titulo.setNro_titulo(nroTitulo);
+    titulo.setEstado("A");
+    titulo.setTipo_titulo("Provision");
+    titulo.setFecha_generacion(localDateFA);
+    tituloService.save(titulo);
+
+
+
+    return "redirect:listarTitulos";
+      }else{
+       // Directorio donde se guardará el archivo PDF 
+     Path rootPathTitulos = Paths.get("archivos/titulos/provision");
+		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+   
+
+     TituloGenerado tituloGenerado = new TituloGenerado();
+   
+     // Nombre del archivo PDF
+     String nombreArchivo = codigo+".pdf";
+
+     // Generar la ruta completa del archivo
+     String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
+
+
+    
+
+      // Generar el documento PDF utilizando Flying Saucer
+      try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+        
+        // Establecer tamaño de página Legal
+        renderer.layout();
+        renderer.createPDF(outputStream);
+    } catch (Exception e) {
+        // Manejar la excepción según sea necesario
+    }
+    
+    //Registrar titulo Generado 
+    
+    tituloGenerado.setNombre_archivo(nombreArchivo);
+    tituloGenerado.setRuta_archivo(rutaCompleta);
+    tituloGenerado.setEstado("A");
+    TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+
+
+    //Registrar titulo
+
+    titulo.setTituloGenerado(tituloGenerado2);
+    titulo.setPersona(persona);
+    titulo.setNro_titulo(nroTitulo);
+    titulo.setEstado("A");
+    titulo.setTipo_titulo("Provision");
     titulo.setFecha_generacion(localDateFA);
     tituloService.save(titulo);
 
