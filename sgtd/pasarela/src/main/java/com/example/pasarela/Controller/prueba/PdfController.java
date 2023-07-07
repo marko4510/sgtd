@@ -342,7 +342,7 @@ public class PdfController {
     } catch (Exception e) {
         // Manejar la excepción según sea necesario
     }
-    archive.plantilla(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
+    archive.plantillaB(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
     //Registrar titulo Generado 
     
     tituloGenerado.setNombre_archivo(nombreArchivo);

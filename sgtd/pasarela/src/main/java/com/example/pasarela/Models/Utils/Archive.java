@@ -120,4 +120,28 @@ public class Archive {
 		return codigo + ".pdf";
 	}
 
+	public String plantillaB(String archivo, String salida, String plantilla, String codigo)
+			throws IOException, DocumentException {
+		// Leo el contenido de mi PDF base
+		PdfReader reader = new PdfReader(archivo);
+		// Creo el stamper especificando el contenido base y el archivo de salida
+		PdfStamper stamp = new PdfStamper(reader, new FileOutputStream(salida));
+		// Obtengo el contenido del pdf. Si utilizo getUnderContent lo que agregue
+		// aparecera debajo del contenido de mi PDF original
+		// si utilizo getOverContent los elementos agregados apareceran encima del
+		// contenido de mi PDF original
+		PdfContentByte cb = stamp.getUnderContent(1);
+		// Creo una imagen para agregarla y le pongo propiedades de posicion y escala
+		Image image = Image.getInstance(plantilla);
+		image.setAbsolutePosition(0, 0);
+		image.scalePercent(24);
+		// Agrego una imagen, la cual ya tiene las propiedades de posicion
+		cb.addImage(image);
+		// Cierro el stamper y se crea el archivo.
+		stamp.close();
+		reader.close();
+
+		return codigo + ".pdf";
+	}
+
 }
