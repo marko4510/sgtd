@@ -58,8 +58,18 @@
 
                             <form th:action="${edit} ?@{/UsuarioModF} :@{/UsuarioF}" method="post">
                                 <input type="hidden" th:field="${usuario.id_usuario}">
-                                <input type="hidden" th:field="${usuario.persona.id_persona}">
+
                                 <div class="row">
+                                    <div class="col-md-3">
+                                        <div>
+                                            <label class="col-form-label">Persona</label>
+                                            <select class="form-select js-choice" name="id_persona"  th:field="${usuario.persona}">
+                                                <option th:each="per : ${personas}" th:value="${per.id_persona}"
+                                                    th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-md-3">
                                         <label class="col-form-label">Usuario</label>
                                         <input class="form-control" type="text" th:field="${usuario.usuario_nom}"
@@ -76,7 +86,7 @@
                                             <option value="">Seleccione el Rol</option>
                                             <option value="C">Normal</option>
                                             <option value="F">Firmante</option>
-                                            <option value="D">Administrativo</option>
+                                            <option value="A">Administrativo</option>
 
                                         </select>
                                     </div>
@@ -123,7 +133,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="u : ${usuarios}" th:if="${u.estado == 'C' OR u.estado == 'F'}">
+                                    <tr th:each="u : ${usuarios}" th:if="${u.estado == 'C' OR u.estado == 'F' OR u.estado == 'A'}">
                                         <td
                                             th:text="${u.persona.nombre}+ ' '+${u.persona.ap_paterno}+ ' '+${u.persona.ap_materno}">
                                         </td>

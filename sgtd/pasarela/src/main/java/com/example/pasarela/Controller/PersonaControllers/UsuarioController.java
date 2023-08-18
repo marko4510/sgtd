@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.pasarela.Models.Entity.Usuario;
+import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.IUsuarioService;
 
 @Controller
@@ -19,12 +20,16 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService usuarioService;
 
+    @Autowired
+    private IPersonaService personaService;
+
     @RequestMapping(value = "/UsuarioL", method = RequestMethod.GET) // Pagina principal
     public String Carrera(HttpServletRequest request, Model model) {
         if (request.getSession().getAttribute("usuario") != null) {
 
             model.addAttribute("usuario", new Usuario());
             model.addAttribute("usuarios", usuarioService.findAll());
+             model.addAttribute("personas", personaService.findAll());
 
             return "persona/gestionarUsuario";
         } else {
@@ -50,6 +55,7 @@ public class UsuarioController {
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("usuarios", usuarioService.findAll());
+          model.addAttribute("personas", personaService.findAll());
         model.addAttribute("edit", "true");
 
         return "persona/gestionarUsuario";
