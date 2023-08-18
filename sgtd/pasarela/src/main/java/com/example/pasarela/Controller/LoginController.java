@@ -106,7 +106,7 @@ public class LoginController {
 
 			
 			
-			return "redirect:/AdmPG/";
+			return "redirect:/AdmPG";
 
 		} else {
 			return "redirect:/LoginR";

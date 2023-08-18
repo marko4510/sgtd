@@ -95,7 +95,7 @@ public class TramiteController {
         System.out.println(tramite.getTipoDocumento().getNombre_tipo_documento());
         if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("LEGALIZACIÓN")) {
 
-         Path rootPath = Paths.get("archivos/tramites/legalizacion/");
+         Path rootPath = Paths.get("archivos/");
         Path rootAbsolutPath = rootPath.toAbsolutePath();
         String rutaDirectorio = rootAbsolutPath+"";
 
