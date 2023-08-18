@@ -42,7 +42,7 @@ public class InicioController {
 	// Funcion de visualizaciòn de la pagina principal
 	@RequestMapping(value = "/Inicio", method = RequestMethod.GET) // Pagina principal
 	public String Inicio2(Model model) {
-		return "index";
+		return "login";
 
 	}
 
