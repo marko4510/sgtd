@@ -511,7 +511,7 @@ public class PdfController {
      // Generar la ruta completa del archivo
      String rutaCompleta =rootAbsolutPathTitulos + "/" + nombreArchivo;
      //Ruta completa de la Plantilla
-     String rutaCompletaP = rootAbsolutPathPlantillasPath + "/tituloAcademico.jpg";
+     String rutaCompletaP = rootAbsolutPathPlantillasPath + "/tp.jpg";
 
       String rutaCompletaSalida = rootAbsolutPathTitulosP +"/"+nombreArchivo;
          // Generar el documento PDF utilizando Flying Saucer
