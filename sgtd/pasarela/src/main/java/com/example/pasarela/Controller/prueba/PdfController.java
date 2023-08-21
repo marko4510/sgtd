@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -311,10 +312,33 @@ public class PdfController {
      // Directorio donde se guardará el archivo PDF en el disco local C
      Path rootPathTitulos = Paths.get("archivos/titulos/");
 		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
-
+      String rutaDirectorioTitulos = rootPathTitulos + "/";
+      try {
+                if (!Files.exists(rootPathTitulos)) {
+                    Files.createDirectories(rootPathTitulos);
+                    System.out.println("Directorio creado: " + rutaDirectorioTitulos);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioTitulos);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
      // Directorio donde se guardará el archivo PDF con Plantilla 
      Path rootPathTitulosP = Paths.get("archivos/titulos/bachiller");
      Path rootAbsolutPathTitulosP = rootPathTitulosP.toAbsolutePath();
+     String rutaDirectorioTitulosP = rootPathTitulosP + "/";
+     try {
+                if (!Files.exists(rootPathTitulosP)) {
+                    Files.createDirectories(rootPathTitulosP);
+                    System.out.println("Directorio creado: " + rutaDirectorioTitulosP);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioTitulosP);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
+
+
       // Directorio de la Plantilla 
       Path rootPathPlantillaPath = Paths.get("plantillas/");
       Path rootAbsolutPathPlantillasPath = rootPathPlantillaPath.toAbsolutePath();
@@ -494,17 +518,49 @@ public class PdfController {
      // Renderizar la vista HTML utilizando Thymeleaf
      String htmlContent = templateEngine.process("certificado/certificadoPrueba-pdf", context);
       if (usarPlantilla) {
+
         // Directorio donde se guardará el archivo PDF en el disco local C
      Path rootPathTitulos = Paths.get("archivos/titulos/");
 		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+    String rutaDirectorioTitulos = rootAbsolutPathTitulos + "/";
+      try {
+                if (!Files.exists(rootPathTitulos)) {
+                    Files.createDirectories(rootPathTitulos);
+                    System.out.println("Directorio creado: " + rutaDirectorioTitulos);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioTitulos);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
 
+    
      // Directorio donde se guardará el archivo PDF con Plantilla 
      Path rootPathTitulosP = Paths.get("archivos/titulos/titulosP");
      Path rootAbsolutPathTitulosP = rootPathTitulosP.toAbsolutePath();
+       String rutaDirectorioTitulosP = rootAbsolutPathTitulosP + "/";
+     try {
+                if (!Files.exists(rootPathTitulosP)) {
+                    Files.createDirectories(rootPathTitulosP);
+                    System.out.println("Directorio creado: " + rutaDirectorioTitulosP);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioTitulosP);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
+
+
+
+
       // Directorio de la Plantilla 
       Path rootPathPlantillaPath = Paths.get("plantillas/");
       Path rootAbsolutPathPlantillasPath = rootPathPlantillaPath.toAbsolutePath();
      TituloGenerado tituloGenerado = new TituloGenerado();
+
+
+
+
         // Nombre del archivo PDF
      String nombreArchivo = codigo+".pdf";
 
@@ -552,7 +608,19 @@ public class PdfController {
        // Directorio donde se guardará el archivo PDF 
      Path rootPathTitulos = Paths.get("archivos/titulos/");
 		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
-   
+    String rutaDirectorioTitulos = rootPathTitulos + "/";
+      try {
+                if (!Files.exists(rootPathTitulos)) {
+                    Files.createDirectories(rootPathTitulos);
+                    System.out.println("Directorio creado: " + rutaDirectorioTitulos);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioTitulos);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
+        
+
 
      TituloGenerado tituloGenerado = new TituloGenerado();
    
@@ -646,13 +714,41 @@ public class PdfController {
      // Renderizar la vista HTML utilizando Thymeleaf
      String htmlContent = templateEngine.process("certificado/provisionPrueba-pdf", context);
       if (usarPlantilla) {
+
+
         // Directorio donde se guardará el archivo PDF en el disco local C
      Path rootPathTitulos = Paths.get("archivos/titulos/provision");
 		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
 
+     String rutaDirectorioTitulos = rootPathTitulos + "/";
+      try {
+                if (!Files.exists(rootPathTitulos)) {
+                    Files.createDirectories(rootPathTitulos);
+                    System.out.println("Directorio creado: " + rutaDirectorioTitulos);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioTitulos);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
+
      // Directorio donde se guardará el archivo PDF con Plantilla 
      Path rootPathTitulosP = Paths.get("archivos/titulos/provisionP");
      Path rootAbsolutPathTitulosP = rootPathTitulosP.toAbsolutePath();
+      String rutaDirectorioTitulosP = rootPathTitulosP + "/";
+      try {
+                if (!Files.exists(rootPathTitulosP)) {
+                    Files.createDirectories(rootPathTitulosP);
+                    System.out.println("Directorio creado: " + rutaDirectorioTitulosP);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioTitulosP);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
+
+
+
       // Directorio de la Plantilla 
       Path rootPathPlantillaPath = Paths.get("plantillas/");
       Path rootAbsolutPathPlantillasPath = rootPathPlantillaPath.toAbsolutePath();
@@ -704,7 +800,17 @@ public class PdfController {
        // Directorio donde se guardará el archivo PDF 
      Path rootPathTitulos = Paths.get("archivos/titulos/provision");
 		Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
-   
+     String rutaDirectorioTitulos = rootPathTitulos + "/";
+      try {
+                if (!Files.exists(rootPathTitulos)) {
+                    Files.createDirectories(rootPathTitulos);
+                    System.out.println("Directorio creado: " + rutaDirectorioTitulos);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioTitulos);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
 
      TituloGenerado tituloGenerado = new TituloGenerado();
    

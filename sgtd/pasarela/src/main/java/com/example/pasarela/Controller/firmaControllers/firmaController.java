@@ -30,6 +30,7 @@ import com.itextpdf.text.pdf.PdfSignatureAppearance;
 
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
@@ -93,11 +94,32 @@ public class firmaController {
 
         Path rootPathFirmas = Paths.get("archivos/firmas/");
         Path rootAbsolutPathFirmas = rootPathFirmas.toAbsolutePath();
-
+        String rutaDirectorioFirmas = rootAbsolutPathFirmas+"";
+         try {
+                if (!Files.exists(rootPathFirmas)) {
+                    Files.createDirectories(rootPathFirmas);
+                    System.out.println("Directorio creado: " + rutaDirectorioFirmas);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioFirmas);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
         
 
         Path rootPathFirmados = Paths.get("archivos/firmados/");
         Path rootAbsolutPathFirmados = rootPathFirmados.toAbsolutePath();
+        String rutaDirectorioFirmados = rootAbsolutPathFirmados+"";
+         try {
+                if (!Files.exists(rootPathFirmados)) {
+                    Files.createDirectories(rootPathFirmados);
+                    System.out.println("Directorio creado: " + rutaDirectorioFirmados);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioFirmados);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
        
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
@@ -171,13 +193,34 @@ public class firmaController {
             return "redirect:/FirmaR";
         }
 
-        Path rootPathFirmas = Paths.get("archivos/firmas/");
+       Path rootPathFirmas = Paths.get("archivos/firmas/");
         Path rootAbsolutPathFirmas = rootPathFirmas.toAbsolutePath();
-
+        String rutaDirectorioFirmas = rootAbsolutPathFirmas+"";
+         try {
+                if (!Files.exists(rootPathFirmas)) {
+                    Files.createDirectories(rootPathFirmas);
+                    System.out.println("Directorio creado: " + rutaDirectorioFirmas);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioFirmas);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
         
 
         Path rootPathFirmados = Paths.get("archivos/firmados/");
         Path rootAbsolutPathFirmados = rootPathFirmados.toAbsolutePath();
+        String rutaDirectorioFirmados = rootAbsolutPathFirmados+"";
+         try {
+                if (!Files.exists(rootPathFirmados)) {
+                    Files.createDirectories(rootPathFirmados);
+                    System.out.println("Directorio creado: " + rutaDirectorioFirmados);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioFirmados);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
        
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
@@ -245,11 +288,32 @@ public class firmaController {
 
         Path rootPathFirmas = Paths.get("archivos/firmas/");
         Path rootAbsolutPathFirmas = rootPathFirmas.toAbsolutePath();
-
+        String rutaDirectorioFirmas = rootAbsolutPathFirmas+"";
+         try {
+                if (!Files.exists(rootPathFirmas)) {
+                    Files.createDirectories(rootPathFirmas);
+                    System.out.println("Directorio creado: " + rutaDirectorioFirmas);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioFirmas);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
         
 
         Path rootPathFirmados = Paths.get("archivos/firmados/");
         Path rootAbsolutPathFirmados = rootPathFirmados.toAbsolutePath();
+        String rutaDirectorioFirmados = rootAbsolutPathFirmados+"";
+         try {
+                if (!Files.exists(rootPathFirmados)) {
+                    Files.createDirectories(rootPathFirmados);
+                    System.out.println("Directorio creado: " + rutaDirectorioFirmados);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorioFirmados);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
        
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);

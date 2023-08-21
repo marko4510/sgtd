@@ -3,6 +3,7 @@ package com.example.pasarela.Controller.TramiteControllers;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -95,9 +96,19 @@ public class TramiteController {
         System.out.println(tramite.getTipoDocumento().getNombre_tipo_documento());
         if (tramite.getTipoDocumento().getNombre_tipo_documento().equals("LEGALIZACIÓN")) {
 
-         Path rootPath = Paths.get("archivos/");
+         Path rootPath = Paths.get("archivos/tramites/legalizacion");
         Path rootAbsolutPath = rootPath.toAbsolutePath();
         String rutaDirectorio = rootAbsolutPath+"";
+          try {
+                if (!Files.exists(rootPath)) {
+                    Files.createDirectories(rootPath);
+                    System.out.println("Directorio creado: " + rutaDirectorio);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorio);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
 
         String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
         model.addAttribute("di", rutaArchivo);
@@ -121,7 +132,16 @@ public class TramiteController {
              Path rootPath = Paths.get("archivos/tramites/supletorio/");
             Path rootAbsolutPath = rootPath.toAbsolutePath();
             String rutaDirectorio = rootAbsolutPath+"";
-            
+             try {
+                if (!Files.exists(rootPath)) {
+                    Files.createDirectories(rootPath);
+                    System.out.println("Directorio creado: " + rutaDirectorio);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorio);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
             String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
             model.addAttribute("di", rutaArchivo);
             List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
@@ -144,7 +164,16 @@ public class TramiteController {
                 Path rootPath = Paths.get("archivos/tramites/titulacion/");
             Path rootAbsolutPath = rootPath.toAbsolutePath();
             String rutaDirectorio = rootAbsolutPath+"";
-
+                 try {
+                if (!Files.exists(rootPath)) {
+                    Files.createDirectories(rootPath);
+                    System.out.println("Directorio creado: " + rutaDirectorio);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorio);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
                 String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
                 model.addAttribute("di", rutaArchivo);
                 List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
@@ -167,6 +196,16 @@ public class TramiteController {
                      Path rootPath = Paths.get("archivos/tramites/provisionN/");
             Path rootAbsolutPath = rootPath.toAbsolutePath();
             String rutaDirectorio = rootAbsolutPath+"";
+             try {
+                if (!Files.exists(rootPath)) {
+                    Files.createDirectories(rootPath);
+                    System.out.println("Directorio creado: " + rutaDirectorio);
+                } else {
+                    System.out.println("El directorio ya existe: " + rutaDirectorio);
+                }
+            } catch (IOException e) {
+                System.err.println("Error al crear el directorio: " + e.getMessage());
+            }
                     String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
                     model.addAttribute("di", rutaArchivo);
                     List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();

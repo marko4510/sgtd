@@ -66,8 +66,19 @@ public class PersonaController {
         String uniqueFilename = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename();
 
         Path rootPath = Paths.get("archivos/firmas/").resolve(uniqueFilename);
+        Path rootPathD = Paths.get("archivos/firmas");
         Path rootAbsolutPath = rootPath.toAbsolutePath();
-
+        String rutaDirectorio= rootAbsolutPath + "/";
+        try {
+                   if (!Files.exists(rootPathD)) {
+                       Files.createDirectories(rootPathD);
+                       System.out.println("Directorio creado: " + rutaDirectorio);
+                   } else {
+                       System.out.println("El directorio ya existe: " + rutaDirectorio);
+                   }
+               } catch (IOException e) {
+                   System.err.println("Error al crear el directorio: " + e.getMessage());
+               }
         log.info("rootPath: " + rootPath);
         log.info("rootAbsolutPath: " + rootAbsolutPath);
 
