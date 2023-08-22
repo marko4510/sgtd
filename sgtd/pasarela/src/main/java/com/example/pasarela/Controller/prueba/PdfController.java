@@ -516,7 +516,7 @@ public class PdfController {
      context.setVariable("codigo", codigo);
      context.setVariable("plantilla", plantilla);
      // Renderizar la vista HTML utilizando Thymeleaf
-     String htmlContent = templateEngine.process("certificado/certificadoPrueba-pdf", context);
+     String htmlContent = templateEngine.process("certificado/tituloAcademico-pdf", context);
       if (usarPlantilla) {
 
         // Directorio donde se guardará el archivo PDF en el disco local C
