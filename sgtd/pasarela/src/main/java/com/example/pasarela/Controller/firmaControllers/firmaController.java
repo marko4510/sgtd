@@ -2,7 +2,11 @@ package com.example.pasarela.Controller.firmaControllers;
 
 import javax.servlet.http.HttpServletRequest;
 
-
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.example.pasarela.Models.Entity.Autoridad;
 import com.example.pasarela.Models.Entity.Firma;
@@ -24,17 +29,23 @@ import com.example.pasarela.Models.Service.IFirmaService;
 import com.example.pasarela.Models.Service.ITituloGeneradoService;
 import com.example.pasarela.Models.Service.ITituloService;
 import com.example.pasarela.Models.Utils.Archive;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfSignatureAppearance;
 
-
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
-
+import java.io.File;
 import java.security.Security;
 
 import java.util.List;
@@ -124,15 +135,68 @@ public class firmaController {
         BouncyCastleProvider provider = new BouncyCastleProvider();
         Security.addProvider(provider);
 
-        //List<Titulo> listaTitulos = tituloService.titulosSinFirmarRector();
+       
         if (titulosSeleccionados != null && !titulosSeleccionados.isEmpty()) {
         for (Long tituloId : titulosSeleccionados) {
             // Obtener el objeto Titulo correspondiente al ID
             Titulo titulo = tituloService.findOne(tituloId);
-              archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
-                        persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
-                        titulo.getTituloGenerado().getRuta_archivo(),
-                        rootAbsolutPathFirmados.toString() + "/rector" + titulo.getTituloGenerado().getNombre_archivo());
+              try {
+                archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
+                            persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
+                            titulo.getTituloGenerado().getRuta_archivo(),
+                            rootAbsolutPathFirmados.toString() + "/rector" + titulo.getTituloGenerado().getNombre_archivo());
+            } catch (WriterException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            String rutaCompleta = rootAbsolutPathFirmados.toString() + "/rector" + titulo.getTituloGenerado().getNombre_archivo();
+
+            try {
+                // Generar el contenido del código QR
+                String qrContent = "Firmado por: " + persona.getNombre()+" "+persona.getAp_paterno()+" "+persona.getAp_materno();
+                QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
+            
+                // Crear la imagen BufferedImage del código QR
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+                    }
+                }
+            
+                // Cargar el documento PDF existente
+                PDDocument pdfDocument = PDDocument.load(new File(rutaCompleta)); // Reemplaza con la ruta al PDF existente
+            
+                // Convertir la imagen BufferedImage a PDImageXObject
+                PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
+            
+                // Obtener la página donde deseas agregar la imagen
+                PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
+            
+                // Agregar la imagen del código QR al contenido del PDF
+                try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+                    float x = 201; // Ajusta esta coordenada x según tus necesidades
+                    float y = 109; // Ajusta esta coordenada y según tus necesidades
+                    float widthj = 50; // Ajusta el ancho de la imagen
+                    float heightj = 50; // Ajusta la altura de la imagen
+            
+                    contentStream.drawImage(pdImage, x, y, widthj, heightj);
+                }
+            
+                // Guardar el PDF con la imagen del código QR agregada
+                pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+                pdfDocument.close();
+            } catch (Exception e) {
+                e.printStackTrace(); // Maneja las excepciones según tus necesidades
+            }
+
+
+
+
+
                         TituloGenerado tituloGenerado = new TituloGenerado();
                         Firma firma = new Firma();
                 // Registrar titulo Generado
@@ -229,13 +293,66 @@ public class firmaController {
         for (Long tituloId : titulosSeleccionados) {
             // Obtener el objeto Titulo correspondiente al ID
             Titulo titulo = tituloService.findOne(tituloId);
-              archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
-                        persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
-                        titulo.getTituloGenerado().getRuta_archivo(),
-                        rootAbsolutPathFirmados.toString() + "/vicerrector" + titulo.getTituloGenerado().getNombre_archivo());
+              try {
+                archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
+                            persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
+                            titulo.getTituloGenerado().getRuta_archivo(),
+                            rootAbsolutPathFirmados.toString() + "/vicerrector" + titulo.getTituloGenerado().getNombre_archivo());
+            } catch (WriterException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
                         TituloGenerado tituloGenerado = new TituloGenerado();
                         Firma firma = new Firma();
                 // Registrar titulo Generado
+
+              String rutaCompleta = rootAbsolutPathFirmados.toString() + "/vicerrector" + titulo.getTituloGenerado().getNombre_archivo();
+
+            try {
+                // Generar el contenido del código QR
+                String qrContent = "Firmado por: " + persona.getNombre()+" "+persona.getAp_paterno()+" "+persona.getAp_materno();
+                QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
+            
+                // Crear la imagen BufferedImage del código QR
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+                    }
+                }
+            
+                // Cargar el documento PDF existente
+                PDDocument pdfDocument = PDDocument.load(new File(rutaCompleta)); // Reemplaza con la ruta al PDF existente
+            
+                // Convertir la imagen BufferedImage a PDImageXObject
+                PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
+            
+                // Obtener la página donde deseas agregar la imagen
+                PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
+            
+                // Agregar la imagen del código QR al contenido del PDF
+                try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+                    float x = 20; // Ajusta esta coordenada x según tus necesidades
+                    float y = 71; // Ajusta esta coordenada y según tus necesidades
+                    float widthj = 50; // Ajusta el ancho de la imagen
+                    float heightj = 50; // Ajusta la altura de la imagen
+            
+                    contentStream.drawImage(pdImage, x, y, widthj, heightj);
+                }
+            
+                // Guardar el PDF con la imagen del código QR agregada
+                pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+                pdfDocument.close();
+            } catch (Exception e) {
+                e.printStackTrace(); // Maneja las excepciones según tus necesidades
+            }
+
+
+
+
 
                 tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
                 tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString()+"/vicerrector" +titulo.getTituloGenerado().getNombre_archivo());
@@ -322,13 +439,67 @@ public class firmaController {
         for (Long tituloId : titulosSeleccionados) {
             // Obtener el objeto Titulo correspondiente al ID
             Titulo titulo = tituloService.findOne(tituloId);
-              archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
-                        persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
-                        titulo.getTituloGenerado().getRuta_archivo(),
-                        rootAbsolutPathFirmados.toString() + "/secretario" + titulo.getTituloGenerado().getNombre_archivo());
+              try {
+                archive.sign(rootAbsolutPathFirmas.toString() + "/" + persona.getDigital(),
+                            persona.getClaveP().toCharArray(), PdfSignatureAppearance.NOT_CERTIFIED,
+                            titulo.getTituloGenerado().getRuta_archivo(),
+                            rootAbsolutPathFirmados.toString() + "/secretario" + titulo.getTituloGenerado().getNombre_archivo());
+            } catch (WriterException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
                         TituloGenerado tituloGenerado = new TituloGenerado();
                         Firma firma = new Firma();
                 // Registrar titulo Generado
+
+             String rutaCompleta = rootAbsolutPathFirmados.toString() + "/secretario" + titulo.getTituloGenerado().getNombre_archivo();
+
+            try {
+                // Generar el contenido del código QR
+                String qrContent = "Firmado por: " + persona.getNombre()+" "+persona.getAp_paterno()+" "+persona.getAp_materno();
+                QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
+            
+                // Crear la imagen BufferedImage del código QR
+                int width = bitMatrix.getWidth();
+                int height = bitMatrix.getHeight();
+                BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                for (int x = 0; x < width; x++) {
+                    for (int y = 0; y < height; y++) {
+                        qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+                    }
+                }
+            
+                // Cargar el documento PDF existente
+                PDDocument pdfDocument = PDDocument.load(new File(rutaCompleta)); // Reemplaza con la ruta al PDF existente
+            
+                // Convertir la imagen BufferedImage a PDImageXObject
+                PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
+            
+                // Obtener la página donde deseas agregar la imagen
+                PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
+            
+                // Agregar la imagen del código QR al contenido del PDF
+                try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+                    float x = 390; // Ajusta esta coordenada x según tus necesidades
+                    float y = 71;
+                    float widthj = 50; // Ajusta el ancho de la imagen
+                    float heightj = 50; // Ajusta la altura de la imagen
+            
+                    contentStream.drawImage(pdImage, x, y, widthj, heightj);
+                }
+            
+                // Guardar el PDF con la imagen del código QR agregada
+                pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+                pdfDocument.close();
+            } catch (Exception e) {
+                e.printStackTrace(); // Maneja las excepciones según tus necesidades
+            }
+
+
+
+
+
 
                 tituloGenerado.setNombre_archivo( titulo.getTituloGenerado().getNombre_archivo());
                 tituloGenerado.setRuta_archivo(rootAbsolutPathFirmados.toString()+"/secretario" +titulo.getTituloGenerado().getNombre_archivo());

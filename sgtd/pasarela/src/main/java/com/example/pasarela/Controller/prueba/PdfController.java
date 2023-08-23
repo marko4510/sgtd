@@ -632,9 +632,9 @@ public class PdfController {
       try {
     // Generar el contenido del código QR
     String qrContent = "Persona: " + persona.getNombre()+" "+persona.getAp_paterno()+" "+persona.getAp_materno() + "\n" +
-                        "Número de titulo: " + nroTitulo + "\n" +
-                        "Código de titulo: "+ codigo + "\n" +
-                         "Fecha de Generación titulo: "+ fechaComoString;
+                        "Numero de titulo: " + nroTitulo + "\n" +
+                        "Codigo de titulo: "+ codigo + "\n" +
+                         "Fecha de Generacion titulo: "+ fechaComoString;
     QRCodeWriter qrCodeWriter = new QRCodeWriter();
     BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
     
@@ -666,7 +666,7 @@ public class PdfController {
     
     // Agregar la imagen del código QR al contenido del PDF
     try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
-        float x = 30; // Ajusta esta coordenada x según tus necesidades
+        float x = 15; // Ajusta esta coordenada x según tus necesidades
         float y = 830; // Ajusta esta coordenada y según tus necesidades
         float widthj = 100; // Ajusta el ancho de la imagen
         float heightj = 100; // Ajusta la altura de la imagen
