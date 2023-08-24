@@ -149,49 +149,8 @@ public class firmaController {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            String rutaCompleta = rootAbsolutPathFirmados.toString() + "/rector" + titulo.getTituloGenerado().getNombre_archivo();
+           
 
-            try {
-                // Generar el contenido del código QR
-                String qrContent = "Firmado por: " + persona.getNombre()+" "+persona.getAp_paterno()+" "+persona.getAp_materno();
-                QRCodeWriter qrCodeWriter = new QRCodeWriter();
-                BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
-            
-                // Crear la imagen BufferedImage del código QR
-                int width = bitMatrix.getWidth();
-                int height = bitMatrix.getHeight();
-                BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-                for (int x = 0; x < width; x++) {
-                    for (int y = 0; y < height; y++) {
-                        qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
-                    }
-                }
-            
-                // Cargar el documento PDF existente
-                PDDocument pdfDocument = PDDocument.load(new File(rutaCompleta)); // Reemplaza con la ruta al PDF existente
-            
-                // Convertir la imagen BufferedImage a PDImageXObject
-                PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
-            
-                // Obtener la página donde deseas agregar la imagen
-                PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
-            
-                // Agregar la imagen del código QR al contenido del PDF
-                try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
-                    float x = 201; // Ajusta esta coordenada x según tus necesidades
-                    float y = 109; // Ajusta esta coordenada y según tus necesidades
-                    float widthj = 50; // Ajusta el ancho de la imagen
-                    float heightj = 50; // Ajusta la altura de la imagen
-            
-                    contentStream.drawImage(pdImage, x, y, widthj, heightj);
-                }
-            
-                // Guardar el PDF con la imagen del código QR agregada
-                pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
-                pdfDocument.close();
-            } catch (Exception e) {
-                e.printStackTrace(); // Maneja las excepciones según tus necesidades
-            }
 
 
 
@@ -306,49 +265,8 @@ public class firmaController {
                         Firma firma = new Firma();
                 // Registrar titulo Generado
 
-              String rutaCompleta = rootAbsolutPathFirmados.toString() + "/vicerrector" + titulo.getTituloGenerado().getNombre_archivo();
-
-            try {
-                // Generar el contenido del código QR
-                String qrContent = "Firmado por: " + persona.getNombre()+" "+persona.getAp_paterno()+" "+persona.getAp_materno();
-                QRCodeWriter qrCodeWriter = new QRCodeWriter();
-                BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
-            
-                // Crear la imagen BufferedImage del código QR
-                int width = bitMatrix.getWidth();
-                int height = bitMatrix.getHeight();
-                BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-                for (int x = 0; x < width; x++) {
-                    for (int y = 0; y < height; y++) {
-                        qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
-                    }
-                }
-            
-                // Cargar el documento PDF existente
-                PDDocument pdfDocument = PDDocument.load(new File(rutaCompleta)); // Reemplaza con la ruta al PDF existente
-            
-                // Convertir la imagen BufferedImage a PDImageXObject
-                PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
-            
-                // Obtener la página donde deseas agregar la imagen
-                PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
-            
-                // Agregar la imagen del código QR al contenido del PDF
-                try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
-                    float x = 20; // Ajusta esta coordenada x según tus necesidades
-                    float y = 71; // Ajusta esta coordenada y según tus necesidades
-                    float widthj = 50; // Ajusta el ancho de la imagen
-                    float heightj = 50; // Ajusta la altura de la imagen
-            
-                    contentStream.drawImage(pdImage, x, y, widthj, heightj);
-                }
-            
-                // Guardar el PDF con la imagen del código QR agregada
-                pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
-                pdfDocument.close();
-            } catch (Exception e) {
-                e.printStackTrace(); // Maneja las excepciones según tus necesidades
-            }
+             
+        
 
 
 
@@ -452,49 +370,7 @@ public class firmaController {
                         Firma firma = new Firma();
                 // Registrar titulo Generado
 
-             String rutaCompleta = rootAbsolutPathFirmados.toString() + "/secretario" + titulo.getTituloGenerado().getNombre_archivo();
-
-            try {
-                // Generar el contenido del código QR
-                String qrContent = "Firmado por: " + persona.getNombre()+" "+persona.getAp_paterno()+" "+persona.getAp_materno();
-                QRCodeWriter qrCodeWriter = new QRCodeWriter();
-                BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
-            
-                // Crear la imagen BufferedImage del código QR
-                int width = bitMatrix.getWidth();
-                int height = bitMatrix.getHeight();
-                BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-                for (int x = 0; x < width; x++) {
-                    for (int y = 0; y < height; y++) {
-                        qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
-                    }
-                }
-            
-                // Cargar el documento PDF existente
-                PDDocument pdfDocument = PDDocument.load(new File(rutaCompleta)); // Reemplaza con la ruta al PDF existente
-            
-                // Convertir la imagen BufferedImage a PDImageXObject
-                PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
-            
-                // Obtener la página donde deseas agregar la imagen
-                PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
-            
-                // Agregar la imagen del código QR al contenido del PDF
-                try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
-                    float x = 390; // Ajusta esta coordenada x según tus necesidades
-                    float y = 71;
-                    float widthj = 50; // Ajusta el ancho de la imagen
-                    float heightj = 50; // Ajusta la altura de la imagen
-            
-                    contentStream.drawImage(pdImage, x, y, widthj, heightj);
-                }
-            
-                // Guardar el PDF con la imagen del código QR agregada
-                pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
-                pdfDocument.close();
-            } catch (Exception e) {
-                e.printStackTrace(); // Maneja las excepciones según tus necesidades
-            }
+           
 
 
 
