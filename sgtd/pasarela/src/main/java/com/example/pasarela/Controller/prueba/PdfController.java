@@ -574,17 +574,143 @@ public class PdfController {
       String rutaCompletaP = rootAbsolutPathPlantillasPath + "/tp.jpg";
 
       String rutaCompletaSalida = rootAbsolutPathTitulosP + "/" + nombreArchivo;
-      // Generar el documento PDF utilizando Flying Saucer
-      try (OutputStream outputStream = new FileOutputStream(rutaCompleta)) {
-        ITextRenderer renderer = new ITextRenderer();
-        renderer.setDocumentFromString(htmlContent);
+     
+      try {
+    // Generar el contenido del código QR
+    String qrContent = "Persona: " + persona.getNombre()+" "+persona.getAp_paterno()+" "+persona.getAp_materno() + "\n" +
+                        "Numero de titulo: " + nroTitulo + "\n" +
+                        "Codigo de titulo: "+ codigo + "\n" +
+                         "Fecha de Generacion titulo: "+ fechaComoString;
+    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+    BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
 
-        // Establecer tamaño de página Legal
-        renderer.layout();
-        renderer.createPDF(outputStream);
-      } catch (Exception e) {
-        // Manejar la excepción según sea necesario
-      }
+    // Crear la imagen BufferedImage del código QR
+    int width = bitMatrix.getWidth();
+    int height = bitMatrix.getHeight();
+    BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+        }
+    }
+
+    //GENERAR QR DEL RECTOR
+     String qrContentRector = "Firmado por: MSc. Franz Navia Miranda";
+    QRCodeWriter qrCodeWriterRector = new QRCodeWriter();
+    BitMatrix bitMatrixRector = qrCodeWriterRector.encode(qrContentRector, BarcodeFormat.QR_CODE, 200, 200);
+     
+    int widthRector = bitMatrixRector.getWidth();
+    int heightRector = bitMatrixRector.getHeight();
+    BufferedImage qrImageRector = new BufferedImage(widthRector, heightRector, BufferedImage.TYPE_INT_RGB);
+    for (int x = 0; x < widthRector; x++) {
+        for (int y = 0; y < heightRector; y++) {
+            qrImageRector.setRGB(x, y, bitMatrixRector.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+        }
+    }
+    //
+
+     //GENERAR QR DEL VICERRECTOR
+     String qrContentVicerrector = "Firmado por: MSc. Oscar Felipe Melgar Saucedo";
+    QRCodeWriter qrCodeWriterVicerrector = new QRCodeWriter();
+    BitMatrix bitMatrixVicerrector = qrCodeWriterVicerrector.encode(qrContentVicerrector, BarcodeFormat.QR_CODE, 200, 200);
+     
+    int widthVicerrector = bitMatrixVicerrector.getWidth();
+    int heightVicerrector = bitMatrixVicerrector.getHeight();
+    BufferedImage qrImageVicerrector = new BufferedImage(widthVicerrector, heightVicerrector, BufferedImage.TYPE_INT_RGB);
+    for (int x = 0; x < widthVicerrector; x++) {
+        for (int y = 0; y < heightVicerrector; y++) {
+            qrImageVicerrector.setRGB(x, y, bitMatrixVicerrector.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+        }
+    }
+    //
+
+     //GENERAR QR DEL SECRETARIO
+     String qrContentSecretario = "Firmado por: MSc. Ariz Humerez Alvez";
+    QRCodeWriter qrCodeWriterSecretario = new QRCodeWriter();
+    BitMatrix bitMatrixSecretario = qrCodeWriterSecretario.encode(qrContentSecretario, BarcodeFormat.QR_CODE, 200, 200);
+     
+    int widthSecretario = bitMatrixSecretario.getWidth();
+    int heightSecretario = bitMatrixSecretario.getHeight();
+    BufferedImage qrImageSecretario = new BufferedImage(widthSecretario, heightSecretario, BufferedImage.TYPE_INT_RGB);
+    for (int x = 0; x < widthSecretario; x++) {
+        for (int y = 0; y < heightSecretario; y++) {
+            qrImageSecretario.setRGB(x, y, bitMatrixSecretario.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+        }
+    }
+    //
+
+    
+    // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
+    ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+    ITextRenderer renderer = new ITextRenderer();
+    renderer.setDocumentFromString(htmlContent);
+    renderer.layout();
+    renderer.createPDF(pdfOutputStream);
+    
+    // Crear un nuevo documento PDF
+    PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(pdfOutputStream.toByteArray()));
+    
+    // Convertir la imagen BufferedImage a PDImageXObject
+    PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
+
+     // Convertir la imagen BufferedImage a PDImageXObject
+    PDImageXObject pdImageRector = LosslessFactory.createFromImage(pdfDocument, qrImageRector);
+
+     // Convertir la imagen BufferedImage a PDImageXObject
+    PDImageXObject pdImageVicerrector = LosslessFactory.createFromImage(pdfDocument, qrImageVicerrector);
+      // Convertir la imagen BufferedImage a PDImageXObject
+    PDImageXObject pdImageSecretario = LosslessFactory.createFromImage(pdfDocument, qrImageSecretario);
+
+
+    // Obtener la página donde deseas agregar la imagen
+    PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
+    
+    // Agregar la imagen del código QR al contenido del PDF
+    try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+        float x = 15; // Ajusta esta coordenada x según tus necesidades
+        float y = 830; // Ajusta esta coordenada y según tus necesidades
+        float widthj = 100; // Ajusta el ancho de la imagen
+        float heightj = 100; // Ajusta la altura de la imagen
+        
+        contentStream.drawImage(pdImage, x, y, widthj, heightj);
+    }
+     // Agregar la imagen del código QR al contenido del PDF
+    try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+      float x = 201; // Ajusta esta coordenada x según tus necesidades
+      float y = 109; // Ajusta esta coordenada y según tus necesidades
+      float widthj = 50; // Ajusta el ancho de la imagen
+      float heightj = 50; // Ajusta la altura de la imagen
+        
+        contentStream.drawImage(pdImageRector, x, y, widthj, heightj);
+    }
+      // Agregar la imagen del código QR al contenido del PDF
+    try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+      float x = 20; // Ajusta esta coordenada x según tus necesidades
+      float y = 77; // Ajusta esta coordenada y según tus necesidades
+      float widthj = 50; // Ajusta el ancho de la imagen
+      float heightj = 50; // Ajusta la altura de la imagen
+        
+        contentStream.drawImage(pdImageVicerrector, x, y, widthj, heightj);
+    }
+       // Agregar la imagen del código QR al contenido del PDF
+    try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page, PDPageContentStream.AppendMode.APPEND, true, true)) {
+      float x = 390; // Ajusta esta coordenada x según tus necesidades
+      float y = 77;
+      float widthj = 50; // Ajusta el ancho de la imagen
+      float heightj = 50; // Ajusta la altura de la imagen
+        
+        contentStream.drawImage(pdImageSecretario, x, y, widthj, heightj);
+    }
+    
+    
+    // Guardar el PDF con la imagen del código QR agregada
+    pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+    pdfDocument.close();
+} catch (Exception e) {
+    e.printStackTrace(); // Maneja las excepciones según tus necesidades
+}
+
+
       archive.plantilla(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
       // Registrar titulo Generado
 
@@ -815,7 +941,7 @@ public class PdfController {
 
     Path rootPathPlantilla = Paths.get("plantillas/");
     Path rootAbsolutPathPlantilla = rootPathPlantilla.toAbsolutePath();
-    String plantilla = rootAbsolutPathPlantilla + "/tituloProvision.pdf";
+    String plantilla = rootAbsolutPathPlantilla + "/provisionPDF.pdf";
     // Crear el contexto con los datos necesarios para la vista
     Context context = new Context();
     // Agregar los datos que necesites en tu vista
