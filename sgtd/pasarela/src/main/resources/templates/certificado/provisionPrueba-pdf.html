@@ -14,11 +14,11 @@
 
 <body style="font-family:'Times New Roman'; font-size:12pt;  ">
     <div>
-        <p style="margin-bottom: 67px;"></p>
-        <p style="margin-top: 67px; margin-left:466.7pt; margin-bottom:0pt; text-align:justify; line-height:10.4pt">
-            <span style="font-family: Arial; font-weight: bold; font-size:14pt;" th:text="${nroTitulo}">002797</span>
+        <p style="margin-bottom: 23px;"></p>
+        <p style="margin-top: 34px; margin-left:445.7pt; margin-bottom:0pt; text-align:justify; line-height:10.4pt">
+            <span style="font-family: Arial; font-weight: bold; font-size:16pt;" th:text="${nroTitulo}">002797</span>
         </p>
-        <p style="margin-top:169.1pt; margin-bottom:0pt; text-align:center; line-height:28pt">
+        <p style="margin-top:135pt; margin-bottom:0pt; text-align:center; line-height:28pt">
             <span style="font-size:29pt; font-family:Diploma;">MSc. Franz Navia Miranda</span>
         </p>
         <p style="margin-top:100.1pt; margin-bottom:0pt; text-align:center; line-height:28pt">
@@ -27,37 +27,35 @@
         <p style="margin-top:17pt; margin-bottom:0pt; text-align:center; line-height:28pt">
             <span style="font-size:21pt; font-family:Diploma; " th:text="${persona.nombre}+' '+${persona.ap_paterno}+' '+${persona.ap_materno}">JHILMAR PERSI TERRAZAS CHAO</span>
         </p>
-        <p style="margin-top:28pt; margin-left:81.55pt; margin-bottom:0pt; text-align:justify; line-height:13.25pt">
+        <p style="margin-top:31pt; margin-left:81.55pt; margin-bottom:0pt; text-align:justify; line-height:13.25pt">
             <span style="margin-right: 40px;"></span>
             <span style="margin-right: 102px; font-style:Times, serif;"  th:text="${diaN}+' de '+${mesN}+' de '+${anioN}">11 de noviembre de 1985</span>
             <span style="margin-right: 102px; font-style:Times, serif;"  th:text="${provincia}+' - '+${departamento}">Iturralde – La Paz</span>
        
         </p>
-        <p style="margin-top:62.1pt; margin-bottom:0pt; text-align:center; line-height:28pt" th:if="${persona.sexo == 'Masculino'}">
-            <span style="font-size:28pt; font-family:Diploma;">Licenciado</span>
+        <p style="margin-top:62.1pt; margin-bottom:0pt; text-align:center; line-height:28pt" >
+            <span style="font-size:28pt; font-family:Diploma;"  th:text="${persona.gradoAcademico.nombre}">Licenciado</span>
         </p>
-        <p style="margin-top:62.1pt; margin-bottom:0pt; text-align:center; line-height:28pt" th:if="${persona.sexo == 'Femenino'}">
-            <span style="font-size:28pt; font-family:Diploma;" >Licenciada</span>
-        </p>
+       
         <p style="margin-top:15.1pt; margin-bottom:0pt; text-align:center; line-height:28pt">
             <span style="font-size:28pt; font-family:Diploma; "  th:text="${persona.gradoAcademico.carrera.nombre_carrera}">Ingeniería Agroforestal</span>
         </p>
-        <p style="margin-top:84pt; margin-left:148.55pt; margin-bottom:0pt; text-align:justify; line-height:13.25pt">
+        <p style="margin-top:80pt; margin-left:148.55pt; margin-bottom:0pt; text-align:justify; line-height:10pt">
             <span style="margin-right: 40px;"></span>
             <span style="margin-right: 180px; font-style:Times, serif; font-size:14pt;">Cobija</span>
-            <span style="margin-right: 180px; font-style:Times, serif; font-size:14pt;" th:text="${dia}">Veintisiete</span>
+            <span style="margin-right: 130px; font-style:Times, serif; font-size:14pt;" th:text="${dia}">Veintisiete</span>
        
         </p>
-        <p style="margin-top:22pt; margin-left:125.55pt; margin-bottom:0pt; text-align:left; ">
+        <p style="margin-top:28pt; margin-left:132.55pt; margin-bottom:0pt; text-align:left; ">
          
             <span style="margin-right: 181px; font-style:Times, serif; font-size:12pt;" th:text="${mes}">Enero</span>
-            <span style="margin-right: 181px; font-style:Times, serif; font-size:12pt;" th:text="'Dos Mil '+${gestion}"></span>
+            <span style="margin-right: 168px; font-style:Times, serif; font-size:12pt;" th:text="'Dos Mil '+${gestion}"></span>
        
         </p>
    
 
 
-        <p style="margin-top:100.3pt; margin-left:21.25pt; margin-bottom:0pt;  line-height:9.4pt;">
+        <p style="margin-top:95pt; margin-left:21.25pt; margin-bottom:0pt;  line-height:9.4pt;">
             <span style="margin-right: 36px;"></span>
             <span style="font-size:11pt;  margin-right: 128px; ">MSc. Franz Navia Miranda </span>
             <span style="font-size:11pt; margin-left: 128px;">MSc. Ariz Humerez Alvez</span>
