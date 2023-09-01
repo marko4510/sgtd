@@ -877,7 +877,7 @@ public class PdfController {
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
           float x = 20; // Ajusta esta coordenada x según tus necesidades
-          float y = 77; // Ajusta esta coordenada y según tus necesidades
+          float y = 80; // Ajusta esta coordenada y según tus necesidades
           float widthj = 50; // Ajusta el ancho de la imagen
           float heightj = 50; // Ajusta la altura de la imagen
 
@@ -887,7 +887,7 @@ public class PdfController {
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
           float x = 390; // Ajusta esta coordenada x según tus necesidades
-          float y = 77;
+          float y = 80;
           float widthj = 50; // Ajusta el ancho de la imagen
           float heightj = 50; // Ajusta la altura de la imagen
 
