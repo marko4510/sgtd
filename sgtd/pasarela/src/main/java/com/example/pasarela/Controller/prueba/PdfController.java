@@ -24,6 +24,7 @@ import com.itextpdf.text.DocumentException;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -62,6 +63,13 @@ import com.google.zxing.EncodeHintType;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
 @Controller
 public class PdfController {
@@ -856,10 +864,10 @@ public class PdfController {
         // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 15; // Ajusta esta coordenada x según tus necesidades
-          float y = 830; // Ajusta esta coordenada y según tus necesidades
-          float widthj = 100; // Ajusta el ancho de la imagen
-          float heightj = 100; // Ajusta la altura de la imagen
+          float x = 5; // Ajusta esta coordenada x según tus necesidades
+          float y = 860; // Ajusta esta coordenada y según tus necesidades
+          float widthj = 80; // Ajusta el ancho de la imagen
+          float heightj = 80; // Ajusta la altura de la imagen
 
           contentStream.drawImage(pdImage, x, y, widthj, heightj);
         }
@@ -868,8 +876,8 @@ public class PdfController {
             PDPageContentStream.AppendMode.APPEND, true, true)) {
           float x = 201; // Ajusta esta coordenada x según tus necesidades
           float y = 109; // Ajusta esta coordenada y según tus necesidades
-          float widthj = 50; // Ajusta el ancho de la imagen
-          float heightj = 50; // Ajusta la altura de la imagen
+          float widthj = 40; // Ajusta el ancho de la imagen
+          float heightj = 40; // Ajusta la altura de la imagen
 
           contentStream.drawImage(pdImageRector, x, y, widthj, heightj);
         }
@@ -878,18 +886,18 @@ public class PdfController {
             PDPageContentStream.AppendMode.APPEND, true, true)) {
           float x = 20; // Ajusta esta coordenada x según tus necesidades
           float y = 80; // Ajusta esta coordenada y según tus necesidades
-          float widthj = 50; // Ajusta el ancho de la imagen
-          float heightj = 50; // Ajusta la altura de la imagen
+          float widthj = 40; // Ajusta el ancho de la imagen
+          float heightj = 40; // Ajusta la altura de la imagen
 
           contentStream.drawImage(pdImageVicerrector, x, y, widthj, heightj);
         }
         // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 390; // Ajusta esta coordenada x según tus necesidades
+          float x = 500; // Ajusta esta coordenada x según tus necesidades
           float y = 80;
-          float widthj = 50; // Ajusta el ancho de la imagen
-          float heightj = 50; // Ajusta la altura de la imagen
+          float widthj = 40; // Ajusta el ancho de la imagen
+          float heightj = 40; // Ajusta la altura de la imagen
 
           contentStream.drawImage(pdImageSecretario, x, y, widthj, heightj);
         }
@@ -897,6 +905,98 @@ public class PdfController {
         // Guardar el PDF con la imagen del código QR agregada
         pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
         pdfDocument.close();
+
+        // Ruta al archivo de fuente personalizada
+        String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
+        try {
+          // Cargar el documento PDF existente
+          PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta)); // Asegúrate de que "rutaCompleta" apunte
+                                                                             // al archivo existente
+
+          // Obtener la página donde deseas agregar el texto
+          PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
+
+          // Crear un objeto de contenido para escribir texto en la página
+          PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
+              PDPageContentStream.AppendMode.APPEND, true, true);
+
+          // Cargar la fuente personalizada
+          PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
+
+          float fontSize = 32; // Ajusta el tamaño según tus necesidades
+           float fontSize2 = 20;
+          // Configurar el texto y calcular su ancho
+          String texto = persona.getGradoAcademico().getNombre();
+          contentStream.setFont(customFont, fontSize);
+          float textWidth = customFont.getStringWidth(texto) * fontSize / 1000f;
+
+          // Obtener el ancho de la página en puntos
+          float pageWidth = page2.getMediaBox().getWidth();
+
+          // Calcular la posición X para centrar el texto
+          float xTexto = (pageWidth - textWidth) / 2;
+
+          // Configurar la posición Y del texto
+          float yTexto = 298; // Ajusta esta coordenada y según tus necesidades
+
+          // Agregar el texto al documento centrado
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto, yTexto);
+          contentStream.showText(texto);
+          contentStream.endText();
+
+          // Configurar el segundo texto y calcular su ancho
+          String texto2 = persona.getGradoAcademico().getCarrera().getNombre_carrera(); // Reemplaza con tu segundo
+                                                                                        // texto
+          float textWidth2 = customFont.getStringWidth(texto2) * fontSize / 1000f;
+
+          // Configurar la posición Y del segundo texto (un poco más arriba)
+          float yTexto2 = 430; // Ajusta esta coordenada y según tus necesidades
+
+          // Agregar el segundo texto al documento centrado
+          contentStream.beginText();
+          contentStream.newLineAtOffset((page2.getMediaBox().getWidth() - textWidth2) / 2, yTexto2);
+          contentStream.showText(texto2);
+          contentStream.endText();
+
+
+
+          contentStream.setFont(customFont, fontSize2);
+          String diaConvertido = String.valueOf(dia);
+          String texto3 = diaConvertido;
+          float xTexto3 = 250;
+          float yTexto3 = 173;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto3, yTexto3);
+          contentStream.showText(texto3);
+          contentStream.endText();
+
+          String mesConvertido = String.valueOf(cadenaMesC);
+          String texto4 = mesConvertido;
+          float xTexto4 = 280;
+          float yTexto4 = 173;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto4, yTexto4);
+          contentStream.showText(texto4);
+          contentStream.endText();
+
+          String gestionC = String.valueOf(gestion);
+          String texto5 = "Dos mil "+gestionC;
+          float xTexto5 = 370;
+          float yTexto5 = 173;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto5, yTexto5);
+          contentStream.showText(texto5);
+          contentStream.endText();
+
+          // Cerrar el contenido y guardar el documento PDF
+          contentStream.close();
+          pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+          pdfDocument2.close();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+
       } catch (Exception e) {
         e.printStackTrace(); // Maneja las excepciones según tus necesidades
       }
@@ -1091,7 +1191,7 @@ public class PdfController {
           }
         }
 
-         // GENERAR QR DEL RECTOR
+        // GENERAR QR DEL RECTOR
         String qrContentRector = "Firmado por: MSc. Franz Navia Miranda";
         QRCodeWriter qrCodeWriterRector = new QRCodeWriter();
         BitMatrix bitMatrixRector = qrCodeWriterRector.encode(qrContentRector, BarcodeFormat.QR_CODE, 200, 200);
@@ -1122,8 +1222,6 @@ public class PdfController {
           }
         }
         //
-      
-    
 
         // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
@@ -1148,45 +1246,450 @@ public class PdfController {
         // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 0; // Ajusta esta coordenada x según tus necesidades
-          float y = 840; // Ajusta esta coordenada y según tus necesidades
-          float widthj = 100; // Ajusta el ancho de la imagen
-          float heightj = 100; // Ajusta la altura de la imagen
+          float x = 10; // Ajusta esta coordenada x según tus necesidades
+          float y = 855; // Ajusta esta coordenada y según tus necesidades
+          float widthj = 70; // Ajusta el ancho de la imagen
+          float heightj = 70; // Ajusta la altura de la imagen
 
           contentStream.drawImage(pdImage, x, y, widthj, heightj);
         }
 
-          // Agregar la imagen del código QR al contenido del PDF
+        // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 48; // Ajusta esta coordenada x según tus necesidades
-          float y = 67; // Ajusta esta coordenada y según tus necesidades
+          float x = 46; // Ajusta esta coordenada x según tus necesidades
+          float y = 75; // Ajusta esta coordenada y según tus necesidades
           float widthj = 40; // Ajusta el ancho de la imagen
           float heightj = 40; // Ajusta la altura de la imagen
 
           contentStream.drawImage(pdImageRector, x, y, widthj, heightj);
         }
 
-          // Agregar la imagen del código QR al contenido del PDF
+        // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 364; // Ajusta esta coordenada x según tus necesidades
-          float y = 67; // Ajusta esta coordenada y según tus necesidades
+          float x = 525; // Ajusta esta coordenada x según tus necesidades
+          float y = 75; // Ajusta esta coordenada y según tus necesidades
           float widthj = 40; // Ajusta el ancho de la imagen
           float heightj = 40; // Ajusta la altura de la imagen
 
           contentStream.drawImage(pdImageSecretario, x, y, widthj, heightj);
         }
-     
 
         // Guardar el PDF con la imagen del código QR agregada
         pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
         pdfDocument.close();
+
+        // Ruta al archivo de fuente personalizada
+        String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
+  
+        try {
+          // Cargar el documento PDF existente
+          PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta)); // Asegúrate de que "rutaCompleta" apunte
+                                                                             // al archivo existente
+          String primerTexto = "primerTexto";
+          String segundoTexto = "segundoTexto";
+          String tercerTexto = "tercerTexto";
+          float fontSize2 = 32;
+          float fontSize = 20;
+          float fontFirma = 18;
+          
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Enfermería")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Licenciado en Enfermería";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Licenciada en Enfermería";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }
+
+          }
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Medicina")) {
+          
+                primerTexto = "Médico Cirujano";
+                segundoTexto = "Médico Cirujano";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+           
+
+          }
+           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Odontología")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Cirujano Odontólogo";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Cirujano Odontólogo";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Medicina Veterinaria y Zootecnia")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Médico Veterinario Zootecnista";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Médico Veterinario Zootecnista";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Biología")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Licenciado en Biología";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Licenciada en Biología";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Ambiental")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Ingeniero Ambiental";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Ingeniera Ambiental";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Agroforestal")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Ingeniero Agroforestal";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Ingeniera Agroforestal";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+
+            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Industrial")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Ingeniero Industrial";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Ingeniera Industrial";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Civil")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Ingeniero Civil";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Ingeniera Civil";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Informática")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Ingeniero Informático";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Ingeniera Informático";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería de Sistemas")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Ingeniero de Sistemas";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Ingeniera de Sistemas";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+             if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Comunicación Social")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Licenciado en Ciencias de la Comunicación Social";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Licenciada en Ciencias de la Comunicación Social";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Trabajo Social")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Licenciado en Trabajo Social";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Licenciada en Trabajo Social";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Jurídicas")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Abogado";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Abogado";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Políticas y Gestión Pública")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Licenciado en Administración de Empresas";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Licenciada en Administración de Empresas";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Contaduría Pública")) {
+            if (persona.getGradoAcademico().getNombre().equals("Técnico Universitario Superior")) {
+             
+                primerTexto = "Técnico en Contabilidad";
+                segundoTexto = "Técnico Universitario Superior";
+                tercerTexto = "Contabilidad"; 
+          
+            }else{
+               if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Licenciado en Contaduría Pública";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Licenciada en Contaduría Pública";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+            }
+         
+
+          }
+            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Comercial")) {
+            if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Ingeniero Comercial";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }else {
+                primerTexto = "Ingeniera Comercial";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+            }   
+
+          }
+          
+          // Obtener la página donde deseas agregar el texto
+          PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
+
+          // Crear un objeto de contenido para escribir texto en la página
+          PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
+              PDPageContentStream.AppendMode.APPEND, true, true);
+
+          // Cargar la fuente personalizada
+          PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
+
+          
+        
+          // Configurar el texto y calcular su ancho
+          String texto = segundoTexto;
+          contentStream.setFont(customFont, fontSize2);
+          float textWidth = customFont.getStringWidth(texto) * fontSize2 / 1000f;
+
+          // Obtener el ancho de la página en puntos
+          float pageWidth = page2.getMediaBox().getWidth();
+
+          // Calcular la posición X para centrar el texto
+          float xTexto = (pageWidth - textWidth) / 2;
+         
+          // Configurar la posición Y del texto
+          float yTexto = 375; // Ajusta esta coordenada y según tus necesidades
+
+          // Agregar el texto al documento centrado
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto, yTexto);
+          contentStream.showText(texto);
+          contentStream.endText();
+
+           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Políticas y Gestión Pública")) {
+          // Configurar el segundo texto y calcular su ancho
+          String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                                                                        // texto
+          float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+           float xTexto2 = 180;
+          // Configurar la posición Y del segundo texto (un poco más arriba)
+          float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+
+          // Agregar el segundo texto al documento centrado
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto2, yTexto2);
+          contentStream.showText(texto2);
+          contentStream.endText();
+          }else{
+          // Configurar el segundo texto y calcular su ancho
+          String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                                                                        // texto
+          float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+           float xTexto2 = (pageWidth - textWidth2) / 2;
+          // Configurar la posición Y del segundo texto (un poco más arriba)
+          float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+
+          // Agregar el segundo texto al documento centrado
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto2, yTexto2);
+          contentStream.showText(texto2);
+          contentStream.endText();
+          }
+          
+          
+
+           // Configurar el segundo texto y calcular su ancho
+          String texto3 = primerTexto; // Reemplaza con tu segundo
+                                                                                        // texto
+          float textWidth3 = customFont.getStringWidth(texto3) * fontSize2 / 1000f;
+
+          // Configurar la posición Y del segundo texto (un poco más arriba)
+          float yTexto3 = 540; // Ajusta esta coordenada y según tus necesidades
+
+          // Agregar el segundo texto al documento centrado
+          contentStream.beginText();
+          contentStream.newLineAtOffset((page2.getMediaBox().getWidth() - textWidth3) / 2, yTexto3);
+          contentStream.showText(texto3);
+          contentStream.endText();
+
+          contentStream.setFont(customFont, fontSize);
+          String diaConvertido = String.valueOf(diaNum);
+          String texto4 = diaConvertido;
+          float xTexto4 = 500;
+          float yTexto4 = 216;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto4, yTexto4);
+          contentStream.showText(texto4);
+          contentStream.endText();
+
+          String texto5 = cadenaMesC;
+          float xTexto5 = 185;
+          float yTexto5 = 191;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto5, yTexto5);
+          contentStream.showText(texto5);
+          contentStream.endText();
+
+          String texto6 = "Dos mil "+ gestion;
+          float xTexto6 = 380;
+          float yTexto6 = 191;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto6, yTexto6);
+          contentStream.showText(texto6);
+          contentStream.endText();
+
+          //parrafos de firmas
+          contentStream.setFont(customFont, fontFirma);
+          String texto7 = "MSc. Franz Navia Miranda";
+          float xTexto7 = 85;
+          float yTexto7 = 80;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto7, yTexto7);
+          contentStream.showText(texto7);
+          contentStream.endText();
+
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto7, yTexto7);
+          contentStream.showText(texto7);
+          contentStream.endText();
+
+           String texto8 = "MSc. Ariz Humerez Alvez";
+          float xTexto8 = 367;
+          float yTexto8 = 80;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto8, yTexto8);
+          contentStream.showText(texto8);
+          contentStream.endText();
+
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto8, yTexto8);
+          contentStream.showText(texto8);
+          contentStream.endText();
+
+        
+          String texto9 = "Rector Magnífico";
+          float xTexto9 = 115;
+          float yTexto9 = 62;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto9, yTexto9);
+          contentStream.showText(texto9);
+          contentStream.endText();
+
+           contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto9, yTexto9);
+          contentStream.showText(texto9);
+          contentStream.endText();
+
+          String texto10 = "Secretario General";
+          float xTexto10 = 405;
+          float yTexto10 = 62;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto10, yTexto10);
+          contentStream.showText(texto10);
+          contentStream.endText();
+
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto10, yTexto10);
+          contentStream.showText(texto10);
+          contentStream.endText();
+
+          // Cerrar el contenido y guardar el documento PDF
+          contentStream.close();
+          pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+          pdfDocument2.close();
+
+
+
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+   
       } catch (Exception e) {
         e.printStackTrace(); // Maneja las excepciones según tus necesidades
       }
-
-   
 
       // Registrar titulo Generado
 
