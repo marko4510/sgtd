@@ -865,17 +865,17 @@ public class PdfController {
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
           float x = 5; // Ajusta esta coordenada x según tus necesidades
-          float y = 860; // Ajusta esta coordenada y según tus necesidades
-          float widthj = 80; // Ajusta el ancho de la imagen
-          float heightj = 80; // Ajusta la altura de la imagen
+          float y = 840; // Ajusta esta coordenada y según tus necesidades
+          float widthj = 90; // Ajusta el ancho de la imagen
+          float heightj = 90; // Ajusta la altura de la imagen
 
           contentStream.drawImage(pdImage, x, y, widthj, heightj);
         }
         // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 201; // Ajusta esta coordenada x según tus necesidades
-          float y = 109; // Ajusta esta coordenada y según tus necesidades
+          float x = 210; // Ajusta esta coordenada x según tus necesidades
+          float y = 100; // Ajusta esta coordenada y según tus necesidades
           float widthj = 40; // Ajusta el ancho de la imagen
           float heightj = 40; // Ajusta la altura de la imagen
 
@@ -885,7 +885,7 @@ public class PdfController {
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
           float x = 20; // Ajusta esta coordenada x según tus necesidades
-          float y = 80; // Ajusta esta coordenada y según tus necesidades
+          float y = 70; // Ajusta esta coordenada y según tus necesidades
           float widthj = 40; // Ajusta el ancho de la imagen
           float heightj = 40; // Ajusta la altura de la imagen
 
@@ -894,8 +894,8 @@ public class PdfController {
         // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 500; // Ajusta esta coordenada x según tus necesidades
-          float y = 80;
+          float x = 550; // Ajusta esta coordenada x según tus necesidades
+          float y = 70;
           float widthj = 40; // Ajusta el ancho de la imagen
           float heightj = 40; // Ajusta la altura de la imagen
 
@@ -925,6 +925,7 @@ public class PdfController {
 
           float fontSize = 32; // Ajusta el tamaño según tus necesidades
            float fontSize2 = 20;
+           float fontFirma = 17;
           // Configurar el texto y calcular su ancho
           String texto = persona.getGradoAcademico().getNombre();
           contentStream.setFont(customFont, fontSize);
@@ -965,7 +966,7 @@ public class PdfController {
           String diaConvertido = String.valueOf(dia);
           String texto3 = diaConvertido;
           float xTexto3 = 250;
-          float yTexto3 = 173;
+          float yTexto3 = 185;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto3, yTexto3);
           contentStream.showText(texto3);
@@ -973,8 +974,8 @@ public class PdfController {
 
           String mesConvertido = String.valueOf(cadenaMesC);
           String texto4 = mesConvertido;
-          float xTexto4 = 280;
-          float yTexto4 = 173;
+          float xTexto4 = 326;
+          float yTexto4 = 185;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto4, yTexto4);
           contentStream.showText(texto4);
@@ -982,13 +983,68 @@ public class PdfController {
 
           String gestionC = String.valueOf(gestion);
           String texto5 = "Dos mil "+gestionC;
-          float xTexto5 = 370;
-          float yTexto5 = 173;
+          float xTexto5 = 450;
+          float yTexto5 = 185;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto5, yTexto5);
           contentStream.showText(texto5);
           contentStream.endText();
 
+
+           //parrafos de firmas
+          contentStream.setFont(customFont, fontFirma);
+          String texto7 = "MSc. Franz Navia Miranda";
+          float xTexto7 = 245;
+          float yTexto7 = 90;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto7, yTexto7);
+          contentStream.showText(texto7);
+          contentStream.endText();
+
+          String texto9 = "Rector Magnífico";
+          float xTexto9 = 285;
+          float yTexto9 = 72;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto9, yTexto9);
+          contentStream.showText(texto9);
+          contentStream.endText();
+
+            //parrafos de firmas
+          contentStream.setFont(customFont, fontFirma);
+          String texto10 = "MSc. Oscar Felipe Melgar Saucedo";
+          float xTexto10 = 50;
+          float yTexto10 = 60;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto10, yTexto10);
+          contentStream.showText(texto10);
+          contentStream.endText();
+
+          String texto11 = "Vicerrector";
+          float xTexto11 = 120;
+          float yTexto11 = 42;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto11, yTexto11);
+          contentStream.showText(texto11);
+          contentStream.endText();
+
+               //parrafos de firmas
+          contentStream.setFont(customFont, fontFirma);
+          String texto12 = "MSc. Ariz Humerez Alvez";
+          float xTexto12 = 410;
+          float yTexto12 = 60;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto12, yTexto12);
+          contentStream.showText(texto12);
+          contentStream.endText();
+
+          String texto13 = "Secretario General";
+          float xTexto13 = 445;
+          float yTexto13 = 42;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto13, yTexto13);
+          contentStream.showText(texto13);
+          contentStream.endText();
+          
           // Cerrar el contenido y guardar el documento PDF
           contentStream.close();
           pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
