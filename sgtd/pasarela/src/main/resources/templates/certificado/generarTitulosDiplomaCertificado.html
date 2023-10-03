@@ -50,7 +50,7 @@
                             </li>
                            -->
                             <li class="nav-item" role="presentation">
-                              <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="true">Titulo</button>
+                              <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="true">Titulo Académico</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="bachiller-tab" data-bs-toggle="tab" data-bs-target="#bachiller" type="button" role="tab" aria-controls="contact" aria-selected="false">Titulo Bachiller</button>
@@ -107,7 +107,7 @@
                                  -->
                             <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                 <div class="card-body">
-                                    <form th:action="@{/generarTituloPlantillaPdf}" method="post">
+                                    <form id="miFormulario" th:action="@{/generarTituloPlantillaPdf}" method="post">
                                         <div class="checkbox mb-3">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="usarPlantilla" value="true">
@@ -160,10 +160,12 @@
 
         
                                         <br>
-                                        <div class="text-center">
-                                            <button class="btn btn-primary" type="submit"
+                                        <div class="text-center" id="Dsubmit">
+                                            <button class="btn btn-primary"  type="submit" 
                                                 th:text="Generar"></button>
                                         </div>
+                               
+                                    
                                     </form>
                             </div>
 
@@ -211,7 +213,7 @@
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                                 <div class="card-body">
-                                    <form th:action="@{/generarTituloProvisionPlantillaPdf}" method="post">
+                                    <form id="miFormulario2" th:action="@{/generarTituloProvisionPlantillaPdf}" method="post">
                                         <div class="checkbox mb-3">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="usarPlantilla" value="true">
@@ -249,7 +251,7 @@
 
                                             </div>
 
-                                            <div class="col-md-3">
+                                            <div class="col-md-3" >
                                       
                                                     <label class="col-form-label">Número Titulo</label>
                                                 <input class="form-control" name="nroTitulo" type="text" required>
@@ -264,7 +266,7 @@
 
         
                                         <br>
-                                        <div class="text-center">
+                                        <div class="text-center" id="Dsubmit2">
                                             <button class="btn btn-primary" type="submit"
                                                 th:text="Generar"></button>
                                         </div>
@@ -295,14 +297,54 @@
     <!-- INICIO CONTENIDO TEMA -->
     <div th:replace="layout/fragmento :: tema"></div>
     <!-- FIN INICIO CONTENIDO -->
+      <!--INICIO SCRIPTS-->
+      <div th:replace="layout/script :: script"></div>
+      <!--FINAL SCRIPTS-->
+
+<script>
+$(document).ready(function () {
+    $('#miFormulario').submit(function (event) {
+      event.preventDefault();
+      var form = document.getElementById("miFormulario");
+
+    $('#Dsubmit').html('');
+    var botonCarga = '<button class="btn btn-primary" type="button" disabled>'+
+  '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
+  '<span class="sr-only">Cargando...</span>'+
+    '</button>';
+
+    $('#Dsubmit').html(botonCarga);
+  
+    form.submit();
+   
+    });
+  });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#miFormulario2').submit(function (event) {
+          event.preventDefault();
+          var form = document.getElementById("miFormulario2");
+    
+        $('#Dsubmit2').html('');
+        var botonCarga = '<button class="btn btn-primary" type="button" disabled>'+
+      '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
+      '<span class="sr-only">Cargando...</span>'+
+        '</button>';
+    
+        $('#Dsubmit2').html(botonCarga);
+      
+        form.submit();
+       
+        });
+      });
+    
+    </script>
 
 
-
-
-
-    <!--INICIO SCRIPTS-->
-    <div th:replace="layout/script :: script"></div>
-    <!--FINAL SCRIPTS-->
+  
 </body>
 
 </html>

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.pasarela.Models.Entity.Firma;
+import com.example.pasarela.Models.Entity.Provincia;
 import com.example.pasarela.Models.Entity.Titulo;
 import com.example.pasarela.Models.Entity.TituloGenerado;
 import com.example.pasarela.Models.Service.IFirmaService;
@@ -84,4 +85,18 @@ public class TituloController {
         response.setHeader("Content-Length", String.valueOf(file.length()));
         return new FileSystemResource(file);
     }
+
+
+    // FUNCION PARA ELIMINAR EL REGISTRO DE departamento
+	@RequestMapping(value = "/eliminar-titulo/{id_titulo}")
+	public String eliminar_t(@PathVariable("id_titulo") Long id_titulo) {
+        Titulo titulo = tituloService.findOne(id_titulo);
+	
+
+		titulo.setEstado("X");
+
+		tituloService.save(titulo);
+		return "redirect:/listarTitulos";
+
+	}
 }
