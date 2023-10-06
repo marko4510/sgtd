@@ -533,6 +533,17 @@ public class PdfController {
     context.setVariable("nroTitulo", nroTitulo);
     context.setVariable("codigo", codigo);
     context.setVariable("plantilla", plantilla);
+    String nombreCompleto = persona.getNombre() + " " + persona.getAp_paterno() + " " + persona.getAp_materno();
+    int cantidadCaracteres = nombreCompleto.length();
+    System.out.println("+++++++++++++++++++++++++++++"+ cantidadCaracteres);
+    String esMayor = null;
+        if (cantidadCaracteres > 32) {
+        esMayor = "a";
+        }else{
+        esMayor = null;
+        }
+        System.out.println("+++++++++++++++++++++++"+ esMayor);
+   context.setVariable("esMayor", esMayor);
 
     // Renderizar la vista HTML utilizando Thymeleaf
     String htmlContent = templateEngine.process("certificado/tituloAcademico-pdf", context);
