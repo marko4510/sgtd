@@ -37,6 +37,13 @@ public class CertificadoController {
     return "certificado/generarTitulosDiplomaCertificado";
   }
 
+   @GetMapping("/inicioGenerarTituloPosgrado")
+  public String inicioGenerarTituloPosgrado(Model model) {
+    model.addAttribute("personas", personaService.findAll());
+
+    return "certificado/generarTitulosPosgrado";
+  }
+
   public int calcularEdad(LocalDate fechaNacimiento) {
     LocalDate fechaActual = LocalDate.now();
     return Period.between(fechaNacimiento, fechaActual).getYears();

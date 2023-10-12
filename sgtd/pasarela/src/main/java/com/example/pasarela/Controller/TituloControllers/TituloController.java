@@ -74,6 +74,46 @@ public class TituloController {
         }
     }
 
+     @RequestMapping(value = "/listarTitulosPosgrado", method = RequestMethod.GET) // Pagina principal
+    public String listarTitulosPosgrado(Model model, HttpServletRequest request) {
+        if (request.getSession().getAttribute("usuario") != null) {
+
+            List<Titulo> titulosA = tituloService.titulosDiplomado();
+            Map<Titulo, List<Firma>> titulosConFirmasA = new LinkedHashMap<>(); // Usar LinkedHashMap en lugar de HashMap
+            List<Titulo> titulosB = tituloService.titulosEspecialidad();
+            Map<Titulo, List<Firma>> titulosConFirmasB = new LinkedHashMap<>();
+             List<Titulo> titulosC = tituloService.titulosMaestria();
+            Map<Titulo, List<Firma>> titulosConFirmasC = new LinkedHashMap<>();
+            List<Titulo> titulosP = tituloService.titulosDoctorado();
+            Map<Titulo, List<Firma>> titulosConFirmasP = new LinkedHashMap<>();
+
+            for (Titulo titulo : titulosA) {
+                List<Firma> firmasA = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
+                titulosConFirmasA.put(titulo, firmasA); // Agregar el título y las firmas al mapa
+            }
+            for (Titulo titulo : titulosB) {
+                List<Firma> firmasB = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
+                titulosConFirmasB.put(titulo, firmasB); // Agregar el título y las firmas al mapa
+            }
+             for (Titulo titulo : titulosC) {
+                List<Firma> firmasC = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
+                titulosConFirmasC.put(titulo, firmasC); // Agregar el título y las firmas al mapa
+            }
+            for (Titulo titulo : titulosP) {
+                List<Firma> firmasP = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
+                titulosConFirmasP.put(titulo, firmasP); // Agregar el título y las firmas al mapa
+            }
+            
+            model.addAttribute("titulosA", titulosConFirmasA);
+            model.addAttribute("titulosB", titulosConFirmasB);
+            model.addAttribute("titulosC", titulosConFirmasC);
+            model.addAttribute("titulosP", titulosConFirmasP); 
+            return "certificado/listarTitulosPosgrado";
+        } else {
+            return "redirect:LoginR";
+        }
+    }
+
     @RequestMapping(value = "/openFileTitulo/{id}", method = RequestMethod.GET, produces = "application/pdf")
     public @ResponseBody FileSystemResource abrirArchivoMedianteResourse(HttpServletResponse response,
             @PathVariable("id") long id_titulo) throws FileNotFoundException {

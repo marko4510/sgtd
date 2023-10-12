@@ -10,6 +10,11 @@ public interface ITituloService {
 	public List<Titulo> titulosAcademicos();
 	public List<Titulo> titulosBachiller();
 	public List<Titulo> titulosProvision();
+	public List<Titulo> titulosDiplomado();
+	public List<Titulo> titulosEspecialidad();
+	public List<Titulo> titulosMaestria();
+	public List<Titulo> titulosDoctorado();
+
     public List<Titulo> findAll();
 
 	public List<Titulo> titulosSinFirmarRector();

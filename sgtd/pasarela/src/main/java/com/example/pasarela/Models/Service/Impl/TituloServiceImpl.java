@@ -68,5 +68,25 @@ public class TituloServiceImpl implements ITituloService{
     public List<Titulo> titulosProvision() {
         return (List<Titulo>) tituloDao.titulosProvision();
     }
+
+    @Override
+    public List<Titulo> titulosDiplomado() {
+       return (List<Titulo>) tituloDao.titulosDiplomado();
+    }
+
+    @Override
+    public List<Titulo> titulosEspecialidad() {
+         return (List<Titulo>) tituloDao.titulosEspecialidad();
+    }
+
+    @Override
+    public List<Titulo> titulosMaestria() {
+         return (List<Titulo>) tituloDao.titulosMaestria();
+    }
+
+    @Override
+    public List<Titulo> titulosDoctorado() {
+       return (List<Titulo>) tituloDao.titulosDoctorado();
+    }
     
 }

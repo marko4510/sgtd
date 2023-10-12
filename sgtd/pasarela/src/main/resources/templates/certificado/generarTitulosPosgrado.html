@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/head :: head">
+
+
+
+</head>
+
+<body>
+    <!-- loader Start -->
+    <div id="loading">
+        <div class="loader simple-loader">
+            <div class="loader-body"></div>
+        </div>
+    </div>
+    <!-- loader END -->
+
+    <!--INICIO SIDEBAR-->
+    <aside th:replace="layout/sidebar :: sidebar"></aside>
+    <!--FINAL SIDEBAR-->
+
+
+    <main class="main-content">
+        <div class="position-relative iq-banner">
+            <!--Inicio Topbar-->
+            <nav th:replace="layout/topbar :: topbar"></nav>
+            <!-- FINAL TOPBAR -->
+
+            <!-- INICIO PRESENTACION -->
+            <div th:replace="layout/fragmento :: banner"></div>
+            <!-- FIN INICIO PRESENTACION -->
+        </div>
+        <div class="conatiner-fluid content-inner mt-n5 py-0">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <!--FORM DE CARRERA-->
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <div class="header-title">
+                                <h3 class="card-title">Generar Titulos de Posgrado</h3>
+                            </div>
+                        </div>
+                        <br>
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <!--
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Certificado Supletorio</button>
+                            </li>
+                           -->
+                            <li class="nav-item" role="presentation">
+                              <button class="nav-link active" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="true">Diplomado</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="bachiller-tab" data-bs-toggle="tab" data-bs-target="#bachiller" type="button" role="tab" aria-controls="contact" aria-selected="false">Especialidad</button>
+                              </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Maestría</button>
+                              </li>
+                              <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="profile2-tab" data-bs-toggle="tab" data-bs-target="#profile2" type="button" role="tab" aria-controls="profile2" aria-selected="false">Doctorado</button>
+                              </li>
+                          </ul>
+                          <div class="tab-content" id="myTabContent">
+                          
+                            <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                <div class="card-body">
+                                    <form id="miFormulario" th:action="@{/generarTituloPlantillaPdf}" method="post">
+                                        <div class="checkbox mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="usarPlantilla" value="true">
+                                                <label class="form-check-label" for="flexCheckDefault3">
+                                                    Incluir Plantilla
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label class="col-form-label">Persona</label>
+                                                    <select class="form-select js-choice" name="id_persona">
+                                                        <option th:each="per : ${personas}" th:value="${per.id_persona}"
+                                                            th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}">
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-3 text-dark">
+                                                <label class="col-form-label">Gestión</label>
+                                                <select class="form-select js-choice" name="gestion"
+                                                    required>
+                                                    <option value="">Seleccione una Gestión</option>
+                                                    <option value="Veintitrés">2023</option>
+                                                    <option value="Veinticuatro">2024</option>
+                                                    <option value="Veinticinco">2025</option>
+                                                    <option value="Veintiséis">2026</option>
+                                                    <option value="Veintisiete">2027</option>
+                                                    <option value="Veintiocho">2028</option>
+                                                    <option value="Veintinueve">2029</option>
+                                                    <option value="Treinta">2030</option>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-3">
+                                      
+                                                    <label class="col-form-label">Número Titulo</label>
+                                                <input class="form-control" name="nroTitulo" type="text" required>
+                                                       
+                                                  
+                                         
+                                            </div>
+                                        </div>
+                                 
+
+                 
+
+        
+                                        <br>
+                                        <div class="text-center" id="Dsubmit">
+                                            <button class="btn btn-primary"  type="submit" 
+                                                th:text="Generar"></button>
+                                        </div>
+                               
+                                    
+                                    </form>
+                            </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="bachiller" role="tabpanel" aria-labelledby="bachiller-tab">
+                                <div class="card-body">
+                                <form id="miFormulario1" th:action="@{/generarTituloBachillerPdf}" method="post">
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                        <div>
+                                            <label class="col-form-label">Persona</label>
+                                            <select class="form-select js-choice" name="id_persona">
+                                                <option th:each="per : ${personas}" th:value="${per.id_persona}"
+                                                    th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}">
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 text-dark">
+                                        <label class="col-form-label">Gestión</label>
+                                        <select class="form-select js-choice" name="gestion"
+                                            required>
+                                            <option value="">Seleccione una Gestión</option>
+                                            <option value="Veintitrés">2023</option>
+                                            <option value="Veinticuatro">2024</option>
+                                            <option value="Veinticinco">2025</option>
+                                            <option value="Veintiséis">2026</option>
+                                            <option value="Veintisiete">2027</option>
+                                            <option value="Veintiocho">2028</option>
+                                            <option value="Veintinueve">2029</option>
+                                            <option value="Treinta">2030</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                    <br>
+                                    <div class="text-center" id="Dsubmit1">
+                                        <button class="btn btn-primary"  type="submit" 
+                                            th:text="Generar"></button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                <div class="card-body">
+                                    <form id="miFormulario2" th:action="@{/generarTituloProvisionPlantillaPdf}" method="post">
+                                        <div class="checkbox mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="usarPlantilla" value="true">
+                                                <label class="form-check-label" for="flexCheckDefault3">
+                                                    Incluir Plantilla
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label class="col-form-label">Persona</label>
+                                                    <select class="form-select js-choice" name="id_persona">
+                                                        <option th:each="per : ${personas}" th:value="${per.id_persona}"
+                                                            th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}">
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-3 text-dark">
+                                                <label class="col-form-label">Gestión</label>
+                                                <select class="form-select js-choice" name="gestion"
+                                                    required>
+                                                    <option value="">Seleccione una Gestión</option>
+                                                    <option value="Veintitrés">2023</option>
+                                                    <option value="Veinticuatro">2024</option>
+                                                    <option value="Veinticinco">2025</option>
+                                                    <option value="Veintiséis">2026</option>
+                                                    <option value="Veintisiete">2027</option>
+                                                    <option value="Veintiocho">2028</option>
+                                                    <option value="Veintinueve">2029</option>
+                                                    <option value="Treinta">2030</option>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-3" >
+                                      
+                                                    <label class="col-form-label">Número Titulo</label>
+                                                <input class="form-control" name="nroTitulo" type="text" required>
+                                                       
+                                                  
+                                         
+                                            </div>
+                                        </div>
+                                 
+
+                 
+
+        
+                                        <br>
+                                        <div class="text-center" id="Dsubmit2">
+                                            <button class="btn btn-primary" type="submit"
+                                                th:text="Generar"></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile2-tab">
+
+                                <div class="card-body">
+                                    <form id="miFormulario3" th:action="@{/generarTituloProvisionPlantillaPdf}" method="post">
+                                        <div class="checkbox mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="usarPlantilla" value="true">
+                                                <label class="form-check-label" for="flexCheckDefault3">
+                                                    Incluir Plantilla
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label class="col-form-label">Persona</label>
+                                                    <select class="form-select js-choice" name="id_persona">
+                                                        <option th:each="per : ${personas}" th:value="${per.id_persona}"
+                                                            th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}">
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-3 text-dark">
+                                                <label class="col-form-label">Gestión</label>
+                                                <select class="form-select js-choice" name="gestion"
+                                                    required>
+                                                    <option value="">Seleccione una Gestión</option>
+                                                    <option value="Veintitrés">2023</option>
+                                                    <option value="Veinticuatro">2024</option>
+                                                    <option value="Veinticinco">2025</option>
+                                                    <option value="Veintiséis">2026</option>
+                                                    <option value="Veintisiete">2027</option>
+                                                    <option value="Veintiocho">2028</option>
+                                                    <option value="Veintinueve">2029</option>
+                                                    <option value="Treinta">2030</option>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-3" >
+                                      
+                                                    <label class="col-form-label">Número Titulo</label>
+                                                <input class="form-control" name="nroTitulo" type="text" required>
+                                                       
+                                                  
+                                         
+                                            </div>
+                                        </div>
+                                 
+
+                 
+
+        
+                                        <br>
+                                        <div class="text-center" id="Dsubmit3">
+                                            <button class="btn btn-primary" type="submit"
+                                                th:text="Generar"></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                          </div>
+                       
+                    </div>
+                    <!--FIN FORM DE CARRERA-->
+
+         
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Footer Section Start -->
+        <footer th:replace="layout/footer :: footer">
+        </footer>
+        <!-- Footer Section End -->
+    </main>
+
+    <!-- INICIO TEMA -->
+    <a th:replace="layout/fragmento :: tuerca"></a>
+    <!-- FIN INICIO TEMA -->
+
+    <!-- INICIO CONTENIDO TEMA -->
+    <div th:replace="layout/fragmento :: tema"></div>
+    <!-- FIN INICIO CONTENIDO -->
+      <!--INICIO SCRIPTS-->
+      <div th:replace="layout/script :: script"></div>
+      <!--FINAL SCRIPTS-->
+      <script src="../../../../assets/js/jquery-3.7.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#miFormulario').submit(function (event) {
+      event.preventDefault();
+      var form = document.getElementById("miFormulario");
+
+    $('#Dsubmit').html('');
+    var botonCarga = '<button class="btn btn-primary" type="button" disabled>'+
+  '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
+  '<span class="sr-only">Cargando...</span>'+
+    '</button>';
+
+    $('#Dsubmit').html(botonCarga);
+  
+    form.submit();
+   
+    });
+  });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#miFormulario1').submit(function (event) {
+          event.preventDefault();
+          var form = document.getElementById("miFormulario1");
+    
+        $('#Dsubmit1').html('');
+        var botonCarga = '<button class="btn btn-primary" type="button" disabled>'+
+      '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
+      '<span class="sr-only">Cargando...</span>'+
+        '</button>';
+    
+        $('#Dsubmit1').html(botonCarga);
+      
+        form.submit();
+       
+        });
+      });
+    
+    </script>
+
+<script>
+    $(document).ready(function () {
+        $('#miFormulario2').submit(function (event) {
+          event.preventDefault();
+          var form = document.getElementById("miFormulario2");
+    
+        $('#Dsubmit2').html('');
+        var botonCarga = '<button class="btn btn-primary" type="button" disabled>'+
+      '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
+      '<span class="sr-only">Cargando...</span>'+
+        '</button>';
+    
+        $('#Dsubmit2').html(botonCarga);
+      
+        form.submit();
+       
+        });
+      });
+    
+    </script>
+
+<script>
+    $(document).ready(function () {
+        $('#miFormulario3').submit(function (event) {
+          event.preventDefault();
+          var form = document.getElementById("miFormulario3");
+    
+        $('#Dsubmit3').html('');
+        var botonCarga = '<button class="btn btn-primary" type="button" disabled>'+
+      '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
+      '<span class="sr-only">Cargando...</span>'+
+        '</button>';
+    
+        $('#Dsubmit3').html(botonCarga);
+      
+        form.submit();
+       
+        });
+      });
+    
+    </script>
+
+
+  
+</body>
+
+</html>
