@@ -1,0 +1,91 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="Aspose.Words for .NET 22.7.0" />
+    <title></title>
+    <style>
+        @page {
+            size: 8.5in 13in;
+        }
+    </style>
+</head>
+
+<body style="font-family:'Times New Roman'; font-size:12pt;  ">
+    <div>
+
+        <p style="margin-bottom: 90px;"></p>
+        <p style="margin-top: 125px; margin-left:468.8pt; margin-bottom:0pt; text-align:justify; line-height:13.4pt">
+            <strong><span style="font-family:Arial; font-size:12pt" th:text="${nroTitulo}">123456</span></strong>
+        </p>
+        
+        <th:block th:if="${esMayor == 'a'}">
+            <p  style="margin-top:146.1pt; margin-bottom:0pt; text-align:center; line-height:28pt">
+                <span style="font-size:20pt"
+                    th:text="${persona.nombre}+' '+${persona.ap_paterno}+' '+${persona.ap_materno}">MARCO ALEJANDRO
+                    CUELLAR
+                    FERREIRA</span>
+            </p>
+        </th:block>
+
+        <th:block th:if="${esMayor == null}">
+            <p  style="margin-top:146.1pt; margin-bottom:0pt; text-align:center; line-height:28pt">
+                <span style="font-size:24pt"
+                    th:text="${persona.nombre}+' '+${persona.ap_paterno}+' '+${persona.ap_materno}">MARCO ALEJANDRO
+                    CUELLAR
+                    FERREIRA</span>
+            </p>
+        </th:block>
+
+        
+           
+      
+
+
+
+
+        <p
+            style="margin-top:20pt; margin-left:215.55pt; margin-bottom:0pt; text-align:justify; line-height:13.25pt; font-style: italic;">
+            <span style="margin-right: 40px;"></span>
+            <em><span style="margin-right: 60px;"
+                    th:text="${#dates.format(persona.fecha_nacimiento, 'dd/MM/yyyy')}">31/07/1999 Andres Ibañez-Santa
+                    Cruz</span></em>
+            <em><span style="margin-right: 60px;" th:text="${provincia}+'-'+${departamento}">31/07/1999 Andres
+                    Ibañez-Santa
+                    Cruz</span></em>
+        </p>
+        <p style="margin-top: 130pt; margin-bottom: 0pt; text-align:center; "><span style="font-size:30.5pt"></span></p>
+        <p style="margin-top: 88pt; margin-bottom: 0pt; text-align:center; "><span style="font-size:24.5pt"></span></p>
+        <p style="margin-top: 168pt; margin-left:199pt; margin-bottom:0pt; text-align:justify; line-height:15.5pt">
+
+            <span style="font-size:13pt; margin-right: 70px;"></span>
+            <span style="font-size:13pt; margin-right: 105px;"></span><span style="font-size:13pt;"></span>
+        </p>
+        <!--
+        <p style="margin-top:70pt; margin-left:206.4pt; margin-bottom:3pt; text-align:justify; line-height:12.15pt">
+            <span style="font-size:11pt; -aw-import:spaces">&#xa0;</span><span style="font-size:11pt">MSc. Franz Navia
+                Miranda</span><span style="font-size:11pt; -aw-import:spaces">&#xa0; </span>
+        </p>
+        <p style="margin-top:0pt; margin-left:225.4pt; margin-bottom:0pt; text-align:justify; line-height:12.15pt">
+           <span style="font-size:11pt">Rector Magnífico</span>
+        </p>
+       
+        
+        <p style="margin-top:25pt; margin-left:20.25pt; margin-bottom:3pt;  line-height:9.4pt;">
+            <span style="font-size:11pt;  margin-right: 140px; ">MSc. Oscar Felipe Melgar Saucedo </span>
+            <span style="font-size:11pt; margin-left: 140px;">MSc. Ariz Humerez Alvez</span>
+           
+        </p>
+        <p style="margin-top:0pt; margin-left:68.25pt; margin-bottom:0pt;  line-height:9.4pt;">
+            <span style="font-size:11pt;  margin-right: 190px; ">Vicerrector </span>
+            <span style="font-size:11pt; margin-left: 190px;">Secretario General</span>
+           
+        </p>
+        -->
+
+
+    </div>
+</body>
+
+</html>
