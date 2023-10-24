@@ -5,6 +5,8 @@
 
 
 
+
+
 </head>
 
 <body>
@@ -48,6 +50,9 @@
                                 enctype="multipart/form-data">
                                 <input type="hidden" th:field="${persona.id_persona}">
                                 <div class="row">
+
+                                  
+
                                     <div class="col-md-3">
                                         <label class="col-form-label">Nombre</label>
                                         <input class="form-control" type="text" th:field="${persona.nombre}"
@@ -112,7 +117,7 @@
                                     <th:block th:if="${edit} == null">
                                         <div class="col-md-3">
                                             <label class="col-form-label">Departamento</label>
-                                            <select class="form-select mb-3 shadow-none" id="id_departamento"
+                                            <select class="prueba form-select mb-3 shadow-none" id="id_departamento"
                                                 name="id_departamento" onchange="provi()" required
                                                 th:field="${persona.provincia.departamento}">
                                                 <option value="">Seleccione Departamento</option>
@@ -123,7 +128,7 @@
                                     <th:block th:if="${edit} != null">
                                         <div class="col-md-3">
                                             <label class="col-form-label">Departamento</label>
-                                            <select class="form-select mb-3 shadow-none" id="id_departamento"
+                                            <select class="prueba form-select mb-3 shadow-none" id="id_departamento"
                                                 name="id_departamento" required
                                                 th:field="${persona.provincia.departamento}">
                                                 <option value="">Seleccione Departamento</option>
@@ -138,7 +143,7 @@
                                     <th:block th:if="${edit} == null">
                                         <div class="col-md-3">
                                             <label class="col-form-label">Provincia</label>
-                                            <select class="form-select mb-3 shadow-none" id="id_provinci"
+                                            <select class="prueba2 form-select mb-3 shadow-none" id="id_provinci"
                                                 name="id_provincia" required>
                                                 <option value="">Seleccione Provincia</option>
                                             </select>
@@ -147,7 +152,7 @@
                                     <th:block th:if="${edit} != null">
                                         <div class="col-md-3">
                                             <label class="col-form-label">Provincia</label>
-                                            <select class="form-select mb-3 shadow-none" id="id_provinci"
+                                            <select class="prueba2 form-select mb-3 shadow-none" id="id_provinci"
                                                 name="id_provincia" required th:field="${persona.provincia}"
                                                 th:value="${persona.provincia}">
                                                 <option value="">Seleccione Provincia</option>
@@ -238,6 +243,10 @@
     <!-- INICIO CONTENIDO TEMA -->
     <div th:replace="layout/fragmento :: tema"></div>
     <!-- FIN INICIO CONTENIDO -->
+
+
+
+
     <script>
         $('input[type="file"]').on('change', function () {
             var ext = $(this).val().split('.').pop();
@@ -337,10 +346,23 @@
             }).then().done();
         }
     </script>
-
+    
     <!--INICIO SCRIPTS-->
     <div th:replace="layout/script :: script"></div>
     <!--FINAL SCRIPTS-->
+
+    <!-- Inicializar Select2 en tu elemento select -->
+    <script>
+        $(document).ready(function () {
+            $(".prueba").select2();
+        });
+    </script>
+
+<script>
+    $(document).ready(function () {
+        $(".prueba2").select2();
+    });
+</script>
 </body>
 
 </html>
