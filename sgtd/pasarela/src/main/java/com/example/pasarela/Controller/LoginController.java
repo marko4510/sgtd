@@ -395,10 +395,10 @@ public class LoginController {
 
 			flash.addAttribute("success", usuario.getPersona().getNombre());
 
-			return "redirect:/Inicio";
+			return "redirect:/pb";
 		} else {
 
-			return "redirect:/Inicio";
+			return "redirect:/pb";
 		}
 
 		/*
@@ -428,5 +428,16 @@ public class LoginController {
 			flash.addAttribute("validado", "Se cerro sesion con exito!");
 		}
 		return "redirect:/Inicio";
+	}
+
+	// Funcion de cerrar sesion de administrador
+	@RequestMapping("/cerrar_sesion3")
+	public String cerrarSesion3(HttpServletRequest request, RedirectAttributes flash) {
+		HttpSession sessionAdministrador = request.getSession();
+		if (sessionAdministrador != null) {
+			sessionAdministrador.invalidate();
+			flash.addAttribute("validado", "Se cerro sesion con exito!");
+		}
+		return "redirect:/pb";
 	}
 }

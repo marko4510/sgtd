@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -153,17 +155,21 @@ public class SolicitudLegalizacionController {
         MultipartFile multipartFile = solicitudLegalizacion.getFile();
         ArchivoAdjunto archivoAdjunto = new ArchivoAdjunto();
         AdjuntarArchivo adjuntarArchivo = new AdjuntarArchivo();
-        String rutaArchivo = adjuntarArchivo.crearSacDirectorio("SGD/legalizacion");
+
+         Path rootPath = Paths.get("solicitudes/legalizacion/");
+        Path rootAbsolutPath = rootPath.toAbsolutePath();
+        String rutaDirectorio = rootAbsolutPath+"";
+
+        String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
         model.addAttribute("di", rutaArchivo);
         List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
-        solicitudLegalizacion.setNombreArchivo((listArchivos.size() + 1) + "-" + multipartFile.getOriginalFilename());
+        solicitudLegalizacion.setNombreArchivo((listArchivos.size() + 1) + "-"+ persona.getCi()+"-" + multipartFile.getOriginalFilename());
         Integer ad = adjuntarArchivo.adjuntarArchivoLegalizaciones(solicitudLegalizacion, rutaArchivo);
 
-        archivoAdjunto.setNombre_archivo((listArchivos.size() + 1) + "-" + multipartFile.getOriginalFilename());
-        System.out.println(solicitudLegalizacion.getNombreArchivo() + multipartFile.getOriginalFilename()
-                + " +++++++++++++++++++++");
+        archivoAdjunto.setNombre_archivo((listArchivos.size() + 1) +"-"+ persona.getCi() +"-" + multipartFile.getOriginalFilename());
+       
         archivoAdjunto.setTipo_archivo(multipartFile.getContentType());
-        archivoAdjunto.setRuta_archivo("sGD/legalizacion/");
+        archivoAdjunto.setRuta_archivo(rutaArchivo);
         archivoAdjunto.setEstado("A");
         ArchivoAdjunto archivoAdjunto2 = archivoAdjuntoService.registrarArchivoAdjunto(archivoAdjunto);
         // FIN Adjuntar Archivo en SolicitudLegalizacion
@@ -194,7 +200,7 @@ public class SolicitudLegalizacionController {
             @PathVariable("id") long id_solicitud_legalizacion) throws FileNotFoundException {
         ArchivoAdjunto ArchivoAdjuntos = archivoAdjuntoService
                 .buscarArchivoAdjuntoPorSolicitud(id_solicitud_legalizacion);
-        File file = new File("C:/" + ArchivoAdjuntos.getRuta_archivo() + ArchivoAdjuntos.getNombre_archivo());
+        File file = new File( ArchivoAdjuntos.getRuta_archivo() + ArchivoAdjuntos.getNombre_archivo());
         response.setContentType("application/pdf");
         response.setHeader("Content-Disposition", "inline; filename=" + file.getName());
         response.setHeader("Content-Length", String.valueOf(file.length()));

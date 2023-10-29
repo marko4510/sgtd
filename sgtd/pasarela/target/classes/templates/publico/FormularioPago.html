@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="layout/layout2 :: head">
+  
+</head>
+
+<body style="background-color: #caccce;">
+  <!-- Header Start -->
+  
+  <!-- Header End -->
+
+
+
+
+
+
+
+
+  <!-- CONTENIDO -->
+  <div class="container-fluid pt-5">
+    <div class="row row-sm">
+      <center>
+      <div class="col-lg-10 ">
+        <div class="card ">
+          <div class="card-header border-bottom">
+            <div style="display: flex; justify-content: space-between;">
+              <img src="../../../../logo/pasarelalogo.png"  width="200">
+              <img src="../../../../assets/images/UAP-DIGITAL-COLOR.png"  width="200">
+       
+          </div>
+
+          </div>
+
+        </div>
+
+        <br>
+        <div class="row g-3 mb-3">
+          <div class="col-md-8 col-xxl-3">
+            <div class="card h-md-100 ecommerce-card-min-width">
+              <div class="card-header pb-0">
+                <h4 class="mb-0 mt-0" style="color: rgb(31, 45, 151);">Métodos de Pago</h4>
+              </div>
+
+              <form>
+              <div class="card-header border-bottom" style="background-color: #b7d589;">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <input type="radio" name="opcionPago" id="pagoQR" value="qr"> Pago por Código QR
+                    </div>
+                    <img src="../../../../qr/qri.png" width="40">
+                </div>
+            </div>
+            <div class="card-header border-bottom" style="background-color: #b7d589;">
+                <div style="display: flex; justify-content: space-between;">
+                    <div>
+                        <input type="radio" name="opcionPago" id="pagoCPT" value="cpt"> Pago por Código CPT
+                    </div>
+                    <img src="../../../../qr/cpt.png" width="60">
+                </div>
+            </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xxl-3">
+            <div class="card h-md-100 ecommerce-card-min-width">
+              <div class="card-header pb-0">
+                <div style="display: flex; justify-content: space-between;">
+                  <h5 class="mb-0 mt-1">Total(Bs.)</h5>
+                  <h5 class="mb-0 mt-1" th:text="${solicitud.costoDocumento.costo}"></h5>
+                </div>
+                
+              </div>
+              <br>
+             <div>
+              <button type="submit" style="  background-color: #007bff; 
+              color: #fff; 
+              padding: 10px 20px; 
+              border: none; 
+              border-radius: 5px; 
+              cursor: pointer; 
+              font-size: 16px;">Enviar</button>
+            </div>
+            <br>
+            </div>
+          </div>
+
+        </form>
+
+
+          <div class="col-md-8 col-xxl-3">
+            <div class="card h-md-100 ecommerce-card-min-width">
+              <div class="card-header pb-0">
+                <h4 class="mb-0 mt-0" style="color: rgb(31, 45, 151);">Detalles del Trámite</h4>
+              </div>
+              <br>
+              <div>
+                <h6 style="float: left;">Trámite solicitado:</h6><span style="margin-left: 50px;" th:text="${solicitud.tipo_solicitud + ' de ' + solicitud.costoDocumento.documento.nombre_documento}">aaaaaaaaaaa</span>
+
+            </div>
+              <hr style="border: 1px solid #000;">
+              <div >
+                <h6 style="float: left;">Solicitante: </h6><span style="margin-left: 75px;" th:text="${solicitud.usuario.persona.nombre}+' '+${solicitud.usuario.persona.ap_paterno}+' '+${solicitud.usuario.persona.ap_materno}"></span>
+              </div>
+              <hr style="border: 1px solid #000;">
+              <div >
+                <h6 style="float: left;">Fecha Solicitud: </h6><span style="margin-left: 10px;" th:text="${solicitud.fecha_solicitud}"></span>
+      
+              </div>
+
+            
+            </div>
+          </div>
+
+
+
+        </div>
+
+
+      </div>
+    </center>
+
+
+    </div>
+  </div>
+  </div>
+  <!-- CONTENIDO-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>
+    $('input[type="file"]').on('change', function () {
+      var ext = $(this).val().split('.').pop();
+      if ($(this).val() != '') {
+        if (ext == "pdf") {
+         
+          if ($(this)[0].files[0].size > 1048576) {
+            console.log("El documento excede el tamaño máximo");
+            $('#modal-title').text('¡Precaución!');
+            $('#modal-msg').html("Se solicita un archivo no mayor a 1MB. Por favor verifica.");
+            $("#modal-gral").modal();
+            $(this).val('');
+          } else {
+            $("#modal-gral").hide();
+          }
+        }
+        else {
+          $(this).val('');
+          alert("Extensión no permitida: " + ext);
+        }
+      }
+    });
+  </script>
+
+ 
+  <!-- Back to Top -->
+  <a href="#" class="btn btn-primary px-3 back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+  <div th:replace="layout/layout2 :: script"></div>
+
+ 
+</body>
+
+</html>

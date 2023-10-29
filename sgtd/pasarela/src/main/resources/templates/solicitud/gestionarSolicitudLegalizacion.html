@@ -84,6 +84,13 @@
 
                                             </td>
                                         </th:block>
+                                        <th:block th:if="${ sol.estado == 'Rechazado' }">
+                                            <td class="text-center">
+                                                <h5><span class="badge bg-danger"
+                                                        th:text="${sol.estado}">Success</span></h5>
+
+                                            </td>
+                                        </th:block>
                                         <td>
 
 

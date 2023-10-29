@@ -53,6 +53,14 @@ public class InicioController {
 
 	}
 
+	// Funcion de visualizaciòn de la pagina principal
+	@RequestMapping(value = "/pb", method = RequestMethod.GET) // Pagina principal
+	public String InicioPublico(Model model, HttpServletRequest request) {
+		
+		return "index";
+		
+	}
+
 	
 
 
