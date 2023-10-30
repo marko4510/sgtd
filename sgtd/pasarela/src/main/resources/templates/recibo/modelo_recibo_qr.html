@@ -1,0 +1,93 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta name="generator" content="Aspose.Words for .NET 23.5.0" />
+    <title>RECIBO CPT</title>
+  
+    
+</head>
+
+<body>
+     <div class="card-body">
+        <table width="100%" style=" border: 1px solid #000;" cellspacing="0" cellpadding="0">  
+          <tr><td style="text-align: center; font-size: 12pt; border: 1px solid #000;" width="20%" >UAP</td>
+               <td width="60%" height="100%" style="border: 1px solid #000;"> <table  width="100%" cellspacing="1" cellpadding="1">  
+                       <tr><td  style="text-align: center; font-size: 16pt; "><b>RECIBO</b></td> </tr>    
+                       <tr><td  style="text-align: center; font-size: 14pt; "><b>PANDO - BOLIVIA</b></td> </tr>    
+                       
+                    </table>
+                </td>
+               <td width="20%" style="border: 1px solid #000;"> 
+                     <table style="border: 1px solid #000;" width="100%" height="100%" cellspacing="0" cellpadding="0">  
+                         <tr><td style="text-align: center; font-size: 12pt; border: 1px solid #000;">QR </td></tr>
+                         <tr><td  style="text-align: center; font-size: 12pt; border: 1px solid #000; font-weight: bold;" >
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        </td></tr>
+     
+                     </table>
+               </td>
+            </tr>
+            
+       </table>
+       
+       <table width="100%" style="border: 1px solid #000; " cellspacing="0" cellpadding="0">
+          <tr><td style="font-size: 10pt;  ">
+            <div style=" margin-top: 20px;">
+                <strong>SEÑOR(A):</strong> <span  th:text="${nombre}">aaaaaaaaaaaaaa</span>
+                
+              </div>
+          </td>
+          <td style="font-size: 10pt;  ">
+            <div style=" margin-top: 20px;">
+                <strong>NIT/CI:</strong> <span  th:text="${nit}">aaaaaaaaaaaaaa</span>
+              </div>
+          </td>
+        </tr>
+
+        <tr><td style="font-size: 10pt; ">
+            <div style=" margin-top: 20px;">
+                <strong>FECHA DE COMPRA:</strong> <span  th:text="${fecha}">aaaaaaaaaaaaaa</span>
+                
+              </div>
+          </td>
+          <td style="font-size: 10pt;  ">
+            <div style=" margin-top: 20px;">
+                <strong>FECHA DE IMPRESIÓN:</strong> <span  th:text="${fecha}">aaaaaaaaaaaaaa</span>
+              </div>
+          </td>
+        </tr>
+   
+        
+        </table>
+        <table style=" width: 100%;
+        border-collapse: collapse; border: 1px solid black;">
+          <thead>
+          <tr>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">CANTIDAD</th>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">TRÁMITE</th>
+            <th style="padding: 8px;text-align: left; border: 1px solid black;">TOTAL BS.</th>
+           
+
+          
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
+            <td th:text="${solicitud.cantidad_copias}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+            <td th:text="${solicitud.tipo_solicitud}+' '+${solicitud.costoDocumento.documento.nombre_documento}" style="padding: 8px;text-align: left; border: 1px solid black;"> </td>
+            <td th:text="${solicitud.costoDocumento.costo}" style="padding: 8px;text-align: left; border: 1px solid black;"></td>
+
+           
+          </tr>
+        </tbody>
+        </table>
+      </div>
+</body>
+
+</html>

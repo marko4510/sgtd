@@ -94,14 +94,14 @@ public class PdfController {
   @Autowired
   private ITituloGeneradoService tituloGeneradoService;
 
-   @Autowired
-    private IReciboService reciboService;
+  @Autowired
+  private IReciboService reciboService;
 
-    @Autowired
-    private ISolicitudLegalizacionService solicitudLegalizacionService;
+  @Autowired
+  private ISolicitudLegalizacionService solicitudLegalizacionService;
 
-      @Autowired
-    private IUsuarioService usuarioService;
+  @Autowired
+  private IUsuarioService usuarioService;
 
   private final TemplateEngine templateEngine;
 
@@ -350,7 +350,7 @@ public class PdfController {
     context.setVariable("mes", mes);
     context.setVariable("anio", anio);
     context.setVariable("codigo", codigo);
-    
+
     // Renderizar la vista HTML utilizando Thymeleaf
     String htmlContent = templateEngine.process("certificado/bachillerPrueba-pdf", context);
 
@@ -555,15 +555,15 @@ public class PdfController {
     context.setVariable("plantilla", plantilla);
     String nombreCompleto = persona.getNombre() + " " + persona.getAp_paterno() + " " + persona.getAp_materno();
     int cantidadCaracteres = nombreCompleto.length();
-    System.out.println("+++++++++++++++++++++++++++++"+ cantidadCaracteres);
+    System.out.println("+++++++++++++++++++++++++++++" + cantidadCaracteres);
     String esMayor = null;
-        if (cantidadCaracteres > 32) {
-        esMayor = "a";
-        }else{
-        esMayor = null;
-        }
-        System.out.println("+++++++++++++++++++++++"+ esMayor);
-   context.setVariable("esMayor", esMayor);
+    if (cantidadCaracteres > 32) {
+      esMayor = "a";
+    } else {
+      esMayor = null;
+    }
+    System.out.println("+++++++++++++++++++++++" + esMayor);
+    context.setVariable("esMayor", esMayor);
 
     // Renderizar la vista HTML utilizando Thymeleaf
     String htmlContent = templateEngine.process("certificado/tituloAcademico-pdf", context);
@@ -752,7 +752,7 @@ public class PdfController {
         // Guardar el PDF con la imagen del código QR agregada
         pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
         pdfDocument.close();
-      // Ruta al archivo de fuente personalizada
+        // Ruta al archivo de fuente personalizada
         String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
         try {
           // Cargar el documento PDF existente
@@ -770,8 +770,8 @@ public class PdfController {
           PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
 
           float fontSize = 32; // Ajusta el tamaño según tus necesidades
-           float fontSize2 = 20;
-           float fontFirma = 17;
+          float fontSize2 = 20;
+          float fontFirma = 17;
           // Configurar el texto y calcular su ancho
           String texto = persona.getGradoAcademico().getNombre();
           contentStream.setFont(customFont, fontSize);
@@ -806,8 +806,6 @@ public class PdfController {
           contentStream.showText(texto2);
           contentStream.endText();
 
-
-
           contentStream.setFont(customFont, fontSize2);
           String diaConvertido = String.valueOf(dia);
           String texto3 = diaConvertido;
@@ -828,7 +826,7 @@ public class PdfController {
           contentStream.endText();
 
           String gestionC = String.valueOf(gestion);
-          String texto5 = "Dos mil "+gestionC;
+          String texto5 = "Dos mil " + gestionC;
           float xTexto5 = 450;
           float yTexto5 = 170;
           contentStream.beginText();
@@ -836,8 +834,7 @@ public class PdfController {
           contentStream.showText(texto5);
           contentStream.endText();
 
-
-           //parrafos de firmas
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto7 = "MSc. Franz Navia Miranda";
           float xTexto7 = 245;
@@ -855,7 +852,7 @@ public class PdfController {
           contentStream.showText(texto9);
           contentStream.endText();
 
-            //parrafos de firmas
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto10 = "MSc. Oscar Felipe Melgar Saucedo";
           float xTexto10 = 50;
@@ -873,7 +870,7 @@ public class PdfController {
           contentStream.showText(texto11);
           contentStream.endText();
 
-               //parrafos de firmas
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto12 = "MSc. Ariz Humerez Alvez";
           float xTexto12 = 410;
@@ -890,7 +887,7 @@ public class PdfController {
           contentStream.newLineAtOffset(xTexto13, yTexto13);
           contentStream.showText(texto13);
           contentStream.endText();
-          
+
           // Cerrar el contenido y guardar el documento PDF
           contentStream.close();
           pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
@@ -902,7 +899,7 @@ public class PdfController {
       } catch (Exception e) {
         e.printStackTrace(); // Maneja las excepciones según tus necesidades
       }
-      
+
       archive.plantilla(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
       // Registrar titulo Generado
 
@@ -1103,8 +1100,8 @@ public class PdfController {
           PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
 
           float fontSize = 32; // Ajusta el tamaño según tus necesidades
-           float fontSize2 = 20;
-           float fontFirma = 17;
+          float fontSize2 = 20;
+          float fontFirma = 17;
           // Configurar el texto y calcular su ancho
           String texto = persona.getGradoAcademico().getNombre();
           contentStream.setFont(customFont, fontSize);
@@ -1139,8 +1136,6 @@ public class PdfController {
           contentStream.showText(texto2);
           contentStream.endText();
 
-
-
           contentStream.setFont(customFont, fontSize2);
           String diaConvertido = String.valueOf(dia);
           String texto3 = diaConvertido;
@@ -1161,7 +1156,7 @@ public class PdfController {
           contentStream.endText();
 
           String gestionC = String.valueOf(gestion);
-          String texto5 = "Dos mil "+gestionC;
+          String texto5 = "Dos mil " + gestionC;
           float xTexto5 = 450;
           float yTexto5 = 185;
           contentStream.beginText();
@@ -1169,8 +1164,7 @@ public class PdfController {
           contentStream.showText(texto5);
           contentStream.endText();
 
-
-           //parrafos de firmas
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto7 = "MSc. Franz Navia Miranda";
           float xTexto7 = 245;
@@ -1188,7 +1182,7 @@ public class PdfController {
           contentStream.showText(texto9);
           contentStream.endText();
 
-            //parrafos de firmas
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto10 = "MSc. Oscar Felipe Melgar Saucedo";
           float xTexto10 = 50;
@@ -1206,7 +1200,7 @@ public class PdfController {
           contentStream.showText(texto11);
           contentStream.endText();
 
-               //parrafos de firmas
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto12 = "MSc. Ariz Humerez Alvez";
           float xTexto12 = 410;
@@ -1223,7 +1217,7 @@ public class PdfController {
           contentStream.newLineAtOffset(xTexto13, yTexto13);
           contentStream.showText(texto13);
           contentStream.endText();
-          
+
           // Cerrar el contenido y guardar el documento PDF
           contentStream.close();
           pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
@@ -1353,7 +1347,7 @@ public class PdfController {
 
       String rutaCompletaSalida = rootAbsolutPathTitulosP + "/" + nombreArchivo;
       // Generar el documento PDF utilizando Flying Saucer
-       try {
+      try {
         // Generar el contenido del código QR
         String qrContent = "Persona: " + persona.getNombre() + " " + persona.getAp_paterno() + " "
             + persona.getAp_materno() + "\n" +
@@ -1464,7 +1458,7 @@ public class PdfController {
 
         // Ruta al archivo de fuente personalizada
         String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
-  
+
         try {
           // Cargar el documento PDF existente
           PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta)); // Asegúrate de que "rutaCompleta" apunte
@@ -1475,230 +1469,229 @@ public class PdfController {
           float fontSize2 = 32;
           float fontSize = 20;
           float fontFirma = 18;
-          
+
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Enfermería")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Enfermería";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Enfermería";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+              primerTexto = "Licenciado en Enfermería";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Enfermería";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
             }
 
           }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Medicina")) {
-          
-                primerTexto = "Médico Cirujano";
-                segundoTexto = "Médico Cirujano";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-           
+
+            primerTexto = "Médico Cirujano";
+            segundoTexto = "Médico Cirujano";
+            tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Odontología")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Odontología")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Cirujano Odontólogo";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Cirujano Odontólogo";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Cirujano Odontólogo";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Cirujano Odontólogo";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Medicina Veterinaria y Zootecnia")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Medicina Veterinaria y Zootecnia")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Médico Veterinario Zootecnista";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Médico Veterinario Zootecnista";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Médico Veterinario Zootecnista";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Médico Veterinario Zootecnista";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Biología")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Biología")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Biología";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Biología";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Biología";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Biología";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Ambiental")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Ambiental")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Ambiental";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Ambiental";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Ambiental";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Ambiental";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Agroforestal")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Agroforestal")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Agroforestal";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Agroforestal";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Agroforestal";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Agroforestal";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
 
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Industrial")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Industrial")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Industrial";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Industrial";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Industrial";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Industrial";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Civil")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Civil")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Civil";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Civil";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Civil";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Civil";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Informática")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Informática")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Informático";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Informático";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Informático";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Informático";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería de Sistemas")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería de Sistemas")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero de Sistemas";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera de Sistemas";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero de Sistemas";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera de Sistemas";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-             if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Comunicación Social")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Comunicación Social")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Ciencias de la Comunicación Social";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Ciencias de la Comunicación Social";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Ciencias de la Comunicación Social";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Ciencias de la Comunicación Social";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Trabajo Social")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Trabajo Social")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Trabajo Social";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Trabajo Social";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Trabajo Social";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Trabajo Social";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Jurídicas")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Jurídicas")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Abogado";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Abogado";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Abogado";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Abogado";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Políticas y Gestión Pública")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+              .equals("Ciencias Políticas y Gestión Pública")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Administración de Empresas";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Administración de Empresas";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Administración de Empresas";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Administración de Empresas";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Contaduría Pública")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Contaduría Pública")) {
             if (persona.getGradoAcademico().getNombre().equals("Técnico Universitario Superior")) {
-             
-                primerTexto = "Técnico en Contabilidad";
-                segundoTexto = "Técnico Universitario Superior";
-                tercerTexto = "Contabilidad"; 
-          
-            }else{
-               if (persona.getSexo().equals("Masculino")) {
+
+              primerTexto = "Técnico en Contabilidad";
+              segundoTexto = "Técnico Universitario Superior";
+              tercerTexto = "Contabilidad";
+
+            } else {
+              if (persona.getSexo().equals("Masculino")) {
                 primerTexto = "Licenciado en Contaduría Pública";
                 segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              } else {
                 primerTexto = "Licenciada en Contaduría Pública";
                 segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              }
             }
-         
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Comercial")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Comercial")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Comercial";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Comercial";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Comercial";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Comercial";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-          
+
           // Obtener la página donde deseas agregar el texto
           PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
 
@@ -1709,8 +1702,6 @@ public class PdfController {
           // Cargar la fuente personalizada
           PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
 
-          
-        
           // Configurar el texto y calcular su ancho
           String texto = segundoTexto;
           contentStream.setFont(customFont, fontSize2);
@@ -1721,7 +1712,7 @@ public class PdfController {
 
           // Calcular la posición X para centrar el texto
           float xTexto = (pageWidth - textWidth) / 2;
-         
+
           // Configurar la posición Y del texto
           float yTexto = 365; // Ajusta esta coordenada y según tus necesidades
 
@@ -1731,41 +1722,40 @@ public class PdfController {
           contentStream.showText(texto);
           contentStream.endText();
 
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Políticas y Gestión Pública")) {
-          // Configurar el segundo texto y calcular su ancho
-          String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                                                                        // texto
-          float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-           float xTexto2 = 180;
-          // Configurar la posición Y del segundo texto (un poco más arriba)
-          float yTexto2 = 330; // Ajusta esta coordenada y según tus necesidades
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+              .equals("Ciencias Políticas y Gestión Pública")) {
+            // Configurar el segundo texto y calcular su ancho
+            String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                         // texto
+            float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+            float xTexto2 = 180;
+            // Configurar la posición Y del segundo texto (un poco más arriba)
+            float yTexto2 = 330; // Ajusta esta coordenada y según tus necesidades
 
-          // Agregar el segundo texto al documento centrado
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto2, yTexto2);
-          contentStream.showText(texto2);
-          contentStream.endText();
-          }else{
-          // Configurar el segundo texto y calcular su ancho
-          String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                                                                        // texto
-          float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-           float xTexto2 = (pageWidth - textWidth2) / 2;
-          // Configurar la posición Y del segundo texto (un poco más arriba)
-          float yTexto2 = 330; // Ajusta esta coordenada y según tus necesidades
+            // Agregar el segundo texto al documento centrado
+            contentStream.beginText();
+            contentStream.newLineAtOffset(xTexto2, yTexto2);
+            contentStream.showText(texto2);
+            contentStream.endText();
+          } else {
+            // Configurar el segundo texto y calcular su ancho
+            String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                         // texto
+            float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+            float xTexto2 = (pageWidth - textWidth2) / 2;
+            // Configurar la posición Y del segundo texto (un poco más arriba)
+            float yTexto2 = 330; // Ajusta esta coordenada y según tus necesidades
 
-          // Agregar el segundo texto al documento centrado
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto2, yTexto2);
-          contentStream.showText(texto2);
-          contentStream.endText();
+            // Agregar el segundo texto al documento centrado
+            contentStream.beginText();
+            contentStream.newLineAtOffset(xTexto2, yTexto2);
+            contentStream.showText(texto2);
+            contentStream.endText();
           }
-          
-          
 
-           // Configurar el segundo texto y calcular su ancho
+          // Configurar el segundo texto y calcular su ancho
           String texto3 = primerTexto; // Reemplaza con tu segundo
-                                                                                        // texto
+                                       // texto
           float textWidth3 = customFont.getStringWidth(texto3) * fontSize2 / 1000f;
 
           // Configurar la posición Y del segundo texto (un poco más arriba)
@@ -1795,7 +1785,7 @@ public class PdfController {
           contentStream.showText(texto5);
           contentStream.endText();
 
-          String texto6 = "Dos mil "+ gestion;
+          String texto6 = "Dos mil " + gestion;
           float xTexto6 = 380;
           float yTexto6 = 176;
           contentStream.beginText();
@@ -1803,7 +1793,7 @@ public class PdfController {
           contentStream.showText(texto6);
           contentStream.endText();
 
-          //parrafos de firmas
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto7 = "MSc. Franz Navia Miranda";
           float xTexto7 = 85;
@@ -1818,7 +1808,7 @@ public class PdfController {
           contentStream.showText(texto7);
           contentStream.endText();
 
-           String texto8 = "MSc. Ariz Humerez Alvez";
+          String texto8 = "MSc. Ariz Humerez Alvez";
           float xTexto8 = 367;
           float yTexto8 = 80;
           contentStream.beginText();
@@ -1831,7 +1821,6 @@ public class PdfController {
           contentStream.showText(texto8);
           contentStream.endText();
 
-        
           String texto9 = "Rector Magnífico";
           float xTexto9 = 115;
           float yTexto9 = 62;
@@ -1840,7 +1829,7 @@ public class PdfController {
           contentStream.showText(texto9);
           contentStream.endText();
 
-           contentStream.beginText();
+          contentStream.beginText();
           contentStream.newLineAtOffset(xTexto9, yTexto9);
           contentStream.showText(texto9);
           contentStream.endText();
@@ -1863,12 +1852,10 @@ public class PdfController {
           pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
           pdfDocument2.close();
 
-
-
         } catch (IOException e) {
           e.printStackTrace();
         }
-   
+
       } catch (Exception e) {
         e.printStackTrace(); // Maneja las excepciones según tus necesidades
       }
@@ -2027,7 +2014,7 @@ public class PdfController {
 
         // Ruta al archivo de fuente personalizada
         String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
-  
+
         try {
           // Cargar el documento PDF existente
           PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta)); // Asegúrate de que "rutaCompleta" apunte
@@ -2038,230 +2025,229 @@ public class PdfController {
           float fontSize2 = 32;
           float fontSize = 20;
           float fontFirma = 18;
-          
+
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Enfermería")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Enfermería";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Enfermería";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
+              primerTexto = "Licenciado en Enfermería";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Enfermería";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
             }
 
           }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Medicina")) {
-          
-                primerTexto = "Médico Cirujano";
-                segundoTexto = "Médico Cirujano";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-           
+
+            primerTexto = "Médico Cirujano";
+            segundoTexto = "Médico Cirujano";
+            tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Odontología")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Odontología")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Cirujano Odontólogo";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Cirujano Odontólogo";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Cirujano Odontólogo";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Cirujano Odontólogo";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Medicina Veterinaria y Zootecnia")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Medicina Veterinaria y Zootecnia")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Médico Veterinario Zootecnista";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Médico Veterinario Zootecnista";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Médico Veterinario Zootecnista";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Médico Veterinario Zootecnista";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Biología")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Biología")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Biología";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Biología";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Biología";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Biología";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Ambiental")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Ambiental")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Ambiental";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Ambiental";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Ambiental";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Ambiental";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Agroforestal")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Agroforestal")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Agroforestal";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Agroforestal";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Agroforestal";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Agroforestal";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
 
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Industrial")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Industrial")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Industrial";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Industrial";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Industrial";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Industrial";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Civil")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Civil")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Civil";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Civil";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Civil";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Civil";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Informática")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Informática")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Informático";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Informático";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Informático";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Informático";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería de Sistemas")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería de Sistemas")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero de Sistemas";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera de Sistemas";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero de Sistemas";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera de Sistemas";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-             if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Comunicación Social")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Comunicación Social")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Ciencias de la Comunicación Social";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Ciencias de la Comunicación Social";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Ciencias de la Comunicación Social";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Ciencias de la Comunicación Social";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Trabajo Social")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Trabajo Social")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Trabajo Social";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Trabajo Social";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Trabajo Social";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Trabajo Social";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Jurídicas")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Jurídicas")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Abogado";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Abogado";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Abogado";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Abogado";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Políticas y Gestión Pública")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+              .equals("Ciencias Políticas y Gestión Pública")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Licenciado en Administración de Empresas";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Licenciada en Administración de Empresas";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Licenciado en Administración de Empresas";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Administración de Empresas";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Contaduría Pública")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Contaduría Pública")) {
             if (persona.getGradoAcademico().getNombre().equals("Técnico Universitario Superior")) {
-             
-                primerTexto = "Técnico en Contabilidad";
-                segundoTexto = "Técnico Universitario Superior";
-                tercerTexto = "Contabilidad"; 
-          
-            }else{
-               if (persona.getSexo().equals("Masculino")) {
+
+              primerTexto = "Técnico en Contabilidad";
+              segundoTexto = "Técnico Universitario Superior";
+              tercerTexto = "Contabilidad";
+
+            } else {
+              if (persona.getSexo().equals("Masculino")) {
                 primerTexto = "Licenciado en Contaduría Pública";
                 segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              } else {
                 primerTexto = "Licenciada en Contaduría Pública";
                 segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              }
             }
-         
 
           }
-            if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Comercial")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería Comercial")) {
             if (persona.getSexo().equals("Masculino")) {
-                primerTexto = "Ingeniero Comercial";
-                segundoTexto = "Licenciado";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }else {
-                primerTexto = "Ingeniera Comercial";
-                segundoTexto = "Licenciada";
-                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera(); 
-            }   
+              primerTexto = "Ingeniero Comercial";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera Comercial";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
           }
-          
+
           // Obtener la página donde deseas agregar el texto
           PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
 
@@ -2272,8 +2258,6 @@ public class PdfController {
           // Cargar la fuente personalizada
           PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
 
-          
-        
           // Configurar el texto y calcular su ancho
           String texto = segundoTexto;
           contentStream.setFont(customFont, fontSize2);
@@ -2284,7 +2268,7 @@ public class PdfController {
 
           // Calcular la posición X para centrar el texto
           float xTexto = (pageWidth - textWidth) / 2;
-         
+
           // Configurar la posición Y del texto
           float yTexto = 375; // Ajusta esta coordenada y según tus necesidades
 
@@ -2294,41 +2278,40 @@ public class PdfController {
           contentStream.showText(texto);
           contentStream.endText();
 
-           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Políticas y Gestión Pública")) {
-          // Configurar el segundo texto y calcular su ancho
-          String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                                                                        // texto
-          float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-           float xTexto2 = 180;
-          // Configurar la posición Y del segundo texto (un poco más arriba)
-          float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+              .equals("Ciencias Políticas y Gestión Pública")) {
+            // Configurar el segundo texto y calcular su ancho
+            String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                         // texto
+            float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+            float xTexto2 = 180;
+            // Configurar la posición Y del segundo texto (un poco más arriba)
+            float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
 
-          // Agregar el segundo texto al documento centrado
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto2, yTexto2);
-          contentStream.showText(texto2);
-          contentStream.endText();
-          }else{
-          // Configurar el segundo texto y calcular su ancho
-          String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                                                                        // texto
-          float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-           float xTexto2 = (pageWidth - textWidth2) / 2;
-          // Configurar la posición Y del segundo texto (un poco más arriba)
-          float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+            // Agregar el segundo texto al documento centrado
+            contentStream.beginText();
+            contentStream.newLineAtOffset(xTexto2, yTexto2);
+            contentStream.showText(texto2);
+            contentStream.endText();
+          } else {
+            // Configurar el segundo texto y calcular su ancho
+            String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                         // texto
+            float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+            float xTexto2 = (pageWidth - textWidth2) / 2;
+            // Configurar la posición Y del segundo texto (un poco más arriba)
+            float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
 
-          // Agregar el segundo texto al documento centrado
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto2, yTexto2);
-          contentStream.showText(texto2);
-          contentStream.endText();
+            // Agregar el segundo texto al documento centrado
+            contentStream.beginText();
+            contentStream.newLineAtOffset(xTexto2, yTexto2);
+            contentStream.showText(texto2);
+            contentStream.endText();
           }
-          
-          
 
-           // Configurar el segundo texto y calcular su ancho
+          // Configurar el segundo texto y calcular su ancho
           String texto3 = primerTexto; // Reemplaza con tu segundo
-                                                                                        // texto
+                                       // texto
           float textWidth3 = customFont.getStringWidth(texto3) * fontSize2 / 1000f;
 
           // Configurar la posición Y del segundo texto (un poco más arriba)
@@ -2358,7 +2341,7 @@ public class PdfController {
           contentStream.showText(texto5);
           contentStream.endText();
 
-          String texto6 = "Dos mil "+ gestion;
+          String texto6 = "Dos mil " + gestion;
           float xTexto6 = 380;
           float yTexto6 = 191;
           contentStream.beginText();
@@ -2366,7 +2349,7 @@ public class PdfController {
           contentStream.showText(texto6);
           contentStream.endText();
 
-          //parrafos de firmas
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto7 = "MSc. Franz Navia Miranda";
           float xTexto7 = 85;
@@ -2381,7 +2364,7 @@ public class PdfController {
           contentStream.showText(texto7);
           contentStream.endText();
 
-           String texto8 = "MSc. Ariz Humerez Alvez";
+          String texto8 = "MSc. Ariz Humerez Alvez";
           float xTexto8 = 367;
           float yTexto8 = 80;
           contentStream.beginText();
@@ -2394,7 +2377,6 @@ public class PdfController {
           contentStream.showText(texto8);
           contentStream.endText();
 
-        
           String texto9 = "Rector Magnífico";
           float xTexto9 = 115;
           float yTexto9 = 62;
@@ -2403,7 +2385,7 @@ public class PdfController {
           contentStream.showText(texto9);
           contentStream.endText();
 
-           contentStream.beginText();
+          contentStream.beginText();
           contentStream.newLineAtOffset(xTexto9, yTexto9);
           contentStream.showText(texto9);
           contentStream.endText();
@@ -2426,12 +2408,10 @@ public class PdfController {
           pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
           pdfDocument2.close();
 
-
-
         } catch (IOException e) {
           e.printStackTrace();
         }
-   
+
       } catch (Exception e) {
         e.printStackTrace(); // Maneja las excepciones según tus necesidades
       }
@@ -2459,91 +2439,156 @@ public class PdfController {
   }
 
   public static String generarNumeroEnFormato() {
-        Random random = new Random();
+    Random random = new Random();
 
-        // Generar tres segmentos de 4 dígitos cada uno
-        int segmento1 = random.nextInt(10000);
-        int segmento2 = random.nextInt(10000);
-        int segmento3 = random.nextInt(10000);
+    // Generar tres segmentos de 4 dígitos cada uno
+    int segmento1 = random.nextInt(10000);
+    int segmento2 = random.nextInt(10000);
+    int segmento3 = random.nextInt(10000);
 
-        // Formatear los segmentos como una cadena en el formato deseado
-        String numeroGenerado = String.format("%04d-%04d-%04d", segmento1, segmento2, segmento3);
+    // Formatear los segmentos como una cadena en el formato deseado
+    String numeroGenerado = String.format("%04d-%04d-%04d", segmento1, segmento2, segmento3);
 
-        return numeroGenerado;
-    }
+    return numeroGenerado;
+  }
 
   @RequestMapping(value = "/ReciboF", method = RequestMethod.POST)
-    public String LegalizacionPersonaF(@RequestParam("id_solicitud") Long id_solicitud,
-            @RequestParam("opcionPago") String opcionPago,
-            Model model, HttpServletRequest request, RedirectAttributes attr)
-            throws FileNotFoundException, IOException, ParseException {
-        SolicitudLegalizacion solicitud = solicitudLegalizacionService.findOne(id_solicitud);
-        Usuario usuario = usuarioService.findOne(solicitud.getUsuario().getId_usuario());
-        Long id_usuario = usuario.getId_usuario();
-        Date fechaActual = new Date();
-        // Ruta donde se guardarán los recibos
-        Path rootPath = Paths.get("recibos/legalizacion/");
-        Path rootAbsolutePath = rootPath.toAbsolutePath();
-        String directoryPath = rootAbsolutePath.toString();
-        String cpt = generarNumeroEnFormato();
-        List<Recibo> listRecibos = reciboService.findAll();
-        String nro_recibo = (listRecibos.size() + 1) + "";
-        Recibo recibo = new Recibo();
+  public String LegalizacionPersonaF(@RequestParam("id_solicitud") Long id_solicitud,
+      @RequestParam("opcionPago") String opcionPago,
+      Model model, HttpServletRequest request, RedirectAttributes attr)
+      throws FileNotFoundException, IOException, ParseException {
+    SolicitudLegalizacion solicitud = solicitudLegalizacionService.findOne(id_solicitud);
+    Usuario usuario = usuarioService.findOne(solicitud.getUsuario().getId_usuario());
+    Long id_usuario = usuario.getId_usuario();
+    Date fechaActual = new Date();
+    // Ruta donde se guardarán los recibos
+    Path rootPath = Paths.get("recibos/legalizacion/");
+    Path rootAbsolutePath = rootPath.toAbsolutePath();
+    String directoryPath = rootAbsolutePath.toString();
+    String cpt = generarNumeroEnFormato();
+    List<Recibo> listRecibos = reciboService.findAll();
+    String nro_recibo = (listRecibos.size() + 1) + "";
+    Recibo recibo = new Recibo();
 
-        recibo.setNro_recibo(nro_recibo);
-        recibo.setEstado_recibo("No Pagado");
-        recibo.setEstado("A");
-        recibo.setTipo_pago_recibo(opcionPago);
-        recibo.setFecha_recibo(fechaActual);
-        recibo.setMonto_recibo(solicitud.getCostoDocumento().getCosto());
-        recibo.setRazon_recibo(solicitud.getUsuario().getPersona().getNombre() + " "
-                + solicitud.getUsuario().getPersona().getAp_paterno() + " "
-                + solicitud.getUsuario().getPersona().getAp_materno());
-        recibo.setNit_recibo(solicitud.getUsuario().getPersona().getCi());
+    recibo.setNro_recibo(nro_recibo);
+    recibo.setEstado_recibo("No Pagado");
+    recibo.setEstado("A");
+    recibo.setTipo_pago_recibo(opcionPago);
+    recibo.setFecha_recibo(fechaActual);
+    recibo.setMonto_recibo(solicitud.getCostoDocumento().getCosto());
+    recibo.setRazon_recibo(solicitud.getUsuario().getPersona().getNombre() + " "
+        + solicitud.getUsuario().getPersona().getAp_paterno() + " "
+        + solicitud.getUsuario().getPersona().getAp_materno());
+    recibo.setNit_recibo(solicitud.getUsuario().getPersona().getCi());
 
-        // Añade el nombre del archivo a la ruta
-        String pdfFileName = directoryPath + File.separator + "recibo_" + recibo.getNro_recibo() + ".pdf";
+    // Añade el nombre del archivo a la ruta
+    String pdfFileName = rootAbsolutePath + File.separator + "recibo_" + recibo.getNro_recibo() + ".pdf";
 
-        solicitud.setEstado("Completado");
-        solicitudLegalizacionService.save(solicitud);
+    solicitud.setEstado("Completado");
+    solicitudLegalizacionService.save(solicitud);
+
+    recibo.setArchivo_recibo(pdfFileName);
+    recibo.setUsuario(usuario);
+    recibo.setCpt_recibo(cpt);
+    reciboService.save(recibo);
+
+    // Definir el formato deseado
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+
+    // Formatear la fecha
+    String fechaFormateada = sdf.format(recibo.getFecha_recibo());
 
        
-        recibo.setArchivo_recibo(pdfFileName);
-        recibo.setUsuario(usuario);
-        recibo.setCpt_recibo(cpt);
-        reciboService.save(recibo);
+
+    // Crear el contexto con los datos necesarios para la vista
+    if (opcionPago.equals("cpt")) {
+      Context context = new Context();
+      // Agregar los datos que necesites en tu vista
+      context.setVariable("nroRecibo", recibo.getNro_recibo());
+      context.setVariable("cpt", recibo.getCpt_recibo());
+      context.setVariable("nombre", recibo.getRazon_recibo());
+      context.setVariable("nit", recibo.getNit_recibo());
+      context.setVariable("fecha", fechaFormateada);
+      context.setVariable("solicitud", solicitud);
+
+      // Renderizar la vista HTML utilizando Thymeleaf
+      String htmlContent = templateEngine.process("recibo/modelo_recibo", context);
+      // Generar el documento PDF utilizando Flying Saucer
+      try (OutputStream outputStream = new FileOutputStream(pdfFileName)) {
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+
+        // Establecer tamaño de página Legal
+        renderer.layout();
+        renderer.createPDF(outputStream);
+      } catch (Exception e) {
+        // Manejar la excepción según sea necesario
+      }
+    }
+    if (opcionPago.equals("qr")) {
+      System.out.println("Pago con QR");
+      Context context = new Context();
+      // Agregar los datos que necesites en tu vista
+      context.setVariable("nroRecibo", recibo.getNro_recibo());
+      context.setVariable("nombre", recibo.getRazon_recibo());
+      context.setVariable("nit", recibo.getNit_recibo());
+      context.setVariable("fecha", fechaFormateada);
+      context.setVariable("solicitud", solicitud);
+
+      // Renderizar la vista HTML utilizando Thymeleaf
+      String htmlContent = templateEngine.process("recibo/modelo_recibo_qr", context);
+       try {
+        // Generar el contenido del código QR
+        String qrContent =  
+            "Numero de Recibo: " + recibo.getNro_recibo() + "\n" +
+            "Monto: " + recibo.getMonto_recibo() + "\n" +
+            "Fecha de Generacion: " + fechaFormateada;
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 50, 50);
+
+        // Crear la imagen BufferedImage del código QR
+        int width = bitMatrix.getWidth();
+        int height = bitMatrix.getHeight();
+        BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for (int x = 0; x < width; x++) {
+          for (int y = 0; y < height; y++) {
+            qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+          }
+         }
+          // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
+        ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+        renderer.layout();
+        renderer.createPDF(pdfOutputStream);
+          
+        // Crear un nuevo documento PDF
+        PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(pdfOutputStream.toByteArray()));
+
+        // Convertir la imagen BufferedImage a PDImageXObject
+        PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
+        // Obtener la página donde deseas agregar la imagen
+        PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
+
+        // Agregar la imagen del código QR al contenido del PDF
+        try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
+            PDPageContentStream.AppendMode.APPEND, true, true)) {
+          float x = 475; // Ajusta esta coordenada x según tus necesidades
+          float y = 718; // Ajusta esta coordenada y según tus necesidades
+          float widthj = 60; // Ajusta el ancho de la imagen
+          float heightj = 60; // Ajusta la altura de la imagen
+
+          contentStream.drawImage(pdImage, x, y, widthj, heightj);
+        }
+         // Guardar el PDF con la imagen del código QR agregada
+        pdfDocument.save(pdfFileName); // Reemplaza con la ruta y el nombre adecuados
+        pdfDocument.close();
         
-        // Definir el formato deseado
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
-
-        // Formatear la fecha
-        String fechaFormateada = sdf.format(recibo.getFecha_recibo());
-           // Crear el contexto con los datos necesarios para la vista
-    Context context = new Context();
-    // Agregar los datos que necesites en tu vista
-    context.setVariable("nroRecibo", recibo.getNro_recibo());
-    context.setVariable("cpt", recibo.getCpt_recibo());
-    context.setVariable("nombre", recibo.getRazon_recibo());
-    context.setVariable("nit", recibo.getNit_recibo());
-    context.setVariable("fecha", fechaFormateada);
-    context.setVariable("solicitud", solicitud);
-
-   
-    // Renderizar la vista HTML utilizando Thymeleaf
-    String htmlContent = templateEngine.process("recibo/modelo_recibo", context);
-    // Generar el documento PDF utilizando Flying Saucer
-    try (OutputStream outputStream = new FileOutputStream(pdfFileName)) {
-      ITextRenderer renderer = new ITextRenderer();
-      renderer.setDocumentFromString(htmlContent);
-
-      // Establecer tamaño de página Legal
-      renderer.layout();
-      renderer.createPDF(outputStream);
-    } catch (Exception e) {
-      // Manejar la excepción según sea necesario
+         }catch (Exception e) {
+        e.printStackTrace(); // Maneja las excepciones según tus necesidades
+      }
     }
 
-        return "redirect:/Historial/" + id_usuario;
-    }
-
-}
+    return "redirect:/Historial/" + id_usuario;
+  }
+ }

@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -173,7 +174,7 @@ public class LoginController {
 		HttpEntity<HashMap> req = new HttpEntity(requests, headers);
 
 		RestTemplate restTemplate = new RestTemplate();
-
+		try {
 		ResponseEntity<Map> resp = restTemplate.exchange(url, HttpMethod.POST, req, Map.class);
 
 		if (resp.getBody().get("status").toString().equals("200")) {
@@ -384,6 +385,8 @@ public class LoginController {
 			}
 		}
 
+		
+	}catch (HttpServerErrorException.InternalServerError e) {
 		if (usuarioService.getUsuarioContraseña(user, contrasena) != null) {
 
 			HttpSession session = request.getSession(true);
@@ -400,23 +403,8 @@ public class LoginController {
 
 			return "redirect:/pb";
 		}
-
-		/*
-		 * } else {
-		 * 
-		 * //proceso de ingreso atraves del registro por el sistema
-		 * HttpSession session = request.getSession(true);
-		 * 
-		 * Usuario usuario = usuarioService.getUsuarioContraseña(user, contrasena);
-		 * 
-		 * session.setAttribute("usuario", usuario);
-		 * 
-		 * flash.addAttribute("success", usuario.getPersona().getNombre());
-		 * 
-		 * return "redirect:/Inicio";
-		 * }
-		 */
-
+	}
+	return "redirect:/pb";
 	}
 
 	// Funcion de cerrar sesion de administrador
