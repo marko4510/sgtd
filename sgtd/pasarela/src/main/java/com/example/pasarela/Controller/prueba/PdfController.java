@@ -6,17 +6,24 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.example.pasarela.Models.Entity.Persona;
+import com.example.pasarela.Models.Entity.Recibo;
+import com.example.pasarela.Models.Entity.SolicitudLegalizacion;
 import com.example.pasarela.Models.Entity.Titulo;
 import com.example.pasarela.Models.Entity.TituloGenerado;
-
+import com.example.pasarela.Models.Entity.Usuario;
 import com.example.pasarela.Models.Service.IPersonaService;
+import com.example.pasarela.Models.Service.IReciboService;
+import com.example.pasarela.Models.Service.ISolicitudLegalizacionService;
 import com.example.pasarela.Models.Service.ITituloGeneradoService;
 import com.example.pasarela.Models.Service.ITituloService;
+import com.example.pasarela.Models.Service.IUsuarioService;
 import com.example.pasarela.Models.Utils.Archive;
 
 import com.itextpdf.text.DocumentException;
@@ -45,6 +52,10 @@ import java.util.Date;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -82,6 +93,15 @@ public class PdfController {
 
   @Autowired
   private ITituloGeneradoService tituloGeneradoService;
+
+   @Autowired
+    private IReciboService reciboService;
+
+    @Autowired
+    private ISolicitudLegalizacionService solicitudLegalizacionService;
+
+      @Autowired
+    private IUsuarioService usuarioService;
 
   private final TemplateEngine templateEngine;
 
@@ -330,7 +350,7 @@ public class PdfController {
     context.setVariable("mes", mes);
     context.setVariable("anio", anio);
     context.setVariable("codigo", codigo);
-
+    
     // Renderizar la vista HTML utilizando Thymeleaf
     String htmlContent = templateEngine.process("certificado/bachillerPrueba-pdf", context);
 
@@ -2437,5 +2457,93 @@ public class PdfController {
     }
 
   }
+
+  public static String generarNumeroEnFormato() {
+        Random random = new Random();
+
+        // Generar tres segmentos de 4 dígitos cada uno
+        int segmento1 = random.nextInt(10000);
+        int segmento2 = random.nextInt(10000);
+        int segmento3 = random.nextInt(10000);
+
+        // Formatear los segmentos como una cadena en el formato deseado
+        String numeroGenerado = String.format("%04d-%04d-%04d", segmento1, segmento2, segmento3);
+
+        return numeroGenerado;
+    }
+
+  @RequestMapping(value = "/ReciboF", method = RequestMethod.POST)
+    public String LegalizacionPersonaF(@RequestParam("id_solicitud") Long id_solicitud,
+            @RequestParam("opcionPago") String opcionPago,
+            Model model, HttpServletRequest request, RedirectAttributes attr)
+            throws FileNotFoundException, IOException, ParseException {
+        SolicitudLegalizacion solicitud = solicitudLegalizacionService.findOne(id_solicitud);
+        Usuario usuario = usuarioService.findOne(solicitud.getUsuario().getId_usuario());
+        Long id_usuario = usuario.getId_usuario();
+        Date fechaActual = new Date();
+        // Ruta donde se guardarán los recibos
+        Path rootPath = Paths.get("recibos/legalizacion/");
+        Path rootAbsolutePath = rootPath.toAbsolutePath();
+        String directoryPath = rootAbsolutePath.toString();
+        String cpt = generarNumeroEnFormato();
+        List<Recibo> listRecibos = reciboService.findAll();
+        String nro_recibo = (listRecibos.size() + 1) + "";
+        Recibo recibo = new Recibo();
+
+        recibo.setNro_recibo(nro_recibo);
+        recibo.setEstado_recibo("No Pagado");
+        recibo.setEstado("A");
+        recibo.setTipo_pago_recibo(opcionPago);
+        recibo.setFecha_recibo(fechaActual);
+        recibo.setMonto_recibo(solicitud.getCostoDocumento().getCosto());
+        recibo.setRazon_recibo(solicitud.getUsuario().getPersona().getNombre() + " "
+                + solicitud.getUsuario().getPersona().getAp_paterno() + " "
+                + solicitud.getUsuario().getPersona().getAp_materno());
+        recibo.setNit_recibo(solicitud.getUsuario().getPersona().getCi());
+
+        // Añade el nombre del archivo a la ruta
+        String pdfFileName = directoryPath + File.separator + "recibo_" + recibo.getNro_recibo() + ".pdf";
+
+        solicitud.setEstado("Completado");
+        solicitudLegalizacionService.save(solicitud);
+
+       
+        recibo.setArchivo_recibo(pdfFileName);
+        recibo.setUsuario(usuario);
+        recibo.setCpt_recibo(cpt);
+        reciboService.save(recibo);
+        
+        // Definir el formato deseado
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+
+        // Formatear la fecha
+        String fechaFormateada = sdf.format(recibo.getFecha_recibo());
+           // Crear el contexto con los datos necesarios para la vista
+    Context context = new Context();
+    // Agregar los datos que necesites en tu vista
+    context.setVariable("nroRecibo", recibo.getNro_recibo());
+    context.setVariable("cpt", recibo.getCpt_recibo());
+    context.setVariable("nombre", recibo.getRazon_recibo());
+    context.setVariable("nit", recibo.getNit_recibo());
+    context.setVariable("fecha", fechaFormateada);
+    context.setVariable("solicitud", solicitud);
+
+   
+    // Renderizar la vista HTML utilizando Thymeleaf
+    String htmlContent = templateEngine.process("recibo/modelo_recibo", context);
+    // Generar el documento PDF utilizando Flying Saucer
+    try (OutputStream outputStream = new FileOutputStream(pdfFileName)) {
+      ITextRenderer renderer = new ITextRenderer();
+      renderer.setDocumentFromString(htmlContent);
+
+      // Establecer tamaño de página Legal
+      renderer.layout();
+      renderer.createPDF(outputStream);
+    } catch (Exception e) {
+      // Manejar la excepción según sea necesario
+    }
+
+        return "redirect:/Historial/" + id_usuario;
+    }
 
 }

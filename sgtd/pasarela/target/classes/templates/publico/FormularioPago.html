@@ -42,7 +42,9 @@
                 <h4 class="mb-0 mt-0" style="color: rgb(31, 45, 151);">Métodos de Pago</h4>
               </div>
 
-              <form>
+              <form  th:action="@{/ReciboF}" method="post" enctype="multipart/form-data">
+
+                <input type="hidden" th:value="${solicitud.id_solicitud_legalizacion}" name="id_solicitud">
               <div class="card-header border-bottom" style="background-color: #b7d589;">
                 <div style="display: flex; justify-content: space-between;">
                     <div>
