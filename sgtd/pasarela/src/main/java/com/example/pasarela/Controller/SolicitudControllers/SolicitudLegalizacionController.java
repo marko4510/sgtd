@@ -151,28 +151,7 @@ public class SolicitudLegalizacionController {
             Model model, HttpServletRequest request, RedirectAttributes attr)
             throws FileNotFoundException, IOException, ParseException { // validar los datos capturados (1)
 
-        // Adjuntar Archivo en SolicitudLegalizacion
-        MultipartFile multipartFile = solicitudLegalizacion.getFile();
-        ArchivoAdjunto archivoAdjunto = new ArchivoAdjunto();
-        AdjuntarArchivo adjuntarArchivo = new AdjuntarArchivo();
 
-         Path rootPath = Paths.get("solicitudes/legalizacion/");
-        Path rootAbsolutPath = rootPath.toAbsolutePath();
-        String rutaDirectorio = rootAbsolutPath+"";
-
-        String rutaArchivo = adjuntarArchivo.crearSacDirectorio(rutaDirectorio);
-        model.addAttribute("di", rutaArchivo);
-        List<ArchivoAdjunto> listArchivos = archivoAdjuntoService.listarArchivoAdjunto();
-        solicitudLegalizacion.setNombreArchivo((listArchivos.size() + 1) + "-"+ persona.getCi()+"-" + multipartFile.getOriginalFilename());
-        Integer ad = adjuntarArchivo.adjuntarArchivoLegalizaciones(solicitudLegalizacion, rutaArchivo);
-
-        archivoAdjunto.setNombre_archivo((listArchivos.size() + 1) +"-"+ persona.getCi() +"-" + multipartFile.getOriginalFilename());
-       
-        archivoAdjunto.setTipo_archivo(multipartFile.getContentType());
-        archivoAdjunto.setRuta_archivo(rutaArchivo);
-        archivoAdjunto.setEstado("A");
-        ArchivoAdjunto archivoAdjunto2 = archivoAdjuntoService.registrarArchivoAdjunto(archivoAdjunto);
-        // FIN Adjuntar Archivo en SolicitudLegalizacion
 
         // Capturar Usuario de la Sesión
         Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
@@ -180,9 +159,9 @@ public class SolicitudLegalizacionController {
         String timeStamp = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
         Date date1 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(timeStamp);
 
-        solicitudLegalizacion.setArchivoAdjunto(archivoAdjunto2);
+        
         solicitudLegalizacion.setFecha_solicitud(date1);
-        solicitudLegalizacion.setEstado("Pendiente");
+        solicitudLegalizacion.setEstado("Aprobado");
         solicitudLegalizacion.setTipo_solicitud("Legalización");
         solicitudLegalizacion.setUsuario(usuario);
         solicitudLegService.save(solicitudLegalizacion);

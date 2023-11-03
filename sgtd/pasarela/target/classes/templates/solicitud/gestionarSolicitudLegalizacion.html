@@ -91,6 +91,13 @@
 
                                             </td>
                                         </th:block>
+                                        <th:block th:if="${ sol.estado == 'Completado' }">
+                                            <td class="text-center">
+                                                <h5><span class="badge bg-success"
+                                                        th:text="${sol.estado}">Success</span></h5>
+
+                                            </td>
+                                        </th:block>
                                         <td>
 
 
@@ -99,7 +106,7 @@
                                             <div class="d-flex  mb-1">
                                                 <div class="flex align-items-center list-user-action">
 
-                                                
+                                                  <!--
                                                     <a type="button" lass="btn btn-sm btn-icon btn-warning"
                                                     th:onclick="renombrar([[${sol.id_solicitud_legalizacion}]])" title="Ver"
                                                     data-original-title="Ver">
@@ -112,12 +119,13 @@
                                                         </path>
                                                     </svg>
                                                 </a>
+                                            -->
                                                 </div>
 
                                                 <div class="flex align-items-center list-user-action">
 
                                                     <th:block th:if="${ sol.estado == 'Pendiente' }">
-
+                                                    <!--
                                                     <a class="btn btn-sm btn-icon btn-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Aprobar" th:attr="onclick=${'AprobarSol('+sol.id_solicitud_legalizacion+')'}">
                                                         <span class="btn-inner">
                                                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" >
@@ -128,6 +136,7 @@
                                                            </svg>                                        
                                                         </span>
                                                      </a>
+                                                   
                                                      <a class="btn btn-sm btn-icon btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Rechazar"  th:attr="onclick=${'RechazarSol('+sol.id_solicitud_legalizacion+')'}">
                                                         <span class="btn-inner">
                                                            <svg class="icon-20" width="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
@@ -137,8 +146,14 @@
                                                            </svg>
                                                         </span>
                                                      </a>
+                                                       -->
 
-
+                                                    </th:block>
+                                                    <th:block th:if="${ sol.estado == 'Aprobado' }">
+                                                        Completado
+                                                    </th:block>
+                                                    <th:block th:if="${ sol.estado == 'Completado' }">
+                                                        Completado
                                                     </th:block>
 
 

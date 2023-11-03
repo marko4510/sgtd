@@ -174,7 +174,7 @@ public class LoginController {
 		HttpEntity<HashMap> req = new HttpEntity(requests, headers);
 
 		RestTemplate restTemplate = new RestTemplate();
-		try {
+		
 		ResponseEntity<Map> resp = restTemplate.exchange(url, HttpMethod.POST, req, Map.class);
 
 		if (resp.getBody().get("status").toString().equals("200")) {
@@ -383,17 +383,13 @@ public class LoginController {
 				usuario.setEstado("C");
 				usuarioService.save(usuario);
 			}
-		}
-
-		
-	}catch (HttpServerErrorException.InternalServerError e) {
-		if (usuarioService.getUsuarioContraseña(user, contrasena) != null) {
+			if (usuarioService.getUsuarioContraseña(user, contrasena) != null) {
 
 			HttpSession session = request.getSession(true);
 
-			Usuario usuario = usuarioService.getUsuarioContraseña(user, contrasena);
+			Usuario usuario2 = usuarioService.getUsuarioContraseña(user, contrasena);
 
-			session.setAttribute("usuario", usuario);
+			session.setAttribute("usuario", usuario2);
 			session.setAttribute("persona", usuario.getPersona());
 
 			flash.addAttribute("success", usuario.getPersona().getNombre());
@@ -403,7 +399,12 @@ public class LoginController {
 
 			return "redirect:/pb";
 		}
-	}
+		}
+
+		
+	
+		
+	
 	return "redirect:/pb";
 	}
 
