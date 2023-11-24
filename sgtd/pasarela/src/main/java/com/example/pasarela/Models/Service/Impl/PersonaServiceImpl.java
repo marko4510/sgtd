@@ -42,4 +42,9 @@ public class PersonaServiceImpl implements IPersonaService{
         // TODO Auto-generated method stub
         return personaDao.getPersonaCI(ci);
     }
+
+    @Override
+    public Persona getPersonaByNombres(String nombre, String apellidoPaterno, String ap_materno) {
+        return personaDao.getPersonaByNombres(nombre, apellidoPaterno, ap_materno);
+    }
 }

@@ -15,4 +15,6 @@ public interface IPersonaService {
 	public void delete(Long id);
 	
 	public Persona getPersonaCI(String ci);
+
+	public Persona getPersonaByNombres(String nombre, String apellidoPaterno, String ap_materno);
 }

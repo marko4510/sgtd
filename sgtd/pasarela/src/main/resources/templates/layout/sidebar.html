@@ -358,6 +358,7 @@
                       
                     </ul>
                 </li>
+                
                 <li class="nav-item" th:if="${session.usuario.estado != 'F' && session.usuario.estado != 'A'}">
                     <a class="nav-link" data-bs-toggle="collapse" href="#sidebar-generar2" role="button" aria-expanded="false" aria-controls="sidebar-generar2">
                         <i class="icon">
@@ -372,6 +373,7 @@
                             </svg>
                         </i>
                     </a>
+                    
                     <ul class="sub-nav collapse" id="sidebar-generar2" data-bs-parent="#sidebar-menu">
                         <li class="nav-item">
                             <a class="nav-link " href="../../../../listarTitulosPosgrado">
@@ -399,7 +401,9 @@
                         </li>
                       
                     </ul>
+                    
                 </li>
+                
                 <li class="nav-item" th:if="${session.usuario.estado != 'F'}">
                     <a class="nav-link" href="../../../../inicioReportes">
                         <i class="icon">
