@@ -1,6 +1,8 @@
 package com.example.pasarela.Controller.prueba;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -26,12 +28,15 @@ import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.PrgMtrCertificadoDto;
 import com.example.pasarela.Models.Entity.Provincia;
 import com.example.pasarela.Models.Entity.Recibo;
+import com.example.pasarela.Models.Entity.Revalidacion;
 import com.example.pasarela.Models.Entity.SolicitudLegalizacion;
 import com.example.pasarela.Models.Entity.Titulo;
 import com.example.pasarela.Models.Entity.TituloGenerado;
 import com.example.pasarela.Models.Entity.Usuario;
 import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.IReciboService;
+import com.example.pasarela.Models.Service.IRevalidacionGeneradoService;
+import com.example.pasarela.Models.Service.IRevalidacionService;
 import com.example.pasarela.Models.Service.ISolicitudLegalizacionService;
 import com.example.pasarela.Models.Service.ITituloGeneradoService;
 import com.example.pasarela.Models.Service.ITituloService;
@@ -49,7 +54,7 @@ import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -70,6 +75,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -118,6 +124,12 @@ public class PdfController {
 
   @Autowired
   private IUsuarioService usuarioService;
+
+    @Autowired
+    private IRevalidacionService revalidacionService;
+
+    @Autowired
+    private IRevalidacionGeneradoService revalidacionGeneradoService;
 
   private final TemplateEngine templateEngine;
 
@@ -2862,5 +2874,52 @@ public class PdfController {
     }
     return "redirect:/LoginR";
   }
+
+
+  @PostMapping("/generarRevalidacion")
+    public void generarRevalidacion(HttpServletResponse response) throws IOException {
+          Date fechaActual = new Date();
+    // Ruta donde se guardarán las revalidaciones
+    Path rootPath = Paths.get("archivos/revalidaciones/");
+    Path rootAbsolutePath = rootPath.toAbsolutePath();
+    String directoryPath = rootAbsolutePath.toString();
+    String cpt = generarNumeroEnFormato();
+    List<Revalidacion> listRevalidacion = revalidacionService.findAll();
+    String nro_revalidacion = (listRevalidacion.size() + 1) + "";
+    Revalidacion revalidacion = new Revalidacion();
+    
+        // Crear un contexto Thymeleaf
+        Context context = new Context();
+
+        // Obtener la URL de la imagen desde la carpeta static
+        Resource imageResource = new ClassPathResource("/static/assets/images/uap_negro.png");
+        String imageUrl = "file:" + imageResource.getFile().getAbsolutePath(); // URL local
+
+        context.setVariable("imageUrl", imageUrl);
+         // Añade el nombre del archivo a la ruta
+    String pdfFileName = rootAbsolutePath + File.separator + "recibo_" + revalidacion.getNro_revalidacio() + ".pdf";
+
+        // Procesar el template Thymeleaf
+        String processedHtml = templateEngine.process("revalidacion/plantillaRevalidacion", context);
+
+        // Convertir HTML a PDF usando Flying Saucer
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            ITextRenderer renderer = new ITextRenderer();
+            renderer.setDocumentFromString(processedHtml);
+            renderer.layout();
+            renderer.createPDF(outputStream, true);
+            renderer.finishPDF();
+
+            // Configurar la respuesta HTTP
+            response.setContentType("application/pdf");
+            response.setHeader("Content-Disposition", "inline; filename=generated.pdf");
+
+            // Escribir el PDF en la respuesta
+            response.getOutputStream().write(outputStream.toByteArray());
+            response.getOutputStream().flush();
+        } catch (Exception e) {
+            e.printStackTrace(); // Manejo de errores
+        }
+    }
 
 }
