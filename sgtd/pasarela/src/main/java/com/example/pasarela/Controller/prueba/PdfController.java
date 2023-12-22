@@ -29,6 +29,7 @@ import com.example.pasarela.Models.Entity.PrgMtrCertificadoDto;
 import com.example.pasarela.Models.Entity.Provincia;
 import com.example.pasarela.Models.Entity.Recibo;
 import com.example.pasarela.Models.Entity.Revalidacion;
+import com.example.pasarela.Models.Entity.RevalidacionGenerado;
 import com.example.pasarela.Models.Entity.SolicitudLegalizacion;
 import com.example.pasarela.Models.Entity.Titulo;
 import com.example.pasarela.Models.Entity.TituloGenerado;
@@ -42,14 +43,22 @@ import com.example.pasarela.Models.Service.ITituloGeneradoService;
 import com.example.pasarela.Models.Service.ITituloService;
 import com.example.pasarela.Models.Service.IUsuarioService;
 import com.example.pasarela.Models.Utils.Archive;
+import com.example.pasarela.Models.Utils.GenerarCodigo;
 import com.example.pasarela.Models.Utils.numeroAtexto;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.BarcodeQRCode;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -74,6 +83,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -87,6 +97,7 @@ import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.Writer;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
@@ -134,6 +145,8 @@ public class PdfController {
   private final TemplateEngine templateEngine;
 
   Archive archive = new Archive();
+
+  GenerarCodigo generarCodigo = new GenerarCodigo();
 
   public int calcularEdad(LocalDate fechaNacimiento) {
     LocalDate fechaActual = LocalDate.now();
@@ -2875,51 +2888,152 @@ public class PdfController {
     return "redirect:/LoginR";
   }
 
-
-  @PostMapping("/generarRevalidacion")
-    public void generarRevalidacion(HttpServletResponse response) throws IOException {
+ 
+  @PostMapping("/generarRevalidaciones")
+  public String generarRevalidacionesPDF(@Validated Revalidacion revalidacion, Model model,@RequestParam("tenor") String tenor)
+      throws FileNotFoundException, IOException, ParseException, DocumentException {
           Date fechaActual = new Date();
-    // Ruta donde se guardarán las revalidaciones
-    Path rootPath = Paths.get("archivos/revalidaciones/");
-    Path rootAbsolutePath = rootPath.toAbsolutePath();
-    String directoryPath = rootAbsolutePath.toString();
-    String cpt = generarNumeroEnFormato();
+          LocalDate localDateFA = convertirDateALocalDate(fechaActual);
+          String fechaComoString = localDateFA.toString();
     List<Revalidacion> listRevalidacion = revalidacionService.findAll();
     String nro_revalidacion = (listRevalidacion.size() + 1) + "";
-    Revalidacion revalidacion = new Revalidacion();
+    String nro_revalidacionFormato = generarCodigo.generarCodigo(nro_revalidacion);
+    String codigo = archive.getMD5(nro_revalidacion + "");
+  
+
+
+     Context context = new Context();
+     context.setVariable("nro_revalidacion", nro_revalidacionFormato);
+      context.setVariable("tenor", tenor);
+    String htmlContent = templateEngine.process("revalidacion/prueba", context);
+  
     
-        // Crear un contexto Thymeleaf
-        Context context = new Context();
-
-        // Obtener la URL de la imagen desde la carpeta static
-        Resource imageResource = new ClassPathResource("/static/assets/images/uap_negro.png");
-        String imageUrl = "file:" + imageResource.getFile().getAbsolutePath(); // URL local
-
-        context.setVariable("imageUrl", imageUrl);
-         // Añade el nombre del archivo a la ruta
-    String pdfFileName = rootAbsolutePath + File.separator + "recibo_" + revalidacion.getNro_revalidacio() + ".pdf";
-
-        // Procesar el template Thymeleaf
-        String processedHtml = templateEngine.process("revalidacion/plantillaRevalidacion", context);
-
-        // Convertir HTML a PDF usando Flying Saucer
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-            ITextRenderer renderer = new ITextRenderer();
-            renderer.setDocumentFromString(processedHtml);
-            renderer.layout();
-            renderer.createPDF(outputStream, true);
-            renderer.finishPDF();
-
-            // Configurar la respuesta HTTP
-            response.setContentType("application/pdf");
-            response.setHeader("Content-Disposition", "inline; filename=generated.pdf");
-
-            // Escribir el PDF en la respuesta
-            response.getOutputStream().write(outputStream.toByteArray());
-            response.getOutputStream().flush();
-        } catch (Exception e) {
-            e.printStackTrace(); // Manejo de errores
-        }
+     // Directorio donde se guardará el archivo PDF 
+    Path rootPathRevalidaciones = Paths.get("archivos/revalidaciones/");
+    Path rootAbsolutPathRevalidaciones = rootPathRevalidaciones.toAbsolutePath();
+    String rutaDirectorioRevalidaciones = rootPathRevalidaciones + "/";
+    try {
+      if (!Files.exists(rootPathRevalidaciones)) {
+        Files.createDirectories(rootPathRevalidaciones);
+        System.out.println("Directorio creado: " + rutaDirectorioRevalidaciones);
+      } else {
+        System.out.println("El directorio ya existe: " + rutaDirectorioRevalidaciones);
+      }
+    } catch (IOException e) {
+      System.err.println("Error al crear el directorio: " + e.getMessage());
     }
+
+    // Directorio donde se guardará el archivo PDF con Plantilla
+    Path rootPathRevalidacionesP = Paths.get("archivos/revalidaciones/p");
+    Path rootAbsolutPathRevalidacionesP = rootPathRevalidacionesP.toAbsolutePath();
+    String rutaDirectorioRevalidacionesP = rootPathRevalidacionesP + "/";
+    try {
+      if (!Files.exists(rootPathRevalidacionesP)) {
+        Files.createDirectories(rootPathRevalidacionesP);
+        System.out.println("Directorio creado: " + rutaDirectorioRevalidacionesP);
+      } else {
+        System.out.println("El directorio ya existe: " + rutaDirectorioRevalidacionesP);
+      }
+    } catch (IOException e) {
+      System.err.println("Error al crear el directorio: " + e.getMessage());
+    }
+
+    // Directorio de la Plantilla
+    Path rootPathPlantillaPath = Paths.get("plantillas/");
+    Path rootAbsolutPathPlantillasPath = rootPathPlantillaPath.toAbsolutePath();
+    RevalidacionGenerado revalidacionGenerado = new RevalidacionGenerado();
+
+    // Nombre del archivo PDF
+    String nombreArchivo = codigo + ".pdf";
+
+     // Generar la ruta completa del archivo
+     String rutaCompleta = rootAbsolutPathRevalidaciones + "/" + nombreArchivo;
+     // Ruta completa de la Plantilla
+     String rutaCompletaP = rootAbsolutPathPlantillasPath + "/plantillar.jpg";
+ 
+     String rutaCompletaSalida = rootAbsolutPathRevalidacionesP + "/" + nombreArchivo;
+
+     try {
+     // Generar el contenido del código QR
+     String qrContent = 
+     "Numero de Revalidacion: " + nro_revalidacionFormato + "\n" +
+     "Codigo: " + codigo + "\n" +
+     "Fecha de Generacion: " + fechaComoString;
+ QRCodeWriter qrCodeWriter = new QRCodeWriter();
+ BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 100, 100);
+
+ // Crear la imagen BufferedImage del código QR
+ int width = bitMatrix.getWidth();
+ int height = bitMatrix.getHeight();
+ BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+ for (int x = 0; x < width; x++) {
+   for (int y = 0; y < height; y++) {
+     qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+   }
+ }
+ // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
+ ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+ ITextRenderer renderer = new ITextRenderer();
+ renderer.setDocumentFromString(htmlContent);
+ renderer.layout();
+ renderer.createPDF(pdfOutputStream);
+ // Crear un nuevo documento PDF
+ PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(pdfOutputStream.toByteArray()));
+
+ // Convertir la imagen BufferedImage a PDImageXObject
+ PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
+ // Obtener la página donde deseas agregar la imagen
+ PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
+
+ // Agregar la imagen del código QR al contenido del PDF
+ try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
+     PDPageContentStream.AppendMode.APPEND, true, true)) {
+   float x = 30; // Ajusta esta coordenada x según tus necesidades
+   float y = 375; // Ajusta esta coordenada y según tus necesidades
+   float widthj = 68; // Ajusta el ancho de la imagen
+   float heightj = 68; // Ajusta la altura de la imagen
+
+   contentStream.drawImage(pdImage, x, y, widthj, heightj);
+ }
+ // Guardar el PDF con la imagen del código QR agregada
+ pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+ pdfDocument.close();
+
+} catch (Exception e) {
+ e.printStackTrace(); // Maneja las excepciones según tus necesidades
+} 
+
+
+
+
+
+    archive.plantillaR(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
+
+   
+
+     // Registrar Revalidacion Generado
+    revalidacionGenerado.setEstado("A");
+    revalidacionGenerado.setNombre_archivo(nombreArchivo);
+    revalidacionGenerado.setRuta_archivo(rutaCompletaSalida);
+    revalidacionGeneradoService.save(revalidacionGenerado);
+
+    // Registrar revalidacion
+
+    revalidacion.setFecha_generacion(localDateFA);
+    revalidacion.setEstado("A");
+    revalidacion.setNro_revalidacio(nro_revalidacionFormato);
+    revalidacion.setRevalidacionGenerado(revalidacionGenerado);
+    revalidacionService.save(revalidacion);
+    
+
+     return "redirect:listarRevalidaciones";
+    }
+
+
+    
+  
+    
+
+  
 
 }

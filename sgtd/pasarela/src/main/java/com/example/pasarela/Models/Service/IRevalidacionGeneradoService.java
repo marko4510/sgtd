@@ -2,18 +2,18 @@ package com.example.pasarela.Models.Service;
 
 import java.util.List;
 
+
 import com.example.pasarela.Models.Entity.RevalidacionGenerado;
 
 public interface IRevalidacionGeneradoService {
     
-    public RevalidacionGenerado registrarRevalidacionGenerado(RevalidacionGenerado revalidacionGenerado);
+     public List<RevalidacionGenerado> findAll();
 
-    public RevalidacionGenerado buscarRevalidacionGenerado(Long id_revalidacion_generado);
+	public void save(RevalidacionGenerado revalidacionGenerado);
 
+	public RevalidacionGenerado findOne(Long id);
 
-    public RevalidacionGenerado buscarRevalidacionGeneradoPorRevalidacion(Long id_revalidacion);
+	public void delete(Long id);
 
-    public void modificarRevalidacionGenerado(RevalidacionGenerado revalidacionGenerado);
-
-    public List<RevalidacionGenerado> listarRevalidacionGeneradoJPQL();
+	public RevalidacionGenerado buscarRevalidacionGeneradoPorRevalidacion(Long id_revalidacion);
 }

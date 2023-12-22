@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.pasarela.Models.Dao.IRevalidacionGeneradoDao;
+import com.example.pasarela.Models.Entity.Revalidacion;
 import com.example.pasarela.Models.Entity.RevalidacionGenerado;
 import com.example.pasarela.Models.Service.IRevalidacionGeneradoService;
 
@@ -15,18 +16,27 @@ import com.example.pasarela.Models.Service.IRevalidacionGeneradoService;
 @Transactional
 public class RevalidacionGeneradoServiceImpl implements IRevalidacionGeneradoService{
 
-    @Autowired(required = false)
+    @Autowired
     private IRevalidacionGeneradoDao revalidacionGeneradoDao;
 
-
     @Override
-    public RevalidacionGenerado registrarRevalidacionGenerado(RevalidacionGenerado revalidacionGenerado) {
-        return revalidacionGeneradoDao.registrarRevalidacionGenerado(revalidacionGenerado);
+    public List<RevalidacionGenerado> findAll() {
+         return (List<RevalidacionGenerado>) revalidacionGeneradoDao.findAll();
     }
 
     @Override
-    public RevalidacionGenerado buscarRevalidacionGenerado(Long id_revalidacion_generado) {
-        return revalidacionGeneradoDao.buscarRevalidacionGenerado(id_revalidacion_generado);
+    public void save(RevalidacionGenerado revalidacionGenerado) {
+        revalidacionGeneradoDao.save(revalidacionGenerado);
+    }
+
+    @Override
+    public RevalidacionGenerado findOne(Long id) {
+        return revalidacionGeneradoDao.findById(id).orElse(null);
+    }
+
+    @Override
+    public void delete(Long id) {
+        revalidacionGeneradoDao.deleteById(id);
     }
 
     @Override
@@ -34,14 +44,7 @@ public class RevalidacionGeneradoServiceImpl implements IRevalidacionGeneradoSer
         return revalidacionGeneradoDao.buscarRevalidacionGeneradoPorRevalidacion(id_revalidacion);
     }
 
-    @Override
-    public void modificarRevalidacionGenerado(RevalidacionGenerado revalidacionGenerado) {
-        revalidacionGeneradoDao.modificarRevalidacionGenerado(revalidacionGenerado);
-    }
 
-    @Override
-    public List<RevalidacionGenerado> listarRevalidacionGeneradoJPQL() {
-        return revalidacionGeneradoDao.listarRevalidacionGeneradoJPQL();
-    }
+   
     
 }
