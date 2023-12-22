@@ -2890,7 +2890,8 @@ public class PdfController {
 
  
   @PostMapping("/generarRevalidaciones")
-  public String generarRevalidacionesPDF(@Validated Revalidacion revalidacion, Model model,@RequestParam("tenor") String tenor)
+  public String generarRevalidacionesPDF(@Validated Revalidacion revalidacion, Model model,@RequestParam("tenor") String tenor,
+  @RequestParam("titulo") String titulo)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
           Date fechaActual = new Date();
           LocalDate localDateFA = convertirDateALocalDate(fechaActual);
@@ -2899,12 +2900,19 @@ public class PdfController {
     String nro_revalidacion = (listRevalidacion.size() + 1) + "";
     String nro_revalidacionFormato = generarCodigo.generarCodigo(nro_revalidacion);
     String codigo = archive.getMD5(nro_revalidacion + "");
-  
+    int dia = localDateFA.getDayOfMonth();
+    int anio = localDateFA.getYear();
+    String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+      
+    String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
 
 
      Context context = new Context();
      context.setVariable("nro_revalidacion", nro_revalidacionFormato);
-      context.setVariable("tenor", tenor);
+    context.setVariable("tenor", tenor);
+     context.setVariable("dia", dia);
+    context.setVariable("anio", anio);
+    context.setVariable("cadenaMesC", cadenaMesC);
     String htmlContent = templateEngine.process("revalidacion/prueba", context);
   
     
@@ -2953,24 +2961,31 @@ public class PdfController {
  
      String rutaCompletaSalida = rootAbsolutPathRevalidacionesP + "/" + nombreArchivo;
 
-     try {
-     // Generar el contenido del código QR
-     String qrContent = 
-     "Numero de Revalidacion: " + nro_revalidacionFormato + "\n" +
-     "Codigo: " + codigo + "\n" +
-     "Fecha de Generacion: " + fechaComoString;
- QRCodeWriter qrCodeWriter = new QRCodeWriter();
- BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 100, 100);
+  
+try {
+  // Generar el contenido del código QR
+  String qrContent =
+         
+                  "Numero de Revalidacion: " + nro_revalidacionFormato + "\n" +
+                  "Codigo: " + codigo + "\n" +
+                  "Fecha de Generacion: " + fechaComoString;
 
- // Crear la imagen BufferedImage del código QR
- int width = bitMatrix.getWidth();
- int height = bitMatrix.getHeight();
- BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
- for (int x = 0; x < width; x++) {
-   for (int y = 0; y < height; y++) {
-     qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
-   }
- }
+  // Calcular el tamaño necesario para el código QR
+  int tamañoQR = Math.max(200, Math.max(qrContent.length() * 10, 200));
+
+  QRCodeWriter qrCodeWriter = new QRCodeWriter();
+  BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, tamañoQR, tamañoQR);
+
+  // Crear la imagen BufferedImage del código QR
+  int width = bitMatrix.getWidth();
+  int height = bitMatrix.getHeight();
+  BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+  for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+          qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+      }
+  }
+
  // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
  ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
  ITextRenderer renderer = new ITextRenderer();
@@ -2984,24 +2999,27 @@ public class PdfController {
  PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
  // Obtener la página donde deseas agregar la imagen
  PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
+ 
 
- // Agregar la imagen del código QR al contenido del PDF
- try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
-     PDPageContentStream.AppendMode.APPEND, true, true)) {
-   float x = 30; // Ajusta esta coordenada x según tus necesidades
-   float y = 375; // Ajusta esta coordenada y según tus necesidades
-   float widthj = 68; // Ajusta el ancho de la imagen
-   float heightj = 68; // Ajusta la altura de la imagen
+  // Agregar la imagen del código QR al contenido del PDF
+  try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
+          PDPageContentStream.AppendMode.APPEND, true, true)) {
+      float x = 30; // Ajusta esta coordenada x según tus necesidades
+      float y = 375; // Ajusta esta coordenada y según tus necesidades
+      float widthj = 68; // Ajusta el ancho de la imagen
+      float heightj = 68; // Ajusta la altura de la imagen
 
-   contentStream.drawImage(pdImage, x, y, widthj, heightj);
- }
- // Guardar el PDF con la imagen del código QR agregada
- pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
- pdfDocument.close();
+      contentStream.drawImage(pdImage, x, y, widthj, heightj);
+  }
+
+  // Guardar el PDF con la imagen del código QR agregada
+  pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+  pdfDocument.close();
 
 } catch (Exception e) {
- e.printStackTrace(); // Maneja las excepciones según tus necesidades
-} 
+  e.printStackTrace(); // Maneja las excepciones según tus necesidades
+}
+
 
 
 
@@ -3018,7 +3036,7 @@ public class PdfController {
     revalidacionGeneradoService.save(revalidacionGenerado);
 
     // Registrar revalidacion
-
+    revalidacion.setTitulo_revalidacion(titulo);
     revalidacion.setFecha_generacion(localDateFA);
     revalidacion.setEstado("A");
     revalidacion.setNro_revalidacio(nro_revalidacionFormato);

@@ -26,6 +26,7 @@ public class Revalidacion implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_revalidacion;
     private String nro_revalidacio;
+    private String titulo_revalidacion;
     
     private LocalDate fecha_generacion;
     

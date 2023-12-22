@@ -62,8 +62,9 @@
                                         <thead>
                                             <tr>
                                                 <th class="border-bottom-0">Número de Revalidación</th>
-                                              
+                                           
                                                 <th class="border-bottom-0">Fecha Generación</th>
+
                                                 
                                                 <th class="border-bottom-0">Accion</th>
         
@@ -74,6 +75,7 @@
                                             <tr th:each="reva : ${revalidaciones}" th:if="${reva.estado == 'A'}">
                                              
                                                 <td th:text="${reva.nro_revalidacio}"></td>
+                                              
                                                
                                              
 
@@ -136,9 +138,9 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <th class="border-bottom-0">Número de Reva</th>
+                                                <th class="border-bottom-0">Número de Revalidación</th>
                                               
-                                       
+                                                
                                                 <th class="border-bottom-0">Fecha Generación</th>
                                            
                                                 <th class="border-bottom-0">Accion</th>
