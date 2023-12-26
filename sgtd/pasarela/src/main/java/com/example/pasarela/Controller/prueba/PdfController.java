@@ -2891,7 +2891,7 @@ public class PdfController {
  
   @PostMapping("/generarRevalidaciones")
   public String generarRevalidacionesPDF(@Validated Revalidacion revalidacion, Model model,@RequestParam("tenor") String tenor,
-  @RequestParam("titulo") String titulo)
+  @RequestParam("titulo") String titulo, @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
           Date fechaActual = new Date();
           LocalDate localDateFA = convertirDateALocalDate(fechaActual);
@@ -2956,10 +2956,7 @@ public class PdfController {
 
      // Generar la ruta completa del archivo
      String rutaCompleta = rootAbsolutPathRevalidaciones + "/" + nombreArchivo;
-     // Ruta completa de la Plantilla
-     String rutaCompletaP = rootAbsolutPathPlantillasPath + "/plantillar.jpg";
- 
-     String rutaCompletaSalida = rootAbsolutPathRevalidacionesP + "/" + nombreArchivo;
+    
 
   
 try {
@@ -3004,8 +3001,8 @@ try {
   // Agregar la imagen del código QR al contenido del PDF
   try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
           PDPageContentStream.AppendMode.APPEND, true, true)) {
-      float x = 30; // Ajusta esta coordenada x según tus necesidades
-      float y = 375; // Ajusta esta coordenada y según tus necesidades
+      float x = 28; // Ajusta esta coordenada x según tus necesidades
+      float y = 706; // Ajusta esta coordenada y según tus necesidades
       float widthj = 68; // Ajusta el ancho de la imagen
       float heightj = 68; // Ajusta la altura de la imagen
 
@@ -3024,12 +3021,13 @@ try {
 
 
 
-
-    archive.plantillaR(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
-
-   
-
-     // Registrar Revalidacion Generado
+    if (usarPlantilla) {
+        // Ruta completa de la Plantilla
+     String rutaCompletaP = rootAbsolutPathPlantillasPath + "/plantillar.jpg";
+ 
+     String rutaCompletaSalida = rootAbsolutPathRevalidacionesP + "/" + nombreArchivo;
+    archive.plantillaR(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo); 
+        // Registrar Revalidacion Generado
     revalidacionGenerado.setEstado("A");
     revalidacionGenerado.setNombre_archivo(nombreArchivo);
     revalidacionGenerado.setRuta_archivo(rutaCompletaSalida);
@@ -3042,6 +3040,26 @@ try {
     revalidacion.setNro_revalidacio(nro_revalidacionFormato);
     revalidacion.setRevalidacionGenerado(revalidacionGenerado);
     revalidacionService.save(revalidacion);
+    }else{
+       // Registrar Revalidacion Generado
+    revalidacionGenerado.setEstado("A");
+    revalidacionGenerado.setNombre_archivo(nombreArchivo);
+    revalidacionGenerado.setRuta_archivo(rutaCompleta);
+    revalidacionGeneradoService.save(revalidacionGenerado);
+
+    // Registrar revalidacion
+    revalidacion.setTitulo_revalidacion(titulo);
+    revalidacion.setFecha_generacion(localDateFA);
+    revalidacion.setEstado("A");
+    revalidacion.setNro_revalidacio(nro_revalidacionFormato);
+    revalidacion.setRevalidacionGenerado(revalidacionGenerado);
+    revalidacionService.save(revalidacion);
+    }
+   
+
+   
+
+  
     
 
      return "redirect:listarRevalidaciones";

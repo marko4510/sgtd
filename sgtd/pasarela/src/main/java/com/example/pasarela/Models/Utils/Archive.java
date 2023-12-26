@@ -156,7 +156,7 @@ public class Archive {
 		PdfContentByte cb = stamp.getUnderContent(1);
 		// Creo una imagen para agregarla y le pongo propiedades de posicion y escala
 		Image image = Image.getInstance(plantilla);
-		image.setAbsolutePosition(0, 0);
+		image.setAbsolutePosition(0,321);
 		image.scalePercent(19);
 		// Agrego una imagen, la cual ya tiene las propiedades de posicion
 		cb.addImage(image);
@@ -167,6 +167,7 @@ public class Archive {
 		return codigo + ".pdf";
 	}
 	
+
 
 
 
