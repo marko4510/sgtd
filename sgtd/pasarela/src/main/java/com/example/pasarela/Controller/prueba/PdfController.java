@@ -2891,17 +2891,19 @@ public class PdfController {
  
   @PostMapping("/generarRevalidaciones")
   public String generarRevalidacionesPDF(@Validated Revalidacion revalidacion, Model model,@RequestParam("tenor") String tenor,
-  @RequestParam("titulo") String titulo, @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla)
+  @RequestParam("titulo") String titulo,  @RequestParam("persona") String persona, @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
           Date fechaActual = new Date();
           LocalDate localDateFA = convertirDateALocalDate(fechaActual);
           String fechaComoString = localDateFA.toString();
     List<Revalidacion> listRevalidacion = revalidacionService.findAll();
     String nro_revalidacion = (listRevalidacion.size() + 1) + "";
-    String nro_revalidacionFormato = generarCodigo.generarCodigo(nro_revalidacion);
+    int anio = localDateFA.getYear();
+    int dosUltimosDigitos = anio % 100;
+    String nro_revalidacionFormato = generarCodigo.generarCodigo(nro_revalidacion) + "/"+ dosUltimosDigitos+ "R";
     String codigo = archive.getMD5(nro_revalidacion + "");
     int dia = localDateFA.getDayOfMonth();
-    int anio = localDateFA.getYear();
+  
     String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
       
     String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
@@ -2962,7 +2964,7 @@ public class PdfController {
 try {
   // Generar el contenido del código QR
   String qrContent =
-         
+                  "Persona: " + persona + "\n" +
                   "Numero de Revalidacion: " + nro_revalidacionFormato + "\n" +
                   "Codigo: " + codigo + "\n" +
                   "Fecha de Generacion: " + fechaComoString;
@@ -3048,6 +3050,7 @@ try {
     revalidacionGeneradoService.save(revalidacionGenerado);
 
     // Registrar revalidacion
+    revalidacion.setPersona_revalidacion(persona);
     revalidacion.setTitulo_revalidacion(titulo);
     revalidacion.setFecha_generacion(localDateFA);
     revalidacion.setEstado("A");

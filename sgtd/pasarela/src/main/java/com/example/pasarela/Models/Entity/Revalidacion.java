@@ -27,6 +27,7 @@ public class Revalidacion implements Serializable{
     private Long id_revalidacion;
     private String nro_revalidacio;
     private String titulo_revalidacion;
+    private String persona_revalidacion;
     
     private LocalDate fecha_generacion;
     
