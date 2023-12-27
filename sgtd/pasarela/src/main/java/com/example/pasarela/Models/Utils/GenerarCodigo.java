@@ -4,7 +4,7 @@ public class GenerarCodigo {
     
     public static String generarCodigo(String valorIncrementable) {
         // Definir la longitud máxima del código
-        int longitudMaxima = 4;
+        int longitudMaxima = 5;
 
         // Calcular cuántos ceros se deben agregar
         int cerosFaltantes = Math.max(0, longitudMaxima - valorIncrementable.length());
