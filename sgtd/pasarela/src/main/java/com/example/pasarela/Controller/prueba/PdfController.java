@@ -2967,7 +2967,7 @@ try {
   String qrContent =
                   "Persona: " + persona + "\n" +
                   "Numero de Revalidacion: " + nroRevalidacion + "\n" +
-                  "Codigo: " + codigo + "\n" +
+                  
                   "Fecha de Generacion: " + fechaComoString;
 
   // Calcular el tamaño necesario para el código QR
