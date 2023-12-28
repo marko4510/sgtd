@@ -2891,6 +2891,7 @@ public class PdfController {
  
   @PostMapping("/generarRevalidaciones")
   public String generarRevalidacionesPDF(@Validated Revalidacion revalidacion, Model model,@RequestParam("tenor") String tenor,
+  @RequestParam("nroRevalidacion") String nroRevalidacion,
   @RequestParam("titulo") String titulo,  @RequestParam("persona") String persona, @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
           Date fechaActual = new Date();
@@ -2910,7 +2911,7 @@ public class PdfController {
 
 
      Context context = new Context();
-     context.setVariable("nro_revalidacion", nro_revalidacionFormato);
+     context.setVariable("nro_revalidacion", nroRevalidacion);
     context.setVariable("tenor", tenor);
      context.setVariable("dia", dia);
     context.setVariable("anio", anio);
@@ -2965,7 +2966,7 @@ try {
   // Generar el contenido del código QR
   String qrContent =
                   "Persona: " + persona + "\n" +
-                  "Numero de Revalidacion: " + nro_revalidacionFormato + "\n" +
+                  "Numero de Revalidacion: " + nroRevalidacion + "\n" +
                   "Codigo: " + codigo + "\n" +
                   "Fecha de Generacion: " + fechaComoString;
 
@@ -3039,7 +3040,7 @@ try {
     revalidacion.setTitulo_revalidacion(titulo);
     revalidacion.setFecha_generacion(localDateFA);
     revalidacion.setEstado("A");
-    revalidacion.setNro_revalidacio(nro_revalidacionFormato);
+    revalidacion.setNro_revalidacio(nroRevalidacion);
     revalidacion.setRevalidacionGenerado(revalidacionGenerado);
     revalidacionService.save(revalidacion);
     }else{
@@ -3054,7 +3055,7 @@ try {
     revalidacion.setTitulo_revalidacion(titulo);
     revalidacion.setFecha_generacion(localDateFA);
     revalidacion.setEstado("A");
-    revalidacion.setNro_revalidacio(nro_revalidacionFormato);
+    revalidacion.setNro_revalidacio(nroRevalidacion);
     revalidacion.setRevalidacionGenerado(revalidacionGenerado);
     revalidacionService.save(revalidacion);
     }

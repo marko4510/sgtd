@@ -38,10 +38,13 @@ public class RevalidacionController {
 
 
     @GetMapping("/inicioGenerarRevalidacion")
-    public String inicioGenerarCertificado(Model model) {
-    
+    public String inicioGenerarCertificado(Model model , HttpServletRequest request) {
+    if (request.getSession().getAttribute("usuario") != null) {
 
     return "revalidacion/generarRevalidacion";
+     } else {
+            return "redirect:LoginR";
+        }
   }
 
 
