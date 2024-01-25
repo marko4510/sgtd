@@ -2300,6 +2300,19 @@ public class PdfController {
             }
 
           }
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Turismo Sostenible")) {
+            if (persona.getSexo().equals("Masculino")) {
+              primerTexto = "Turismo Sostenible";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Turismo Sostenible";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
+
+          }
+
 
           // Obtener la página donde deseas agregar el texto
           PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
