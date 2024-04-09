@@ -6,9 +6,8 @@ public class numeroAtexto {
     private static final String[] DECENAS = {"", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
     private static final String[] CENTENAS = {"", "ciento", "doscientas", "trescientas", "cuatrocientas", "quinientas", "seiscientas", "setecientas", "ochocientas", "novecientas"};
 
-
     public static String convertirNumeroATexto(int numero) {
-        if (numero < 0 || numero > 2000) {
+        if (numero < 0 || numero > 2050) {
             return "Número fuera de rango (0-2000)";
         }
 
@@ -19,11 +18,14 @@ public class numeroAtexto {
         return convertirParte(numero);
     }
 
-    private static String convertirParte(int parte) {
+    public static String convertirParte(int parte) {
         if (parte <= 9) {
             return UNIDADES[parte];
         } else if (parte <= 15) {
             return DIEZ_A_QUINCE[parte - 10];
+        } else if (parte <= 29) { // Ajuste para números entre 21 y 29
+            int unidad = parte % 10;
+            return "veinti" + UNIDADES[unidad];
         } else if (parte <= 99) {
             int unidad = parte % 10;
             int decena = parte / 10;
@@ -53,3 +55,4 @@ public class numeroAtexto {
         }
     }
 }
+

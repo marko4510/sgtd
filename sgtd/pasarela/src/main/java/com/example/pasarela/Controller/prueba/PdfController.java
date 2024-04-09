@@ -1155,7 +1155,7 @@ public class PdfController {
           float xTexto = (pageWidth - textWidth) / 2;
 
           // Configurar la posición Y del texto
-          float yTexto = 298; // Ajusta esta coordenada y según tus necesidades
+          float yTexto = 286; // Ajusta esta coordenada y según tus necesidades
 
           // Agregar el texto al documento centrado
           contentStream.beginText();
@@ -1181,7 +1181,7 @@ public class PdfController {
           String diaConvertido = String.valueOf(dia);
           String texto3 = diaConvertido;
           float xTexto3 = 250;
-          float yTexto3 = 185;
+          float yTexto3 = 170;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto3, yTexto3);
           contentStream.showText(texto3);
@@ -1190,7 +1190,7 @@ public class PdfController {
           String mesConvertido = String.valueOf(cadenaMesC);
           String texto4 = mesConvertido;
           float xTexto4 = 326;
-          float yTexto4 = 185;
+          float yTexto4 = 170;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto4, yTexto4);
           contentStream.showText(texto4);
@@ -1198,8 +1198,8 @@ public class PdfController {
 
           String gestionC = String.valueOf(gestion);
           String texto5 = "Dos mil " + gestionC;
-          float xTexto5 = 450;
-          float yTexto5 = 185;
+          float xTexto5 = 455;
+          float yTexto5 = 170;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto5, yTexto5);
           contentStream.showText(texto5);
@@ -2527,10 +2527,14 @@ public class PdfController {
     Usuario usuario = usuarioService.findOne(solicitud.getUsuario().getId_usuario());
     Long id_usuario = usuario.getId_usuario();
     Date fechaActual = new Date();
+    
     // Ruta donde se guardarán los recibos
     Path rootPath = Paths.get("recibos/legalizacion/");
     Path rootAbsolutePath = rootPath.toAbsolutePath();
     String directoryPath = rootAbsolutePath.toString();
+
+
+
     String cpt = generarNumeroEnFormato();
     List<Recibo> listRecibos = reciboService.findAll();
     String nro_recibo = (listRecibos.size() + 1) + "";
@@ -2672,8 +2676,11 @@ public class PdfController {
     String fechaComoString = localDateFA.toString();
     int dia = localDateFA.getDayOfMonth();
     String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+    int anio = localDateFA.getYear();
+    int dosUltimosDigitos = anio % 100;
+    String anioString = String.valueOf(dosUltimosDigitos);
 
-    String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
+  
     String codigo = archive.getMD5((listTitulo.size() + 1) + "");
 
     Map<String, Object> requests = new HashMap<String, Object>();
@@ -2702,9 +2709,17 @@ public class PdfController {
       String plan = data.getPlan();
       String version = data.getVersion();
       Integer horas = data.getHorasAcademicas();
-      String numeroTextoHoras = a.convertirNumeroATexto(horas);
+      Integer modulos = data.getCantidadModulos();
+      String numeroTextoHoras = a.convertirParte(horas);
+      String numeroTextoModulos = a.convertirParte(modulos);
+      String numeroTextoDia = a.convertirParte(dia);
+      String numeroTextoAnio = a.convertirParte(dosUltimosDigitos);
       String numeroTextoHorasConver = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoHoras);
-
+      String numeroTextoModulosConver = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoModulos);
+      String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
+      String cadenaDiaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoDia);
+      String cadenaAnioC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoAnio);
+     
 
       Context context = new Context();
       // Agregar los datos que necesites en tu vista
@@ -2715,6 +2730,10 @@ public class PdfController {
       context.setVariable("plan", plan);
       context.setVariable("version", version);
       context.setVariable("horas", numeroTextoHorasConver);
+      context.setVariable("modulos", numeroTextoModulosConver);
+      context.setVariable("mes", cadenaMesC);
+      context.setVariable("anio", cadenaAnioC);
+      context.setVariable("dia", cadenaDiaC);
       
       String htmlContent = templateEngine.process("certificado/tituloDiplomado-pdf", context);
 
@@ -2831,8 +2850,8 @@ public class PdfController {
         // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 210; // Ajusta esta coordenada x según tus necesidades
-          float y = 100; // Ajusta esta coordenada y según tus necesidades
+          float x = 540; // Ajusta esta coordenada x según tus necesidades
+          float y = 70; // Ajusta esta coordenada y según tus necesidades
           float widthj = 40; // Ajusta el ancho de la imagen
           float heightj = 40; // Ajusta la altura de la imagen
 
@@ -2854,6 +2873,62 @@ public class PdfController {
         pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
         pdfDocument.close();
 
+
+        // Ruta al archivo de fuente personalizada
+        String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
+    
+     try {
+          // Cargar el documento PDF existente
+          PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta));
+          
+          float fontFirma = 18;
+          
+     // Obtener la página donde deseas agregar el texto
+          PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
+
+          // Crear un objeto de contenido para escribir texto en la página
+          PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
+              PDPageContentStream.AppendMode.APPEND, true, true);
+
+          // Cargar la fuente personalizada
+          PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
+          
+           // parrafos de firmas
+          contentStream.setFont(customFont, fontFirma);
+          String texto7 = "MSc. Oscar Felipe Melgar Saucedo";
+          float xTexto7 = 60;
+          float yTexto7 = 69;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto7, yTexto7);
+          contentStream.showText(texto7);
+          contentStream.endText();
+
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto7, yTexto7);
+          contentStream.showText(texto7);
+          contentStream.endText();
+
+          String texto8 = "MSc. Franz Navia Miranda";
+          float xTexto8 = 377;
+          float yTexto8 = 69;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto8, yTexto8);
+          contentStream.showText(texto8);
+          contentStream.endText();
+
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto8, yTexto8);
+          contentStream.showText(texto8);
+          contentStream.endText();
+          
+           // Cerrar el contenido y guardar el documento PDF
+          contentStream.close();
+          pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+          pdfDocument2.close();
+
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
       
 
       } catch (Exception e) {
@@ -2890,6 +2965,331 @@ public class PdfController {
       
       titulo.setEstado("A");
       titulo.setTipo_titulo("Diplomado");
+      titulo.setFecha_generacion(localDateFA);
+      tituloService.save(titulo);
+
+
+
+      return "redirect:/listarTitulosPosgrado";
+
+    }
+    return "redirect:/LoginR";
+  }
+
+
+
+  @RequestMapping(value = "/generarEspecialidad", method = RequestMethod.POST)
+  public String generarEspecialidad(@Validated Titulo titulo, @RequestParam(value = "correlativo") String correlativo,
+  @RequestParam(value = "nroTitulo", required = false) String nroTitulo,
+      @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla, Model model,
+      HttpServletRequest request,
+      RedirectAttributes redirectAttrs)
+      throws FileNotFoundException, IOException, ParseException, DocumentException, WriterException {
+
+    List<Titulo> listTitulo = tituloService.findAll();
+    Date fechaActual = new Date();
+    LocalDate localDateFA = convertirDateALocalDate(fechaActual);
+    String fechaComoString = localDateFA.toString();
+    int dia = localDateFA.getDayOfMonth();
+    String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+    int anio = localDateFA.getYear();
+    int dosUltimosDigitos = anio % 100;
+    String anioString = String.valueOf(dosUltimosDigitos);
+
+  
+    String codigo = archive.getMD5((listTitulo.size() + 1) + "");
+
+    Map<String, Object> requests = new HashMap<String, Object>();
+    requests.put("correlativo", correlativo);
+    String url = "http://virtual.uap.edu.bo:6061/v1/api/certificado";
+    String key = "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKVVNWUlZURUZEU1U5T0lpd2libUZ0WlNJNklsVk9TVlpGVWxOSlJFRkVYMEZOUVZwUFRrbERRVjlRUVU1RVQxOVFUMU5IVWtGRVR5SXNJbWxoZENJNk1qQXlNMzAuZThZeU42YmVyalhMbXFneENzMEl1ZWdiZlRSbWJrUTVOSG95bEVrUV91OA==";
+    HttpHeaders headers = new HttpHeaders();
+
+    headers.setContentType(MediaType.APPLICATION_JSON);
+    headers.set("api-key", key);
+
+    HttpEntity<HashMap> req = new HttpEntity(requests, headers);
+
+    RestTemplate restTemplate = new RestTemplate();
+
+    ResponseEntity<Map> resp = restTemplate.exchange(url, HttpMethod.POST, req, Map.class);
+
+    if (resp.getStatusCode().equals(HttpStatus.OK)) {
+
+      PrgMtrCertificadoDto data = new ObjectMapper().convertValue(resp.getBody(), PrgMtrCertificadoDto.class);
+      numeroAtexto a = new numeroAtexto();
+      String nombre = data.getNombrePersona();
+      String apellidoP = data.getApellidoPaterno();
+      String apellidoM = data.getApellidoMaterno();
+      String programa = data.getNombrePrograma();
+      String plan = data.getPlan();
+      String version = data.getVersion();
+      Integer horas = data.getHorasAcademicas();
+      Integer modulos = data.getCantidadModulos();
+      
+      String nacionalidad = data.getNacionalidad();
+      if (nacionalidad.equals("BOLIVIANO(A)")) {
+        nacionalidad = "Boliviana";
+      }
+      String dip = data.getDip();
+      String fechaNacimiento = data.getFechaNacimiento();
+      String numeroTextoHoras = a.convertirParte(horas);
+      String numeroTextoModulos = a.convertirParte(modulos);
+      String numeroTextoDia = a.convertirParte(dia);
+      String numeroTextoAnio = a.convertirParte(dosUltimosDigitos);
+      String numeroTextoHorasConver = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoHoras);
+      String numeroTextoModulosConver = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoModulos);
+      String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
+      String cadenaDiaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoDia);
+      String cadenaAnioC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoAnio);
+     
+
+      Context context = new Context();
+      // Agregar los datos que necesites en tu vista
+      context.setVariable("fechaNacimiento", fechaNacimiento);
+      context.setVariable("nacionalidad", nacionalidad);
+      context.setVariable("nombre", nombre);
+      context.setVariable("apellidoP", apellidoP);
+      context.setVariable("apellidoM", apellidoM);
+      context.setVariable("programa", programa);
+      context.setVariable("plan", plan);
+      context.setVariable("version", version);
+      context.setVariable("horas", numeroTextoHorasConver);
+      context.setVariable("modulos", numeroTextoModulosConver);
+      context.setVariable("mes", cadenaMesC);
+      context.setVariable("anio", cadenaAnioC);
+      context.setVariable("dia", cadenaDiaC);
+      
+      String htmlContent = templateEngine.process("certificado/tituloDiplomado-pdf", context);
+
+      // Directorio donde se guardará el archivo PDF
+      Path rootPathTitulos = Paths.get("archivos/especilidad/");
+      Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
+      String rutaDirectorioTitulos = rootPathTitulos + "/";
+      try {
+        if (!Files.exists(rootPathTitulos)) {
+          Files.createDirectories(rootPathTitulos);
+          System.out.println("Directorio creado: " + rutaDirectorioTitulos);
+        } else {
+          System.out.println("El directorio ya existe: " + rutaDirectorioTitulos);
+        }
+      } catch (IOException e) {
+        System.err.println("Error al crear el directorio: " + e.getMessage());
+      }
+
+      TituloGenerado tituloGenerado = new TituloGenerado();
+
+      // Nombre del archivo PDF
+      String nombreArchivo = codigo + ".pdf";
+
+      // Generar la ruta completa del archivo
+      String rutaCompleta = rootAbsolutPathTitulos + "/" + nombreArchivo;
+
+       try {
+        // Generar el contenido del código QR
+        String qrContent = "Persona: " + nombre + " " + apellidoP + " "
+            + apellidoM + "\n" +
+            "Numero de titulo: " + nroTitulo + "\n" +
+            "Codigo de titulo: " + codigo + "\n" +
+            "Fecha de Generacion titulo: " + fechaComoString;
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
+
+        // Crear la imagen BufferedImage del código QR
+        int width = bitMatrix.getWidth();
+        int height = bitMatrix.getHeight();
+        BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for (int x = 0; x < width; x++) {
+          for (int y = 0; y < height; y++) {
+            qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+          }
+        }
+
+        // GENERAR QR DEL RECTOR
+        String qrContentRector = "Firmado por: MSc. Franz Navia Miranda";
+        QRCodeWriter qrCodeWriterRector = new QRCodeWriter();
+        BitMatrix bitMatrixRector = qrCodeWriterRector.encode(qrContentRector, BarcodeFormat.QR_CODE, 200, 200);
+
+        int widthRector = bitMatrixRector.getWidth();
+        int heightRector = bitMatrixRector.getHeight();
+        BufferedImage qrImageRector = new BufferedImage(widthRector, heightRector, BufferedImage.TYPE_INT_RGB);
+        for (int x = 0; x < widthRector; x++) {
+          for (int y = 0; y < heightRector; y++) {
+            qrImageRector.setRGB(x, y, bitMatrixRector.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+          }
+        }
+        //
+
+        // GENERAR QR DEL VICERRECTOR
+        String qrContentVicerrector = "Firmado por: MSc. Oscar Felipe Melgar Saucedo";
+        QRCodeWriter qrCodeWriterVicerrector = new QRCodeWriter();
+        BitMatrix bitMatrixVicerrector = qrCodeWriterVicerrector.encode(qrContentVicerrector, BarcodeFormat.QR_CODE,
+            200, 200);
+
+        int widthVicerrector = bitMatrixVicerrector.getWidth();
+        int heightVicerrector = bitMatrixVicerrector.getHeight();
+        BufferedImage qrImageVicerrector = new BufferedImage(widthVicerrector, heightVicerrector,
+            BufferedImage.TYPE_INT_RGB);
+        for (int x = 0; x < widthVicerrector; x++) {
+          for (int y = 0; y < heightVicerrector; y++) {
+            qrImageVicerrector.setRGB(x, y, bitMatrixVicerrector.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+          }
+        }
+        //
+
+       
+
+        // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
+        ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+        ITextRenderer renderer = new ITextRenderer();
+        renderer.setDocumentFromString(htmlContent);
+        renderer.layout();
+        renderer.createPDF(pdfOutputStream);
+
+        // Crear un nuevo documento PDF
+        PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(pdfOutputStream.toByteArray()));
+
+        // Convertir la imagen BufferedImage a PDImageXObject
+        PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
+
+        // Convertir la imagen BufferedImage a PDImageXObject
+        PDImageXObject pdImageRector = LosslessFactory.createFromImage(pdfDocument, qrImageRector);
+
+        // Convertir la imagen BufferedImage a PDImageXObject
+        PDImageXObject pdImageVicerrector = LosslessFactory.createFromImage(pdfDocument, qrImageVicerrector);
+        // Convertir la imagen BufferedImage a PDImageXObject
+
+        // Obtener la página donde deseas agregar la imagen
+        PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
+
+        // Agregar la imagen del código QR al contenido del PDF
+        try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
+            PDPageContentStream.AppendMode.APPEND, true, true)) {
+          float x = 5; // Ajusta esta coordenada x según tus necesidades
+          float y = 840; // Ajusta esta coordenada y según tus necesidades
+          float widthj = 90; // Ajusta el ancho de la imagen
+          float heightj = 90; // Ajusta la altura de la imagen
+
+          contentStream.drawImage(pdImage, x, y, widthj, heightj);
+        }
+        // Agregar la imagen del código QR al contenido del PDF
+        try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
+            PDPageContentStream.AppendMode.APPEND, true, true)) {
+          float x = 540; // Ajusta esta coordenada x según tus necesidades
+          float y = 70; // Ajusta esta coordenada y según tus necesidades
+          float widthj = 40; // Ajusta el ancho de la imagen
+          float heightj = 40; // Ajusta la altura de la imagen
+
+          contentStream.drawImage(pdImageRector, x, y, widthj, heightj);
+        }
+        // Agregar la imagen del código QR al contenido del PDF
+        try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
+            PDPageContentStream.AppendMode.APPEND, true, true)) {
+          float x = 20; // Ajusta esta coordenada x según tus necesidades
+          float y = 70; // Ajusta esta coordenada y según tus necesidades
+          float widthj = 40; // Ajusta el ancho de la imagen
+          float heightj = 40; // Ajusta la altura de la imagen
+
+          contentStream.drawImage(pdImageVicerrector, x, y, widthj, heightj);
+        }
+       
+
+        // Guardar el PDF con la imagen del código QR agregada
+        pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+        pdfDocument.close();
+
+
+        // Ruta al archivo de fuente personalizada
+        String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
+    
+     try {
+          // Cargar el documento PDF existente
+          PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta));
+          
+          float fontFirma = 18;
+          
+     // Obtener la página donde deseas agregar el texto
+          PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
+
+          // Crear un objeto de contenido para escribir texto en la página
+          PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
+              PDPageContentStream.AppendMode.APPEND, true, true);
+
+          // Cargar la fuente personalizada
+          PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
+          
+           // parrafos de firmas
+          contentStream.setFont(customFont, fontFirma);
+          String texto7 = "MSc. Oscar Felipe Melgar Saucedo";
+          float xTexto7 = 60;
+          float yTexto7 = 69;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto7, yTexto7);
+          contentStream.showText(texto7);
+          contentStream.endText();
+
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto7, yTexto7);
+          contentStream.showText(texto7);
+          contentStream.endText();
+
+          String texto8 = "MSc. Franz Navia Miranda";
+          float xTexto8 = 377;
+          float yTexto8 = 69;
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto8, yTexto8);
+          contentStream.showText(texto8);
+          contentStream.endText();
+
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto8, yTexto8);
+          contentStream.showText(texto8);
+          contentStream.endText();
+          
+           // Cerrar el contenido y guardar el documento PDF
+          contentStream.close();
+          pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+          pdfDocument2.close();
+
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      
+
+      } catch (Exception e) {
+        e.printStackTrace(); // Maneja las excepciones según tus necesidades
+      }
+      Persona personaExiste = personaService.getPersonaByNombres(nombre, apellidoP, apellidoM);
+
+      if (personaExiste == null) {
+      Persona personaNueva = new Persona();
+      personaNueva.setNombre(nombre);
+      personaNueva.setAp_paterno(apellidoP);
+      personaNueva.setAp_materno(apellidoM);
+      personaNueva.setEstado("P");
+      personaNueva.setCi("0-0-0-0-0-0");
+      personaService.save(personaNueva); 
+      titulo.setPersona(personaNueva); 
+      }else{
+      titulo.setPersona(personaExiste);
+      }
+
+      // Registrar titulo Generado
+
+      tituloGenerado.setNombre_archivo(nombreArchivo);
+      tituloGenerado.setRuta_archivo(rutaCompleta);
+      tituloGenerado.setEstado("A");
+      TituloGenerado tituloGenerado2 = tituloGeneradoService.registrarTituloGenerado(tituloGenerado);
+
+      // Registrar titulo
+      List<Titulo> titulosDiplomado = tituloService.titulosDiplomado();
+   
+      titulo.setNro_titulo((titulosDiplomado.size()+1)+"");
+      titulo.setTituloGenerado(tituloGenerado2);
+      titulo.setNro_titulo(nroTitulo);
+      
+      titulo.setEstado("A");
+      titulo.setTipo_titulo("Especialidad");
       titulo.setFecha_generacion(localDateFA);
       tituloService.save(titulo);
 

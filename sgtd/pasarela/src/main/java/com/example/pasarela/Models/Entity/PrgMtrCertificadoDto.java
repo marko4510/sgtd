@@ -31,4 +31,8 @@ private String apellidoPaterno;
   private Integer anhoEjecucion;
   private String correlativo;
   private Integer cantidadModulos;
+  private String dip;
+  private String nacionalidad;
+  private String fechaNacimiento;
+
 }

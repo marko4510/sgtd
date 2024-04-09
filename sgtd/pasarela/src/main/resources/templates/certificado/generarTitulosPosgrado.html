@@ -87,16 +87,14 @@
                                                   
                                          
                                             </div>
-                                            <!--
                                             <div class="col-md-3">
                                       
-                                                <label class="col-form-label">Número de Título</label>
+                                                <label class="col-form-label">Número Titulo</label>
                                             <input class="form-control" name="nroTitulo" type="text" required>
                                                    
                                               
                                      
                                         </div>
-                                        -->
                                         </div>
                                  
 
@@ -116,41 +114,49 @@
                             </div>
                             <div class="tab-pane fade" id="bachiller" role="tabpanel" aria-labelledby="bachiller-tab">
                                 <div class="card-body">
-                                <form id="miFormulario1" th:action="@{/generarTituloBachillerPdf}" method="post">
-                                    <div class="row">
-                                    <div class="col-md-6">
-                                        <div>
-                                            <label class="col-form-label">Persona</label>
-                                            <select class="form-select js-choice" name="id_persona">
-                                                <option th:each="per : ${personas}" th:value="${per.id_persona}"
-                                                    th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}">
-                                                </option>
-                                            </select>
+                                    <form id="miFormulario1" th:action="@{/generarEspecialidad}" method="post">
+                                        <div class="checkbox mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="usarPlantilla" value="true">
+                                                <label class="form-check-label" for="flexCheckDefault3">
+                                                    Incluir Plantilla
+                                                </label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-3 text-dark">
-                                        <label class="col-form-label">Gestión</label>
-                                        <select class="form-select js-choice" name="gestion"
-                                            required>
-                                            <option value="">Seleccione una Gestión</option>
-                                            <option value="Veintitrés">2023</option>
-                                            <option value="Veinticuatro">2024</option>
-                                            <option value="Veinticinco">2025</option>
-                                            <option value="Veintiséis">2026</option>
-                                            <option value="Veintisiete">2027</option>
-                                            <option value="Veintiocho">2028</option>
-                                            <option value="Veintinueve">2029</option>
-                                            <option value="Treinta">2030</option>
-                                        </select>
+                                        <div class="row">
+                                            
+                                         
 
-                                    </div>
-                                </div>
-                                    <br>
-                                    <div class="text-center" id="Dsubmit1">
-                                        <button class="btn btn-primary"  type="submit" 
-                                            th:text="Generar"></button>
-                                    </div>
-                                </form>
+                                            <div class="col-md-3">
+                                      
+                                                    <label class="col-form-label">Código Correlativo</label>
+                                                <input class="form-control" name="correlativo" type="text" required>
+                                                       
+                                                  
+                                         
+                                            </div>
+                                            <div class="col-md-3">
+                                      
+                                                <label class="col-form-label">Número Titulo</label>
+                                            <input class="form-control" name="nroTitulo" type="text" required>
+                                                   
+                                              
+                                     
+                                        </div>
+                                        </div>
+                                 
+
+                 
+
+        
+                                        <br>
+                                        <div class="text-center" id="Dsubmit1">
+                                            <button class="btn btn-primary"  type="submit" 
+                                                th:text="Generar"></button>
+                                        </div>
+                               
+                                    
+                                    </form>
                             </div>
 
                             </div>
