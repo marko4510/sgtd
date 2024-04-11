@@ -2405,8 +2405,8 @@ public class PdfController {
           contentStream.setFont(customFont, fontSize);
           String diaConvertido = String.valueOf(diaNum);
           String texto4 = diaConvertido;
-          float xTexto4 = 500;
-          float yTexto4 = 216;
+          float xTexto4 = 510;
+          float yTexto4 = 200;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto4, yTexto4);
           contentStream.showText(texto4);
@@ -2414,7 +2414,7 @@ public class PdfController {
 
           String texto5 = cadenaMesC;
           float xTexto5 = 185;
-          float yTexto5 = 191;
+          float yTexto5 = 175;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto5, yTexto5);
           contentStream.showText(texto5);
@@ -2422,7 +2422,7 @@ public class PdfController {
 
           String texto6 = "Dos mil " + gestion;
           float xTexto6 = 380;
-          float yTexto6 = 191;
+          float yTexto6 = 175;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto6, yTexto6);
           contentStream.showText(texto6);
