@@ -2313,6 +2313,19 @@ public class PdfController {
 
           }
 
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Sistema de Producción Agropecuaria")) {
+            if (persona.getSexo().equals("Masculino")) {
+              primerTexto = "Sistema de Producción Agropecuaria";
+              segundoTexto = "Técnico Superior";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Sistema de Producción Agropecuaria";
+              segundoTexto = "Técnico Superior";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
+
+          }
+
 
           // Obtener la página donde deseas agregar el texto
           PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
