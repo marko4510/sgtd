@@ -58,6 +58,10 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Titulo en Provisión Nacional</button>
                               </li>
+
+                              <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="revalidacion-tab" data-bs-toggle="tab" data-bs-target="#revalidacion" type="button" role="tab" aria-controls="revalidacion" aria-selected="false">Revalidación Provisión Nacional</button>
+                              </li>
                           </ul>
                           <div class="tab-content" id="myTabContent">
                              <!--
@@ -273,6 +277,70 @@
                                     </form>
                                 </div>
                             </div>
+
+                            <div class="tab-pane fade" id="revalidacion" role="tabpanel" aria-labelledby="revalidacion-tab">
+
+                                <div class="card-body">
+                                    <form id="miFormulario3" th:action="@{/generarTituloProvisionPlantillaPdf}" method="post">
+                                        <div class="checkbox mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="usarPlantilla" value="true">
+                                                <label class="form-check-label" for="flexCheckDefault3">
+                                                    Incluir Plantilla
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div>
+                                                    <label class="col-form-label">Persona</label>
+                                                    <select class="form-select js-choice" name="id_persona">
+                                                        <option th:each="per : ${personas}" th:value="${per.id_persona}"
+                                                            th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}">
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-3 text-dark">
+                                                <label class="col-form-label">Gestión</label>
+                                                <select class="form-select js-choice" name="gestion"
+                                                    required>
+                                                    <option value="">Seleccione una Gestión</option>
+                                                    <option value="Veintitrés">2023</option>
+                                                    <option value="Veinticuatro">2024</option>
+                                                    <option value="Veinticinco">2025</option>
+                                                    <option value="Veintiséis">2026</option>
+                                                    <option value="Veintisiete">2027</option>
+                                                    <option value="Veintiocho">2028</option>
+                                                    <option value="Veintinueve">2029</option>
+                                                    <option value="Treinta">2030</option>
+                                                </select>
+
+                                            </div>
+
+                                            <div class="col-md-3" >
+                                      
+                                                    <label class="col-form-label">Número Titulo</label>
+                                                <input class="form-control" name="nroTitulo" type="text" required>
+                                                       
+                                                  
+                                         
+                                            </div>
+                                        </div>
+                                 
+
+                 
+
+        
+                                        <br>
+                                        <div class="text-center" id="Dsubmit3">
+                                            <button class="btn btn-primary" type="submit"
+                                                th:text="Generar"></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                           </div>
                        
                     </div>
@@ -335,6 +403,27 @@ $(document).ready(function () {
         '</button>';
     
         $('#Dsubmit2').html(botonCarga);
+      
+        form.submit();
+       
+        });
+      });
+    
+    </script>
+
+<script>
+    $(document).ready(function () {
+        $('#miFormulario3').submit(function (event) {
+          event.preventDefault();
+          var form = document.getElementById("miFormulario3");
+    
+        $('#Dsubmit3').html('');
+        var botonCarga = '<button class="btn btn-primary" type="button" disabled>'+
+      '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'+
+      '<span class="sr-only">Cargando...</span>'+
+        '</button>';
+    
+        $('#Dsubmit3').html(botonCarga);
       
         form.submit();
        
