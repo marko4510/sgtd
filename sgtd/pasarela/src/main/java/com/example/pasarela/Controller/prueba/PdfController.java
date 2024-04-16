@@ -1181,7 +1181,7 @@ public class PdfController {
           String diaConvertido = String.valueOf(dia);
           String texto3 = diaConvertido;
           float xTexto3 = 250;
-          float yTexto3 = 179;
+          float yTexto3 = 182;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto3, yTexto3);
           contentStream.showText(texto3);
@@ -1190,7 +1190,7 @@ public class PdfController {
           String mesConvertido = String.valueOf(cadenaMesC);
           String texto4 = mesConvertido;
           float xTexto4 = 326;
-          float yTexto4 = 179;
+          float yTexto4 = 182;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto4, yTexto4);
           contentStream.showText(texto4);
@@ -1199,7 +1199,7 @@ public class PdfController {
           String gestionC = String.valueOf(gestion);
           String texto5 = "Dos mil " + gestionC;
           float xTexto5 = 455;
-          float yTexto5 = 179;
+          float yTexto5 = 182;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto5, yTexto5);
           contentStream.showText(texto5);
@@ -2406,7 +2406,7 @@ public class PdfController {
           String diaConvertido = String.valueOf(diaNum);
           String texto4 = diaConvertido;
           float xTexto4 = 505;
-          float yTexto4 = 207;
+          float yTexto4 = 212;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto4, yTexto4);
           contentStream.showText(texto4);
@@ -2414,7 +2414,7 @@ public class PdfController {
 
           String texto5 = cadenaMesC;
           float xTexto5 = 185;
-          float yTexto5 = 185;
+          float yTexto5 = 189;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto5, yTexto5);
           contentStream.showText(texto5);
@@ -2422,7 +2422,7 @@ public class PdfController {
 
           String texto6 = "Dos mil " + gestion;
           float xTexto6 = 380;
-          float yTexto6 = 185;
+          float yTexto6 = 189;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto6, yTexto6);
           contentStream.showText(texto6);
