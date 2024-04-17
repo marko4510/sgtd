@@ -2372,22 +2372,7 @@ public class PdfController {
             contentStream.newLineAtOffset(xTexto2, yTexto2);
             contentStream.showText(texto2);
             contentStream.endText();
-          } else {
-            // Configurar el segundo texto y calcular su ancho
-            String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                         // texto
-            float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-            float xTexto2 = (pageWidth - textWidth2) / 2;
-            // Configurar la posición Y del segundo texto (un poco más arriba)
-            float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
-
-            // Agregar el segundo texto al documento centrado
-            contentStream.beginText();
-            contentStream.newLineAtOffset(xTexto2, yTexto2);
-            contentStream.showText(texto2);
-            contentStream.endText();
-          }
-
+          } 
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
           .equals("Sistema de Producción Agropecuaria")) {
         // Configurar el segundo texto y calcular su ancho
@@ -2747,6 +2732,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         float fontSize2 = 32;
         float fontSize = 20;
         float fontFirma = 18;
+    
 
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Enfermería")) {
           if (persona.getSexo().equals("Masculino")) {
@@ -3007,10 +2993,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
         
 
-        // Configurar el texto y calcular su ancho Revalidacion
-        String textoRevalidacion = revalidacionTexto;
-        contentStream.setFont(customFont, fontSize);
-        float textWidthRevalidacion = customFont.getStringWidth(textoRevalidacion) * fontSize / 1000f;
+        
  
 
         // Configurar el texto y calcular su ancho
@@ -3033,14 +3016,9 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         contentStream.showText(texto);
         contentStream.endText();
 
-        // Calcular la posición X para centrar el texto
-        float xTextoRevalidacion = (pageWidth - textWidthRevalidacion) / 2;
-        float yTextoRevalidacion = 500;
-
-        contentStream.beginText();
-        contentStream.newLineAtOffset(xTextoRevalidacion, yTextoRevalidacion);
-        contentStream.showText(textoRevalidacion);
-        contentStream.endText();
+        // Configurar el texto y calcular su ancho Revalidacion
+  
+        
 
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
             .equals("Ciencias Políticas y Gestión Pública")) {
@@ -3057,24 +3035,10 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
           contentStream.newLineAtOffset(xTexto2, yTexto2);
           contentStream.showText(texto2);
           contentStream.endText();
-        } else {
-          // Configurar el segundo texto y calcular su ancho
-          String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                       // texto
-          float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-          float xTexto2 = (pageWidth - textWidth2) / 2;
-          // Configurar la posición Y del segundo texto (un poco más arriba)
-          float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
-
-          // Agregar el segundo texto al documento centrado
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto2, yTexto2);
-          contentStream.showText(texto2);
-          contentStream.endText();
-        }
-
+        } 
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
         .equals("Sistema de Producción Agropecuaria")) {
+
       // Configurar el segundo texto y calcular su ancho
       String texto2 = tercerTexto; // Reemplaza con tu segundo
                                    // texto
@@ -3088,7 +3052,9 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       contentStream.newLineAtOffset(xTexto2, yTexto2);
       contentStream.showText(texto2);
       contentStream.endText();
-    } else {
+    }
+    else {
+ 
       // Configurar el segundo texto y calcular su ancho
       String texto2 = tercerTexto; // Reemplaza con tu segundo
                                    // texto
@@ -3103,6 +3069,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       contentStream.showText(texto2);
       contentStream.endText();
     }
+    
 
         // Configurar el segundo texto y calcular su ancho
         String texto3 = primerTexto; // Reemplaza con tu segundo
@@ -3119,6 +3086,17 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         contentStream.endText();
 
         contentStream.setFont(customFont, fontSize);
+
+        String textoRevalidacion = revalidacionTexto;
+        float textWidthRevalidacion = customFont.getStringWidth(textoRevalidacion) * fontSize / 1000f;
+        // Calcular la posición X para centrar el texto
+        float xTextoRevalidacion = (pageWidth - textWidthRevalidacion) / 2;
+        float yTextoRevalidacion = 570;
+        contentStream.beginText();
+        contentStream.newLineAtOffset(xTextoRevalidacion, yTextoRevalidacion);
+        contentStream.showText(textoRevalidacion);
+        contentStream.endText();
+
         String diaConvertido = String.valueOf(diaNum);
         String texto4 = diaConvertido;
         float xTexto4 = 505;
@@ -3146,6 +3124,11 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
         // parrafos de firmas
         contentStream.setFont(customFont, fontFirma);
+
+
+       
+
+
         String texto7 = "MSc. Franz Navia Miranda";
         float xTexto7 = 85;
         float yTexto7 = 80;
