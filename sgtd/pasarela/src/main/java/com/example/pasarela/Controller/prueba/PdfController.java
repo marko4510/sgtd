@@ -114,7 +114,6 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
-
 @Controller
 public class PdfController {
 
@@ -136,11 +135,11 @@ public class PdfController {
   @Autowired
   private IUsuarioService usuarioService;
 
-    @Autowired
-    private IRevalidacionService revalidacionService;
+  @Autowired
+  private IRevalidacionService revalidacionService;
 
-    @Autowired
-    private IRevalidacionGeneradoService revalidacionGeneradoService;
+  @Autowired
+  private IRevalidacionGeneradoService revalidacionGeneradoService;
 
   private final TemplateEngine templateEngine;
 
@@ -2313,7 +2312,8 @@ public class PdfController {
 
           }
 
-          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Sistema de Producción Agropecuaria")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+              .equals("Sistema de Producción Agropecuaria")) {
             if (persona.getSexo().equals("Masculino")) {
               primerTexto = "Sistema de Producción Agropecuaria";
               segundoTexto = "Técnico Superior";
@@ -2325,7 +2325,6 @@ public class PdfController {
             }
 
           }
-
 
           // Obtener la página donde deseas agregar el texto
           PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
@@ -2372,37 +2371,37 @@ public class PdfController {
             contentStream.newLineAtOffset(xTexto2, yTexto2);
             contentStream.showText(texto2);
             contentStream.endText();
-          } 
+          }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
-          .equals("Sistema de Producción Agropecuaria")) {
-        // Configurar el segundo texto y calcular su ancho
-        String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                     // texto
-        float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-        float xTexto2 = 180;
-        // Configurar la posición Y del segundo texto (un poco más arriba)
-        float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+              .equals("Sistema de Producción Agropecuaria")) {
+            // Configurar el segundo texto y calcular su ancho
+            String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                         // texto
+            float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+            float xTexto2 = 180;
+            // Configurar la posición Y del segundo texto (un poco más arriba)
+            float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
 
-        // Agregar el segundo texto al documento centrado
-        contentStream.beginText();
-        contentStream.newLineAtOffset(xTexto2, yTexto2);
-        contentStream.showText(texto2);
-        contentStream.endText();
-      } else {
-        // Configurar el segundo texto y calcular su ancho
-        String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                     // texto
-        float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-        float xTexto2 = (pageWidth - textWidth2) / 2;
-        // Configurar la posición Y del segundo texto (un poco más arriba)
-        float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+            // Agregar el segundo texto al documento centrado
+            contentStream.beginText();
+            contentStream.newLineAtOffset(xTexto2, yTexto2);
+            contentStream.showText(texto2);
+            contentStream.endText();
+          } else {
+            // Configurar el segundo texto y calcular su ancho
+            String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                         // texto
+            float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+            float xTexto2 = (pageWidth - textWidth2) / 2;
+            // Configurar la posición Y del segundo texto (un poco más arriba)
+            float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
 
-        // Agregar el segundo texto al documento centrado
-        contentStream.beginText();
-        contentStream.newLineAtOffset(xTexto2, yTexto2);
-        contentStream.showText(texto2);
-        contentStream.endText();
-      }
+            // Agregar el segundo texto al documento centrado
+            contentStream.beginText();
+            contentStream.newLineAtOffset(xTexto2, yTexto2);
+            contentStream.showText(texto2);
+            contentStream.endText();
+          }
 
           // Configurar el segundo texto y calcular su ancho
           String texto3 = primerTexto; // Reemplaza con tu segundo
@@ -2533,59 +2532,58 @@ public class PdfController {
 
   }
 
-/*
- * 
- * 
- * TITULO PROVISION NACIONAL REVALIDADO
- * 
- * 
- */
-@PostMapping("/generarTituloProvisionalRevalidadoPdf")
-public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
-    @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla,
-    @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,
-    @RequestParam("nroTitulo") String nroTitulo, Model model)
-    throws FileNotFoundException, IOException, ParseException, DocumentException {
-  List<Titulo> listTitulo = tituloService.findAll();
-  Date fechaActual = new Date();
+  /*
+   * 
+   * 
+   * TITULO PROVISION NACIONAL REVALIDADO
+   * 
+   * 
+   */
+  @PostMapping("/generarTituloProvisionalRevalidadoPdf")
+  public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
+      @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla,
+      @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,
+      @RequestParam("nroTitulo") String nroTitulo, Model model)
+      throws FileNotFoundException, IOException, ParseException, DocumentException {
+    List<Titulo> listTitulo = tituloService.findAll();
+    Date fechaActual = new Date();
 
-  LocalDate localDateFA = convertirDateALocalDate(fechaActual);
-  String fechaComoString = localDateFA.toString();
-  int diaNum = localDateFA.getDayOfMonth();
-  String dia = convertirNumTexto(diaNum);
-  String diaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(dia);
-  String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
-  Persona persona = personaService.findOne(id_persona);
-  String cadenaDepartamento = persona.getProvincia().getDepartamento().getNombre();
-  String cadenaProvincia = persona.getProvincia().getNombre_provincia();
-  String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
-  String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
-  String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
-  String codigo = archive.getMD5((listTitulo.size() + 1) + "");
-  Date fechaNacimiento = persona.getFecha_nacimiento();
-  LocalDate localDateFa2 = convertirDateALocalDate(fechaNacimiento);
-  int diaN = localDateFa2.getDayOfMonth();
-  String mesN = localDateFa2.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
-  int anioN = localDateFa2.getYear();
+    LocalDate localDateFA = convertirDateALocalDate(fechaActual);
+    String fechaComoString = localDateFA.toString();
+    int diaNum = localDateFA.getDayOfMonth();
+    String dia = convertirNumTexto(diaNum);
+    String diaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(dia);
+    String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+    Persona persona = personaService.findOne(id_persona);
+    String cadenaDepartamento = persona.getProvincia().getDepartamento().getNombre();
+    String cadenaProvincia = persona.getProvincia().getNombre_provincia();
+    String cadenaDepartamentoC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaDepartamento);
+    String cadenaProvinciaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(cadenaProvincia);
+    String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
+    String codigo = archive.getMD5((listTitulo.size() + 1) + "");
+    Date fechaNacimiento = persona.getFecha_nacimiento();
+    LocalDate localDateFa2 = convertirDateALocalDate(fechaNacimiento);
+    int diaN = localDateFa2.getDayOfMonth();
+    String mesN = localDateFa2.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
+    int anioN = localDateFa2.getYear();
 
+    // Crear el contexto con los datos necesarios para la vista
+    Context context = new Context();
+    // Agregar los datos que necesites en tu vista
+    context.setVariable("departamento", cadenaDepartamentoC);
+    context.setVariable("provincia", cadenaProvinciaC);
+    context.setVariable("persona", persona);
+    context.setVariable("dia", diaC);
+    context.setVariable("diaN", diaN);
+    context.setVariable("mesN", mesN);
+    context.setVariable("anioN", anioN);
+    context.setVariable("mes", cadenaMesC);
+    context.setVariable("gestion", gestion);
+    context.setVariable("nroTitulo", nroTitulo);
+    context.setVariable("codigo", codigo);
+    // Renderizar la vista HTML utilizando Thymeleaf
+    String htmlContent = templateEngine.process("certificado/provisionPrueba-pdf", context);
 
-  // Crear el contexto con los datos necesarios para la vista
-  Context context = new Context();
-  // Agregar los datos que necesites en tu vista
-  context.setVariable("departamento", cadenaDepartamentoC);
-  context.setVariable("provincia", cadenaProvinciaC);
-  context.setVariable("persona", persona);
-  context.setVariable("dia", diaC);
-  context.setVariable("diaN", diaN);
-  context.setVariable("mesN", mesN);
-  context.setVariable("anioN", anioN);
-  context.setVariable("mes", cadenaMesC);
-  context.setVariable("gestion", gestion);
-  context.setVariable("nroTitulo", nroTitulo);
-  context.setVariable("codigo", codigo);
-  // Renderizar la vista HTML utilizando Thymeleaf
-  String htmlContent = templateEngine.process("certificado/provisionPrueba-pdf", context);
- 
     // Directorio donde se guardará el archivo PDF
     Path rootPathTitulos = Paths.get("archivos/titulos/provision");
     Path rootAbsolutPathTitulos = rootPathTitulos.toAbsolutePath();
@@ -2733,9 +2731,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         float fontSize = 20;
         float fontFirma = 18;
         float fontRevalidacion = 22;
-
-       
-    
 
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Enfermería")) {
           if (persona.getSexo().equals("Masculino")) {
@@ -2984,7 +2979,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
         }
 
-
         // Obtener la página donde deseas agregar el texto
         PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
 
@@ -2994,10 +2988,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
         // Cargar la fuente personalizada
         PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
-        
-
-       
- 
 
         // Configurar el texto y calcular su ancho
         String texto = segundoTexto;
@@ -3023,14 +3013,14 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         String textoRevalidacion = revalidacionTexto;
         float textWidthRevalidacion = customFont.getStringWidth(textoRevalidacion) * fontRevalidacion / 1000f;
         // Calcular la posición X para centrar el texto
-        float xTextoRevalidacion = (pageWidth - textWidthRevalidacion) / 2;
+        float xTextoRevalidacion = 225;
         float yTextoRevalidacion = 560;
         contentStream.beginText();
         contentStream.newLineAtOffset(xTextoRevalidacion, yTextoRevalidacion);
         contentStream.showText(textoRevalidacion);
         contentStream.endText();
-        
 
+      
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
             .equals("Ciencias Políticas y Gestión Pública")) {
           // Configurar el segundo texto y calcular su ancho
@@ -3046,41 +3036,39 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
           contentStream.newLineAtOffset(xTexto2, yTexto2);
           contentStream.showText(texto2);
           contentStream.endText();
-        } 
+        }
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
-        .equals("Sistema de Producción Agropecuaria")) {
+            .equals("Sistema de Producción Agropecuaria")) {
 
-      // Configurar el segundo texto y calcular su ancho
-      String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                   // texto
-      float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-      float xTexto2 = 180;
-      // Configurar la posición Y del segundo texto (un poco más arriba)
-      float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+          // Configurar el segundo texto y calcular su ancho
+          String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                       // texto
+          float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+          float xTexto2 = 180;
+          // Configurar la posición Y del segundo texto (un poco más arriba)
+          float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
 
-      // Agregar el segundo texto al documento centrado
-      contentStream.beginText();
-      contentStream.newLineAtOffset(xTexto2, yTexto2);
-      contentStream.showText(texto2);
-      contentStream.endText();
-    }
-    else {
- 
-      // Configurar el segundo texto y calcular su ancho
-      String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                   // texto
-      float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-      float xTexto2 = (pageWidth - textWidth2) / 2;
-      // Configurar la posición Y del segundo texto (un poco más arriba)
-      float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+          // Agregar el segundo texto al documento centrado
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto2, yTexto2);
+          contentStream.showText(texto2);
+          contentStream.endText();
+        } else {
 
-      // Agregar el segundo texto al documento centrado
-      contentStream.beginText();
-      contentStream.newLineAtOffset(xTexto2, yTexto2);
-      contentStream.showText(texto2);
-      contentStream.endText();
-    }
-    
+          // Configurar el segundo texto y calcular su ancho
+          String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                       // texto
+          float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+          float xTexto2 = (pageWidth - textWidth2) / 2;
+          // Configurar la posición Y del segundo texto (un poco más arriba)
+          float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+
+          // Agregar el segundo texto al documento centrado
+          contentStream.beginText();
+          contentStream.newLineAtOffset(xTexto2, yTexto2);
+          contentStream.showText(texto2);
+          contentStream.endText();
+        }
 
         // Configurar el segundo texto y calcular su ancho
         String texto3 = primerTexto; // Reemplaza con tu segundo
@@ -3097,8 +3085,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         contentStream.endText();
 
         contentStream.setFont(customFont, fontSize);
-
-       
 
         String diaConvertido = String.valueOf(diaNum);
         String texto4 = diaConvertido;
@@ -3127,10 +3113,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
         // parrafos de firmas
         contentStream.setFont(customFont, fontFirma);
-
-
-       
-
 
         String texto7 = "MSc. Franz Navia Miranda";
         float xTexto7 = 85;
@@ -3215,14 +3197,8 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
     tituloService.save(titulo);
 
     return "redirect:listarTitulos";
-  
 
-}
-
-
-
-
-
+  }
 
   public static String generarNumeroEnFormato() {
     Random random = new Random();
@@ -3247,13 +3223,11 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
     Usuario usuario = usuarioService.findOne(solicitud.getUsuario().getId_usuario());
     Long id_usuario = usuario.getId_usuario();
     Date fechaActual = new Date();
-    
+
     // Ruta donde se guardarán los recibos
     Path rootPath = Paths.get("recibos/legalizacion/");
     Path rootAbsolutePath = rootPath.toAbsolutePath();
     String directoryPath = rootAbsolutePath.toString();
-
-
 
     String cpt = generarNumeroEnFormato();
     List<Recibo> listRecibos = reciboService.findAll();
@@ -3379,12 +3353,9 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
     return "redirect:/Historial/" + id_usuario;
   }
 
-  
- 
-
   @RequestMapping(value = "/generarDiplomado", method = RequestMethod.POST)
   public String generarDiplomado(@Validated Titulo titulo, @RequestParam(value = "correlativo") String correlativo,
-  @RequestParam(value = "nroTitulo", required = false) String nroTitulo,
+      @RequestParam(value = "nroTitulo", required = false) String nroTitulo,
       @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla, Model model,
       HttpServletRequest request,
       RedirectAttributes redirectAttrs)
@@ -3400,7 +3371,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
     int dosUltimosDigitos = anio % 100;
     String anioString = String.valueOf(dosUltimosDigitos);
 
-  
     String codigo = archive.getMD5((listTitulo.size() + 1) + "");
 
     Map<String, Object> requests = new HashMap<String, Object>();
@@ -3439,7 +3409,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
       String cadenaDiaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoDia);
       String cadenaAnioC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoAnio);
-     
 
       Context context = new Context();
       // Agregar los datos que necesites en tu vista
@@ -3454,7 +3423,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       context.setVariable("mes", cadenaMesC);
       context.setVariable("anio", cadenaAnioC);
       context.setVariable("dia", cadenaDiaC);
-      
+
       String htmlContent = templateEngine.process("certificado/tituloDiplomado-pdf", context);
 
       // Directorio donde se guardará el archivo PDF
@@ -3480,7 +3449,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       // Generar la ruta completa del archivo
       String rutaCompleta = rootAbsolutPathTitulos + "/" + nombreArchivo;
 
-       try {
+      try {
         // Generar el contenido del código QR
         String qrContent = "Persona: " + nombre + " " + apellidoP + " "
             + apellidoM + "\n" +
@@ -3531,8 +3500,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
           }
         }
         //
-
-       
 
         // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
@@ -3587,23 +3554,21 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
           contentStream.drawImage(pdImageVicerrector, x, y, widthj, heightj);
         }
-       
 
         // Guardar el PDF con la imagen del código QR agregada
         pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
         pdfDocument.close();
 
-
         // Ruta al archivo de fuente personalizada
         String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
-    
-     try {
+
+        try {
           // Cargar el documento PDF existente
           PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta));
-          
+
           float fontFirma = 18;
-          
-     // Obtener la página donde deseas agregar el texto
+
+          // Obtener la página donde deseas agregar el texto
           PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
 
           // Crear un objeto de contenido para escribir texto en la página
@@ -3612,8 +3577,8 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
           // Cargar la fuente personalizada
           PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
-          
-           // parrafos de firmas
+
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto7 = "MSc. Oscar Felipe Melgar Saucedo";
           float xTexto7 = 60;
@@ -3640,8 +3605,8 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
           contentStream.newLineAtOffset(xTexto8, yTexto8);
           contentStream.showText(texto8);
           contentStream.endText();
-          
-           // Cerrar el contenido y guardar el documento PDF
+
+          // Cerrar el contenido y guardar el documento PDF
           contentStream.close();
           pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
           pdfDocument2.close();
@@ -3649,7 +3614,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         } catch (IOException e) {
           e.printStackTrace();
         }
-      
 
       } catch (Exception e) {
         e.printStackTrace(); // Maneja las excepciones según tus necesidades
@@ -3657,16 +3621,16 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       Persona personaExiste = personaService.getPersonaByNombres(nombre, apellidoP, apellidoM);
 
       if (personaExiste == null) {
-      Persona personaNueva = new Persona();
-      personaNueva.setNombre(nombre);
-      personaNueva.setAp_paterno(apellidoP);
-      personaNueva.setAp_materno(apellidoM);
-      personaNueva.setEstado("P");
-      personaNueva.setCi("0-0-0-0-0-0");
-      personaService.save(personaNueva); 
-      titulo.setPersona(personaNueva); 
-      }else{
-      titulo.setPersona(personaExiste);
+        Persona personaNueva = new Persona();
+        personaNueva.setNombre(nombre);
+        personaNueva.setAp_paterno(apellidoP);
+        personaNueva.setAp_materno(apellidoM);
+        personaNueva.setEstado("P");
+        personaNueva.setCi("0-0-0-0-0-0");
+        personaService.save(personaNueva);
+        titulo.setPersona(personaNueva);
+      } else {
+        titulo.setPersona(personaExiste);
       }
 
       // Registrar titulo Generado
@@ -3678,17 +3642,15 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
       // Registrar titulo
       List<Titulo> titulosDiplomado = tituloService.titulosDiplomado();
-   
-      titulo.setNro_titulo((titulosDiplomado.size()+1)+"");
+
+      titulo.setNro_titulo((titulosDiplomado.size() + 1) + "");
       titulo.setTituloGenerado(tituloGenerado2);
       titulo.setNro_titulo(nroTitulo);
-      
+
       titulo.setEstado("A");
       titulo.setTipo_titulo("Diplomado");
       titulo.setFecha_generacion(localDateFA);
       tituloService.save(titulo);
-
-
 
       return "redirect:/listarTitulosPosgrado";
 
@@ -3696,11 +3658,9 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
     return "redirect:/LoginR";
   }
 
-
-
   @RequestMapping(value = "/generarEspecialidad", method = RequestMethod.POST)
   public String generarEspecialidad(@Validated Titulo titulo, @RequestParam(value = "correlativo") String correlativo,
-  @RequestParam(value = "nroTitulo", required = false) String nroTitulo,
+      @RequestParam(value = "nroTitulo", required = false) String nroTitulo,
       @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla, Model model,
       HttpServletRequest request,
       RedirectAttributes redirectAttrs)
@@ -3716,7 +3676,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
     int dosUltimosDigitos = anio % 100;
     String anioString = String.valueOf(dosUltimosDigitos);
 
-  
     String codigo = archive.getMD5((listTitulo.size() + 1) + "");
 
     Map<String, Object> requests = new HashMap<String, Object>();
@@ -3746,7 +3705,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       String version = data.getVersion();
       Integer horas = data.getHorasAcademicas();
       Integer modulos = data.getCantidadModulos();
-      
+
       String nacionalidad = data.getNacionalidad();
       if (nacionalidad.equals("BOLIVIANO(A)")) {
         nacionalidad = "Boliviana";
@@ -3762,7 +3721,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
       String cadenaDiaC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoDia);
       String cadenaAnioC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(numeroTextoAnio);
-     
 
       Context context = new Context();
       // Agregar los datos que necesites en tu vista
@@ -3779,7 +3737,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       context.setVariable("mes", cadenaMesC);
       context.setVariable("anio", cadenaAnioC);
       context.setVariable("dia", cadenaDiaC);
-      
+
       String htmlContent = templateEngine.process("certificado/tituloDiplomado-pdf", context);
 
       // Directorio donde se guardará el archivo PDF
@@ -3805,7 +3763,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       // Generar la ruta completa del archivo
       String rutaCompleta = rootAbsolutPathTitulos + "/" + nombreArchivo;
 
-       try {
+      try {
         // Generar el contenido del código QR
         String qrContent = "Persona: " + nombre + " " + apellidoP + " "
             + apellidoM + "\n" +
@@ -3856,8 +3814,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
           }
         }
         //
-
-       
 
         // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
         ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
@@ -3912,23 +3868,21 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
           contentStream.drawImage(pdImageVicerrector, x, y, widthj, heightj);
         }
-       
 
         // Guardar el PDF con la imagen del código QR agregada
         pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
         pdfDocument.close();
 
-
         // Ruta al archivo de fuente personalizada
         String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
-    
-     try {
+
+        try {
           // Cargar el documento PDF existente
           PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta));
-          
+
           float fontFirma = 18;
-          
-     // Obtener la página donde deseas agregar el texto
+
+          // Obtener la página donde deseas agregar el texto
           PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
 
           // Crear un objeto de contenido para escribir texto en la página
@@ -3937,8 +3891,8 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
           // Cargar la fuente personalizada
           PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
-          
-           // parrafos de firmas
+
+          // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
           String texto7 = "MSc. Oscar Felipe Melgar Saucedo";
           float xTexto7 = 60;
@@ -3965,8 +3919,8 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
           contentStream.newLineAtOffset(xTexto8, yTexto8);
           contentStream.showText(texto8);
           contentStream.endText();
-          
-           // Cerrar el contenido y guardar el documento PDF
+
+          // Cerrar el contenido y guardar el documento PDF
           contentStream.close();
           pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
           pdfDocument2.close();
@@ -3974,7 +3928,6 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         } catch (IOException e) {
           e.printStackTrace();
         }
-      
 
       } catch (Exception e) {
         e.printStackTrace(); // Maneja las excepciones según tus necesidades
@@ -3982,16 +3935,16 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       Persona personaExiste = personaService.getPersonaByNombres(nombre, apellidoP, apellidoM);
 
       if (personaExiste == null) {
-      Persona personaNueva = new Persona();
-      personaNueva.setNombre(nombre);
-      personaNueva.setAp_paterno(apellidoP);
-      personaNueva.setAp_materno(apellidoM);
-      personaNueva.setEstado("P");
-      personaNueva.setCi("0-0-0-0-0-0");
-      personaService.save(personaNueva); 
-      titulo.setPersona(personaNueva); 
-      }else{
-      titulo.setPersona(personaExiste);
+        Persona personaNueva = new Persona();
+        personaNueva.setNombre(nombre);
+        personaNueva.setAp_paterno(apellidoP);
+        personaNueva.setAp_materno(apellidoM);
+        personaNueva.setEstado("P");
+        personaNueva.setCi("0-0-0-0-0-0");
+        personaService.save(personaNueva);
+        titulo.setPersona(personaNueva);
+      } else {
+        titulo.setPersona(personaExiste);
       }
 
       // Registrar titulo Generado
@@ -4003,17 +3956,15 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
       // Registrar titulo
       List<Titulo> titulosDiplomado = tituloService.titulosDiplomado();
-   
-      titulo.setNro_titulo((titulosDiplomado.size()+1)+"");
+
+      titulo.setNro_titulo((titulosDiplomado.size() + 1) + "");
       titulo.setTituloGenerado(tituloGenerado2);
       titulo.setNro_titulo(nroTitulo);
-      
+
       titulo.setEstado("A");
       titulo.setTipo_titulo("Especialidad");
       titulo.setFecha_generacion(localDateFA);
       tituloService.save(titulo);
-
-
 
       return "redirect:/listarTitulosPosgrado";
 
@@ -4021,38 +3972,37 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
     return "redirect:/LoginR";
   }
 
- 
   @PostMapping("/generarRevalidaciones")
-  public String generarRevalidacionesPDF(@Validated Revalidacion revalidacion, Model model,@RequestParam("tenor") String tenor,
-  @RequestParam("nroRevalidacion") String nroRevalidacion,
-  @RequestParam("titulo") String titulo,  @RequestParam("persona") String persona, @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla)
+  public String generarRevalidacionesPDF(@Validated Revalidacion revalidacion, Model model,
+      @RequestParam("tenor") String tenor,
+      @RequestParam("nroRevalidacion") String nroRevalidacion,
+      @RequestParam("titulo") String titulo, @RequestParam("persona") String persona,
+      @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
-          Date fechaActual = new Date();
-          LocalDate localDateFA = convertirDateALocalDate(fechaActual);
-          String fechaComoString = localDateFA.toString();
+    Date fechaActual = new Date();
+    LocalDate localDateFA = convertirDateALocalDate(fechaActual);
+    String fechaComoString = localDateFA.toString();
     List<Revalidacion> listRevalidacion = revalidacionService.findAll();
     String nro_revalidacion = (listRevalidacion.size() + 1) + "";
     int anio = localDateFA.getYear();
     int dosUltimosDigitos = anio % 100;
-    String nro_revalidacionFormato = generarCodigo.generarCodigo(nro_revalidacion) + "/"+ dosUltimosDigitos+ "R";
+    String nro_revalidacionFormato = generarCodigo.generarCodigo(nro_revalidacion) + "/" + dosUltimosDigitos + "R";
     String codigo = archive.getMD5(nro_revalidacion + "");
     int dia = localDateFA.getDayOfMonth();
-  
+
     String mes = localDateFA.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault());
-      
+
     String cadenaMesC = convertirMayusculasAMinusculasConPrimeraMayusPorPalabra(mes);
 
-
-     Context context = new Context();
-     context.setVariable("nro_revalidacion", nroRevalidacion);
+    Context context = new Context();
+    context.setVariable("nro_revalidacion", nroRevalidacion);
     context.setVariable("tenor", tenor);
-     context.setVariable("dia", dia);
+    context.setVariable("dia", dia);
     context.setVariable("anio", anio);
     context.setVariable("cadenaMesC", cadenaMesC);
     String htmlContent = templateEngine.process("revalidacion/prueba", context);
-  
-    
-     // Directorio donde se guardará el archivo PDF 
+
+    // Directorio donde se guardará el archivo PDF
     Path rootPathRevalidaciones = Paths.get("archivos/revalidaciones/");
     Path rootAbsolutPathRevalidaciones = rootPathRevalidaciones.toAbsolutePath();
     String rutaDirectorioRevalidaciones = rootPathRevalidaciones + "/";
@@ -4090,123 +4040,102 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
     // Nombre del archivo PDF
     String nombreArchivo = codigo + ".pdf";
 
-     // Generar la ruta completa del archivo
-     String rutaCompleta = rootAbsolutPathRevalidaciones + "/" + nombreArchivo;
-    
+    // Generar la ruta completa del archivo
+    String rutaCompleta = rootAbsolutPathRevalidaciones + "/" + nombreArchivo;
 
-  
-try {
-  // Generar el contenido del código QR
-  String qrContent =
-                  "Persona: " + persona + "\n" +
-                  "Numero de Revalidacion: " + nroRevalidacion + "\n" +
-                  
-                  "Fecha de Generacion: " + fechaComoString;
+    try {
+      // Generar el contenido del código QR
+      String qrContent = "Persona: " + persona + "\n" +
+          "Numero de Revalidacion: " + nroRevalidacion + "\n" +
 
-  // Calcular el tamaño necesario para el código QR
-  int tamañoQR = Math.max(200, Math.max(qrContent.length() * 10, 200));
+          "Fecha de Generacion: " + fechaComoString;
 
-  QRCodeWriter qrCodeWriter = new QRCodeWriter();
-  BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, tamañoQR, tamañoQR);
+      // Calcular el tamaño necesario para el código QR
+      int tamañoQR = Math.max(200, Math.max(qrContent.length() * 10, 200));
 
-  // Crear la imagen BufferedImage del código QR
-  int width = bitMatrix.getWidth();
-  int height = bitMatrix.getHeight();
-  BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-  for (int x = 0; x < width; x++) {
-      for (int y = 0; y < height; y++) {
+      QRCodeWriter qrCodeWriter = new QRCodeWriter();
+      BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, tamañoQR, tamañoQR);
+
+      // Crear la imagen BufferedImage del código QR
+      int width = bitMatrix.getWidth();
+      int height = bitMatrix.getHeight();
+      BufferedImage qrImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+      for (int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
           qrImage.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
+        }
       }
-  }
 
- // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
- ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
- ITextRenderer renderer = new ITextRenderer();
- renderer.setDocumentFromString(htmlContent);
- renderer.layout();
- renderer.createPDF(pdfOutputStream);
- // Crear un nuevo documento PDF
- PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(pdfOutputStream.toByteArray()));
+      // Crear el contenido HTML y convertirlo a PDF utilizando Flying Saucer
+      ByteArrayOutputStream pdfOutputStream = new ByteArrayOutputStream();
+      ITextRenderer renderer = new ITextRenderer();
+      renderer.setDocumentFromString(htmlContent);
+      renderer.layout();
+      renderer.createPDF(pdfOutputStream);
+      // Crear un nuevo documento PDF
+      PDDocument pdfDocument = PDDocument.load(new ByteArrayInputStream(pdfOutputStream.toByteArray()));
 
- // Convertir la imagen BufferedImage a PDImageXObject
- PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
- // Obtener la página donde deseas agregar la imagen
- PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
- 
+      // Convertir la imagen BufferedImage a PDImageXObject
+      PDImageXObject pdImage = LosslessFactory.createFromImage(pdfDocument, qrImage);
+      // Obtener la página donde deseas agregar la imagen
+      PDPage page = pdfDocument.getPage(0); // Puedes ajustar el número de página
 
-  // Agregar la imagen del código QR al contenido del PDF
-  try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
+      // Agregar la imagen del código QR al contenido del PDF
+      try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
           PDPageContentStream.AppendMode.APPEND, true, true)) {
-      float x = 28; // Ajusta esta coordenada x según tus necesidades
-      float y = 706; // Ajusta esta coordenada y según tus necesidades
-      float widthj = 68; // Ajusta el ancho de la imagen
-      float heightj = 68; // Ajusta la altura de la imagen
+        float x = 28; // Ajusta esta coordenada x según tus necesidades
+        float y = 706; // Ajusta esta coordenada y según tus necesidades
+        float widthj = 68; // Ajusta el ancho de la imagen
+        float heightj = 68; // Ajusta la altura de la imagen
 
-      contentStream.drawImage(pdImage, x, y, widthj, heightj);
-  }
+        contentStream.drawImage(pdImage, x, y, widthj, heightj);
+      }
 
-  // Guardar el PDF con la imagen del código QR agregada
-  pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
-  pdfDocument.close();
+      // Guardar el PDF con la imagen del código QR agregada
+      pdfDocument.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
+      pdfDocument.close();
 
-} catch (Exception e) {
-  e.printStackTrace(); // Maneja las excepciones según tus necesidades
-}
-
-
-
-
+    } catch (Exception e) {
+      e.printStackTrace(); // Maneja las excepciones según tus necesidades
+    }
 
     if (usarPlantilla) {
-        // Ruta completa de la Plantilla
-     String rutaCompletaP = rootAbsolutPathPlantillasPath + "/plantillar.jpg";
- 
-     String rutaCompletaSalida = rootAbsolutPathRevalidacionesP + "/" + nombreArchivo;
-    archive.plantillaR(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo); 
-        // Registrar Revalidacion Generado
-    revalidacionGenerado.setEstado("A");
-    revalidacionGenerado.setNombre_archivo(nombreArchivo);
-    revalidacionGenerado.setRuta_archivo(rutaCompletaSalida);
-    revalidacionGeneradoService.save(revalidacionGenerado);
+      // Ruta completa de la Plantilla
+      String rutaCompletaP = rootAbsolutPathPlantillasPath + "/plantillar.jpg";
 
-    // Registrar revalidacion
-    revalidacion.setTitulo_revalidacion(titulo);
-    revalidacion.setFecha_generacion(localDateFA);
-    revalidacion.setEstado("A");
-    revalidacion.setNro_revalidacio(nroRevalidacion);
-    revalidacion.setRevalidacionGenerado(revalidacionGenerado);
-    revalidacionService.save(revalidacion);
-    }else{
-       // Registrar Revalidacion Generado
-    revalidacionGenerado.setEstado("A");
-    revalidacionGenerado.setNombre_archivo(nombreArchivo);
-    revalidacionGenerado.setRuta_archivo(rutaCompleta);
-    revalidacionGeneradoService.save(revalidacionGenerado);
+      String rutaCompletaSalida = rootAbsolutPathRevalidacionesP + "/" + nombreArchivo;
+      archive.plantillaR(rutaCompleta, rutaCompletaSalida, rutaCompletaP, codigo);
+      // Registrar Revalidacion Generado
+      revalidacionGenerado.setEstado("A");
+      revalidacionGenerado.setNombre_archivo(nombreArchivo);
+      revalidacionGenerado.setRuta_archivo(rutaCompletaSalida);
+      revalidacionGeneradoService.save(revalidacionGenerado);
 
-    // Registrar revalidacion
-    revalidacion.setPersona_revalidacion(persona);
-    revalidacion.setTitulo_revalidacion(titulo);
-    revalidacion.setFecha_generacion(localDateFA);
-    revalidacion.setEstado("A");
-    revalidacion.setNro_revalidacio(nroRevalidacion);
-    revalidacion.setRevalidacionGenerado(revalidacionGenerado);
-    revalidacionService.save(revalidacion);
-    }
-   
+      // Registrar revalidacion
+      revalidacion.setTitulo_revalidacion(titulo);
+      revalidacion.setFecha_generacion(localDateFA);
+      revalidacion.setEstado("A");
+      revalidacion.setNro_revalidacio(nroRevalidacion);
+      revalidacion.setRevalidacionGenerado(revalidacionGenerado);
+      revalidacionService.save(revalidacion);
+    } else {
+      // Registrar Revalidacion Generado
+      revalidacionGenerado.setEstado("A");
+      revalidacionGenerado.setNombre_archivo(nombreArchivo);
+      revalidacionGenerado.setRuta_archivo(rutaCompleta);
+      revalidacionGeneradoService.save(revalidacionGenerado);
 
-   
-
-  
-    
-
-     return "redirect:listarRevalidaciones";
+      // Registrar revalidacion
+      revalidacion.setPersona_revalidacion(persona);
+      revalidacion.setTitulo_revalidacion(titulo);
+      revalidacion.setFecha_generacion(localDateFA);
+      revalidacion.setEstado("A");
+      revalidacion.setNro_revalidacio(nroRevalidacion);
+      revalidacion.setRevalidacionGenerado(revalidacionGenerado);
+      revalidacionService.save(revalidacion);
     }
 
-
-    
-  
-    
-
-  
+    return "redirect:listarRevalidaciones";
+  }
 
 }
