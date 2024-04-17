@@ -88,5 +88,10 @@ public class TituloServiceImpl implements ITituloService{
     public List<Titulo> titulosDoctorado() {
        return (List<Titulo>) tituloDao.titulosDoctorado();
     }
+
+    @Override
+    public List<Titulo> titulosProvisionRevalidacion() {
+        return (List<Titulo>) tituloDao.titulosProvisionRevalidacion();
+    }
     
 }

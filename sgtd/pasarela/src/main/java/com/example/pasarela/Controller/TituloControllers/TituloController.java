@@ -51,6 +51,8 @@ public class TituloController {
             Map<Titulo, List<Firma>> titulosConFirmasB = new LinkedHashMap<>();
             List<Titulo> titulosP = tituloService.titulosProvision();
             Map<Titulo, List<Firma>> titulosConFirmasP = new LinkedHashMap<>();
+            List<Titulo> titulosPR = tituloService.titulosProvisionRevalidacion();
+            Map<Titulo, List<Firma>> titulosConFirmasPR = new LinkedHashMap<>();
 
             for (Titulo titulo : titulosA) {
                 List<Firma> firmasA = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
@@ -64,10 +66,15 @@ public class TituloController {
                 List<Firma> firmasP = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
                 titulosConFirmasP.put(titulo, firmasP); // Agregar el título y las firmas al mapa
             }
+            for (Titulo titulo : titulosPR) {
+                List<Firma> firmasPR = firmaService.Firmas(titulo.getId_titulo()); // Obtener las firmas relacionadas a cada título
+                titulosConFirmasPR.put(titulo, firmasPR); // Agregar el título y las firmas al mapa
+            }
             
             model.addAttribute("titulosA", titulosConFirmasA);
             model.addAttribute("titulosB", titulosConFirmasB);
             model.addAttribute("titulosP", titulosConFirmasP); // Agregar el mapa al modelo
+            model.addAttribute("titulosPR", titulosConFirmasPR);
             return "certificado/listarTitulos";
         } else {
             return "redirect:LoginR";

@@ -30,6 +30,9 @@ public interface ITituloDao extends CrudRepository<Titulo, Long>{
     @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND tipo_titulo = 'Provision'", nativeQuery = true)
     public List<Titulo> titulosProvision();
 
+    @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND tipo_titulo = 'Provision Revalidado'", nativeQuery = true)
+    public List<Titulo> titulosProvisionRevalidacion();
+
     @Query(value = "SELECT * FROM public.pasarela_titulo WHERE estado='A' AND tipo_titulo = 'Diplomado'", nativeQuery = true)
     public List<Titulo> titulosDiplomado();
 
