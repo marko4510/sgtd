@@ -2732,6 +2732,9 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         float fontSize2 = 32;
         float fontSize = 20;
         float fontFirma = 18;
+        float fontRevalidacion = 22;
+
+       
     
 
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Enfermería")) {
@@ -2993,7 +2996,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
         
 
-        
+       
  
 
         // Configurar el texto y calcular su ancho
@@ -3017,7 +3020,15 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         contentStream.endText();
 
         // Configurar el texto y calcular su ancho Revalidacion
-  
+        String textoRevalidacion = revalidacionTexto;
+        float textWidthRevalidacion = customFont.getStringWidth(textoRevalidacion) * fontRevalidacion / 1000f;
+        // Calcular la posición X para centrar el texto
+        float xTextoRevalidacion = (pageWidth - textWidthRevalidacion) / 2;
+        float yTextoRevalidacion = 560;
+        contentStream.beginText();
+        contentStream.newLineAtOffset(xTextoRevalidacion, yTextoRevalidacion);
+        contentStream.showText(textoRevalidacion);
+        contentStream.endText();
         
 
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
@@ -3077,7 +3088,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
         float textWidth3 = customFont.getStringWidth(texto3) * fontSize2 / 1000f;
 
         // Configurar la posición Y del segundo texto (un poco más arriba)
-        float yTexto3 = 540; // Ajusta esta coordenada y según tus necesidades
+        float yTexto3 = 530; // Ajusta esta coordenada y según tus necesidades
 
         // Agregar el segundo texto al documento centrado
         contentStream.beginText();
@@ -3087,15 +3098,7 @@ public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
 
         contentStream.setFont(customFont, fontSize);
 
-        String textoRevalidacion = revalidacionTexto;
-        float textWidthRevalidacion = customFont.getStringWidth(textoRevalidacion) * fontSize / 1000f;
-        // Calcular la posición X para centrar el texto
-        float xTextoRevalidacion = (pageWidth - textWidthRevalidacion) / 2;
-        float yTextoRevalidacion = 570;
-        contentStream.beginText();
-        contentStream.newLineAtOffset(xTextoRevalidacion, yTextoRevalidacion);
-        contentStream.showText(textoRevalidacion);
-        contentStream.endText();
+       
 
         String diaConvertido = String.valueOf(diaNum);
         String texto4 = diaConvertido;
