@@ -3649,6 +3649,7 @@ public class PdfController {
 
       titulo.setEstado("A");
       titulo.setTipo_titulo("Diplomado");
+      titulo.setActa_calificacion_posgrado(correlativo);
       titulo.setFecha_generacion(localDateFA);
       tituloService.save(titulo);
 
