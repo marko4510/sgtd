@@ -1714,9 +1714,9 @@ public class PdfController {
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Contaduría Pública")) {
             if (persona.getGradoAcademico().getNombre().equals("Técnico Universitario Superior")) {
 
-              primerTexto = "Técnico en Contabilidad";
+              primerTexto = "Técnico Universitario Superior en Contabilidad";
               segundoTexto = "Técnico Universitario Superior";
-              tercerTexto = "Contabilidad";
+              tercerTexto = "Contaduría Pública";
 
             } else {
               if (persona.getSexo().equals("Masculino")) {
@@ -2270,9 +2270,9 @@ public class PdfController {
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Contaduría Pública")) {
             if (persona.getGradoAcademico().getNombre().equals("Técnico Universitario Superior")) {
 
-              primerTexto = "Técnico en Contabilidad";
+              primerTexto = "Técnico Universitario Superior en Contabilidad";
               segundoTexto = "Técnico Universitario Superior";
-              tercerTexto = "Contabilidad";
+              tercerTexto = "Contaduría Pública";
 
             } else {
               if (persona.getSexo().equals("Masculino")) {
@@ -2924,9 +2924,9 @@ public class PdfController {
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Contaduría Pública")) {
           if (persona.getGradoAcademico().getNombre().equals("Técnico Universitario Superior")) {
 
-            primerTexto = "Técnico en Contabilidad";
+            primerTexto = "Técnico Universitario Superior en Contabilidad";
             segundoTexto = "Técnico Universitario Superior";
-            tercerTexto = "Contabilidad";
+            tercerTexto = "Contaduría Pública";
 
           } else {
             if (persona.getSexo().equals("Masculino")) {
