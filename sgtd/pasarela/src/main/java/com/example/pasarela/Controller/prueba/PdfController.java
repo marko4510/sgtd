@@ -271,9 +271,15 @@ public class PdfController {
 
   @PostMapping("/generarTituloPdf")
   public String generarTituloPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona,
-      @RequestParam("gestion") String gestion, @RequestParam("nroTitulo") String nroTitulo, Model model)
+      @RequestParam("gestion") String gestion, @RequestParam("nroTitulo") String nroTitulo, Model model, RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
-
+    Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+    if (titulo2 != null) {
+      redirectAttrs
+      .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
+      .addFlashAttribute("clase", "warning alert-dismissible fade show");
+      return "redirect:/inicioGenerarCertificado";
+    }
     Date fechaActual = new Date();
     LocalDate localDateFA = convertirDateALocalDate(fechaActual);
     int dia = localDateFA.getDayOfMonth();
@@ -473,9 +479,15 @@ public class PdfController {
 
   @PostMapping("/generarTituloProvisionPdf")
   public String generarTituloProvisionPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona,
-      @RequestParam("gestion") String gestion, @RequestParam("nroTitulo") String nroTitulo, Model model)
+      @RequestParam("gestion") String gestion, @RequestParam("nroTitulo") String nroTitulo, Model model, RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
-
+        Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+    if (titulo2 != null) {
+      redirectAttrs
+      .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
+      .addFlashAttribute("clase", "warning alert-dismissible fade show");
+      return "redirect:/inicioGenerarCertificado";
+    }
     Date fechaActual = new Date();
 
     LocalDate localDateFA = convertirDateALocalDate(fechaActual);
@@ -562,8 +574,15 @@ public class PdfController {
   public String generarTituloPlantillaPdf(@Validated Titulo titulo,
       @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla,
       @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,
-      @RequestParam("nroTitulo") String nroTitulo, Model model)
+      @RequestParam("nroTitulo") String nroTitulo, Model model, RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException, WriterException {
+        Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+    if (titulo2 != null) {
+      redirectAttrs
+      .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
+      .addFlashAttribute("clase", "warning alert-dismissible fade show");
+      return "redirect:/inicioGenerarCertificado";
+    }
     List<Titulo> listTitulo = tituloService.findAll();
     Date fechaActual = new Date();
     LocalDate localDateFA = convertirDateALocalDate(fechaActual);
@@ -1296,8 +1315,15 @@ public class PdfController {
   public String generarTituloProvisionPlantillaPdf(@Validated Titulo titulo,
       @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla,
       @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,
-      @RequestParam("nroTitulo") String nroTitulo, Model model)
+      @RequestParam("nroTitulo") String nroTitulo, Model model,RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
+        Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+        if (titulo2 != null) {
+          redirectAttrs
+          .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
+          .addFlashAttribute("clase", "warning alert-dismissible fade show");
+          return "redirect:/inicioGenerarCertificado";
+        }
     List<Titulo> listTitulo = tituloService.findAll();
     Date fechaActual = new Date();
 
@@ -2543,8 +2569,15 @@ public class PdfController {
   public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla,
       @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,
-      @RequestParam("nroTitulo") String nroTitulo, Model model)
+      @RequestParam("nroTitulo") String nroTitulo, Model model,RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
+        Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+        if (titulo2 != null) {
+          redirectAttrs
+          .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
+          .addFlashAttribute("clase", "warning alert-dismissible fade show");
+          return "redirect:/inicioGenerarCertificado";
+        }
     List<Titulo> listTitulo = tituloService.findAll();
     Date fechaActual = new Date();
 

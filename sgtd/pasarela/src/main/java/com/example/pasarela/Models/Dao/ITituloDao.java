@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.example.pasarela.Models.Entity.Titulo;
+import com.example.pasarela.Models.Entity.Usuario;
 
 public interface ITituloDao extends CrudRepository<Titulo, Long>{
 
@@ -47,6 +48,9 @@ public interface ITituloDao extends CrudRepository<Titulo, Long>{
 
     //@Query(value = "SELECT * FROM public.pasarela_titulo WHERE (tipo_titulo = 'Bachiller' OR tipo_titulo = 'Academico') AND estado = 'A'", nativeQuery = true)
 //public List<Titulo> titulosBachillerAcademicoSinFirmar();
+
+    @Query("select t from Titulo t where t.nro_titulo = ?1 and t.estado = 'A'")
+    public Titulo getTituloPorNroTitulo(String nro_titulo);
 
   
 }
