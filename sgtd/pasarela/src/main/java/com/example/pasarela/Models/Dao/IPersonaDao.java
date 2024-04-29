@@ -9,7 +9,7 @@ import com.example.pasarela.Models.Entity.Persona;
 
 public interface IPersonaDao extends CrudRepository<Persona, Long>{
     
-    @Query("Select p from Persona p where p.ci = ?1")
+    @Query("Select p from Persona p where p.ci = ?1 and p.estado_persona != 'X'")
     public Persona getPersonaCI(String ci);
 
     @Query("SELECT p FROM Persona p WHERE p.nombre = ?1 AND p.ap_paterno = ?2 AND p.ap_materno = ?3")
