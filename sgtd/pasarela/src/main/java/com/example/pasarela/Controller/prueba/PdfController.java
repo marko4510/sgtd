@@ -271,13 +271,14 @@ public class PdfController {
 
   @PostMapping("/generarTituloPdf")
   public String generarTituloPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona,
-      @RequestParam("gestion") String gestion, @RequestParam("nroTitulo") String nroTitulo, Model model, RedirectAttributes redirectAttrs)
+      @RequestParam("gestion") String gestion, @RequestParam("nroTitulo") String nroTitulo, Model model,
+      RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
     Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
     if (titulo2 != null) {
       redirectAttrs
-      .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
-      .addFlashAttribute("clase", "warning alert-dismissible fade show");
+          .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
+          .addFlashAttribute("clase", "warning alert-dismissible fade show");
       return "redirect:/inicioGenerarCertificado";
     }
     Date fechaActual = new Date();
@@ -479,13 +480,14 @@ public class PdfController {
 
   @PostMapping("/generarTituloProvisionPdf")
   public String generarTituloProvisionPdf(@Validated Titulo titulo, @RequestParam("id_persona") Long id_persona,
-      @RequestParam("gestion") String gestion, @RequestParam("nroTitulo") String nroTitulo, Model model, RedirectAttributes redirectAttrs)
+      @RequestParam("gestion") String gestion, @RequestParam("nroTitulo") String nroTitulo, Model model,
+      RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
-        Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+    Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
     if (titulo2 != null) {
       redirectAttrs
-      .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
-      .addFlashAttribute("clase", "warning alert-dismissible fade show");
+          .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
+          .addFlashAttribute("clase", "warning alert-dismissible fade show");
       return "redirect:/inicioGenerarCertificado";
     }
     Date fechaActual = new Date();
@@ -576,11 +578,11 @@ public class PdfController {
       @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,
       @RequestParam("nroTitulo") String nroTitulo, Model model, RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException, WriterException {
-        Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+    Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
     if (titulo2 != null) {
       redirectAttrs
-      .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
-      .addFlashAttribute("clase", "warning alert-dismissible fade show");
+          .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
+          .addFlashAttribute("clase", "warning alert-dismissible fade show");
       return "redirect:/inicioGenerarCertificado";
     }
     List<Titulo> listTitulo = tituloService.findAll();
@@ -1315,15 +1317,15 @@ public class PdfController {
   public String generarTituloProvisionPlantillaPdf(@Validated Titulo titulo,
       @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla,
       @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,
-      @RequestParam("nroTitulo") String nroTitulo, Model model,RedirectAttributes redirectAttrs)
+      @RequestParam("nroTitulo") String nroTitulo, Model model, RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
-        Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
-        if (titulo2 != null) {
-          redirectAttrs
+    Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+    if (titulo2 != null) {
+      redirectAttrs
           .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
           .addFlashAttribute("clase", "warning alert-dismissible fade show");
-          return "redirect:/inicioGenerarCertificado";
-        }
+      return "redirect:/inicioGenerarCertificado";
+    }
     List<Titulo> listTitulo = tituloService.findAll();
     Date fechaActual = new Date();
 
@@ -1712,19 +1714,19 @@ public class PdfController {
             }
 
           }
-          // if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
-          //     .equals("Ciencias Políticas y Gestión Pública")) {
-          //   if (persona.getSexo().equals("Masculino")) {
-          //     primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
-          //     segundoTexto = "Licenciado";
-          //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-          //   } else {
-          //     primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
-          //     segundoTexto = "Licenciada";
-          //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-          //   }
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+              .equals("Ciencias Políticas y Gestión Pública")) {
+            if (persona.getSexo().equals("Masculino")) {
+              primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
-          // }
+          }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
             if (persona.getSexo().equals("Masculino")) {
               primerTexto = "Licenciado en Administración de Empresas";
@@ -1802,6 +1804,7 @@ public class PdfController {
 
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
               .equals("Ciencias Políticas y Gestión Pública")) {
+            System.out.println("ENTRO AL IF DE CIENCIAS POLITICAS");
             // Configurar el segundo texto y calcular su ancho
             String texto2 = tercerTexto; // Reemplaza con tu segundo
                                          // texto
@@ -1816,6 +1819,7 @@ public class PdfController {
             contentStream.showText(texto2);
             contentStream.endText();
           } else {
+            System.out.println("ENTRO AL ELSE DE CIENCIAS POLITICAS");
             // Configurar el segundo texto y calcular su ancho
             String texto2 = tercerTexto; // Reemplaza con tu segundo
                                          // texto
@@ -2280,19 +2284,19 @@ public class PdfController {
             }
 
           }
-          // if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
-          //     .equals("Ciencias Políticas y Gestión Pública")) {
-          //   if (persona.getSexo().equals("Masculino")) {
-          //     primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
-          //     segundoTexto = "Licenciado";
-          //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-          //   } else {
-          //     primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
-          //     segundoTexto = "Licenciada";
-          //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-          //   }
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+              .equals("Ciencias Políticas y Gestión Pública")) {
+            if (persona.getSexo().equals("Masculino")) {
+              primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
 
-          // }
+          }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
             if (persona.getSexo().equals("Masculino")) {
               primerTexto = "Licenciado en Administración de Empresas";
@@ -2393,23 +2397,6 @@ public class PdfController {
           contentStream.newLineAtOffset(xTexto, yTexto);
           contentStream.showText(texto);
           contentStream.endText();
-
-          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
-              .equals("Ciencias Políticas y Gestión Pública")) {
-            // Configurar el segundo texto y calcular su ancho
-            String texto2 = tercerTexto; // Reemplaza con tu segundo
-                                         // texto
-            float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
-            float xTexto2 = 180;
-            // Configurar la posición Y del segundo texto (un poco más arriba)
-            float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
-
-            // Agregar el segundo texto al documento centrado
-            contentStream.beginText();
-            contentStream.newLineAtOffset(xTexto2, yTexto2);
-            contentStream.showText(texto2);
-            contentStream.endText();
-          }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
               .equals("Sistema de Producción Agropecuaria")) {
             // Configurar el segundo texto y calcular su ancho
@@ -2425,7 +2412,25 @@ public class PdfController {
             contentStream.newLineAtOffset(xTexto2, yTexto2);
             contentStream.showText(texto2);
             contentStream.endText();
+          }
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+              .equals("Ciencias Políticas y Gestión Pública")) {
+            System.out.println("ENTRO AL IF DE CIENCIAS POLITICAS");
+            // Configurar el segundo texto y calcular su ancho
+            String texto2 = tercerTexto; // Reemplaza con tu segundo
+                                         // texto
+            float textWidth2 = customFont.getStringWidth(texto2) * fontSize2 / 1000f;
+            float xTexto2 = 180;
+            // Configurar la posición Y del segundo texto (un poco más arriba)
+            float yTexto2 = 340; // Ajusta esta coordenada y según tus necesidades
+
+            // Agregar el segundo texto al documento centrado
+            contentStream.beginText();
+            contentStream.newLineAtOffset(xTexto2, yTexto2);
+            contentStream.showText(texto2);
+            contentStream.endText();
           } else {
+            System.out.println("ENTRO AL ELSE DE CIENCIAS POLITICAS");
             // Configurar el segundo texto y calcular su ancho
             String texto2 = tercerTexto; // Reemplaza con tu segundo
                                          // texto
@@ -2581,15 +2586,15 @@ public class PdfController {
   public String generarTituloProvisionalRevalidadoPdf(@Validated Titulo titulo,
       @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla,
       @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,
-      @RequestParam("nroTitulo") String nroTitulo, Model model,RedirectAttributes redirectAttrs)
+      @RequestParam("nroTitulo") String nroTitulo, Model model, RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
-        Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
-        if (titulo2 != null) {
-          redirectAttrs
+    Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+    if (titulo2 != null) {
+      redirectAttrs
           .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")
           .addFlashAttribute("clase", "warning alert-dismissible fade show");
-          return "redirect:/inicioGenerarCertificado";
-        }
+      return "redirect:/inicioGenerarCertificado";
+    }
     List<Titulo> listTitulo = tituloService.findAll();
     Date fechaActual = new Date();
 
@@ -2942,16 +2947,16 @@ public class PdfController {
 
         }
         // if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
-        //     .equals("Ciencias Políticas y Gestión Pública")) {
-        //   if (persona.getSexo().equals("Masculino")) {
-        //     primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
-        //     segundoTexto = "Licenciado";
-        //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-        //   } else {
-        //     primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
-        //     segundoTexto = "Licenciada";
-        //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-        //   }
+        // .equals("Ciencias Políticas y Gestión Pública")) {
+        // if (persona.getSexo().equals("Masculino")) {
+        // primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+        // segundoTexto = "Licenciado";
+        // tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+        // } else {
+        // primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+        // segundoTexto = "Licenciada";
+        // tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+        // }
 
         // }
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
@@ -3065,7 +3070,6 @@ public class PdfController {
         contentStream.showText(textoRevalidacion);
         contentStream.endText();
 
-      
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
             .equals("Ciencias Políticas y Gestión Pública")) {
           // Configurar el segundo texto y calcular su ancho
