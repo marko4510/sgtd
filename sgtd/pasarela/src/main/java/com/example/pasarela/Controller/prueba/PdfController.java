@@ -1706,11 +1706,11 @@ public class PdfController {
             if (persona.getSexo().equals("Masculino")) {
               primerTexto = "Abogado";
               segundoTexto = "Licenciado";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              tercerTexto = "Ciencias Jurídicas";
             } else {
               primerTexto = "Abogado";
               segundoTexto = "Licenciada";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              tercerTexto = "Ciencias Jurídicas";
             }
 
           }
@@ -2276,11 +2276,11 @@ public class PdfController {
             if (persona.getSexo().equals("Masculino")) {
               primerTexto = "Abogado";
               segundoTexto = "Licenciado";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              tercerTexto = "Ciencias Jurídicas";
             } else {
               primerTexto = "Abogado";
               segundoTexto = "Licenciada";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              tercerTexto = "Ciencias Jurídicas";
             }
 
           }
@@ -2938,11 +2938,11 @@ public class PdfController {
           if (persona.getSexo().equals("Masculino")) {
             primerTexto = "Abogado";
             segundoTexto = "Licenciado";
-            tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            tercerTexto = "Ciencias Jurídicas";
           } else {
             primerTexto = "Abogado";
             segundoTexto = "Licenciada";
-            tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            tercerTexto = "Ciencias Jurídicas";
           }
 
         }
