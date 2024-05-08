@@ -1700,7 +1700,7 @@ public class PdfController {
             }
 
           }
-          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Jurídicas")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Derecho")) {
             if (persona.getSexo().equals("Masculino")) {
               primerTexto = "Abogado";
               segundoTexto = "Licenciado";
@@ -1712,19 +1712,19 @@ public class PdfController {
             }
 
           }
-          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
-              .equals("Ciencias Políticas y Gestión Pública")) {
-            if (persona.getSexo().equals("Masculino")) {
-              primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
-              segundoTexto = "Licenciado";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-            } else {
-              primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
-              segundoTexto = "Licenciada";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-            }
+          // if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+          //     .equals("Ciencias Políticas y Gestión Pública")) {
+          //   if (persona.getSexo().equals("Masculino")) {
+          //     primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+          //     segundoTexto = "Licenciado";
+          //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+          //   } else {
+          //     primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+          //     segundoTexto = "Licenciada";
+          //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+          //   }
 
-          }
+          // }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
             if (persona.getSexo().equals("Masculino")) {
               primerTexto = "Licenciado en Administración de Empresas";
@@ -2268,19 +2268,31 @@ public class PdfController {
             }
 
           }
-          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
-              .equals("Ciencias Políticas y Gestión Pública")) {
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Derecho")) {
             if (persona.getSexo().equals("Masculino")) {
-              primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+              primerTexto = "Abogado";
               segundoTexto = "Licenciado";
               tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
             } else {
-              primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+              primerTexto = "Abogado";
               segundoTexto = "Licenciada";
               tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
             }
 
           }
+          // if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+          //     .equals("Ciencias Políticas y Gestión Pública")) {
+          //   if (persona.getSexo().equals("Masculino")) {
+          //     primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+          //     segundoTexto = "Licenciado";
+          //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+          //   } else {
+          //     primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+          //     segundoTexto = "Licenciada";
+          //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+          //   }
+
+          // }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
             if (persona.getSexo().equals("Masculino")) {
               primerTexto = "Licenciado en Administración de Empresas";
@@ -2917,7 +2929,7 @@ public class PdfController {
           }
 
         }
-        if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ciencias Jurídicas")) {
+        if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Derecho")) {
           if (persona.getSexo().equals("Masculino")) {
             primerTexto = "Abogado";
             segundoTexto = "Licenciado";
@@ -2929,19 +2941,19 @@ public class PdfController {
           }
 
         }
-        if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
-            .equals("Ciencias Políticas y Gestión Pública")) {
-          if (persona.getSexo().equals("Masculino")) {
-            primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
-            segundoTexto = "Licenciado";
-            tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-          } else {
-            primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
-            segundoTexto = "Licenciada";
-            tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-          }
+        // if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+        //     .equals("Ciencias Políticas y Gestión Pública")) {
+        //   if (persona.getSexo().equals("Masculino")) {
+        //     primerTexto = "Licenciado en Ciencias Políticas y Gestión Pública";
+        //     segundoTexto = "Licenciado";
+        //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+        //   } else {
+        //     primerTexto = "Licenciada en Ciencias Políticas y Gestión Pública";
+        //     segundoTexto = "Licenciada";
+        //     tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+        //   }
 
-        }
+        // }
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Administración de Empresas")) {
           if (persona.getSexo().equals("Masculino")) {
             primerTexto = "Licenciado en Administración de Empresas";
