@@ -1655,15 +1655,23 @@ public class PdfController {
 
           }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería de Sistemas")) {
-            if (persona.getSexo().equals("Masculino")) {
-              primerTexto = "Ingeniero de Sistemas";
-              segundoTexto = "Licenciado";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-            } else {
-              primerTexto = "Ingeniera de Sistemas";
-              segundoTexto = "Licenciada";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            if(persona.getGradoAcademico().getNombre().equals("Técnico Universitario Medio en Programación de Computadoras")){
+              primerTexto = "Técnico Universitario Medio en Programación de Computadoras";
+              segundoTexto = "Técnico Universitario Medio";
+              tercerTexto = "Programación de Computadoras";
+
+            }else{
+              if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Ingeniero de Sistemas";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              } else {
+                primerTexto = "Ingeniera de Sistemas";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              }
             }
+            
 
           }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Comunicación Social")) {
@@ -2225,15 +2233,23 @@ public class PdfController {
 
           }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería de Sistemas")) {
-            if (persona.getSexo().equals("Masculino")) {
-              primerTexto = "Ingeniero de Sistemas";
-              segundoTexto = "Licenciado";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-            } else {
-              primerTexto = "Ingeniera de Sistemas";
-              segundoTexto = "Licenciada";
-              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            if(persona.getGradoAcademico().getNombre().equals("Técnico Universitario Medio en Programación de Computadoras")){
+              primerTexto = "Técnico Universitario Medio en Programación de Computadoras";
+              segundoTexto = "Técnico Universitario Medio";
+              tercerTexto = "Programación de Computadoras";
+
+            }else{
+              if (persona.getSexo().equals("Masculino")) {
+                primerTexto = "Ingeniero de Sistemas";
+                segundoTexto = "Licenciado";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              } else {
+                primerTexto = "Ingeniera de Sistemas";
+                segundoTexto = "Licenciada";
+                tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+              }
             }
+            
 
           }
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Comunicación Social")) {
@@ -2899,15 +2915,23 @@ public class PdfController {
 
         }
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería de Sistemas")) {
-          if (persona.getSexo().equals("Masculino")) {
-            primerTexto = "Ingeniero de Sistemas";
-            segundoTexto = "Licenciado";
-            tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
-          } else {
-            primerTexto = "Ingeniera de Sistemas";
-            segundoTexto = "Licenciada";
-            tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+          if(persona.getGradoAcademico().getNombre().equals("Técnico Universitario Medio en Programación de Computadoras")){
+            primerTexto = "Técnico Universitario Medio en Programación de Computadoras";
+            segundoTexto = "Técnico Universitario Medio";
+            tercerTexto = "Programación de Computadoras";
+
+          }else{
+            if (persona.getSexo().equals("Masculino")) {
+              primerTexto = "Ingeniero de Sistemas";
+              segundoTexto = "Licenciado";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Ingeniera de Sistemas";
+              segundoTexto = "Licenciada";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
           }
+          
 
         }
         if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Comunicación Social")) {
