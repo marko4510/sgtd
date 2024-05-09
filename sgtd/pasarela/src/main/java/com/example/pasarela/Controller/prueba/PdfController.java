@@ -2476,17 +2476,14 @@ public class PdfController {
           // Configurar el segundo texto y calcular su ancho
           String texto3 = primerTexto; // Reemplaza con tu segundo
                                        // texto
-      
-          
-          
-          contentStream.setFont(customFont, fontSizeP);
-          float xTexto3 = 98;
+          float textWidth3 = customFont.getStringWidth(texto3) * fontSize2 / 1000f;
+
           // Configurar la posición Y del segundo texto (un poco más arriba)
           float yTexto3 = 540; // Ajusta esta coordenada y según tus necesidades
 
           // Agregar el segundo texto al documento centrado
           contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto3, yTexto3);
+          contentStream.newLineAtOffset((page2.getMediaBox().getWidth() - textWidth3) / 2, yTexto3);
           contentStream.showText(texto3);
           contentStream.endText();
 
