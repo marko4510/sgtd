@@ -1850,6 +1850,7 @@ public class PdfController {
                                        // texto
           float textWidth3;
           int cantidadCaracteresTexto3 = texto3.length();
+          System.out.println("+++++++++++++++++++++++++++++++++++++++++"+cantidadCaracteresTexto3);
           if (cantidadCaracteresTexto3 >= 50) {
             textWidth3 = customFont.getStringWidth(texto3) * fontSize3 / 1000f;
           } else {
@@ -2123,7 +2124,8 @@ public class PdfController {
           float fontSize2 = 32;
           float fontSize = 20;
           float fontFirma = 18;
-          float fontSize3 = 26;
+          float fontSizeP = 28;
+          
 
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Enfermería")) {
             if (persona.getSexo().equals("Masculino")) {
@@ -2244,9 +2246,9 @@ public class PdfController {
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera().equals("Ingeniería de Sistemas")) {
             if (persona.getGradoAcademico().getNombre()
                 .equals("Técnico Universitario Medio en Programación de Computadoras")) {
-              primerTexto = "Técnico Universitario Medio en Programación de Computadoras";
+              primerTexto = "Técnico Universitario Medio En Programación de Computadoras";
               segundoTexto = "Técnico Universitario Medio";
-              tercerTexto = "Programación de Computadoras";
+              tercerTexto = "Programación De Computadoras";
 
             } else {
               if (persona.getSexo().equals("Masculino")) {
@@ -2474,20 +2476,17 @@ public class PdfController {
           // Configurar el segundo texto y calcular su ancho
           String texto3 = primerTexto; // Reemplaza con tu segundo
                                        // texto
-          float textWidth3;
-          int cantidadCaracteresTexto3 = texto3.length();
-          if (cantidadCaracteresTexto3 >= 50) {
-            textWidth3 = customFont.getStringWidth(texto3) * fontSize3 / 1000f;
-          } else {
-            textWidth3 = customFont.getStringWidth(texto3) * fontSize2 / 1000f;
-          }
-
+      
+          
+          
+          contentStream.setFont(customFont, fontSizeP);
+          float xTexto3 = 98;
           // Configurar la posición Y del segundo texto (un poco más arriba)
           float yTexto3 = 540; // Ajusta esta coordenada y según tus necesidades
 
           // Agregar el segundo texto al documento centrado
           contentStream.beginText();
-          contentStream.newLineAtOffset((page2.getMediaBox().getWidth() - textWidth3) / 2, yTexto3);
+          contentStream.newLineAtOffset(xTexto3, yTexto3);
           contentStream.showText(texto3);
           contentStream.endText();
 
@@ -3164,6 +3163,7 @@ public class PdfController {
                                      // texto
         float textWidth3;
         int cantidadCaracteresTexto3 = texto3.length();
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++"+cantidadCaracteresTexto3);
         if (cantidadCaracteresTexto3 >= 50) {
           textWidth3 = customFont.getStringWidth(texto3) * fontSize3 / 1000f;
         } else {
