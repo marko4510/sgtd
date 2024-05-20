@@ -1319,7 +1319,7 @@ public class PdfController {
       @RequestParam("id_persona") Long id_persona, @RequestParam("gestion") String gestion,
       @RequestParam("nroTitulo") String nroTitulo, Model model, RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
-    Titulo titulo2 = tituloService.getTituloPorNroTitulo(nroTitulo);
+    Titulo titulo2 = tituloService.getTituloPorNroTituloProvision(nroTitulo);
     if (titulo2 != null) {
       redirectAttrs
           .addFlashAttribute("mensaje", "El Titulo que intenta registrar ya existe!")

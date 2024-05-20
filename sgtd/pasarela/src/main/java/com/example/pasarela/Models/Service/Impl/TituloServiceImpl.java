@@ -98,5 +98,10 @@ public class TituloServiceImpl implements ITituloService{
     public Titulo getTituloPorNroTitulo(String nro_titulo) {
       return tituloDao.getTituloPorNroTitulo(nro_titulo);
     }
+
+    @Override
+    public Titulo getTituloPorNroTituloProvision(String nro_titulo) {
+        return tituloDao.getTituloPorNroTituloProvision(nro_titulo);
+    }
     
 }

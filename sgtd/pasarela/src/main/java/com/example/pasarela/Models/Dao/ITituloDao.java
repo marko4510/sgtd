@@ -52,5 +52,8 @@ public interface ITituloDao extends CrudRepository<Titulo, Long>{
     @Query("select t from Titulo t where t.nro_titulo = ?1 and t.estado = 'A'")
     public Titulo getTituloPorNroTitulo(String nro_titulo);
 
+    @Query("select t from Titulo t where t.nro_titulo = ?1 and t.estado = 'A' AND tipo_titulo = 'Provision'")
+    public Titulo getTituloPorNroTituloProvision(String nro_titulo);
+
   
 }

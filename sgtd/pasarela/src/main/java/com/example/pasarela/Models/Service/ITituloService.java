@@ -29,4 +29,6 @@ public interface ITituloService {
 	public void delete(Long id);
 
 	public Titulo getTituloPorNroTitulo(String nro_titulo);
+
+	public Titulo getTituloPorNroTituloProvision(String nro_titulo);
 }
