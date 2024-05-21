@@ -3466,7 +3466,9 @@ public class PdfController {
 
     Map<String, Object> requests = new HashMap<String, Object>();
     requests.put("correlativo", correlativo);
-    String url = "http://virtual.uap.edu.bo:6061/v1/api/certificado";
+    
+    //String url = "http://virtual.uap.edu.bo:6061/v1/api/certificado"; //LOCAL
+    String url = "http://172.16.21.2:3333/v1/api/certificado"; //SERVER
     String key = "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKVVNWUlZURUZEU1U5T0lpd2libUZ0WlNJNklsVk9TVlpGVWxOSlJFRkVYMEZOUVZwUFRrbERRVjlRUVU1RVQxOVFUMU5IVWtGRVR5SXNJbWxoZENJNk1qQXlNMzAuZThZeU42YmVyalhMbXFneENzMEl1ZWdiZlRSbWJrUTVOSG95bEVrUV91OA==";
     HttpHeaders headers = new HttpHeaders();
 
