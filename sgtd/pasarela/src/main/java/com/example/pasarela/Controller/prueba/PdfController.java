@@ -606,7 +606,7 @@ public class PdfController {
     Context context = new Context();
     // Agregar los datos que necesites en tu vista
     context.setVariable("departamento", cadenaDepartamento);
-    context.setVariable("provincia", cadenaProvinciaC);
+    context.setVariable("provincia", cadenaProvincia);
     context.setVariable("persona", persona);
     context.setVariable("dia", dia);
     context.setVariable("mes", cadenaMesC);
