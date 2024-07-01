@@ -33,7 +33,7 @@ public class ApiTitulosPgController {
             return new ResponseEntity<>("Clave de API no válida", HttpStatus.UNAUTHORIZED);
         }
 
-        String sql = "SELECT pt.nro_titulo, pp.nombre, pp.ap_paterno, pp.ap_materno, pt.tipo_titulo, pt.fecha_generacion, ptg.ruta_archivo " +
+        String sql = "SELECT pt.nro_titulo, pp.nombre, pp.ap_paterno, pp.ap_materno, pt.tipo_titulo, pt.nombre_programa, pt.fecha_generacion, ptg.ruta_archivo " +
                      "FROM pasarela_titulo pt " +
                      "LEFT JOIN pasarela_titulo_generado ptg ON pt.id_titulo_generado = ptg.id_titulo_generado " +
                      "LEFT JOIN pasarela_persona pp ON pt.id_persona = pp.id_persona " +

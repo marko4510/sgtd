@@ -3739,7 +3739,7 @@ public class PdfController {
       titulo.setNro_titulo((titulosDiplomado.size() + 1) + "");
       titulo.setTituloGenerado(tituloGenerado2);
       titulo.setNro_titulo(nroTitulo);
-
+      titulo.setNombre_programa(programa);
       titulo.setEstado("A");
       titulo.setTipo_titulo("Diplomado");
       titulo.setActa_calificacion_posgrado(correlativo);
