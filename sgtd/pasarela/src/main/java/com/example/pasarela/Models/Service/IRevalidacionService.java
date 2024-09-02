@@ -3,6 +3,7 @@ package com.example.pasarela.Models.Service;
 import java.util.List;
 
 import com.example.pasarela.Models.Entity.Revalidacion;
+import com.example.pasarela.Models.Entity.Titulo;
 
 
 public interface IRevalidacionService {
@@ -16,4 +17,6 @@ public interface IRevalidacionService {
 	public Revalidacion findOne(Long id);
 
 	public void delete(Long id);
+
+	public Revalidacion getRevalidacionPorNroTitulo(String nro_revalidacio);
 }

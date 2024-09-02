@@ -42,6 +42,13 @@
                                 <h3 class="card-title">Generar Revalidaciones</h3>
                             </div>
                         </div>
+                        <div th:class="'alert alert-' + (${clase != null} ? ${clase} : info)" role="alert"
+                        th:if="${mensaje != null}">
+                        <h4 class="alert-body" th:text="${mensaje}"></h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                    </div>
+                        <br>
                         <br>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <!--

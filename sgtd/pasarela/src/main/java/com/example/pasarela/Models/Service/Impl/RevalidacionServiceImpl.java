@@ -35,5 +35,10 @@ public class RevalidacionServiceImpl implements IRevalidacionService{
     public void delete(Long id) {
         revalidacionDao.deleteById(id);
     }
+
+    @Override
+    public Revalidacion getRevalidacionPorNroTitulo(String nro_revalidacio) {
+        return revalidacionDao.getRevalidacionPorNroTitulo(nro_revalidacio);
+    }
     
 }

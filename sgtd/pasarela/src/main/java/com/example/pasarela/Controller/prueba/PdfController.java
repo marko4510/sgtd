@@ -3466,9 +3466,9 @@ public class PdfController {
 
     Map<String, Object> requests = new HashMap<String, Object>();
     requests.put("correlativo", correlativo);
-    
-    //String url = "http://virtual.uap.edu.bo:6061/v1/api/certificado"; //LOCAL
-    String url = "http://172.16.21.8:6061/v1/api/certificado"; //SERVER
+
+    // String url = "http://virtual.uap.edu.bo:6061/v1/api/certificado"; //LOCAL
+    String url = "http://172.16.21.8:6061/v1/api/certificado"; // SERVER
     String key = "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnpkV0lpT2lKVVNWUlZURUZEU1U5T0lpd2libUZ0WlNJNklsVk9TVlpGVWxOSlJFRkVYMEZOUVZwUFRrbERRVjlRUVU1RVQxOVFUMU5IVWtGRVR5SXNJbWxoZENJNk1qQXlNMzAuZThZeU42YmVyalhMbXFneENzMEl1ZWdiZlRSbWJrUTVOSG95bEVrUV91OA==";
     HttpHeaders headers = new HttpHeaders();
 
@@ -4071,8 +4071,24 @@ public class PdfController {
       @RequestParam("tenor") String tenor,
       @RequestParam("nroRevalidacion") String nroRevalidacion,
       @RequestParam("titulo") String titulo, @RequestParam("persona") String persona,
-      @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla)
+      @RequestParam(value = "usarPlantilla", required = false) boolean usarPlantilla, RedirectAttributes redirectAttrs)
       throws FileNotFoundException, IOException, ParseException, DocumentException {
+
+    if (nroRevalidacion == null || nroRevalidacion.isEmpty()) {
+      redirectAttrs
+          .addFlashAttribute("mensaje", "El número de revalidación es requerido!")
+          .addFlashAttribute("clase", "warning alert-dismissible fade show");
+      return "redirect:/inicioGenerarRevalidacion";
+    }
+    Revalidacion revalidacion2 = revalidacionService.getRevalidacionPorNroTitulo(nroRevalidacion);
+
+    if (revalidacion2 != null) {
+      redirectAttrs
+          .addFlashAttribute("mensaje", "La Revalidación que intenta registrar ya existe!")
+          .addFlashAttribute("clase", "warning alert-dismissible fade show");
+      return "redirect:/inicioGenerarRevalidacion";
+    }
+
     Date fechaActual = new Date();
     LocalDate localDateFA = convertirDateALocalDate(fechaActual);
     String fechaComoString = localDateFA.toString();
