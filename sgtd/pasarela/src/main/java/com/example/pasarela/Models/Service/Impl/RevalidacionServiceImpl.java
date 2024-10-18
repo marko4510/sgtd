@@ -40,5 +40,10 @@ public class RevalidacionServiceImpl implements IRevalidacionService{
     public Revalidacion getRevalidacionPorNroTitulo(String nro_revalidacio) {
         return revalidacionDao.getRevalidacionPorNroTitulo(nro_revalidacio);
     }
+
+    @Override
+    public List<Revalidacion> titulosRevalidacion() {
+        return (List<Revalidacion>) revalidacionDao.titulosRevalidacion();
+    }
     
 }

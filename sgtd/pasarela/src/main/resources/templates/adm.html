@@ -61,14 +61,32 @@
                                                  </svg>
                                               </div>
                                               <div class="text-end">
-                                                    <h2 class="counter" th:text="${listL}"></h2>
-                                                 Legalizaciones
+                                                    <h2 class="counter" th:text="${listaTituloAcademico}"></h2>
+                                                    T. Académicos
                                               </div>
                                            </div>
                                         </div>
                                     </div> 
                                 </div>
 
+                                <div class="col-md-3">
+                                    <div class="card bg-soft-primary">
+                                        <div class="card-body">
+                                           <div class="d-flex justify-content-between align-items-center">
+                                              <div class="bg-soft-primary rounded p-3">
+                                                 <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="25px"  viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                                 </svg>
+                                              </div>
+                                              <div class="text-end">
+                                                    <h2 class="counter" th:text="${listaTituloRevalidacion}"></h2>
+                                                 T. Revalidado
+                                              </div>
+                                           </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <div class="col-md-3">
                                     <div class="card bg-soft-warning">
                                         <div class="card-body">
@@ -79,8 +97,8 @@
                                                  </svg>
                                               </div>
                                               <div class="text-end">
-                                                    <h2 class="counter" th:text="${listS}"></h2>
-                                                 Supletorios
+                                                    <h2 class="counter" th:text="${listaTituloProvision}"></h2>
+                                                    T. Provisión Nacional
                                               </div>
                                            </div>
                                         </div>
@@ -97,31 +115,15 @@
                                                  </svg>
                                               </div>
                                               <div class="text-end">
-                                                    <h2 class="counter" th:text="${listT}"></h2>
-                                                 Títulos
+                                                    <h2 class="counter" th:text="${listaTituloProvisionRevalidado}"></h2>
+                                                    T Pro. Nacional Revalidado
                                               </div>
                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
-                                    <div class="card bg-soft-primary">
-                                        <div class="card-body">
-                                           <div class="d-flex justify-content-between align-items-center">
-                                              <div class="bg-soft-primary rounded p-3">
-                                                 <svg class="icon-20" xmlns="http://www.w3.org/2000/svg" width="25px"  viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
-                                                 </svg>
-                                              </div>
-                                              <div class="text-end">
-                                                    <h2 class="counter" th:text="${listP}"></h2>
-                                                 Pro. Nacional
-                                              </div>
-                                           </div>
-                                        </div>
-                                    </div>
-                                </div>
+                             
                             </div>
                         </div>
                     </div>

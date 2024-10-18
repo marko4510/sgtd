@@ -34,6 +34,8 @@ import com.example.pasarela.Models.Entity.GradoAcademico;
 import com.example.pasarela.Models.Entity.Nacionalidad;
 import com.example.pasarela.Models.Entity.Persona;
 import com.example.pasarela.Models.Entity.Provincia;
+import com.example.pasarela.Models.Entity.Revalidacion;
+import com.example.pasarela.Models.Entity.Titulo;
 import com.example.pasarela.Models.Entity.Tramite;
 import com.example.pasarela.Models.Entity.Usuario;
 import com.example.pasarela.Models.Service.IAutoridadService;
@@ -43,6 +45,8 @@ import com.example.pasarela.Models.Service.IGradoAcademicoService;
 import com.example.pasarela.Models.Service.INacionalidadService;
 import com.example.pasarela.Models.Service.IPersonaService;
 import com.example.pasarela.Models.Service.IProvinciaService;
+import com.example.pasarela.Models.Service.IRevalidacionService;
+import com.example.pasarela.Models.Service.ITituloService;
 import com.example.pasarela.Models.Service.ITramiteService;
 import com.example.pasarela.Models.Service.IUsuarioService;
 
@@ -75,6 +79,12 @@ public class LoginController {
 
 	@Autowired
     private IAutoridadService autoridadService;
+
+	@Autowired
+    private ITituloService tituloService;
+
+	@Autowired
+    private IRevalidacionService revalidacionService;
 
 	// Funcion de visualizacion de iniciar sesiòn administrador
 	@RequestMapping(value = "/LoginR", method = RequestMethod.GET)
@@ -120,14 +130,14 @@ public class LoginController {
 	public String Inicio(HttpServletRequest request, Model model) {
 		if (request.getSession().getAttribute("usuario") != null) {
 		
-			List<Tramite> listL = tramiteService.listaCarpetaLegalizacion();
-			List<Tramite> listS = tramiteService.listaCarpetaSupletorio();
-			List<Tramite> listT = tramiteService.listaCarpetaTitulos();
-			List<Tramite> listP = tramiteService.listaCarpetaProvision();
-            model.addAttribute("listL", listL.size());
-			model.addAttribute("listS", listS.size());
-			model.addAttribute("listT", listT.size());
-			model.addAttribute("listP", listP.size());
+			List<Titulo> listaTituloAcademico = tituloService.titulosAcademicos();
+			List<Titulo> listaTituloProvision = tituloService.titulosProvision();
+			List<Titulo> listaTituloProvisionRevalidado = tituloService.titulosProvisionRevalidacion();
+			List<Revalidacion> listaTituloRevalidacion = revalidacionService.titulosRevalidacion();
+            model.addAttribute("listaTituloAcademico", listaTituloAcademico.size());
+			model.addAttribute("listaTituloProvision", listaTituloProvision.size());
+			model.addAttribute("listaTituloProvisionRevalidado", listaTituloProvisionRevalidado.size());
+			model.addAttribute("listaTituloRevalidacion", listaTituloRevalidacion.size());
 			
 			return "adm";
 		} else {

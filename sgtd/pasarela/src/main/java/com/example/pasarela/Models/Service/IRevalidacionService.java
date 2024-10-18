@@ -19,4 +19,6 @@ public interface IRevalidacionService {
 	public void delete(Long id);
 
 	public Revalidacion getRevalidacionPorNroTitulo(String nro_revalidacio);
+
+	public List<Revalidacion> titulosRevalidacion();
 }
