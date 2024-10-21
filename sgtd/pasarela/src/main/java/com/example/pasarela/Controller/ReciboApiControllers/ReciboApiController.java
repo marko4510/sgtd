@@ -79,7 +79,7 @@ public class ReciboApiController {
 		String codigo_recibo = codigo +"/"+gestion;
         Map<String, Object> requests = new HashMap<String, Object>();
         requests.put("code", codigo_recibo);
-        String url = "http://181.115.188.250:9993/v1/service/api/abd0b66440194985807c94c918fa319c";
+        String url = "http://190.129.216.246:9993/v1/service/api/abd0b66440194985807c94c918fa319c?=";
         String key = "key 4d177e5f89ef62d1ce4b3fab51a58b77640d04246d38ccde163b3855e7237828";
         HttpHeaders headers = new HttpHeaders();
 
