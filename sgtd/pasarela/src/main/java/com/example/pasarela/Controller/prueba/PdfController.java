@@ -93,6 +93,8 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.graphics.image.LosslessFactory;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
+import org.apache.pdfbox.pdmodel.graphics.state.RenderingMode;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
@@ -816,143 +818,131 @@ public class PdfController {
         // Ruta al archivo de fuente personalizada
         String fontFilePath = "sgtd/pasarela/src/main/resources/static/fonts/Kuenstler Script Bold.ttf";
         try {
-          // Cargar el documento PDF existente
-          PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta)); // Asegúrate de que "rutaCompleta" apunte
-                                                                             // al archivo existente
+    // Primero dibujamos la plantilla
+PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta));
+PDPage page2 = pdfDocument2.getPage(0);
 
-          // Obtener la página donde deseas agregar el texto
-          PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
+// 1. Dibujar la plantilla primero
+PDImageXObject plantillaImage = PDImageXObject.createFromFile(rutaCompletaP, pdfDocument2);
+PDPageContentStream plantillaStream = new PDPageContentStream(pdfDocument2, page2, 
+    PDPageContentStream.AppendMode.PREPEND, true, true);
+plantillaStream.drawImage(plantillaImage, 0, 0, page2.getMediaBox().getWidth(), page2.getMediaBox().getHeight());
+plantillaStream.close();
 
-          // Crear un objeto de contenido para escribir texto en la página
-          PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
-              PDPageContentStream.AppendMode.APPEND, true, true);
+// 2. Luego agregamos el texto en una nueva capa
+PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
+    PDPageContentStream.AppendMode.APPEND, true, true);
 
-          // Cargar la fuente personalizada
-          PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
+// Cargar la fuente personalizada
+PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
 
-          float fontSize = 32; // Ajusta el tamaño según tus necesidades
-          float fontSize2 = 20;
-          float fontFirma = 17;
-          // Configurar el texto y calcular su ancho
-          String texto = persona.getGradoAcademico().getNombre();
-          contentStream.setFont(customFont, fontSize);
-          float textWidth = customFont.getStringWidth(texto) * fontSize / 1000f;
+float fontSize = 32;
+float fontSize2 = 20;
+float fontFirma = 17;
 
-          // Obtener el ancho de la página en puntos
-          float pageWidth = page2.getMediaBox().getWidth();
+// Configurar el texto con opacidad completa
+contentStream.setNonStrokingColor(0, 0, 0); // Negro
+contentStream.setRenderingMode(RenderingMode.FILL); // Cambiado a RenderingMode.FILL
+// Configurar el texto y calcular su ancho
+String texto = persona.getGradoAcademico().getNombre();
+contentStream.setFont(customFont, fontSize);
+float textWidth = customFont.getStringWidth(texto) * fontSize / 1000f;
 
-          // Calcular la posición X para centrar el texto
-          float xTexto = (pageWidth - textWidth) / 2;
+// Obtener el ancho de la página en puntos
+float pageWidth = page2.getMediaBox().getWidth();
 
-          // Configurar la posición Y del texto
-          float yTexto = 288; // Ajusta esta coordenada y según tus necesidades
+// Calcular la posición X para centrar el texto
+float xTexto = (pageWidth - textWidth) / 2;
 
-          // Agregar el texto al documento centrado
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto, yTexto);
-          contentStream.showText(texto);
-          contentStream.endText();
+// Configurar la posición Y del texto
+float yTexto = 299; // Ajusta esta coordenada y según tus necesidades
 
-          // Configurar el segundo texto y calcular su ancho
-          String texto2 = persona.getGradoAcademico().getCarrera().getNombre_carrera(); // Reemplaza con tu segundo
-                                                                                        // texto
-          float textWidth2 = customFont.getStringWidth(texto2) * fontSize / 1000f;
+// Agregar el texto al documento centrado
+contentStream.beginText();
+contentStream.newLineAtOffset(xTexto, yTexto);
+contentStream.showText(texto);
+contentStream.endText();
 
-          // Configurar la posición Y del segundo texto (un poco más arriba)
-          float yTexto2 = 420; // Ajusta esta coordenada y según tus necesidades
+// Configurar el segundo texto y calcular su ancho
+String texto2 = persona.getGradoAcademico().getCarrera().getNombre_carrera(); // Reemplaza con tu segundo
+                                                                              // texto
+float textWidth2 = customFont.getStringWidth(texto2) * fontSize / 1000f;
 
-          // Agregar el segundo texto al documento centrado
-          contentStream.beginText();
-          contentStream.newLineAtOffset((page2.getMediaBox().getWidth() - textWidth2) / 2, yTexto2);
-          contentStream.showText(texto2);
-          contentStream.endText();
+// Configurar la posición Y del segundo texto (un poco más arriba)
+float yTexto2 = 430; // Ajusta esta coordenada y según tus necesidades
 
-          contentStream.setFont(customFont, fontSize2);
-          String diaConvertido = String.valueOf(dia);
-          String texto3 = diaConvertido;
-          float xTexto3 = 250;
-          float yTexto3 = 185;
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto3, yTexto3);
-          contentStream.showText(texto3);
-          contentStream.endText();
+// Agregar el segundo texto al documento centrado
+contentStream.beginText();
+contentStream.newLineAtOffset((page2.getMediaBox().getWidth() - textWidth2) / 2, yTexto2);
+contentStream.showText(texto2);
+contentStream.endText();
 
-          String mesConvertido = String.valueOf(cadenaMesC);
-          String texto4 = mesConvertido;
-          float xTexto4 = 326;
-          float yTexto4 = 185;
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto4, yTexto4);
-          contentStream.showText(texto4);
-          contentStream.endText();
 
-          String gestionC = String.valueOf(gestion);
-          String texto5 = "Dos mil " + gestionC;
-          float xTexto5 = 450;
-          float yTexto5 = 185;
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto5, yTexto5);
-          contentStream.showText(texto5);
-          contentStream.endText();
 
-          // parrafos de firmas
-          contentStream.setFont(customFont, fontFirma);
-          String texto7 = "MSc. Franz Navia Miranda";
-          float xTexto7 = 245;
-          float yTexto7 = 90;
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto7, yTexto7);
-          contentStream.showText(texto7);
-          contentStream.endText();
+contentStream.setFont(customFont, fontSize2);
 
-          String texto9 = "Rector Magnífico";
-          float xTexto9 = 285;
-          float yTexto9 = 72;
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto9, yTexto9);
-          contentStream.showText(texto9);
-          contentStream.endText();
+// texto3 (día)
+String diaConvertido = String.valueOf(dia);
+contentStream.beginText();
+contentStream.newLineAtOffset(250, 185);
+contentStream.showText(diaConvertido);
+contentStream.endText();
 
-          // parrafos de firmas
-          contentStream.setFont(customFont, fontFirma);
-          String texto10 = "MSc. Oscar Felipe Melgar Saucedo";
-          float xTexto10 = 50;
-          float yTexto10 = 60;
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto10, yTexto10);
-          contentStream.showText(texto10);
-          contentStream.endText();
+// texto4 (mes)
+String mesConvertido = String.valueOf(cadenaMesC);
+contentStream.beginText();
+contentStream.newLineAtOffset(326, 185);
+contentStream.showText(mesConvertido);
+contentStream.endText();
 
-          String texto11 = "Vicerrector";
-          float xTexto11 = 120;
-          float yTexto11 = 42;
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto11, yTexto11);
-          contentStream.showText(texto11);
-          contentStream.endText();
+// texto5 (año)
+String gestionC = String.valueOf(gestion);
+String texto5 = "Dos mil " + gestionC;
+contentStream.beginText();
+contentStream.newLineAtOffset(450, 185);
+contentStream.showText(texto5);
+contentStream.endText();
 
-          // parrafos de firmas
-          contentStream.setFont(customFont, fontFirma);
-          String texto12 = "MSc. Ariz Humerez Alvez";
-          float xTexto12 = 410;
-          float yTexto12 = 60;
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto12, yTexto12);
-          contentStream.showText(texto12);
-          contentStream.endText();
+// Configurar fuente para firmas
+contentStream.setFont(customFont, fontFirma);
 
-          String texto13 = "Secretario General";
-          float xTexto13 = 445;
-          float yTexto13 = 42;
-          contentStream.beginText();
-          contentStream.newLineAtOffset(xTexto13, yTexto13);
-          contentStream.showText(texto13);
-          contentStream.endText();
+// texto7 y texto9 (Rector)
+contentStream.beginText();
+contentStream.newLineAtOffset(245, 90);
+contentStream.showText("MSc. Franz Navia Miranda");
+contentStream.endText();
 
-          // Cerrar el contenido y guardar el documento PDF
-          contentStream.close();
-          pdfDocument2.save(rutaCompleta); // Reemplaza con la ruta y el nombre adecuados
-          pdfDocument2.close();
+contentStream.beginText();
+contentStream.newLineAtOffset(285, 72);
+contentStream.showText("Rector Magnífico");
+contentStream.endText();
+
+// texto10 y texto11 (Vicerrector)
+contentStream.beginText();
+contentStream.newLineAtOffset(50, 60);
+contentStream.showText("MSc. Oscar Felipe Melgar Saucedo");
+contentStream.endText();
+
+contentStream.beginText();
+contentStream.newLineAtOffset(120, 42);
+contentStream.showText("Vicerrector");
+contentStream.endText();
+
+// texto12 y texto13 (Secretario)
+contentStream.beginText();
+contentStream.newLineAtOffset(410, 60);
+contentStream.showText("MSc. Ariz Humerez Alvez");
+contentStream.endText();
+
+contentStream.beginText();
+contentStream.newLineAtOffset(445, 42);
+contentStream.showText("Secretario General");
+contentStream.endText();
+
+// Cerrar el stream y guardar
+contentStream.close();
+pdfDocument2.save(rutaCompleta);
+pdfDocument2.close();
         } catch (IOException e) {
           e.printStackTrace();
         }
@@ -1529,8 +1519,11 @@ public class PdfController {
 
         try {
           // Cargar el documento PDF existente
-          PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta)); // Asegúrate de que "rutaCompleta" apunte
-                                                                             // al archivo existente
+          PDDocument pdfDocument2 = PDDocument.load(new File(rutaCompleta)); 
+         
+
+
+
           String primerTexto = "primerTexto";
           String segundoTexto = "segundoTexto";
           String tercerTexto = "tercerTexto";
@@ -1782,15 +1775,24 @@ public class PdfController {
 
           }
 
-          // Obtener la página donde deseas agregar el texto
-          PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
+          PDPage page2 = pdfDocument2.getPage(0);
 
-          // Crear un objeto de contenido para escribir texto en la página
-          PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
-              PDPageContentStream.AppendMode.APPEND, true, true);
+// 1. Dibujar la plantilla primero
+PDImageXObject plantillaImage = PDImageXObject.createFromFile(rutaCompletaP, pdfDocument2);
+PDPageContentStream plantillaStream = new PDPageContentStream(pdfDocument2, page2, 
+    PDPageContentStream.AppendMode.PREPEND, true, true);
+plantillaStream.drawImage(plantillaImage, 0, 0, page2.getMediaBox().getWidth(), page2.getMediaBox().getHeight());
+plantillaStream.close();
 
-          // Cargar la fuente personalizada
-          PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
+// 2. Luego agregamos el texto en una nueva capa
+PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
+    PDPageContentStream.AppendMode.APPEND, true, true);
+
+// Cargar la fuente personalizada
+PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
+// Configurar el texto con opacidad completa
+contentStream.setNonStrokingColor(0, 0, 0); // Negro
+contentStream.setRenderingMode(RenderingMode.FILL); // Cambiado a RenderingMode.FILL
 
           // Configurar el texto y calcular su ancho
           String texto = segundoTexto;
@@ -2379,7 +2381,6 @@ public class PdfController {
             }
 
           }
-
           if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
               .equals("Sistema de Producción Agropecuaria")) {
             if (persona.getSexo().equals("Masculino")) {
@@ -2389,6 +2390,20 @@ public class PdfController {
             } else {
               primerTexto = "Sistema de Producción Agropecuaria";
               segundoTexto = "Técnico Superior";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            }
+
+          }
+
+          if (persona.getGradoAcademico().getCarrera().getNombre_carrera()
+              .equals("Idioma Ingles")) {
+            if (persona.getSexo().equals("Masculino")) {
+              primerTexto = "Técnico Universitario Superior en Idioma Inglés";
+              segundoTexto = "Técnico Universitario Superior";
+              tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
+            } else {
+              primerTexto = "Técnico Universitario Superior en Idioma Inglés";
+              segundoTexto = "Técnico Universitario Superior";
               tercerTexto = persona.getGradoAcademico().getCarrera().getNombre_carrera();
             }
 
@@ -2674,7 +2689,11 @@ public class PdfController {
     } catch (IOException e) {
       System.err.println("Error al crear el directorio: " + e.getMessage());
     }
-
+    // Directorio de la Plantilla
+    Path rootPathPlantillaPath = Paths.get("plantillas/");
+    Path rootAbsolutPathPlantillasPath = rootPathPlantillaPath.toAbsolutePath();
+// Ruta completa de la Plantilla
+    String rutaCompletaP = rootAbsolutPathPlantillasPath + "/provision.jpg";
     TituloGenerado tituloGenerado = new TituloGenerado();
 
     // Nombre del archivo PDF
@@ -3064,15 +3083,25 @@ public class PdfController {
 
         }
 
-        // Obtener la página donde deseas agregar el texto
-        PDPage page2 = pdfDocument2.getPage(0); // Puedes ajustar el número de página
+        PDPage page2 = pdfDocument2.getPage(0);
 
-        // Crear un objeto de contenido para escribir texto en la página
+        // 1. Dibujar la plantilla primero
+        PDImageXObject plantillaImage = PDImageXObject.createFromFile(rutaCompletaP, pdfDocument2);
+        PDPageContentStream plantillaStream = new PDPageContentStream(pdfDocument2, page2, 
+            PDPageContentStream.AppendMode.PREPEND, true, true);
+        plantillaStream.drawImage(plantillaImage, 0, 0, page2.getMediaBox().getWidth(), page2.getMediaBox().getHeight());
+        plantillaStream.close();
+        
+        // 2. Luego agregamos el texto en una nueva capa
         PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
             PDPageContentStream.AppendMode.APPEND, true, true);
-
+        
         // Cargar la fuente personalizada
         PDType0Font customFont = PDType0Font.load(pdfDocument2, new File(fontFilePath));
+        // Configurar el texto con opacidad completa
+        contentStream.setNonStrokingColor(0, 0, 0); // Negro
+        contentStream.setRenderingMode(RenderingMode.FILL); // Cambiado a RenderingMode.FILL
+        
 
         // Configurar el texto y calcular su ancho
         String texto = segundoTexto;
