@@ -3086,11 +3086,11 @@ contentStream.setRenderingMode(RenderingMode.FILL); // Cambiado a RenderingMode.
         PDPage page2 = pdfDocument2.getPage(0);
 
         // 1. Dibujar la plantilla primero
-        PDImageXObject plantillaImage = PDImageXObject.createFromFile(rutaCompletaP, pdfDocument2);
-        PDPageContentStream plantillaStream = new PDPageContentStream(pdfDocument2, page2, 
-            PDPageContentStream.AppendMode.PREPEND, true, true);
-        plantillaStream.drawImage(plantillaImage, 0, 0, page2.getMediaBox().getWidth(), page2.getMediaBox().getHeight());
-        plantillaStream.close();
+        // PDImageXObject plantillaImage = PDImageXObject.createFromFile(rutaCompletaP, pdfDocument2);
+        // PDPageContentStream plantillaStream = new PDPageContentStream(pdfDocument2, page2, 
+        //     PDPageContentStream.AppendMode.PREPEND, true, true);
+        // plantillaStream.drawImage(plantillaImage, 0, 0, page2.getMediaBox().getWidth(), page2.getMediaBox().getHeight());
+        // plantillaStream.close();
         
         // 2. Luego agregamos el texto en una nueva capa
         PDPageContentStream contentStream = new PDPageContentStream(pdfDocument2, page2,
