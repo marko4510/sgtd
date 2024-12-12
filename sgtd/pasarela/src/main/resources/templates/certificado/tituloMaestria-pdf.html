@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="generator" content="Aspose.Words for .NET 22.7.0" />
+<title></title>
+<style>
+@page {
+    size: 8.5in 13in;
+}
+/* Agregamos estilos para controlar mejor el espaciado */
+.info-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 140pt;
+    white-space: nowrap; /* Evita que el texto se ajuste */
+}
+
+.info-item {
+    display: inline-block;
+    margin-right: 160px; /* Puedes ajustar este valor según necesites */
+}
+
+/* Resto de estilos específicos */
+.titulo-numero {
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 16pt;
+}
+
+.nombre-completo {
+    font-size: 18pt;
+}
+
+.texto-normal {
+    font-family: Times, serif;
+}
+</style>
+</head>
+<body style="font-family:'Times New Roman'; font-size:12pt;">
+<div>
+    <p style="margin-bottom: 90px;"></p>
+    <p style="margin-top: 145px; margin-left:42pt; margin-bottom:0pt; text-align:justify; line-height:10.4pt">
+        <span class="titulo-numero" th:text="${nroTitulo}">002797</span>
+    </p>
+    
+    <p style="margin-top:145pt; margin-bottom:0pt; text-align:center; line-height:28pt">
+        <span class="nombre-completo" th:text="${nombre}+' '+${apellidoP}+' '+${apellidoM}"></span>
+    </p>
+    
+    <!-- Aquí está el cambio principal -->
+    <div class="info-container" style="margin-top:32.5pt;">
+        <span class="info-item texto-normal" style="margin-right: 70px;"></span>
+        <span class="info-item texto-normal" th:text="${nacionalidad}"></span>
+        <span class="info-item texto-normal" th:text="${fechaNacimiento}"></span>
+    </div>
+    
+    <p style="margin-top:60pt; margin-bottom:0pt; text-align:center; line-height:20pt">
+        <span class="nombre-completo" th:text="${programa}"></span>
+    </p>
+    
+    <p style="margin-top:5pt; margin-bottom:0pt; text-align:center; line-height:20pt">
+        <span class="nombre-completo" th:text="'Versión '+${version}"></span>
+    </p>
+    
+    <p style="margin-top:36.1pt; margin-bottom:0pt; text-align:center; line-height:28pt"></p>
+    
+    <p style="margin-top:140pt; margin-left:200pt; margin-bottom:0pt; text-align:justify; line-height:10pt">
+        <span style="font-size:14pt; margin-right: 100px;" th:text="${dia}"></span>
+        <span style="margin-right: 50px; font-size:14pt" th:text="${mes}"></span>
+        <span style="margin-right: 50px; font-size:14pt" th:text="${anio}"></span>
+    </p>
+</div>
+</body>
+</html>

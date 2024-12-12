@@ -163,7 +163,7 @@
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                                 <div class="card-body">
-                                    <form id="miFormulario2" th:action="@{/generarTituloProvisionPlantillaPdf}" method="post">
+                                    <form id="miFormulario2" th:action="@{/generarMaestria}" method="post">
                                         <div class="checkbox mb-3">
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="usarPlantilla" value="true">
@@ -173,42 +173,25 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div>
-                                                    <label class="col-form-label">Persona</label>
-                                                    <select class="form-select js-choice" name="id_persona">
-                                                        <option th:each="per : ${personas}" th:value="${per.id_persona}"
-                                                            th:if="${per.estado != 'X'}" th:text="${per.nombre}+' '+${per.ap_paterno}+' '+${per.ap_materno}+'-'+${per.ci}">
-                                                        </option>
-                                                    </select>
-                                                </div>
-                                            </div>
                                             
-                                            <div class="col-md-3 text-dark">
-                                                <label class="col-form-label">Gestión</label>
-                                                <select class="form-select js-choice" name="gestion"
-                                                    required>
-                                                    <option value="">Seleccione una Gestión</option>
-                                                    <option value="Veintitrés">2023</option>
-                                                    <option value="Veinticuatro">2024</option>
-                                                    <option value="Veinticinco">2025</option>
-                                                    <option value="Veintiséis">2026</option>
-                                                    <option value="Veintisiete">2027</option>
-                                                    <option value="Veintiocho">2028</option>
-                                                    <option value="Veintinueve">2029</option>
-                                                    <option value="Treinta">2030</option>
-                                                </select>
+                                         
 
-                                            </div>
-
-                                            <div class="col-md-3" >
+                                            <div class="col-md-3">
                                       
-                                                    <label class="col-form-label">Número Titulo</label>
-                                                <input class="form-control" name="nroTitulo" type="text" required>
+                                                    <label class="col-form-label">Código Correlativo</label>
+                                                <input class="form-control" name="correlativo" type="text" required>
                                                        
                                                   
                                          
                                             </div>
+                                            <div class="col-md-3">
+                                      
+                                                <label class="col-form-label">Número Titulo</label>
+                                            <input class="form-control" name="nroTituloMaestria" type="text" required>
+                                                   
+                                              
+                                     
+                                        </div>
                                         </div>
                                  
 
@@ -217,9 +200,11 @@
         
                                         <br>
                                         <div class="text-center" id="Dsubmit2">
-                                            <button class="btn btn-primary" type="submit"
+                                            <button class="btn btn-primary"  type="submit" 
                                                 th:text="Generar"></button>
                                         </div>
+                               
+                                    
                                     </form>
                                 </div>
                             </div>
