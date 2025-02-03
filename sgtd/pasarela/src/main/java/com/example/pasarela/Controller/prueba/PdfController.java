@@ -4177,8 +4177,8 @@ contentStream.setRenderingMode(RenderingMode.FILL); // Cambiado a RenderingMode.
       context.setVariable("horas", numeroTextoHorasConver);
       context.setVariable("modulos", numeroTextoModulosConver);
       context.setVariable("mes", cadenaMesC);
-      context.setVariable("anio", cadenaAnioC);
-      context.setVariable("dia", cadenaDiaC);
+      context.setVariable("anio", anioString);
+      context.setVariable("dia", dia);
 
       String htmlContent = templateEngine.process("certificado/tituloMaestria-pdf", context);
 
@@ -4213,7 +4213,7 @@ contentStream.setRenderingMode(RenderingMode.FILL); // Cambiado a RenderingMode.
             "Codigo de titulo: " + codigo + "\n" +
             "Fecha de Generacion titulo: " + fechaComoString;
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 200, 200);
+        BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 160, 160);
 
         // Crear la imagen BufferedImage del código QR
         int width = bitMatrix.getWidth();
@@ -4283,32 +4283,32 @@ contentStream.setRenderingMode(RenderingMode.FILL); // Cambiado a RenderingMode.
         // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 5; // Ajusta esta coordenada x según tus necesidades
-          float y = 840; // Ajusta esta coordenada y según tus necesidades
-          float widthj = 90; // Ajusta el ancho de la imagen
-          float heightj = 90; // Ajusta la altura de la imagen
+          float x = 500; // Ajusta esta coordenada x según tus necesidades
+          float y = 620; // Ajusta esta coordenada y según tus necesidades
+          float widthj = 80; // Ajusta el ancho de la imagen
+          float heightj = 80; // Ajusta la altura de la imagen
 
           contentStream.drawImage(pdImage, x, y, widthj, heightj);
         }
         // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
-          float x = 540; // Ajusta esta coordenada x según tus necesidades
-          float y = 70; // Ajusta esta coordenada y según tus necesidades
+          float x = 550; // Ajusta esta coordenada x según tus necesidades
+          float y = 110; // Ajusta esta coordenada y según tus necesidades
           float widthj = 40; // Ajusta el ancho de la imagen
           float heightj = 40; // Ajusta la altura de la imagen
 
-          contentStream.drawImage(pdImageRector, x, y, widthj, heightj);
+          contentStream.drawImage(pdImageVicerrector, x, y, widthj, heightj);
         }
         // Agregar la imagen del código QR al contenido del PDF
         try (PDPageContentStream contentStream = new PDPageContentStream(pdfDocument, page,
             PDPageContentStream.AppendMode.APPEND, true, true)) {
           float x = 20; // Ajusta esta coordenada x según tus necesidades
-          float y = 70; // Ajusta esta coordenada y según tus necesidades
+          float y = 105; // Ajusta esta coordenada y según tus necesidades
           float widthj = 40; // Ajusta el ancho de la imagen
           float heightj = 40; // Ajusta la altura de la imagen
 
-          contentStream.drawImage(pdImageVicerrector, x, y, widthj, heightj);
+          contentStream.drawImage(pdImageRector, x, y, widthj, heightj);
         }
 
         // Guardar el PDF con la imagen del código QR agregada
@@ -4336,9 +4336,9 @@ contentStream.setRenderingMode(RenderingMode.FILL); // Cambiado a RenderingMode.
 
           // parrafos de firmas
           contentStream.setFont(customFont, fontFirma);
-          String texto7 = "MSc. Oscar Felipe Melgar Saucedo";
+          String texto7 = "MSc. Franz Navia Miranda";
           float xTexto7 = 60;
-          float yTexto7 = 69;
+          float yTexto7 = 100;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto7, yTexto7);
           contentStream.showText(texto7);
@@ -4349,9 +4349,9 @@ contentStream.setRenderingMode(RenderingMode.FILL); // Cambiado a RenderingMode.
           contentStream.showText(texto7);
           contentStream.endText();
 
-          String texto8 = "MSc. Franz Navia Miranda";
-          float xTexto8 = 377;
-          float yTexto8 = 69;
+          String texto8 = "MSc. Oscar Felipe Melgar Saucedo";
+          float xTexto8 = 375;
+          float yTexto8 = 100;
           contentStream.beginText();
           contentStream.newLineAtOffset(xTexto8, yTexto8);
           contentStream.showText(texto8);
