@@ -494,6 +494,7 @@ public class PdfController {
     }
     Date fechaActual = new Date();
 
+
     LocalDate localDateFA = convertirDateALocalDate(fechaActual);
     int diaNum = localDateFA.getDayOfMonth();
     String dia = convertirNumTexto(diaNum);
@@ -589,6 +590,7 @@ public class PdfController {
     }
     List<Titulo> listTitulo = tituloService.findAll();
     Date fechaActual = new Date();
+    //Date fechaActual = new SimpleDateFormat("yyyy-MM-dd").parse("2024-12-13");
     LocalDate localDateFA = convertirDateALocalDate(fechaActual);
     String fechaComoString = localDateFA.toString();
     int dia = localDateFA.getDayOfMonth();
